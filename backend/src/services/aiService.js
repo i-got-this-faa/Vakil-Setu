@@ -15,17 +15,36 @@ function inferUserLanguage(userText) {
   return "en";
 }
 
-function buildClassificationPrompt(userText) {
+function formatHistoryForPrompt(history) {
+  if (!Array.isArray(history) || history.length === 0) return "";
+  const lines = history
+    .slice(-10)
+    .map((m) => {
+      const role = m?.role === "assistant" ? "Assistant" : "User";
+      const content = String(m?.content || m?.text || "").trim();
+      return content ? `${role}: ${content}` : null;
+    })
+    .filter(Boolean);
+  if (!lines.length) return "";
+  return `Previous conversation (same case — continue context, do not repeat prior summary verbatim):\n${lines.join("\n")}\n\n`;
+}
+
+function buildClassificationPrompt(userText, history = []) {
   const lang = inferUserLanguage(userText);
   const languageRules =
     lang === "hi"
       ? `The user wrote in Hindi (Devanagari and/or Roman Hindi). Write ALL user-visible text in Hindi using Devanagari script: domain_label, summary, every section heading and body, and every action. Be clear and legally appropriate. Only the JSON key "domain" must be an English slug (criminal | civil | family | property).`
       : `The user wrote in English. Write ALL user-visible text in English: domain_label, summary, sections, and actions. Only "domain" must be one of the English slugs: criminal | civil | family | property.`;
 
+  const historyBlock = formatHistoryForPrompt(history);
+  const userBlock = historyBlock
+    ? `${historyBlock}Latest user message:\n${userText}`
+    : userText;
+
   return `You triage legal issues under Indian law (general information only, not a substitute for a licensed advocate).
 
 User message:
-${userText}
+${userBlock}
 
 ${languageRules}
 
@@ -144,7 +163,7 @@ const extractClassificationFromRaw = (raw) => {
   };
 };
 
-export const classifyLegalIssue = async (userText) => {
+export const classifyLegalIssue = async (userText, history = []) => {
   const llmProvider = process.env.LLM_PROVIDER || "gateway";
   const fallbackMode = process.env.LLM_FALLBACK_MODE || "rule_based";
   const apiKey = process.env.LLM_API_KEY;
@@ -163,7 +182,7 @@ export const classifyLegalIssue = async (userText) => {
     response_language: classification?.response_language || inferUserLanguage(userText || "")
   });
 
-  const prompt = buildClassificationPrompt(userText || "");
+  const prompt = buildClassificationPrompt(userText || "", history);
 
   if (llmProvider === "gemini") {
     const geminiBaseUrl =

@@ -8,6 +8,14 @@ export default function ResultCard({ classification }) {
     ? { low: "कम", medium: "मध्यम", high: "उच्च", emergency: "आपातकालीन" }[urgencyRaw] ||
       classification.urgency
     : classification.urgency;
+
+  const urgencyClass =
+    urgencyRaw === "emergency" || urgencyRaw === "high"
+      ? "urgency-high"
+      : urgencyRaw === "medium"
+        ? "urgency-medium"
+        : "urgency-low";
+
   const L = hi
     ? {
         title: "एआई मामला विश्लेषण",
@@ -17,26 +25,39 @@ export default function ResultCard({ classification }) {
     : {
         title: "AI case analysis",
         summary: "Summary",
-        actions: "Recommended actions"
+        actions: "Recommended next steps"
       };
 
   return (
-    <div className="card animate-in">
-      <h3>{L.title}</h3>
-      <div className="badge-row">
-        <span className="badge">{domainBadge}</span>
-        <span className="badge warn">{urgencyBadge}</span>
+    <article className="analysis-panel animate-in">
+      <header className="analysis-panel-head">
+        <h2 className="analysis-panel-title">{L.title}</h2>
+        <div className="analysis-badges">
+          <span className="analysis-badge domain">{domainBadge}</span>
+          <span className={`analysis-badge urgency ${urgencyClass}`}>{urgencyBadge}</span>
+        </div>
+      </header>
+
+      <div className="analysis-block">
+        <h3 className="analysis-block-label">{L.summary}</h3>
+        <p className="analysis-block-text">{classification.summary}</p>
       </div>
-      <div className="analysis-summary">
-        <strong>{L.summary}</strong>
-        <p>{classification.summary}</p>
-      </div>
-      <strong>{L.actions}</strong>
-      <ul>
-        {(classification.actions || []).map((item, index) => (
-          <li key={`${item}-${index}`}>{item}</li>
-        ))}
-      </ul>
-    </div>
+
+      {(classification.actions || []).length > 0 ? (
+        <div className="analysis-block">
+          <h3 className="analysis-block-label">{L.actions}</h3>
+          <ol className="analysis-steps">
+            {(classification.actions || []).map((item, index) => (
+              <li key={`${item}-${index}`}>
+                <span className="step-num" aria-hidden="true">
+                  {index + 1}
+                </span>
+                <span>{item}</span>
+              </li>
+            ))}
+          </ol>
+        </div>
+      ) : null}
+    </article>
   );
 }
