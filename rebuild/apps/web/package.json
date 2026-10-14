@@ -1,0 +1,30 @@
+{
+  "name": "@vakil/web",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev --hostname 0.0.0.0 --port 3000",
+    "build": "next build",
+    "start": "next start --hostname 0.0.0.0 --port 3000",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@clerk/nextjs": "7.9.15",
+    "@vakil/backend": "workspace:*",
+    "@vakil/domain": "workspace:*",
+    "@vakil/i18n": "workspace:*",
+    "@vakil/ui": "workspace:*",
+    "convex": "1.46.0",
+    "lucide-react": "1.57.0",
+    "next": "16.4.0",
+    "react": "19.3.0",
+    "react-dom": "19.3.0"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "4.3.3",
+    "@types/node": "26.6.5",
+    "@types/react": "19.3.0",
+    "@types/react-dom": "19.3.0",
+    "tailwindcss": "4.3.3"
+  }
+}
