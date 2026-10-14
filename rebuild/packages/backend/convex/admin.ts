@@ -33,6 +33,7 @@ export const handleAffectedBooking = mutation({ args: { bookingId: v.id("booking
     if (!user || user.disabled || !(await approvedAdvocate(ctx, booking.advocateId))) fail("NOT_APPROVED", "Reactivate the user and explicitly approve the advocate before retaining this consultation.");
     await notifyBooking(ctx, booking, "Administrator retained the accepted consultation after review.");
   } else {
+    if (booking.start <= Date.now()) fail("CONFLICT", "An accepted consultation cannot be cancelled once it starts.");
     await terminateBooking(ctx, booking, "cancelled", reason, { kind: "admin", accountId: admin._id });
   }
   await ctx.db.patch(booking._id, { adminHandling: { kind: "resolved", action: args.action, reason, adminId: admin._id, handledAt: Date.now() } });

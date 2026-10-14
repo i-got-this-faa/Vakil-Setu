@@ -1,73 +1,42 @@
-# Backend review handoff — 2026-10-14
+# Backend second-round handoff — 2026-10-14
 
-Local implementation of the five backend integration-review gaps is complete. This record covers backend work only; the parent owns client integration, install/lock/codegen-script changes, overall verification, and the integration-review disposition.
+The four verified backend findings are implemented within `packages/backend`. Starting parent commits were `1348e24` and `e397df1`; starting HEAD was `e397df1`. The existing uncommitted oversized-discovery-cohort test was preserved. Parent owns web/domain integration, full-workspace checks, codegen and commits.
 
-## Evidence
+## Exact evidence
 
-Commands use the installed Bun at `rebuild/.tooling/node_modules/bun/bin/bun.exe`.
+From `rebuild/packages/backend`, using the existing installed Bun:
 
-- From `rebuild`: `.tooling/node_modules/bun/bin/bun.exe scripts/codegen-local.mjs` passed. Used existing Convex 1.46.0 templates; no deployment contacted and no script changes.
-- From `rebuild/packages/backend`: `../../.tooling/node_modules/bun/bin/bun.exe run typecheck` passed using installed TypeScript 7.0.2 native `tsc --noEmit`. Backend no longer requires `vite/client`; test glob typing is scoped to tests.
-- From `rebuild/packages/backend`: `../../.tooling/node_modules/bun/bin/bun.exe run test` passed: 37 convex-test cases against registered functions. Real in-memory mutations, queries, scheduler, and storage; only the external provider call is replaced with synthetic test responses.
-- From `rebuild/packages/domain`: `../../.tooling/node_modules/bun/bin/bun.exe ../../node_modules/typescript/bin/tsc --noEmit` passed. Domain package script/compiler migration remains parent-owned.
+- `../../.tooling/node_modules/bun/bin/bun.exe run test` passed: **60 tests**, one test file, Vitest 5.0.4. This includes the existing 41 tests and 19 new cases in this round. Final run duration reported 1.16 seconds; this is a check result, not a benchmark.
+- `../../.tooling/node_modules/bun/bin/bun.exe run typecheck` passed: installed native TypeScript `tsc --noEmit`. Generated data model/API types derive from schema and existing module exports; this worker did not run codegen or edit generated files.
+- From `rebuild`, `git diff --check -- packages/backend` passed.
 
-The evidence level is local integration through convex-test plus static types. Hosted Convex OCC, real Clerk identities, hosted storage/scheduler, DGX inference, language comprehension, browser/client flows and production schema migration were not tested. No hosted credentials are needed for these local checks.
+Tests invoke registered Convex queries, mutations, actions, local storage and scheduler through convex-test. Provider calls use synthetic fetch responses; the final credential-permission test intercepts Blob.arrayBuffer to disable the reader while bytes are obtained. Evidence is local integration plus static typing. Hosted Convex OCC, real Clerk identities, hosted storage/scheduler, real gateway/DGX inference, language comprehension, browser/client flows and deployment migration were not tested. Missing hosted services remain an intentional user decision.
 
 ## Surface and completion ledger
 
-| Surface | Applicability and result | Evidence |
-|---|---|---|
-| Approval and account mutations | Applies: profile, credential, suspend, advocate disable, user disable preserve accepted bookings and close pending requests | Five parameterized loss-path tests; retained slot and redacted admin queue assertions |
-| Reverse lifecycle | Applies: explicit admin cancel/retain, participant cancellation, completion/expiry, repeated flags | Durable event checks; reapproval leaves handling pending; unresolved completion rejected |
-| Reservation races | Applies: two owners, same-key retries, publication overlaps, same-user cross-advocate overlap, acceptance/suspension, cancellation/expiry, repeated admin handling | Real registered mutations; one winning reservation/decision and no duplicate terminal event |
-| Contracts/discovery | Applies: modes in profile/slot, trusted booked mode, unknown/emergency urgency | Mode ownership/injection checks; unsupported modes hidden; urgency preserved in snapshots/provider results |
-| Follow-up/provider | Applies: owner/review requirement, bounded recent messages, Unicode/locale preservation, context revision conflict | Unauthorized append/analysis rejected; count/aggregate pruning; late results cannot overwrite changed context/account/version |
-| Credential content | Applies: signatures, type/size/name, owner/admin read, owner removal, admin review, concurrent capacity and cleanup | PDF/PNG/JPEG fixtures; denied foreign access; deleted blobs; losing upload leaves no orphan |
-| Clients/mobile | Parent integration applies; no client files owned here. Mobile does not apply: deferred product | Required API changes below; no browser acceptance claim |
-| Connection modes | Manual/no-key and provider-action boundaries apply; speech/payment/video transport do not apply: deferred or unavailable | Explicit unavailable/rate-limited output; external failures cannot create a summary |
-| Documents | Applies: API, architecture and this handoff updated | Executable contracts in schema and generated bindings |
+| Surface | Result and exact test evidence |
+|---|---|
+| Approval/account changes | Ten new parameterized cases cover profile edit, credential invalidation, suspension, advocate disable and user disable at exact start and one hour afterward. Accepted booking documents, reservations, booking events and booking notifications remain identical; no new affected queue entry. Existing five future-loss tests still prove future flags and pending cancellation. |
+| Existing flag crosses start | Two new cases reject admin cancellation at exact start and one hour afterward, preserving state/history/reservation. Retention still rejects suspended advocates, then succeeds after explicit reapproval. Existing completion and reactivation tests remain passing. |
+| Analysis consent contract | Missing and false consent fail before fetch, rate attempts or consent records. All existing valid action calls now send consent:true. |
+| Configured provider dispatch | A new test observes the audit already persisted when fetch begins, validates POST/auth/redirect/timeout contract, authorized context and successful private summary persistence. Exact audit fields contain current case/owner/version/context revision, timestamp, gateway and URL origin only. Endpoint path/query, API key, private intake/follow-up and credential content are absent. Existing unknown/emergency and language tests remain passing. |
+| Final consent permission/revision boundary | A new test rejects foreign/admin callers, stale version/context and disabled owners in the internal consent mutation without recording consent. Configured public calls reject unauthorized/stale inputs without dispatch. Existing late-response tests reject changed account/version/context at persistence. |
+| Unavailable provider | Existing no-key/rate-limit test additionally proves no consent audit. Unavailable configurations return before the consent mutation/fetch; no provider success is fabricated. |
+| Credential read audit | A new test verifies exact owner/admin records containing only credentialId, readerId, derived role and timestamp. Foreign/anonymous/disabled owner/disabled admin reads and missing storage create no new audit. Internal audit authorization is tested directly. Another new test disables the owner during arrayBuffer and proves the final mutation rejects without an audit or returned bytes. Existing private metadata/URL, upload/review/remove tests remain passing. |
+| Direct routes | Two new tests exercise bounded/invalid/wrong-table/deleted/nonowned routes, role/auth/disabled-account checks and pending/disabled public profiles. With 60 newer cases and 60 earlier-ranked profiles, first pages omit original links but direct resolvers return their branded IDs. Existing getMine/getPublic contracts still return their original results. |
+| Clients | Parent-owned: pass consent:true and renew the checkbox on summary/context revision changes; use resolvePublic/resolveMine before typed reads. This worker edited no client files. Mobile is deferred. |
+| Documents | Backend API, architecture and this validation handoff reflect the final contracts and observed evidence. |
 
-## Parent integration requirements
+## Contracts for parent integration
 
-1. Profile editors must send required `consultationModes: ("phone" | "video" | "in_person")[]`; slot publication must send required `consultationMode`. Display modes in discovery and booking review/history. Booking requests still send only slot IDs, never a client mode.
-2. Read `case.contextRevision` (starts at zero), send it as `expectedContextRevision` to `triage.analyze` and `cases.appendFollowUp`, and expose reviewed follow-up text/consent. Refetch on revision conflicts. Add unknown/emergency urgency options with preliminary-label/no-guarantee copy.
-3. Connect `admin.affectedBookings` and `admin.handleAffectedBooking`, display participant handling flags, use `bookings.history`, and require an advocate cancellation reason in the client. Reapproval alone does not clear flags.
-4. The only shared domain edit is `packages/domain/src/index.ts`: add unknown/emergency urgency plus consultation mode constants/type, and widen `isUrgency`. Parent must integrate this contract and migrate the domain package's typecheck script if needed. Language registry files were untouched.
-5. Fresh local fixtures use the required schema fields. If a deployment already has data, the parent must plan explicit backfill/migration for profile modes, slot/booked modes and case context revisions; no existing hosted data was guessed or changed.
+- `triage.analyze({caseId, expectedVersion, expectedContextRevision, consent: true})` now requires affirmative consent at the action validator. Consent is stripped from calls to existing internal consume/forAnalysis/saveProviderSummary functions. New private `aiConsents` records are written through `internal.triageRate.recordConsent` immediately before configured dispatch, after active ownership and revision rechecks. Audit records describe consented dispatch attempts, including provider failures.
+- `credentials.read` returns its existing bytes/contentType/fileName shape. New private `credentialReads` records are written through `internal.credentials.auditRead` after arrayBuffer resolves and current active owner/admin authorization succeeds. No public audit queries or storage URLs were added.
+- `advocates.resolvePublic({routeId: string})` returns `Id<"advocates"> | null`; `cases.resolveMine({routeId: string})` returns `Id<"cases"> | null`. Both bound route length to 1–128 and use normalizeId/direct lookup without casts or paging. The private resolver requires an active user and hides others with null. Existing typed getPublic/getMine contracts are unchanged.
+- Newly affected accepted consultations require `start > now`. Admin cancellation also requires `start > now`, even when an old flag exists. Retention keeps its explicit active-user/approved-advocate guard after start.
+- The schema adds two private tables; existing records require no new fields for these changes. Deployment/codegen remain parent-owned.
 
-## Exact authored files
+## Authored files and scope
 
-All paths are relative to `rebuild/`.
+This round changed only backend API.md, ARCHITECTURE.md, VALIDATION.md, tests/backend.test.ts, and convex/{admin,advocates,cases,credentials,schema,triage,triageRate}.ts plus convex/lib/lifecycle.ts. Generated bindings were untouched. No domain/web/root/vendor files, installs, locks, commits, staging, browser launches, hosted deployment or secret reads were performed.
 
-- `packages/backend/convex/admin.ts`
-- `packages/backend/convex/advocates.ts`
-- `packages/backend/convex/bookings.ts`
-- `packages/backend/convex/cases.ts`
-- `packages/backend/convex/credentials.ts`
-- `packages/backend/convex/schema.ts`
-- `packages/backend/convex/slots.ts`
-- `packages/backend/convex/triage.ts`
-- `packages/backend/convex/triageRate.ts`
-- `packages/backend/convex/lib/discovery.ts`
-- `packages/backend/convex/lib/lifecycle.ts`
-- `packages/backend/convex/lib/validators.ts`
-- `packages/backend/tests/backend.test.ts`
-- `packages/backend/tests/import-meta.d.ts` (new)
-- `packages/backend/tsconfig.json`
-- `packages/backend/package.json` (typecheck command only)
-- `packages/backend/API.md`
-- `packages/backend/ARCHITECTURE.md`
-- `packages/backend/VALIDATION.md` (new)
-- `packages/domain/src/index.ts` (shared contract; parent integration required)
-
-The existing local generator also produced `packages/backend/convex/_generated/api.js`, `api.d.ts`, `server.js`, `server.d.ts`, and `dataModel.d.ts`. These are untracked generated artifacts, not handwritten bindings; the parent decides their integration policy.
-
-## Parent integration additions
-
-The parent added a status-filtered administrative profile queue, redacted account management query, future-only participant cancellation, and global availability ranking within a bounded 500-profile pilot cohort. New tests prove approved/suspended review reachability, role enforcement/redaction, disable/reactivation, cancellation at slot start, strict language filtering before pagination, ranked pages, and rejection of cursors from different filters. Final focused backend run: **40 passed**, with backend and domain native TypeScript checks passing. Full-workspace/browser evidence is recorded separately in `docs/verification.md`.
-
-## Worker repository state and limits
-
-Branch: `master`; inspected starting commit: `03e3204` (`docs(rebuild): record service activation and acceptance gates`). Source files were already untracked in this worktree; unrelated parent changes remain present. The worker performed no commit, staging, push, install, lockfile edit, codegen-script edit, legacy edit, or secret read. Parent Git actions are recorded in `docs/verification.md`.
-
-No local backend implementation blocker remains. Parent-owned client integration and hosted acceptance are outstanding. The next integration step is to consume the updated generated API contracts in the web client and run the parent's complete checks.
+The review false positives remain outside this implementation: i18n correctly uses Bun tests; candidate-cap overflow explicitly throws instead of silently truncating; discovery uses strict expertise matching followed by earliest-slot ordering. The parent owns the UI match explanation.

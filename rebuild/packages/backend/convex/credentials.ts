@@ -3,6 +3,7 @@ import { v } from "convex/values";
 import type { Infer } from "convex/values";
 import { internal } from "./_generated/api";
 import { action, internalMutation, internalQuery, mutation, query } from "./_generated/server";
+import type { MutationCtx, QueryCtx } from "./_generated/server";
 import type { Id } from "./_generated/dataModel";
 import { credentialType } from "./lib/validators";
 import { fail, ownAdvocate, requireAccount } from "./lib/access";
@@ -48,20 +49,29 @@ export const mine = query({ args: {}, handler: async (ctx) => {
   const { advocate } = await ownAdvocate(ctx);
   return (await ctx.db.query("credentials").withIndex("by_advocate", (q) => q.eq("advocateId", advocate._id)).collect()).map(({ storageId: _storageId, ...metadata }) => metadata);
 } });
-export const authorizeRead = internalQuery({ args: { credentialId: v.id("credentials") }, handler: async (ctx, args) => {
+async function readableCredential(ctx: QueryCtx | MutationCtx, credentialId: Id<"credentials">) {
   const account = await requireAccount(ctx);
-  const credential = await ctx.db.get(args.credentialId);
+  const credential = await ctx.db.get(credentialId);
   const advocate = credential ? await ctx.db.get(credential.advocateId) : null;
   if (!credential || !advocate || (account.role !== "admin" && advocate.accountId !== account._id)) fail("NOT_FOUND", "Credential not found.");
-  return credential;
+  return { account, credential };
+}
+export const authorizeRead = internalQuery({ args: { credentialId: v.id("credentials") }, handler: async (ctx, args) => {
+  return (await readableCredential(ctx, args.credentialId)).credential;
+} });
+export const auditRead = internalMutation({ args: { credentialId: v.id("credentials") }, handler: async (ctx, args) => {
+  const { account, credential } = await readableCredential(ctx, args.credentialId);
+  await ctx.db.insert("credentialReads", { credentialId: credential._id, readerId: account._id, role: account.role, at: Date.now() });
+  return null;
 } });
 export const read = action({ args: { credentialId: v.id("credentials") }, handler: async (ctx, args): Promise<{ content: ArrayBuffer; contentType: Infer<typeof credentialType>; fileName: string }> => {
   const credential = await ctx.runQuery(internal.credentials.authorizeRead, args);
   const blob = await ctx.storage.get(credential.storageId);
   if (!blob) fail("NOT_FOUND", "Credential content is unavailable.");
-  // Recheck identity after the external storage operation; never return a bearer URL.
-  await ctx.runQuery(internal.credentials.authorizeRead, args);
-  return { content: await blob.arrayBuffer(), contentType: credential.contentType, fileName: credential.fileName };
+  const content = await blob.arrayBuffer();
+  // Audit and recheck permission after obtaining bytes; never return a bearer URL.
+  await ctx.runMutation(internal.credentials.auditRead, args);
+  return { content, contentType: credential.contentType, fileName: credential.fileName };
 } });
 export const review = mutation({ args: { credentialId: v.id("credentials"), decision: v.union(v.literal("valid"), v.literal("rejected")), reason: v.string() }, handler: async (ctx, args) => {
   const admin = await requireAccount(ctx, "admin");

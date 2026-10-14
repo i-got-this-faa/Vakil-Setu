@@ -9,12 +9,14 @@ import type { UnavailableReason } from "./lib/provider";
 
 type AnalysisResult = { kind: "available"; summaryId: Id<"caseSummaries">; sourceMode: "provider"; provider: "gateway" } | { kind: "unavailable"; reason: UnavailableReason };
 
-export const analyze = action({ args: { caseId: v.id("cases"), expectedVersion: v.number(), expectedContextRevision: v.number() }, handler: async (ctx, args): Promise<AnalysisResult> => {
-  await ctx.runMutation(internal.triageRate.consume, args);
-  const legalCase = await ctx.runQuery(internal.cases.forAnalysis, args);
+export const analyze = action({ args: { caseId: v.id("cases"), expectedVersion: v.number(), expectedContextRevision: v.number(), consent: v.literal(true) }, handler: async (ctx, args): Promise<AnalysisResult> => {
+  const analysisArgs = { caseId: args.caseId, expectedVersion: args.expectedVersion, expectedContextRevision: args.expectedContextRevision };
+  await ctx.runMutation(internal.triageRate.consume, analysisArgs);
+  const legalCase = await ctx.runQuery(internal.cases.forAnalysis, analysisArgs);
   const config = gatewayConfig(process.env);
   if (config.kind === "unavailable") return config;
   let result: ReturnType<typeof parseProviderResult>;
+  await ctx.runMutation(internal.triageRate.recordConsent, { ...analysisArgs, recipientOrigin: new URL(config.url).origin });
   try {
     const response = await fetch(config.url, {
       method: "POST", redirect: "error", signal: AbortSignal.timeout(30_000),
@@ -35,6 +37,6 @@ export const analyze = action({ args: { caseId: v.id("cases"), expectedVersion: 
     if (!result) return { kind: "unavailable", reason: "invalid_result" };
   } catch { return { kind: "unavailable", reason: "provider_failed" }; }
   // Persistence failures (ownership, suspension, concurrent edit) remain real errors.
-  const summaryId = await ctx.runMutation(internal.cases.saveProviderSummary, { ...args, summary: result, source: { kind: "provider", provider: "gateway", model: config.model } });
+  const summaryId = await ctx.runMutation(internal.cases.saveProviderSummary, { ...analysisArgs, summary: result, source: { kind: "provider", provider: "gateway", model: config.model } });
   return { kind: "available", summaryId, sourceMode: "provider", provider: "gateway" };
 } });

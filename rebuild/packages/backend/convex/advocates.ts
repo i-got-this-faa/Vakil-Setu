@@ -33,6 +33,11 @@ export const getPublic = query({ args: { advocateId: v.id("advocates") }, handle
   const advocate = await approvedAdvocate(ctx, args.advocateId);
   return advocate ? await publicProfile(ctx, advocate) : null;
 } });
+export const resolvePublic = query({ args: { routeId: v.string() }, handler: async (ctx, args) => {
+  if (args.routeId.length < 1 || args.routeId.length > 128) return null;
+  const advocateId = ctx.db.normalizeId("advocates", args.routeId);
+  return advocateId && await approvedAdvocate(ctx, advocateId) ? advocateId : null;
+} });
 export const listPublic = query({
   args: { domain: v.optional(domain), locale: v.optional(locale), city: v.optional(v.string()), paginationOpts: paginationOptsValidator },
   handler: async (ctx, args) => {

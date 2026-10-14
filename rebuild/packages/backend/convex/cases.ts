@@ -24,6 +24,14 @@ export const listMine = query({ args: { paginationOpts: paginationOptsValidator 
   const account = await requireAccount(ctx, "user");
   return await ctx.db.query("cases").withIndex("by_owner", (q) => q.eq("ownerId", account._id)).order("desc").paginate(page(args.paginationOpts));
 } });
+export const resolveMine = query({ args: { routeId: v.string() }, handler: async (ctx, args) => {
+  const account = await requireAccount(ctx, "user");
+  if (args.routeId.length < 1 || args.routeId.length > 128) return null;
+  const caseId = ctx.db.normalizeId("cases", args.routeId);
+  if (!caseId) return null;
+  const legalCase = await ctx.db.get(caseId);
+  return legalCase?.ownerId === account._id ? caseId : null;
+} });
 export const getMine = query({ args: { caseId: v.id("cases") }, handler: async (ctx, args) => {
   const { legalCase } = await ownCase(ctx, args.caseId);
   const summaries = await ctx.db.query("caseSummaries").withIndex("by_case_version", (q) => q.eq("caseId", legalCase._id)).order("desc").collect();

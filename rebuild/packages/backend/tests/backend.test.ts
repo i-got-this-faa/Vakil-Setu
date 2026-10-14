@@ -38,6 +38,20 @@ beforeEach(() => { vi.useFakeTimers(); vi.setSystemTime(now); });
 afterEach(() => { vi.clearAllTimers(); vi.useRealTimers(); vi.unstubAllEnvs(); vi.unstubAllGlobals(); });
 
 describe("administrative reachability and ranked discovery", () => {
+  it("rejects oversized discovery cohorts instead of silently returning partial matches", async () => {
+    const f = await fixture();
+    await f.t.run(async (ctx) => {
+      const reviewer = await ctx.db.query("accounts").withIndex("by_subject", (q) => q.eq("clerkSubject", "clerk-admin")).unique();
+      if (!reviewer) throw new Error("Test reviewer missing.");
+      for (let index = 0; index < LIMITS.discoveryCandidates; index++) {
+        const accountId = await ctx.db.insert("accounts", { clerkSubject: `cohort-fixture-${index}`, displayName: `Test advocate ${index}`, role: "advocate", locale: "en", disabled: false });
+        await ctx.db.insert("advocates", { ...profile, domains: [...profile.domains], locales: [...profile.locales], consultationModes: [...profile.consultationModes], accountId, city: "Test City", cityKey: "test city", revision: 1, application: { kind: "approved", reviewerId: reviewer._id, reviewedAt: now, reason: "Synthetic cohort fixture only." } });
+      }
+    });
+    await expect(f.t.query(api.advocates.listPublic, { paginationOpts })).rejects.toMatchObject({ data: { code: "LIMIT_EXCEEDED" } });
+    expect((await f.t.query(api.advocates.listPublic, { city: "Jammu", paginationOpts })).page.map((entry) => entry._id)).toEqual([f.advocateId]);
+  });
+
   it("lists approved/suspended profiles and redacted accounts only for active administrators", async () => {
     const f = await fixture();
     expect((await f.admin.query(api.admin.queue, { paginationOpts, status: "approved" })).page.map((entry) => entry.advocate._id)).toEqual([f.advocateId]);
@@ -102,11 +116,123 @@ function configureTestProvider() {
   vi.stubEnv("LLM_API_KEY_HEADER", "Authorization");
   vi.stubEnv("LLM_API_KEY_PREFIX", "Bearer");
 }
+
+describe("direct route resolution", () => {
+  it("normalizes bounded routes, hides private/nonapproved targets, and preserves existing read contracts", async () => {
+    const f = await fixture();
+    for (const routeId of ["", "invalid-id", "x".repeat(129), f.userId]) {
+      expect(await f.t.query(api.advocates.resolvePublic, { routeId })).toBeNull();
+      expect(await f.user.query(api.cases.resolveMine, { routeId })).toBeNull();
+    }
+    expect(await f.t.query(api.advocates.resolvePublic, { routeId: f.caseId })).toBeNull();
+    expect(await f.user.query(api.cases.resolveMine, { routeId: f.advocateId })).toBeNull();
+    expect(await f.stranger.query(api.cases.resolveMine, { routeId: f.caseId })).toBeNull();
+    await expect(f.t.query(api.cases.resolveMine, { routeId: f.caseId })).rejects.toMatchObject({ data: { code: "UNAUTHENTICATED" } });
+    await expect(f.admin.query(api.cases.resolveMine, { routeId: f.caseId })).rejects.toMatchObject({ data: { code: "FORBIDDEN" } });
+    expect(await f.user.query(api.cases.resolveMine, { routeId: f.caseId })).toBe(f.caseId);
+    expect((await f.user.query(api.cases.getMine, { caseId: f.caseId })).case._id).toBe(f.caseId);
+    expect(await f.t.query(api.advocates.resolvePublic, { routeId: f.advocateId })).toBe(f.advocateId);
+    expect((await f.t.query(api.advocates.getPublic, { advocateId: f.advocateId }))?._id).toBe(f.advocateId);
+    await f.advocate.mutation(api.advocates.upsert, { ...profile, domains: [...profile.domains], locales: [...profile.locales], consultationModes: [...profile.consultationModes] });
+    expect(await f.t.query(api.advocates.resolvePublic, { routeId: f.advocateId })).toBeNull();
+    await f.admin.mutation(api.admin.review, { advocateId: f.advocateId, revision: 2, decision: "approve", reason: "Explicit approval." });
+    await f.admin.mutation(api.admin.setDisabled, { accountId: f.advocateAccountId, disabled: true, reason: "Disabled profile hidden." });
+    expect(await f.t.query(api.advocates.resolvePublic, { routeId: f.advocateId })).toBeNull();
+    await f.user.mutation(api.cases.deleteDraft, { caseId: f.caseId });
+    expect(await f.user.query(api.cases.resolveMine, { routeId: f.caseId })).toBeNull();
+    await f.admin.mutation(api.admin.setDisabled, { accountId: f.userId, disabled: true, reason: "Disabled case reader." });
+    await expect(f.user.query(api.cases.resolveMine, { routeId: f.caseId })).rejects.toMatchObject({ data: { code: "ACCOUNT_DISABLED" } });
+  });
+  it("resolves old case/profile links beyond the first page without listing all records", async () => {
+    const f = await fixture();
+    await f.advocate.mutation(api.slots.remove, { slotId: f.slotId });
+    const admin = await f.admin.query(api.accounts.me, {});
+    if (!admin) throw new Error("Test administrator missing.");
+    for (let index = 0; index < 60; index++) {
+      vi.setSystemTime(now + index + 1);
+      await f.user.mutation(api.cases.create, { title: `Recent case ${index}`, text: "Synthetic recent intake.", locale: "en", context: [] });
+      await f.t.run(async (ctx) => {
+        const accountId = await ctx.db.insert("accounts", { clerkSubject: `route-fixture-${index}`, displayName: `A fixture ${index}`, role: "advocate", locale: "en", disabled: false });
+        await ctx.db.insert("advocates", { ...profile, displayName: `A fixture ${index}`, domains: [...profile.domains], locales: [...profile.locales], consultationModes: [...profile.consultationModes], accountId, cityKey: "jammu", revision: 1, application: { kind: "approved", reviewerId: admin._id, reviewedAt: Date.now(), reason: "Synthetic approved route fixture." } });
+      });
+    }
+    const casePage = await f.user.query(api.cases.listMine, { paginationOpts });
+    const profilePage = await f.t.query(api.advocates.listPublic, { paginationOpts });
+    expect(casePage.page.map((entry) => entry._id)).not.toContain(f.caseId);
+    expect(profilePage.page.map((entry) => entry._id)).not.toContain(f.advocateId);
+    expect(casePage.isDone).toBe(false);
+    expect(profilePage.isDone).toBe(false);
+    expect(await f.user.query(api.cases.resolveMine, { routeId: f.caseId })).toBe(f.caseId);
+    expect(await f.t.query(api.advocates.resolvePublic, { routeId: f.advocateId })).toBe(f.advocateId);
+  });
+});
 function providerResponse(locale: "en" | "hi" | "pa", urgency: "unknown" | "emergency" = "unknown") {
   return Response.json({ choices: [{ message: { content: JSON.stringify({ sourceMode: "provider", provider: "gateway", locale, domain: "unknown", urgency, summary: "Test-only preliminary summary.", actions: [] }) } }] });
 }
 
 describe("provider boundary and follow-up persistence", () => {
+  it("requires explicit consent before any configured dispatch or consent audit", async () => {
+    const f = await fixture();
+    configureTestProvider();
+    const fetch = vi.fn();
+    vi.stubGlobal("fetch", fetch);
+    const args = { caseId: f.caseId, expectedVersion: 1, expectedContextRevision: 0 };
+    // @ts-expect-error Deliberately exercise missing consent at the action boundary.
+    await expect(f.user.action(api.triage.analyze, args)).rejects.toThrow();
+    // @ts-expect-error Deliberately exercise refused consent at the action boundary.
+    await expect(f.user.action(api.triage.analyze, { ...args, consent: false })).rejects.toThrow();
+    expect(fetch).not.toHaveBeenCalled();
+    expect(await f.t.run((ctx) => ctx.db.query("aiConsents").collect())).toEqual([]);
+    expect(await f.t.run((ctx) => ctx.db.query("aiAttempts").collect())).toEqual([]);
+  });
+  it("audits only server-derived consent metadata immediately before configured dispatch", async () => {
+    const f = await fixture();
+    configureTestProvider();
+    vi.stubEnv("LLM_API_URL", "https://provider.example.test/private/chat?key=test-query-secret");
+    await f.user.mutation(api.cases.appendFollowUp, { caseId: f.caseId, expectedVersion: 1, expectedContextRevision: 0, reviewed: true, text: "Private reviewed follow-up." });
+    const fetch = vi.fn(async (input: RequestInfo | URL, init?: RequestInit) => {
+      expect(input).toBe("https://provider.example.test/private/chat?key=test-query-secret");
+      expect(init).toMatchObject({ method: "POST", redirect: "error", headers: { Authorization: "Bearer test-only-noncredential", "Content-Type": "application/json" } });
+      expect(init?.signal).toBeInstanceOf(AbortSignal);
+      const rows = await f.t.run((ctx) => ctx.db.query("aiConsents").collect());
+      expect(rows).toHaveLength(1);
+      const row = rows[0];
+      if (!row) throw new Error("Missing consent audit before dispatch.");
+      const { _id, _creationTime, ...metadata } = row;
+      expect(metadata).toEqual({ caseId: f.caseId, ownerId: f.userId, summaryVersion: 1, contextRevision: 1, at: now, provider: "gateway", recipientOrigin: "https://provider.example.test" });
+      const serialized = JSON.stringify(rows);
+      for (const privateValue of ["test-only-noncredential", "test-query-secret", "/private/chat", "Private reviewed follow-up.", "A property transfer is disputed.", profile.barRegistration, "Test-only credential content"]) expect(serialized).not.toContain(privateValue);
+      if (typeof init?.body !== "string") throw new Error("Expected JSON provider request.");
+      expect(init.body).toContain("Private reviewed follow-up.");
+      expect(init.body).not.toContain('"consent"');
+      return providerResponse("en");
+    });
+    vi.stubGlobal("fetch", fetch);
+    expect(await f.user.action(api.triage.analyze, { caseId: f.caseId, expectedVersion: 1, expectedContextRevision: 1, consent: true })).toMatchObject({ kind: "available" });
+    expect(fetch).toHaveBeenCalledOnce();
+    expect((await f.user.query(api.cases.getMine, { caseId: f.caseId })).case.summaryVersion).toBe(2);
+  });
+  it("rejects unauthorized, stale and disabled consent in the final mutation without auditing", async () => {
+    const f = await fixture();
+    configureTestProvider();
+    const fetch = vi.fn();
+    vi.stubGlobal("fetch", fetch);
+    const args = { caseId: f.caseId, expectedVersion: 1, expectedContextRevision: 0, consent: true } as const;
+    await expect(f.stranger.action(api.triage.analyze, args)).rejects.toMatchObject({ data: { code: "NOT_FOUND" } });
+    await expect(f.user.action(api.triage.analyze, { ...args, expectedVersion: 0 })).rejects.toMatchObject({ data: { code: "CONFLICT" } });
+    await expect(f.user.action(api.triage.analyze, { ...args, expectedContextRevision: 1 })).rejects.toMatchObject({ data: { code: "CONFLICT" } });
+    const auditArgs = { caseId: f.caseId, expectedVersion: 1, expectedContextRevision: 0, recipientOrigin: "https://provider.example.test" };
+    await expect(f.stranger.mutation(internal.triageRate.recordConsent, auditArgs)).rejects.toMatchObject({ data: { code: "NOT_FOUND" } });
+    await expect(f.admin.mutation(internal.triageRate.recordConsent, auditArgs)).rejects.toMatchObject({ data: { code: "FORBIDDEN" } });
+    await f.user.mutation(api.cases.appendFollowUp, { caseId: f.caseId, expectedVersion: 1, expectedContextRevision: 0, reviewed: true, text: "Context changed after initial authorization." });
+    await expect(f.user.mutation(internal.triageRate.recordConsent, auditArgs)).rejects.toMatchObject({ data: { code: "CONFLICT" } });
+    await f.user.mutation(api.cases.updateSummary, { caseId: f.caseId, expectedVersion: 1, summary: { ...manualSummary, actions: [] } });
+    await expect(f.user.mutation(internal.triageRate.recordConsent, { ...auditArgs, expectedContextRevision: 1 })).rejects.toMatchObject({ data: { code: "CONFLICT" } });
+    await f.admin.mutation(api.admin.setDisabled, { accountId: f.userId, disabled: true, reason: "Disabled before outbound dispatch." });
+    await expect(f.user.mutation(internal.triageRate.recordConsent, { ...auditArgs, expectedVersion: 2, expectedContextRevision: 1 })).rejects.toMatchObject({ data: { code: "ACCOUNT_DISABLED" } });
+    expect(fetch).not.toHaveBeenCalled();
+    expect(await f.t.run((ctx) => ctx.db.query("aiConsents").collect())).toEqual([]);
+  });
   it.each(["unknown", "emergency"] as const)("sends authorized recent context and preserves %s and the selected locale", async (urgency) => {
     const f = await fixture();
     configureTestProvider();
@@ -119,7 +245,7 @@ describe("provider boundary and follow-up persistence", () => {
       return providerResponse("hi", urgency);
     });
     vi.stubGlobal("fetch", fetch);
-    const result = await f.user.action(api.triage.analyze, { caseId, expectedVersion: 0, expectedContextRevision: 1 });
+    const result = await f.user.action(api.triage.analyze, { caseId, expectedVersion: 0, expectedContextRevision: 1, consent: true });
     expect(result).toMatchObject({ kind: "available", sourceMode: "provider" });
     expect(fetch).toHaveBeenCalledOnce();
     expect(bodies[0]).toContain("नई जानकारी की समीक्षा की है।");
@@ -137,7 +263,7 @@ describe("provider boundary and follow-up persistence", () => {
       if (change === "summary_edit") await f.user.mutation(api.cases.updateSummary, { caseId: f.caseId, expectedVersion: 1, summary: { ...manualSummary, text: "Concurrent manual revision", actions: [] } });
       return providerResponse("en");
     }));
-    await expect(f.user.action(api.triage.analyze, { caseId: f.caseId, expectedVersion: 1, expectedContextRevision: 0 })).rejects.toMatchObject({ data: { code: change === "disabled" ? "ACCOUNT_DISABLED" : "CONFLICT" } });
+    await expect(f.user.action(api.triage.analyze, { caseId: f.caseId, expectedVersion: 1, expectedContextRevision: 0, consent: true })).rejects.toMatchObject({ data: { code: change === "disabled" ? "ACCOUNT_DISABLED" : "CONFLICT" } });
     expect(await f.t.run((ctx) => ctx.db.query("caseSummaries").filter((q) => q.eq(q.field("source.kind"), "provider")).collect())).toEqual([]);
   });
   it("rejects foreign and stale context before fetch and exposes unavailable/rate-limited states", async () => {
@@ -145,12 +271,13 @@ describe("provider boundary and follow-up persistence", () => {
     vi.stubEnv("LLM_API_KEY", "");
     const fetch = vi.fn();
     vi.stubGlobal("fetch", fetch);
-    const args = { caseId: f.caseId, expectedVersion: 1, expectedContextRevision: 0 };
+    const args = { caseId: f.caseId, expectedVersion: 1, expectedContextRevision: 0, consent: true } as const;
     await expect(f.stranger.action(api.triage.analyze, args)).rejects.toMatchObject({ data: { code: "NOT_FOUND" } });
     await expect(f.user.action(api.triage.analyze, { ...args, expectedContextRevision: 1 })).rejects.toMatchObject({ data: { code: "CONFLICT" } });
     for (let index = 0; index < LIMITS.aiAttemptsPerHour; index++) expect(await f.user.action(api.triage.analyze, args)).toEqual({ kind: "unavailable", reason: "not_configured" });
     await expect(f.user.action(api.triage.analyze, args)).rejects.toMatchObject({ data: { code: "RATE_LIMITED" } });
     expect(fetch).not.toHaveBeenCalled();
+    expect(await f.t.run((ctx) => ctx.db.query("aiConsents").collect())).toEqual([]);
     expect((await f.user.query(api.cases.getMine, { caseId: f.caseId })).summaries).toHaveLength(1);
   });
   it("rejects malformed/wrong-language output and reports failed external calls without saving", async () => {
@@ -162,7 +289,7 @@ describe("provider boundary and follow-up persistence", () => {
       .mockResolvedValueOnce(new Response("provider error", { status: 503 }))
       .mockRejectedValueOnce(new Error("Test-only timeout"));
     vi.stubGlobal("fetch", fetch);
-    const args = { caseId: f.caseId, expectedVersion: 1, expectedContextRevision: 0 };
+    const args = { caseId: f.caseId, expectedVersion: 1, expectedContextRevision: 0, consent: true } as const;
     expect(await f.user.action(api.triage.analyze, args)).toEqual({ kind: "unavailable", reason: "invalid_result" });
     expect(await f.user.action(api.triage.analyze, args)).toEqual({ kind: "unavailable", reason: "provider_failed" });
     expect(await f.user.action(api.triage.analyze, args)).toEqual({ kind: "unavailable", reason: "provider_failed" });
@@ -172,6 +299,45 @@ describe("provider boundary and follow-up persistence", () => {
 });
 
 describe("identity, onboarding, private credential review", () => {
+  it("audits successful owner/admin credential reads with no bytes, names or storage URLs", async () => {
+    const f = await fixture();
+    const admin = await f.admin.query(api.accounts.me, {});
+    if (!admin) throw new Error("Test administrator missing.");
+    expect((await f.advocate.action(api.credentials.read, { credentialId: f.credentialId })).content).toEqual(pdf);
+    expect((await f.admin.action(api.credentials.read, { credentialId: f.credentialId })).content).toEqual(pdf);
+    const rows = await f.t.run((ctx) => ctx.db.query("credentialReads").collect());
+    expect(rows.map(({ _id, _creationTime, ...metadata }) => metadata)).toEqual([
+      { credentialId: f.credentialId, readerId: f.advocateAccountId, role: "advocate", at: now },
+      { credentialId: f.credentialId, readerId: admin._id, role: "admin", at: now },
+    ]);
+    await expect(f.user.action(api.credentials.read, { credentialId: f.credentialId })).rejects.toMatchObject({ data: { code: "NOT_FOUND" } });
+    await expect(f.t.action(api.credentials.read, { credentialId: f.credentialId })).rejects.toMatchObject({ data: { code: "UNAUTHENTICATED" } });
+    await expect(f.stranger.mutation(internal.credentials.auditRead, { credentialId: f.credentialId })).rejects.toMatchObject({ data: { code: "NOT_FOUND" } });
+    await f.t.run(async (ctx) => {
+      const credential = await ctx.db.get(f.credentialId);
+      if (!credential) throw new Error("Test credential missing.");
+      await ctx.storage.delete(credential.storageId);
+    });
+    await expect(f.admin.action(api.credentials.read, { credentialId: f.credentialId })).rejects.toMatchObject({ data: { code: "NOT_FOUND" } });
+    await f.admin.mutation(api.admin.setDisabled, { accountId: f.advocateAccountId, disabled: true, reason: "Reader disabled." });
+    await expect(f.advocate.action(api.credentials.read, { credentialId: f.credentialId })).rejects.toMatchObject({ data: { code: "ACCOUNT_DISABLED" } });
+    await expect(f.advocate.mutation(internal.credentials.auditRead, { credentialId: f.credentialId })).rejects.toMatchObject({ data: { code: "ACCOUNT_DISABLED" } });
+    await f.t.run((ctx) => ctx.db.patch(admin._id, { disabled: true }));
+    await expect(f.admin.action(api.credentials.read, { credentialId: f.credentialId })).rejects.toMatchObject({ data: { code: "ACCOUNT_DISABLED" } });
+    expect(await f.t.run((ctx) => ctx.db.query("credentialReads").collect())).toEqual(rows);
+  });
+  it("rechecks credential read permission after arrayBuffer resolves and does not audit denied bytes", async () => {
+    const f = await fixture();
+    const arrayBuffer = vi.spyOn(Blob.prototype, "arrayBuffer").mockImplementationOnce(async () => {
+      await f.admin.mutation(api.admin.setDisabled, { accountId: f.advocateAccountId, disabled: true, reason: "Disabled while obtaining credential bytes." });
+      return pdf;
+    });
+    try {
+      await expect(f.advocate.action(api.credentials.read, { credentialId: f.credentialId })).rejects.toMatchObject({ data: { code: "ACCOUNT_DISABLED" } });
+      expect(arrayBuffer).toHaveBeenCalledOnce();
+      expect(await f.t.run((ctx) => ctx.db.query("credentialReads").collect())).toEqual([]);
+    } finally { arrayBuffer.mockRestore(); }
+  });
   it("bounds concurrent uploads atomically and removes the losing upload's storage blob", async () => {
     const f = await fixture();
     for (let index = 0; index < 3; index++) await f.advocate.action(api.credentials.upload, { content: pdf, contentType: "application/pdf", fileName: `fixture-${index}.pdf` });
@@ -321,6 +487,45 @@ describe("private cases and consent snapshots", () => {
 });
 
 describe("atomic slots, reservation, lifecycle and notifications", () => {
+  it.each((["profile", "credential", "suspension", "advocate_disabled", "user_disabled"] as const).flatMap((source) => [0, LIMITS.hourMs].map((elapsed) => ({ source, elapsed }))))("does not retrospectively flag started accepted bookings on $source loss ($elapsed ms after start)", async ({ source, elapsed }) => {
+    const f = await fixture();
+    const bookingId = await f.user.mutation(api.bookings.request, f.request);
+    await f.advocate.mutation(api.bookings.transition, { bookingId, action: "accept" });
+    const before = await f.t.run((ctx) => ctx.db.get(bookingId));
+    const events = await f.t.run((ctx) => ctx.db.query("bookingEvents").collect());
+    const notices = await f.t.run((ctx) => ctx.db.query("notifications").filter((q) => q.eq(q.field("bookingId"), bookingId)).collect());
+    vi.setSystemTime(now + 4 * LIMITS.hourMs + elapsed);
+    switch (source) {
+      case "profile": await f.advocate.mutation(api.advocates.upsert, { ...profile, bio: "Edited after consultation", domains: [...profile.domains], locales: [...profile.locales], consultationModes: [...profile.consultationModes] }); break;
+      case "credential": await f.admin.mutation(api.credentials.review, { credentialId: f.credentialId, decision: "rejected", reason: "Later credential review" }); break;
+      case "suspension": await f.admin.mutation(api.admin.review, { advocateId: f.advocateId, revision: 1, decision: "suspend", reason: "Later suspension" }); break;
+      case "advocate_disabled": await f.admin.mutation(api.admin.setDisabled, { accountId: f.advocateAccountId, disabled: true, reason: "Later disablement" }); break;
+      case "user_disabled": await f.admin.mutation(api.admin.setDisabled, { accountId: f.userId, disabled: true, reason: "Later disablement" }); break;
+      default: { const exhaustive: never = source; throw new Error(exhaustive); }
+    }
+    expect(await f.t.run((ctx) => ctx.db.get(bookingId))).toEqual(before);
+    expect(await f.t.run((ctx) => ctx.db.query("bookingEvents").collect())).toEqual(events);
+    expect(await f.t.run((ctx) => ctx.db.query("notifications").filter((q) => q.eq(q.field("bookingId"), bookingId)).collect())).toEqual(notices);
+    expect((await f.admin.query(api.admin.affectedBookings, { paginationOpts })).page).toEqual([]);
+    expect((await f.t.run((ctx) => ctx.db.get(f.slotId)))?.reservation).toEqual({ kind: "reserved", bookingId });
+  });
+  it.each([0, LIMITS.hourMs])("rejects administrator cancellation after a flag crosses slot start by %s ms", async (elapsed) => {
+    const f = await fixture();
+    const bookingId = await f.user.mutation(api.bookings.request, f.request);
+    await f.advocate.mutation(api.bookings.transition, { bookingId, action: "accept" });
+    await f.admin.mutation(api.admin.review, { advocateId: f.advocateId, revision: 1, decision: "suspend", reason: "Flagged before start." });
+    const before = await f.t.run((ctx) => ctx.db.get(bookingId));
+    const events = await f.t.run((ctx) => ctx.db.query("bookingEvents").collect());
+    vi.setSystemTime(now + 4 * LIMITS.hourMs + elapsed);
+    await expect(f.admin.mutation(api.admin.handleAffectedBooking, { bookingId, action: "cancel", reason: "Too late to cancel." })).rejects.toMatchObject({ data: { code: "CONFLICT" } });
+    await expect(f.admin.mutation(api.admin.handleAffectedBooking, { bookingId, action: "retain", reason: "Still suspended." })).rejects.toMatchObject({ data: { code: "NOT_APPROVED" } });
+    expect(await f.t.run((ctx) => ctx.db.get(bookingId))).toEqual(before);
+    expect(await f.t.run((ctx) => ctx.db.query("bookingEvents").collect())).toEqual(events);
+    expect((await f.t.run((ctx) => ctx.db.get(f.slotId)))?.reservation).toEqual({ kind: "reserved", bookingId });
+    await f.admin.mutation(api.admin.review, { advocateId: f.advocateId, revision: 1, decision: "approve", reason: "Explicit reapproval for retention." });
+    await f.admin.mutation(api.admin.handleAffectedBooking, { bookingId, action: "retain", reason: "Explicitly reviewed retention." });
+    expect(await f.t.run((ctx) => ctx.db.get(bookingId))).toMatchObject({ state: "accepted", adminHandling: { kind: "resolved", action: "retain" } });
+  });
   it.each(["profile", "credential", "suspension", "advocate_disabled", "user_disabled"] as const)("preserves accepted bookings and closes pending requests on %s loss", async (source) => {
     const f = await fixture();
     const [pendingSlot] = await f.advocate.mutation(api.slots.publish, { slots: [{ start: now + 6 * LIMITS.hourMs, durationMinutes: 30, consultationMode: "phone" }] });
@@ -563,6 +768,6 @@ describe("atomic slots, reservation, lifecycle and notifications", () => {
     await expect(f.user.mutation(api.bookings.request, f.request)).rejects.toMatchObject({ data: { code: "ACCOUNT_DISABLED" } });
     await expect(f.user.query(api.bookings.mine, { paginationOpts })).rejects.toMatchObject({ data: { code: "ACCOUNT_DISABLED" } });
     await expect(f.user.query(api.notifications.mine, { paginationOpts })).rejects.toMatchObject({ data: { code: "ACCOUNT_DISABLED" } });
-    await expect(f.user.action(api.triage.analyze, { caseId: f.caseId, expectedVersion: 1, expectedContextRevision: 0 })).rejects.toMatchObject({ data: { code: "ACCOUNT_DISABLED" } });
+    await expect(f.user.action(api.triage.analyze, { caseId: f.caseId, expectedVersion: 1, expectedContextRevision: 0, consent: true })).rejects.toMatchObject({ data: { code: "ACCOUNT_DISABLED" } });
   });
 });

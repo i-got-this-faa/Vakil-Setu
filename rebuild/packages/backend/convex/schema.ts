@@ -8,6 +8,7 @@ export default defineSchema({
   advocateReviews: defineTable({ advocateId: v.id("advocates"), revision: v.number(), decision: v.union(v.literal("approve"), v.literal("reject"), v.literal("suspend")), reviewerId: v.id("accounts"), reason: v.string(), at: v.number() }).index("by_advocate", ["advocateId"]),
   accountAudits: defineTable({ accountId: v.id("accounts"), adminId: v.id("accounts"), disabled: v.boolean(), reason: v.string(), at: v.number() }),
   credentials: defineTable({ advocateId: v.id("advocates"), storageId: v.id("_storage"), contentType: credentialType, fileName: v.string(), size: v.number(), review: credentialReview }).index("by_advocate", ["advocateId"]),
+  credentialReads: defineTable({ credentialId: v.id("credentials"), readerId: v.id("accounts"), role, at: v.number() }),
   cases: defineTable({ ownerId: v.id("accounts"), title: v.string(), text: v.string(), locale, context: v.array(contextMessage), contextRevision: v.number(), state: v.union(v.literal("draft"), v.literal("shared")), summaryVersion: v.number() }).index("by_owner", ["ownerId"]),
   caseSummaries: defineTable({ caseId: v.id("cases"), version: v.number(), summary, source: summarySource, createdAt: v.number() }).index("by_case_version", ["caseId", "version"]),
   slots: defineTable({ advocateId: v.id("advocates"), start: v.number(), durationMinutes: v.number(), end: v.number(), consultationMode, reservation: v.union(v.object({ kind: v.literal("free") }), v.object({ kind: v.literal("reserved"), bookingId: v.id("bookings") })) }).index("by_advocate_start", ["advocateId", "start"]).index("by_advocate_end", ["advocateId", "end"]),
@@ -15,4 +16,5 @@ export default defineSchema({
   bookingEvents: defineTable({ bookingId: v.id("bookings"), at: v.number(), actor: bookingActor, event: bookingEvent }).index("by_booking", ["bookingId"]),
   notifications: defineTable({ accountId: v.id("accounts"), kind: v.union(v.literal("booking_requested"), v.literal("booking_changed"), v.literal("application_reviewed"), v.literal("credential_reviewed"), v.literal("account_changed")), message: v.string(), bookingId: v.optional(v.id("bookings")), readAt: v.optional(v.number()) }).index("by_account", ["accountId"]),
   aiAttempts: defineTable({ accountId: v.id("accounts"), at: v.number() }).index("by_account_at", ["accountId", "at"]),
+  aiConsents: defineTable({ caseId: v.id("cases"), ownerId: v.id("accounts"), summaryVersion: v.number(), contextRevision: v.number(), at: v.number(), provider: v.literal("gateway"), recipientOrigin: v.string() }),
 });

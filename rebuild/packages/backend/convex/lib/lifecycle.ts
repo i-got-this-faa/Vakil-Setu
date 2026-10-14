@@ -19,10 +19,10 @@ export async function terminateBooking(ctx: MutationCtx, booking: Doc<"bookings"
   await releaseSlot(ctx, booking);
   await notifyBooking(ctx, booking, state === "expired" ? "Consultation request expired." : `Consultation cancelled: ${reason}`);
 }
-// Approval loss closes requests but preserves accepted reservations for a recorded decision.
+// Approval loss closes requests and flags future accepted reservations for a recorded decision.
 export async function affectBooking(ctx: MutationCtx, booking: Doc<"bookings">, reason: string) {
   if (booking.state === "pending") return await terminateBooking(ctx, booking, "cancelled", reason);
-  if (booking.state !== "accepted" || booking.adminHandling?.kind === "pending") return;
+  if (booking.state !== "accepted" || booking.start <= Date.now() || booking.adminHandling?.kind === "pending") return;
   await ctx.db.patch(booking._id, { adminHandling: { kind: "pending", reason, flaggedAt: Date.now() } });
   await recordBookingEvent(ctx, booking._id, { kind: "system" }, { kind: "affected", reason });
   await notifyBooking(ctx, booking, "Accepted consultation requires administrator handling because a participant or profile is unavailable.");
