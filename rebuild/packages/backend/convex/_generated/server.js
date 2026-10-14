@@ -8,7 +8,7 @@
    * To regenerate, run `npx convex dev`.
    * @module
    */
-  
+
     import {
       actionGeneric,
       httpActionGeneric,
@@ -94,5 +94,3 @@
     export const httpAction = httpActionGeneric;
 
 export const env = process.env;
-
-    

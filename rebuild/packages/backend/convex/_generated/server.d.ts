@@ -8,7 +8,7 @@
    * To regenerate, run `npx convex dev`.
    * @module
    */
-  
+
     import {
       ActionBuilder,
       HttpActionBuilder,
@@ -21,7 +21,7 @@
       GenericDatabaseWriter,
     } from "convex/server";
     import type { DataModel } from "./dataModel.js";
-    
+
 
     /**
      * Define a query in this Convex app's public API.

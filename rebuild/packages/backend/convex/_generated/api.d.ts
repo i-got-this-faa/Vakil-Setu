@@ -7,7 +7,7 @@
    * To regenerate, run `npx convex dev`.
    * @module
    */
-  
+
   import type { ApiFromModules, FilterApi, FunctionReference } from "convex/server";
   import type * as accounts from "../accounts.js";
 import type * as admin from "../admin.js";
@@ -58,4 +58,3 @@ import type * as triageRate from "../triageRate.js";
   }>;
   export declare const api: FilterApi<typeof fullApi, FunctionReference<any, "public">>;
   export declare const internal: FilterApi<typeof fullApi, FunctionReference<any, "internal">>;
-  
