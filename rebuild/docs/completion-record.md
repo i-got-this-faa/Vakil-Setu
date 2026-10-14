@@ -14,10 +14,14 @@ English/Hindi/Punjabi pilot; hosted Convex and Clerk; payments/reviews/emergency
 - Audited legacy gateway, missing advertised Whisper endpoint, two-language limitation and fabricated confidence.
 - Cloned and referenced Fleet; installed task-local Bun; pinned foundation versions.
 - Initial scoped commit `0d70a46` created the rebuild foundation.
+- `1348e24` implements the authorized Convex backend, private credentials/cases, exclusive reservations, lifecycle/history and shared domain.
+- `e397df1` adds pilot dictionaries/registry, real shadcn components, the locked workspace and stable native TypeScript tooling.
+- `92214b2` adds dispatch consent/private retrieval audit and checked direct lookup; `7a281bc` commits the complete responsive web workflows.
+- Discovery, account management and admin status review now have complete backend/client paths. Local tests additionally cover ranked paging, strict filters, candidate limits and cancellation timing.
 
 ## Current work
 
-T3 tasks own separate scopes: Codex high backend/domain, second Codex high web, Gemini Flash High UI/i18n, Luna xhigh requirements/language evidence, Muse xhigh operations documentation. Parent owns dependency installation, cross-package integration, checks, preview and commits.
+All implementation and review rounds have finished. Codex high completed provider consent/private-read audits/direct route resolution; Muse xhigh completed client/admin/mobile fixes; Luna xhigh audited language/setup/legacy contracts; the parent verified Gemini findings and rejected false positives with source/test evidence. Native checks, all 72 tests, production build and fresh isolated-browser checks at 1280/375/360px pass. Final scoped commits and their evidence are recorded in `verification.md`.
 
 ## External gates
 
