@@ -18,7 +18,12 @@ export function GET() {
             ? "configured"
             : "unconfigured",
         ai: "not_verified",
-        browserSpeech: "device_dependent",
+        browserSpeech: {
+          recognition: "browser_vendor_dependent",
+          englishPlayback: "local_device_voice",
+          hindiPunjabiPlayback: "bundled_local_engine",
+          pronunciation: "unverified",
+        },
       },
       note: "Configuration status does not establish live connectivity.",
     },

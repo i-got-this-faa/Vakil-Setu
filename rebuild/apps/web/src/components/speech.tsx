@@ -6,6 +6,7 @@ import { useCallback, useEffect, useId, useRef, useState } from "react";
 import { Mic, Square, Volume2 } from "lucide-react";
 import { useLocale } from "./locale";
 import type { PilotLocale } from "@vakil/domain";
+import { LocalReadAloud } from "./local-read-aloud";
 
 interface RecognitionAlternative {
   transcript: string;
@@ -228,6 +229,18 @@ export function SpeechCapture({
 }
 
 export function ReadAloud({
+  text,
+  locale,
+}: {
+  text: string;
+  locale: PilotLocale;
+}) {
+  return locale === "en"
+    ? <DeviceReadAloud text={text} locale={locale} />
+    : <LocalReadAloud text={text} locale={locale} />;
+}
+
+function DeviceReadAloud({
   text,
   locale,
 }: {

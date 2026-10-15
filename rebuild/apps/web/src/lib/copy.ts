@@ -29,6 +29,11 @@ type ProductCopy = {
     unavailable: string;
     noVoice: string;
     ready: string;
+    bundledReady: string;
+    bundledStarting: string;
+    bundledDisclosure: string;
+    bundledError: string;
+    bundledLimit: string;
     starting: string;
     speaking: string;
     finished: string;
@@ -95,6 +100,11 @@ export const productCopy: Record<PilotLocale, ProductCopy> = {
       unavailable: "Read-aloud is unavailable in this browser.",
       noVoice: "No local voice was found for the selected text language. Install a matching device voice to use read-aloud.",
       ready: "Ready to read this text using a local device voice. Pronunciation is unverified; remote voices are not used.",
+      bundledReady: "Ready to read with the bundled local voice.",
+      bundledStarting: "Preparing local speech… voice data is about 19 MB on first use.",
+      bundledDisclosure: "Hindi and Punjabi use a synthetic voice inside your browser. Text is not sent to a speech service. Pronunciation is unverified.",
+      bundledError: "Local speech could not complete. Check your connection while loading the voice files, then retry. No device voice installation is needed.",
+      bundledLimit: "This text produces more than five minutes of audio. Use a shorter passage for local read-aloud; your text has not been changed.",
       starting: "Starting playback…",
       speaking: "Reading aloud…",
       finished: "Playback finished.",
@@ -179,6 +189,11 @@ export const productCopy: Record<PilotLocale, ProductCopy> = {
       unavailable: "इस ब्राउज़र में पाठ सुनने की सुविधा उपलब्ध नहीं है।",
       noVoice: "चुनी गई पाठ की भाषा के लिए स्थानीय आवाज़ नहीं मिली। पाठ सुनने के लिए डिवाइस पर उस भाषा की आवाज़ स्थापित करें।",
       ready: "स्थानीय डिवाइस की आवाज़ में पाठ सुनने के लिए तैयार। उच्चारण की जाँच नहीं हुई है; दूरस्थ आवाज़ों का उपयोग नहीं होता।",
+      bundledReady: "ऐप की स्थानीय आवाज़ में पाठ सुनने के लिए तैयार।",
+      bundledStarting: "स्थानीय आवाज़ तैयार हो रही है… पहली बार लगभग 19 MB आवाज़ डेटा लोड होगा।",
+      bundledDisclosure: "हिन्दी और पंजाबी के लिए आपके ब्राउज़र में कृत्रिम आवाज़ बनती है। पाठ किसी आवाज़ सेवा को नहीं भेजा जाता। उच्चारण की जाँच नहीं हुई है।",
+      bundledError: "स्थानीय आवाज़ पूरी नहीं हो सकी। आवाज़ की फ़ाइलें लोड होते समय कनेक्शन जाँचें और फिर कोशिश करें। डिवाइस पर आवाज़ स्थापित करने की ज़रूरत नहीं है।",
+      bundledLimit: "इस पाठ से पाँच मिनट से अधिक आवाज़ बनती है। सुनने के लिए छोटा अंश चुनें; आपका पाठ बदला नहीं गया है।",
       starting: "पाठ सुनाना शुरू हो रहा है…",
       speaking: "पाठ सुनाया जा रहा है…",
       finished: "पाठ सुनाना पूरा हुआ।",
@@ -263,6 +278,11 @@ export const productCopy: Record<PilotLocale, ProductCopy> = {
       unavailable: "ਇਸ ਬ੍ਰਾਊਜ਼ਰ ਵਿੱਚ ਪਾਠ ਸੁਣਨ ਦੀ ਸਹੂਲਤ ਉਪਲਬਧ ਨਹੀਂ ਹੈ।",
       noVoice: "ਚੁਣੀ ਪਾਠ ਦੀ ਭਾਸ਼ਾ ਲਈ ਸਥਾਨਕ ਆਵਾਜ਼ ਨਹੀਂ ਮਿਲੀ। ਪਾਠ ਸੁਣਨ ਲਈ ਡਿਵਾਈਸ ਉੱਤੇ ਉਸ ਭਾਸ਼ਾ ਦੀ ਆਵਾਜ਼ ਸਥਾਪਤ ਕਰੋ।",
       ready: "ਸਥਾਨਕ ਡਿਵਾਈਸ ਦੀ ਆਵਾਜ਼ ਵਿੱਚ ਪਾਠ ਸੁਣਨ ਲਈ ਤਿਆਰ। ਉਚਾਰਨ ਦੀ ਜਾਂਚ ਨਹੀਂ ਹੋਈ; ਦੂਰ ਦੀਆਂ ਆਵਾਜ਼ਾਂ ਨਹੀਂ ਵਰਤੀਆਂ ਜਾਂਦੀਆਂ।",
+      bundledReady: "ਐਪ ਦੀ ਸਥਾਨਕ ਆਵਾਜ਼ ਵਿੱਚ ਪਾਠ ਸੁਣਨ ਲਈ ਤਿਆਰ।",
+      bundledStarting: "ਸਥਾਨਕ ਆਵਾਜ਼ ਤਿਆਰ ਹੋ ਰਹੀ ਹੈ… ਪਹਿਲੀ ਵਾਰ ਲਗਭਗ 19 MB ਆਵਾਜ਼ ਡਾਟਾ ਲੋਡ ਹੋਵੇਗਾ।",
+      bundledDisclosure: "ਹਿੰਦੀ ਅਤੇ ਪੰਜਾਬੀ ਲਈ ਤੁਹਾਡੇ ਬ੍ਰਾਊਜ਼ਰ ਵਿੱਚ ਨਕਲੀ ਆਵਾਜ਼ ਬਣਦੀ ਹੈ। ਪਾਠ ਕਿਸੇ ਆਵਾਜ਼ ਸੇਵਾ ਨੂੰ ਨਹੀਂ ਭੇਜਿਆ ਜਾਂਦਾ। ਉਚਾਰਨ ਦੀ ਜਾਂਚ ਨਹੀਂ ਹੋਈ ਹੈ।",
+      bundledError: "ਸਥਾਨਕ ਆਵਾਜ਼ ਪੂਰੀ ਨਹੀਂ ਹੋ ਸਕੀ। ਆਵਾਜ਼ ਦੀਆਂ ਫ਼ਾਈਲਾਂ ਲੋਡ ਹੋਣ ਵੇਲੇ ਕਨੈਕਸ਼ਨ ਜਾਂਚੋ ਅਤੇ ਫਿਰ ਕੋਸ਼ਿਸ਼ ਕਰੋ। ਡਿਵਾਈਸ ਉੱਤੇ ਆਵਾਜ਼ ਸਥਾਪਤ ਕਰਨ ਦੀ ਲੋੜ ਨਹੀਂ ਹੈ।",
+      bundledLimit: "ਇਸ ਪਾਠ ਤੋਂ ਪੰਜ ਮਿੰਟ ਤੋਂ ਵੱਧ ਆਵਾਜ਼ ਬਣਦੀ ਹੈ। ਸੁਣਨ ਲਈ ਛੋਟਾ ਹਿੱਸਾ ਚੁਣੋ; ਤੁਹਾਡਾ ਪਾਠ ਬਦਲਿਆ ਨਹੀਂ ਗਿਆ ਹੈ।",
       starting: "ਪਾਠ ਸੁਣਾਉਣਾ ਸ਼ੁਰੂ ਹੋ ਰਿਹਾ ਹੈ…",
       speaking: "ਪਾਠ ਸੁਣਾਇਆ ਜਾ ਰਿਹਾ ਹੈ…",
       finished: "ਪਾਠ ਸੁਣਾਉਣਾ ਪੂਰਾ ਹੋਇਆ।",
