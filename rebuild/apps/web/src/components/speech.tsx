@@ -2,7 +2,7 @@
 
 import { Button, Input, Textarea, Label } from "@vakil/ui";
 
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useId, useRef, useState } from "react";
 import { Mic, Square, Volume2 } from "lucide-react";
 import { useLocale } from "./locale";
 import type { PilotLocale } from "@vakil/domain";
@@ -234,9 +234,33 @@ export function ReadAloud({
   text: string;
   locale: PilotLocale;
 }) {
+  const { copy } = useLocale();
+  const statusId = useId();
   const [voices, setVoices] = useState<SpeechSynthesisVoice[]>([]);
   const [available, setAvailable] = useState<boolean | null>(null);
-  const [message, setMessage] = useState("");
+  const [playback, setPlayback] = useState<
+    "idle" | "starting" | "speaking" | "finished" | "stopped" | "error" | "blocked"
+  >("idle");
+  // Keep the utterance alive and ignore late events from cancelled playback.
+  const utterance = useRef<SpeechSynthesisUtterance | null>(null);
+  const startTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const releasePlayback = useCallback(() => {
+    const current = utterance.current;
+    utterance.current = null;
+    if (startTimeout.current !== null) {
+      clearTimeout(startTimeout.current);
+      startTimeout.current = null;
+    }
+    return current;
+  }, []);
+  const cancelPlayback = useCallback(() => {
+    if (releasePlayback()) window.speechSynthesis.cancel();
+  }, [releasePlayback]);
+  useEffect(() => {
+    cancelPlayback();
+    setPlayback("idle");
+    return cancelPlayback;
+  }, [text, locale, cancelPlayback]);
   useEffect(() => {
     if (!("speechSynthesis" in window)) {
       setAvailable(false);
@@ -250,61 +274,95 @@ export function ReadAloud({
     window.speechSynthesis.addEventListener("voiceschanged", update);
     return () => {
       window.speechSynthesis.removeEventListener("voiceschanged", update);
-      window.speechSynthesis.cancel();
     };
   }, []);
   const matching = voices.filter(
     (voice) =>
       voice.localService && voice.lang.toLowerCase().startsWith(locale),
   );
+  const busy = playback === "starting" || playback === "speaking";
+  const status = available === null
+    ? copy.readAloud.checking
+    : !available
+      ? copy.readAloud.unavailable
+      : !matching.length
+        ? copy.readAloud.noVoice
+        : !text.trim()
+          ? copy.readAloud.empty
+          : playback === "idle"
+            ? copy.readAloud.ready
+            : copy.readAloud[playback];
   function speak() {
-    const voice = matching[0];
-    if (!voice || !text.trim()) return;
+    const voice = matching.find((voice) => voice.lang.toLowerCase() === languageTags[locale].toLowerCase())
+      ?? matching.find((voice) => voice.default)
+      ?? matching[0];
+    if (!voice || !text.trim() || utterance.current) return;
     window.speechSynthesis.cancel();
-    const utterance = new SpeechSynthesisUtterance(text);
-    utterance.voice = voice;
-    utterance.lang = voice.lang;
-    utterance.onerror = () =>
-      setMessage(
-        "Read-aloud could not complete. Read or edit the text directly.",
-      );
-    window.speechSynthesis.speak(utterance);
+    const current = new SpeechSynthesisUtterance(text.trim());
+    utterance.current = current;
+    current.voice = voice;
+    current.lang = voice.lang;
+    current.onstart = () => {
+      if (utterance.current !== current) return;
+      if (startTimeout.current !== null) clearTimeout(startTimeout.current);
+      startTimeout.current = null;
+      setPlayback("speaking");
+    };
+    current.onend = () => {
+      if (utterance.current !== current) return;
+      releasePlayback();
+      setPlayback("finished");
+    };
+    current.onerror = (event) => {
+      if (utterance.current !== current) return;
+      releasePlayback();
+      setPlayback(event.error === "not-allowed"
+        ? "blocked"
+        : event.error === "canceled" || event.error === "interrupted"
+          ? "stopped"
+          : "error");
+    };
+    setPlayback("starting");
+    startTimeout.current = setTimeout(() => {
+      if (utterance.current !== current) return;
+      cancelPlayback();
+      setPlayback("error");
+    }, 10000);
+    try {
+      window.speechSynthesis.speak(current);
+    } catch {
+      cancelPlayback();
+      setPlayback("error");
+    }
   }
   return (
     <div>
-      <p className="muted small-text">
-        Device read-aloud:{" "}
-        {available === null
-          ? "checking availability"
-          : matching.length
-            ? `${matching.length} local voice option(s) detected for this language; pronunciation unverified`
-            : "no matching local device voice detected"}
-        . Remote voices are not used.
+      <p id={statusId} role="status" className="muted small-text">
+        {status}
       </p>
       <div className="actions" style={{ marginTop: 10 }}>
         <Button
           type="button"
           className="btn secondary small"
-          disabled={!matching.length || !text.trim()}
+          disabled={!matching.length || !text.trim() || busy}
+          aria-describedby={statusId}
           onClick={speak}
         >
           <Volume2 size={15} />
-          Read aloud
+          {copy.readAloud.label}
         </Button>
         <Button
           type="button"
           className="btn secondary small"
-          disabled={!available}
-          onClick={() => window.speechSynthesis.cancel()}
+          disabled={!busy}
+          onClick={() => {
+            cancelPlayback();
+            setPlayback("stopped");
+          }}
         >
-          Stop playback
+          {copy.readAloud.stop}
         </Button>
       </div>
-      {message && (
-        <p role="status" className="muted">
-          {message}
-        </p>
-      )}
     </div>
   );
 }

@@ -53,7 +53,7 @@ Not proved: real Clerk sign-in/token integration, hosted Convex persistence and 
 | Intake, summary versions, follow-up, AI unavailable state               | Yes     | Typed calls and explicit consent implemented; local editor checked; hosted/AI path untested                    |
 | Slots, recipient/version consent, booking transitions, notifications    | Yes     | Typed calls and reverse actions implemented; hosted concurrency and timing untested                            |
 | English/Hindi/Punjabi switch and text input                             | Yes     | Core controls/browser checked; extended English fallback disclosed                                             |
-| Browser speech/device playback                                          | Yes     | Detection/disclosure and typed fallback implemented; actual audio untested                                     |
+| Browser speech/device playback                                          | Yes     | Read-aloud lifecycle/error states checked; real English device API emitted start/end; audibility, pronunciation and microphone input unverified |
 | Unconfigured mode and configuration health                              | Yes     | HTTP/browser checked; no simulated success                                                                     |
 | Native mobile, payments, ratings/reviews, guaranteed emergency dispatch | No      | Explicitly outside the requested pilot                                                                         |
 | Documentation and generated artifacts                                   | Yes     | This handoff; Next generated local route types/build output; backend generation owned by parent/backend worker |

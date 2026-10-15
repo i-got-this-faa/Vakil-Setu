@@ -21,6 +21,21 @@ type ProductCopy = {
   voiceConsent: string;
   transcriptReview: string;
   addTranscript: string;
+  readAloud: {
+    label: string;
+    stop: string;
+    empty: string;
+    checking: string;
+    unavailable: string;
+    noVoice: string;
+    ready: string;
+    starting: string;
+    speaking: string;
+    finished: string;
+    stopped: string;
+    error: string;
+    blocked: string;
+  };
   headline: string;
   headlineAccent: string;
   heroDescription: string;
@@ -72,6 +87,21 @@ export const productCopy: Record<PilotLocale, ProductCopy> = {
       "I understand this browser processing and choose to use my microphone.",
     transcriptReview: "Review final transcript",
     addTranscript: "Add reviewed text to intake",
+    readAloud: {
+      label: "Read aloud",
+      stop: "Stop playback",
+      empty: "Enter text before reading it aloud. If you recorded speech, add the reviewed transcript first.",
+      checking: "Checking device voices…",
+      unavailable: "Read-aloud is unavailable in this browser.",
+      noVoice: "No local voice was found for the selected text language. Install a matching device voice to use read-aloud.",
+      ready: "Ready to read this text using a local device voice. Pronunciation is unverified; remote voices are not used.",
+      starting: "Starting playback…",
+      speaking: "Reading aloud…",
+      finished: "Playback finished.",
+      stopped: "Playback stopped.",
+      error: "The device could not play this text. Check your audio output and installed speech voices, then try again.",
+      blocked: "The browser blocked playback. Allow sound for this site, then click Read aloud again.",
+    },
     headline: "Your next step.",
     headlineAccent: "A little clearer.",
     heroDescription:
@@ -141,6 +171,21 @@ export const productCopy: Record<PilotLocale, ProductCopy> = {
       "मैं ब्राउज़र द्वारा इस प्रक्रिया को समझता/समझती हूँ और माइक्रोफ़ोन इस्तेमाल करना चाहता/चाहती हूँ।",
     transcriptReview: "अंतिम प्रतिलेख जाँचें",
     addTranscript: "जाँचा हुआ पाठ विवरण में जोड़ें",
+    readAloud: {
+      label: "पाठ सुनें",
+      stop: "सुनना रोकें",
+      empty: "पाठ सुनने से पहले पाठ लिखें। अगर आपने आवाज़ रिकॉर्ड की है, तो पहले जाँचा हुआ प्रतिलेख जोड़ें।",
+      checking: "डिवाइस की आवाज़ें जाँची जा रही हैं…",
+      unavailable: "इस ब्राउज़र में पाठ सुनने की सुविधा उपलब्ध नहीं है।",
+      noVoice: "चुनी गई पाठ की भाषा के लिए स्थानीय आवाज़ नहीं मिली। पाठ सुनने के लिए डिवाइस पर उस भाषा की आवाज़ स्थापित करें।",
+      ready: "स्थानीय डिवाइस की आवाज़ में पाठ सुनने के लिए तैयार। उच्चारण की जाँच नहीं हुई है; दूरस्थ आवाज़ों का उपयोग नहीं होता।",
+      starting: "पाठ सुनाना शुरू हो रहा है…",
+      speaking: "पाठ सुनाया जा रहा है…",
+      finished: "पाठ सुनाना पूरा हुआ।",
+      stopped: "पाठ सुनाना रोक दिया गया।",
+      error: "डिवाइस यह पाठ सुना नहीं सका। ऑडियो आउटपुट और स्थापित आवाज़ें जाँचकर फिर कोशिश करें।",
+      blocked: "ब्राउज़र ने आवाज़ रोक दी। इस साइट के लिए ध्वनि की अनुमति देकर फिर पाठ सुनें पर क्लिक करें।",
+    },
     headline: "आपका अगला कदम।",
     headlineAccent: "कुछ और स्पष्ट।",
     heroDescription:
@@ -210,6 +255,21 @@ export const productCopy: Record<PilotLocale, ProductCopy> = {
       "ਮੈਂ ਬ੍ਰਾਊਜ਼ਰ ਦੀ ਇਸ ਪ੍ਰਕਿਰਿਆ ਨੂੰ ਸਮਝਦਾ/ਸਮਝਦੀ ਹਾਂ ਅਤੇ ਮਾਈਕ੍ਰੋਫ਼ੋਨ ਵਰਤਣਾ ਚੁਣਦਾ/ਚੁਣਦੀ ਹਾਂ।",
     transcriptReview: "ਅੰਤਿਮ ਲਿਖਤ ਜਾਂਚੋ",
     addTranscript: "ਜਾਂਚਿਆ ਪਾਠ ਵੇਰਵੇ ਵਿੱਚ ਜੋੜੋ",
+    readAloud: {
+      label: "ਪਾਠ ਸੁਣੋ",
+      stop: "ਸੁਣਨਾ ਰੋਕੋ",
+      empty: "ਪਾਠ ਸੁਣਨ ਤੋਂ ਪਹਿਲਾਂ ਪਾਠ ਲਿਖੋ। ਜੇ ਤੁਸੀਂ ਆਵਾਜ਼ ਰਿਕਾਰਡ ਕੀਤੀ ਹੈ, ਤਾਂ ਪਹਿਲਾਂ ਜਾਂਚੀ ਲਿਖਤ ਜੋੜੋ।",
+      checking: "ਡਿਵਾਈਸ ਦੀਆਂ ਆਵਾਜ਼ਾਂ ਜਾਂਚੀਆਂ ਜਾ ਰਹੀਆਂ ਹਨ…",
+      unavailable: "ਇਸ ਬ੍ਰਾਊਜ਼ਰ ਵਿੱਚ ਪਾਠ ਸੁਣਨ ਦੀ ਸਹੂਲਤ ਉਪਲਬਧ ਨਹੀਂ ਹੈ।",
+      noVoice: "ਚੁਣੀ ਪਾਠ ਦੀ ਭਾਸ਼ਾ ਲਈ ਸਥਾਨਕ ਆਵਾਜ਼ ਨਹੀਂ ਮਿਲੀ। ਪਾਠ ਸੁਣਨ ਲਈ ਡਿਵਾਈਸ ਉੱਤੇ ਉਸ ਭਾਸ਼ਾ ਦੀ ਆਵਾਜ਼ ਸਥਾਪਤ ਕਰੋ।",
+      ready: "ਸਥਾਨਕ ਡਿਵਾਈਸ ਦੀ ਆਵਾਜ਼ ਵਿੱਚ ਪਾਠ ਸੁਣਨ ਲਈ ਤਿਆਰ। ਉਚਾਰਨ ਦੀ ਜਾਂਚ ਨਹੀਂ ਹੋਈ; ਦੂਰ ਦੀਆਂ ਆਵਾਜ਼ਾਂ ਨਹੀਂ ਵਰਤੀਆਂ ਜਾਂਦੀਆਂ।",
+      starting: "ਪਾਠ ਸੁਣਾਉਣਾ ਸ਼ੁਰੂ ਹੋ ਰਿਹਾ ਹੈ…",
+      speaking: "ਪਾਠ ਸੁਣਾਇਆ ਜਾ ਰਿਹਾ ਹੈ…",
+      finished: "ਪਾਠ ਸੁਣਾਉਣਾ ਪੂਰਾ ਹੋਇਆ।",
+      stopped: "ਪਾਠ ਸੁਣਾਉਣਾ ਰੋਕ ਦਿੱਤਾ ਗਿਆ।",
+      error: "ਡਿਵਾਈਸ ਇਹ ਪਾਠ ਸੁਣਾ ਨਹੀਂ ਸਕਿਆ। ਆਡੀਓ ਆਉਟਪੁੱਟ ਅਤੇ ਸਥਾਪਤ ਆਵਾਜ਼ਾਂ ਜਾਂਚ ਕੇ ਮੁੜ ਕੋਸ਼ਿਸ਼ ਕਰੋ।",
+      blocked: "ਬ੍ਰਾਊਜ਼ਰ ਨੇ ਆਵਾਜ਼ ਰੋਕ ਦਿੱਤੀ। ਇਸ ਸਾਈਟ ਲਈ ਆਵਾਜ਼ ਦੀ ਇਜਾਜ਼ਤ ਦੇ ਕੇ ਮੁੜ ਪਾਠ ਸੁਣੋ ਉੱਤੇ ਕਲਿੱਕ ਕਰੋ।",
+    },
     headline: "ਤੁਹਾਡਾ ਅਗਲਾ ਕਦਮ।",
     headlineAccent: "ਕੁਝ ਹੋਰ ਸਪਸ਼ਟ।",
     heroDescription:
