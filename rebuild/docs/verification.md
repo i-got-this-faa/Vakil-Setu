@@ -71,6 +71,14 @@ Native mobile, payments, reviews and guaranteed emergency dispatch remain outsid
 
 ## Git scope
 
+### Saved intake outcome — 16 October 2026
+
+The no-summary state now confirms that the concern was saved and explicitly states that no AI analysis was generated. The new status copy covers English, Hindi and Punjabi. Users can open a manual summary prefilled with their unchanged intake or browse advocates. Category and urgency start as unknown. Review remains mandatory; a summary over 4,000 characters asks for shortening and cannot be saved, while the complete intake remains intact. No AI request or write runs automatically.
+
+Six actual React render tests cover the three pilot-language outcomes, prefilled text, mandatory review, a long Gurmukhi intake, an unreviewed provider draft and the reviewed-summary state. Auth/data/audio boundaries are substituted; unexpected writes or AI calls throw. These are render-boundary tests, not browser interaction or live-provider evidence. Native typechecks, all 78 registered tests and the production build passed; unchanged backend/language test results were reused from Turbo cache. The previous real hosted intake/summary evidence remains above. Repeating the new flow in a signed-in browser is pending because the Chrome extension is disconnected and the T3 browser is signed out.
+
+The user authorized a new repository under `sid4761` and a push after completion. A standalone export of committed `rebuild/` is planned, excluding legacy source, local environment files, dependencies and build output. GitHub CLI is installed in ignored `.tooling/github-cli`; the existing Git Credential Manager authorization was verified by GitHub as `sid4761`. Credentials are passed only to the child process, never printed or added to the export. Remote publication is recorded separately once verified. The two older queued runs were cancelled and their message text could not be recovered through the queue API; clarification is pending.
+
 ### Case detail redesign — 15 October 2026
 
 The case page now prioritizes the saved intake and one next step. Summary editing, follow-ups, playback controls, AI, history and draft deletion are disclosed on demand, with the original mutations and review acknowledgements retained. An AI-generated summary prompts review; a manually reviewed summary offers advocate discovery. This is a focused case-detail change, not a redesign of the entire portal. Operational copy still includes English fallback.

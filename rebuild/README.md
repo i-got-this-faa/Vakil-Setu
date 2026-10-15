@@ -8,10 +8,9 @@ Next.js 16.4.0, React 19.3.0, Convex 1.46.0, Clerk, Bun 1.4.3, Turborepo 2.11.8,
 
 ## Development
 
-Install Bun 1.4.3 or later and Node.js 24. The current Windows workstation also has a task-local Bun binary at `.tooling/node_modules/bun/bin/bun.exe`; it is ignored by Git.
+Install Bun 1.4.3 or later and Node.js 24. Run commands from the workspace root (the directory containing this README and `package.json`). In the original checkout this is `rebuild/`; in a standalone clone it is the repository root. The current Windows workstation also has a task-local Bun binary at `.tooling/node_modules/bun/bin/bun.exe`; it is ignored by Git.
 
 ```powershell
-cd C:\Users\DELL\Vakil-Setu\rebuild
 bun install --frozen-lockfile
 bun run dev
 ```
@@ -19,6 +18,8 @@ bun run dev
 The web app runs at http://localhost:3000. It renders public pages and explicit setup notices without service credentials. Authenticated persistence is not simulated.
 
 Configure hosted Clerk and Convex using the examples in `apps/web` and `packages/backend`; see `docs/setup.md`. Never commit environment files. Clerk owns passwords and sessions; the Convex backend owns application roles and permissions. Bootstrap the first administrator through an internal backend operation, never a public role selector.
+
+Saving an intake stores your own words privately; it does not run AI analysis. The saved case confirms that outcome and lets you review a manual summary starting from your intake or browse advocates. An AI draft requires a configured provider, explicit consent and review. No DGX endpoint has been supplied yet.
 
 ```powershell
 bun run typecheck

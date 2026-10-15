@@ -25,6 +25,7 @@ import { useEffect, useRef, useState, type FormEvent } from "react";
 import { RequireRole } from "./workspace-gate";
 import { EmptyState, formatTime, LoadMore, urgencyLabel } from "./shared";
 import { errorMessage } from "@/lib/errors";
+import { caseNoSummaryCopy } from "@/lib/case-copy";
 import { ReadAloud } from "./speech";
 import { useLocale } from "./locale";
 
@@ -120,7 +121,8 @@ function CaseDetail({ caseId }: { caseId: Id<"cases"> }) {
   const [confirmDelete, setConfirmDelete] = useState(false);
   const [deleting, setDeleting] = useState(false);
   const [error, setError] = useState("");
-  const { copy } = useLocale();
+  const { copy, locale } = useLocale();
+  const noSummaryCopy = caseNoSummaryCopy[locale];
   const summaryEditor = useRef<HTMLDetailsElement>(null);
   if (!data)
     return (
@@ -166,23 +168,39 @@ function CaseDetail({ caseId }: { caseId: Id<"cases"> }) {
                 ? "Ready to contact an advocate"
                 : latest
                   ? "Review your draft"
-                  : "Prepare a summary"}
+                  : noSummaryCopy.savedTitle}
             </h2>
-            <p>
-              {hasReviewedSummary
-                ? "Your summary is saved. Choose an advocate to request a consultation."
-                : latest
-                  ? "Check the draft, make any corrections, and save your reviewed summary."
-                  : "Write a short summary to share with an advocate. Your full intake stays private."}
-            </p>
+            {hasReviewedSummary || latest ? (
+              <p>
+                {hasReviewedSummary
+                  ? "Your summary is saved. Choose an advocate to request a consultation."
+                  : "Check the draft, make any corrections, and save your reviewed summary."}
+              </p>
+            ) : (
+              <>
+                <p>{noSummaryCopy.savedBody}</p>
+                <p>
+                  {noSummaryCopy.noAnalysis} {noSummaryCopy.nextOptions}
+                </p>
+              </>
+            )}
             {hasReviewedSummary ? (
               <Link className="btn" href="/discover">
                 Choose an advocate
               </Link>
-            ) : (
+            ) : latest ? (
               <Button className="btn" onClick={openSummary}>
-                {latest ? "Review summary" : "Write your summary"}
+                Review summary
               </Button>
+            ) : (
+              <div className="actions">
+                <Button className="btn" onClick={openSummary}>
+                  {noSummaryCopy.openSummary}
+                </Button>
+                <Link className="btn secondary" href="/discover">
+                  {noSummaryCopy.findAdvocate}
+                </Link>
+              </div>
             )}
           </section>
           <article className="case-intake">
@@ -419,14 +437,15 @@ export function SummaryEditor({
   legalCase: Doc<"cases">;
   latest: Doc<"caseSummaries"> | undefined;
 }) {
-  const { messages, copy } = useLocale();
+  const { messages, copy, locale } = useLocale();
+  const noSummaryCopy = caseNoSummaryCopy[locale];
   const save = useMutation(api.cases.updateSummary);
-  const [text, setText] = useState(latest?.summary.text ?? "");
+  const [text, setText] = useState(latest?.summary.text ?? legalCase.text);
   const [domain, setDomain] = useState<LegalDomain>(
     latest?.summary.domain ?? "unknown",
   );
   const [urgency, setUrgency] = useState<Urgency>(
-    latest?.summary.urgency ?? "low",
+    latest?.summary.urgency ?? "unknown",
   );
   const [actions, setActions] = useState(
     latest?.summary.actions.join("\n") ?? "",
@@ -462,6 +481,11 @@ export function SummaryEditor({
   return (
     <article className="card">
       <h2>Review your private summary</h2>
+      {!latest && (
+        <p className="muted" style={{ marginBlock: 14 }}>
+          {noSummaryCopy.yourWordsNote}
+        </p>
+      )}
       <p className="muted" style={{ marginBlock: 14 }}>
         Write in the intake language. Category and urgency are your own notes.
         Saving creates a new version.
@@ -483,6 +507,12 @@ export function SummaryEditor({
               setReviewed(false);
             }}
           />
+          <small>
+            {text.length.toLocaleString()} / {LIMITS.summaryText.toLocaleString()} {copy.charactersUnit}
+          </small>
+          {text.length > LIMITS.summaryText && (
+            <p className="status-message" role="alert">{noSummaryCopy.shortenSummary}</p>
+          )}
         </div>
         <div className="card-grid">
           <div className="field">
@@ -569,13 +599,17 @@ export function SummaryEditor({
         <div className="actions">
           <Button
             className="btn"
-            disabled={pending || !reviewed || !text.trim()}
+            disabled={pending || !reviewed || !text.trim() || text.length > LIMITS.summaryText}
           >
             {pending ? "Saving version…" : "Save reviewed summary"}
           </Button>
-          {latest && (
+          {latest ? (
             <Link className="btn secondary" href="/discover">
               Choose an advocate
+            </Link>
+          ) : (
+            <Link className="btn secondary" href="/discover">
+              {noSummaryCopy.findAdvocate}
             </Link>
           )}
         </div>
