@@ -21,7 +21,7 @@ import {
   type LegalDomain,
   type Urgency,
 } from "@vakil/domain";
-import { useEffect, useState, type FormEvent } from "react";
+import { useEffect, useRef, useState, type FormEvent } from "react";
 import { RequireRole } from "./workspace-gate";
 import { EmptyState, formatTime, LoadMore, urgencyLabel } from "./shared";
 import { errorMessage } from "@/lib/errors";
@@ -120,6 +120,8 @@ function CaseDetail({ caseId }: { caseId: Id<"cases"> }) {
   const [confirmDelete, setConfirmDelete] = useState(false);
   const [deleting, setDeleting] = useState(false);
   const [error, setError] = useState("");
+  const { copy } = useLocale();
+  const summaryEditor = useRef<HTMLDetailsElement>(null);
   if (!data)
     return (
       <p className="loading" role="status">
@@ -127,6 +129,13 @@ function CaseDetail({ caseId }: { caseId: Id<"cases"> }) {
       </p>
     );
   const latest = data.summaries[0];
+  const hasReviewedSummary = latest?.source.kind === "manual";
+  function openSummary() {
+    if (!summaryEditor.current) return;
+    summaryEditor.current.open = true;
+    summaryEditor.current.querySelector("textarea")?.focus();
+    summaryEditor.current.scrollIntoView({ block: "start" });
+  }
   async function deleteDraft() {
     setDeleting(true);
     try {
@@ -138,107 +147,174 @@ function CaseDetail({ caseId }: { caseId: Id<"cases"> }) {
     }
   }
   return (
-    <>
-      <div className="workspace-heading">
-        <div>
-          <div className="eyebrow">
-            Private case · {data.case.locale.toUpperCase()}
-          </div>
-          <h1>{data.case.title}</h1>
-          <p className="page-description">
-            Version {data.case.summaryVersion} · {data.case.state}. Changes here
-            never overwrite a shared consultation snapshot.
-          </p>
-        </div>
-        <Link className="btn secondary" href="/workspace/cases">
+    <div className="case-detail">
+      <header className="case-header">
+        <Link className="case-breadcrumb" href="/workspace/cases">
           All cases
         </Link>
-      </div>
-      <div className="stack">
-        <article className="card">
-          <h2>Your saved intake</h2>
-          <p className="summary-text muted" style={{ marginTop: 20 }}>
-            {data.case.text}
-          </p>
-          <div style={{ marginTop: 20 }}>
-            <ReadAloud text={data.case.text} locale={data.case.locale} />
-          </div>
-        </article>
-        <FollowUp
-          key={`${data.case.summaryVersion}:${data.case.contextRevision}`}
-          legalCase={data.case}
-        />
-        <SummaryEditor
-          key={data.case.summaryVersion}
-          legalCase={data.case}
-          latest={latest}
-        />
-        <AiAnalysis
-          caseId={caseId}
-          expectedVersion={data.case.summaryVersion}
-          expectedContextRevision={data.case.contextRevision}
-        />
-        <article className="card">
-          <h2>Version history</h2>
-          {data.summaries.length ? (
-            data.summaries.map((version: Doc<"caseSummaries">) => (
-              <details key={version._id} style={{ marginTop: 18 }}>
-                <summary>
-                  Version {version.version} ·{" "}
-                  {version.source.kind === "manual"
-                    ? "Written by you"
-                    : "Provider draft"}{" "}
-                  · {version.summary.domain} ·{" "}
-                  {urgencyLabel(version.summary.urgency)} ·{" "}
-                  {formatTime(version.createdAt)}
-                </summary>
-                <p className="summary-text muted" style={{ paddingBlock: 15 }}>
-                  {version.summary.text}
-                </p>
-              </details>
-            ))
-          ) : (
-            <p className="muted" style={{ marginTop: 14 }}>
-              No summary saved yet. Write your first version above.
+        <h1>{data.case.title}</h1>
+        <p className="case-meta">
+          {data.case.state} · {data.case.locale.toUpperCase()} · Version{" "}
+          {data.case.summaryVersion}
+        </p>
+      </header>
+      <div className="case-layout">
+        <div className="case-content">
+          <section className="case-next-step" aria-label="Next step">
+            <h2>
+              {hasReviewedSummary
+                ? "Ready to contact an advocate"
+                : latest
+                  ? "Review your draft"
+                  : "Prepare a summary"}
+            </h2>
+            <p>
+              {hasReviewedSummary
+                ? "Your summary is saved. Choose an advocate to request a consultation."
+                : latest
+                  ? "Check the draft, make any corrections, and save your reviewed summary."
+                  : "Write a short summary to share with an advocate. Your full intake stays private."}
             </p>
+            {hasReviewedSummary ? (
+              <Link className="btn" href="/discover">
+                Choose an advocate
+              </Link>
+            ) : (
+              <Button className="btn" onClick={openSummary}>
+                {latest ? "Review summary" : "Write your summary"}
+              </Button>
+            )}
+          </section>
+          <article className="case-intake">
+            <h2>Saved intake</h2>
+            <p className="summary-text">{data.case.text}</p>
+            <details className="case-audio">
+              <summary>Listen to intake</summary>
+              <div style={{ marginTop: 12 }}>
+                <ReadAloud text={data.case.text} locale={data.case.locale} />
+              </div>
+            </details>
+          </article>
+          {latest && (
+            <article className="case-summary-preview">
+              <h2>Your summary</h2>
+              <p className="muted small-text">
+                {copy.domainLabels[latest.summary.domain]} ·{" "}
+                {urgencyLabel(latest.summary.urgency)} · Version{" "}
+                {latest.version}
+              </p>
+              <p className="summary-text" style={{ marginTop: 12 }}>
+                {latest.summary.text}
+              </p>
+            </article>
           )}
-        </article>
-        {data.case.state === "draft" && (
-          <article className="card">
-            <h2>Delete this unshared draft</h2>
-            <p className="muted" style={{ marginBlock: 14 }}>
-              This permanently removes the intake and all summary versions.
-              Shared cases cannot be deleted as drafts.
+          <details className="case-tool" id="case-summary" ref={summaryEditor}>
+            <summary>{latest ? "Edit summary" : "Write a summary"}</summary>
+            <p className="muted" style={{ marginBlock: 12 }}>
+              {latest
+                ? "Change the text below and save to create a new version."
+                : "Describe your issue briefly. Saving creates your first version."}
             </p>
-            <Label className="checkbox-line">
-              <Input
-                type="checkbox"
-                checked={confirmDelete}
-                onChange={(event) => setConfirmDelete(event.target.checked)}
-              />
-              I want to permanently delete this draft.
-            </Label>
-            <Button
-              className="btn danger"
-              disabled={!confirmDelete || deleting}
-              style={{ marginTop: 16 }}
-              onClick={deleteDraft}
-            >
-              {deleting ? "Deleting…" : "Delete draft and summary history"}
-            </Button>
-            {error && (
-              <p
-                className="status-message error"
-                role="alert"
-                style={{ marginTop: 14 }}
-              >
-                {error}
+            <SummaryEditor
+              key={data.case.summaryVersion}
+              legalCase={data.case}
+              latest={latest}
+            />
+          </details>
+          <details className="case-tool">
+            <summary>
+              Add details
+              {data.case.context.length
+                ? ` (${data.case.context.length})`
+                : ""}
+            </summary>
+            <FollowUp
+              key={`${data.case.summaryVersion}:${data.case.contextRevision}`}
+              legalCase={data.case}
+            />
+          </details>
+        </div>
+        <div className="case-aside">
+          <section className="case-guidance" aria-label="What happens next">
+            <h2>What happens next</h2>
+            <ol>
+              <li>Save a summary of your issue.</li>
+              <li>Choose an advocate and request a consultation.</li>
+              <li>Wait for the advocate to accept your request.</li>
+            </ol>
+          </section>
+          <details className="case-tool">
+            <summary>AI draft</summary>
+            <AiAnalysis
+              caseId={caseId}
+              expectedVersion={data.case.summaryVersion}
+              expectedContextRevision={data.case.contextRevision}
+            />
+          </details>
+          <details className="case-tool">
+            <summary>
+              Summary history
+              {data.summaries.length ? ` (${data.summaries.length})` : ""}
+            </summary>
+            {data.summaries.length ? (
+              data.summaries.map((version: Doc<"caseSummaries">) => (
+                <details key={version._id} style={{ marginTop: 14 }}>
+                  <summary>
+                    Version {version.version} ·{" "}
+                    {version.source.kind === "manual"
+                      ? "Written by you"
+                      : "Provider draft"}{" "}
+                    · {version.summary.domain} ·{" "}
+                    {urgencyLabel(version.summary.urgency)} ·{" "}
+                    {formatTime(version.createdAt)}
+                  </summary>
+                  <p className="summary-text muted" style={{ paddingBlock: 12 }}>
+                    {version.summary.text}
+                  </p>
+                </details>
+              ))
+            ) : (
+              <p className="muted" style={{ marginTop: 12 }}>
+                No summary saved yet.
               </p>
             )}
-          </article>
-        )}
+          </details>
+          {data.case.state === "draft" && (
+            <details className="case-tool case-danger">
+              <summary>Delete draft</summary>
+              <p className="muted" style={{ marginBlock: 12 }}>
+                This permanently removes the intake and all summary versions.
+              </p>
+              <Label className="checkbox-line">
+                <Input
+                  type="checkbox"
+                  checked={confirmDelete}
+                  onChange={(event) => setConfirmDelete(event.target.checked)}
+                />
+                I want to permanently delete this draft.
+              </Label>
+              <Button
+                className="btn danger"
+                disabled={!confirmDelete || deleting}
+                style={{ marginTop: 14 }}
+                onClick={deleteDraft}
+              >
+                {deleting ? "Deleting…" : "Delete draft and summary history"}
+              </Button>
+              {error && (
+                <p
+                  className="status-message error"
+                  role="alert"
+                  style={{ marginTop: 12 }}
+                >
+                  {error}
+                </p>
+              )}
+            </details>
+          )}
+        </div>
       </div>
-    </>
+    </div>
   );
 }
 
@@ -273,10 +349,9 @@ function FollowUp({ legalCase }: { legalCase: Doc<"cases"> }) {
     <article className="card">
       <h2>Follow-up context</h2>
       <p className="muted" style={{ marginBlock: 14 }}>
-        Follow-ups stay in {legalCase.locale.toUpperCase()} and within this
-        case. Only reviewed text is appended; the service keeps the most recent
-        messages within its configured bound. Appending never rewrites your
-        intake or summaries.
+        Extra context stays with this case in {legalCase.locale.toUpperCase()}.
+        Only reviewed text is saved. Nothing here changes your intake or
+        summaries.
       </p>
       {legalCase.context.length ? (
         <div className="stack" style={{ gap: 12 }}>
@@ -388,9 +463,8 @@ export function SummaryEditor({
     <article className="card">
       <h2>Review your private summary</h2>
       <p className="muted" style={{ marginBlock: 14 }}>
-        Write or edit a summary in the intake language. Category and urgency are
-        your selections, not verified legal findings. Saving creates a new
-        private version.
+        Write in the intake language. Category and urgency are your own notes.
+        Saving creates a new version.
       </p>
       <form className="form-stack" onSubmit={submit}>
         <div className="field">
@@ -551,9 +625,8 @@ function AiAnalysis({
     <article className="card">
       <h2>Optional AI assistance</h2>
       <p className="muted" style={{ marginBlock: 14 }}>
-        A compatible, configured provider is required. DGX documentation and
-        deployment verification are unavailable; no provider capability or legal
-        accuracy is promised. Up to five attempts per hour.
+        AI drafts may be unavailable. You can always write your own summary.
+        Review any draft before sharing it.
       </p>
       <Label className="checkbox-line">
         <Input

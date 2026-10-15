@@ -71,4 +71,12 @@ Native mobile, payments, reviews and guaranteed emergency dispatch remain outsid
 
 ## Git scope
 
+### Case detail redesign — 15 October 2026
+
+The case page now prioritizes the saved intake and one next step. Summary editing, follow-ups, playback controls, AI, history and draft deletion are disclosed on demand, with the original mutations and review acknowledgements retained. An AI-generated summary prompts review; a manually reviewed summary offers advocate discovery. This is a focused case-detail change, not a redesign of the entire portal. Operational copy still includes English fallback.
+
+Native typechecks and the production build passed. In the existing authenticated Chrome session, the primary button opened the editor and focused its textarea. Closing and reopening the disclosure retained the synthetic Gurmukhi summary. Keyboard review acknowledgement and submission saved version 1 of the labelled test case to hosted Convex. Reload showed the persisted summary, the updated next step and collapsed secondary tools. No real user case was edited, no AI request was sent, and no deletion was performed.
+
+CSS layout checks at 390px and 1280px found no horizontal overflow and the expected single/two-column layouts. Screenshots are ignored at `.runtime/browser-qa/case-redesign-phone.png` and `case-redesign-desktop.png`. The existing browser zoom produced a 6144px CSS viewport and screenshot timeouts; temporary CDP mobile metrics were used at both widths to isolate the responsive layout from that zoom. Pointer actions under emulation were unreliable, so phone interaction checks used the real keyboard controls; this does not certify native touch behavior. The browser disconnected after the interruption, preventing another final capture or an explicit metrics reset. No browser session remains available to this agent.
+
 Work stays on `master` and changes only `rebuild`. Legacy and unrelated user files are preserved. Scoped implementation commits are `1348e24` (backend/domain), `e397df1` (shared UI/languages/native tooling), `92214b2` (consent/private-read audits and direct lookup), and `7a281bc` (responsive multilingual web workflows). The 15 October continuation adds `be56a94` (bundled Hindi/Punjabi playback) followed by its evidence commit. No push or public deployment was performed. Build outputs, tooling binaries, browser QA files, clean-source export and actual environment files are ignored.
