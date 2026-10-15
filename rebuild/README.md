@@ -29,7 +29,7 @@ bun run doctor
 
 See `docs/verification.md` for the exact checks performed and remaining live acceptance work. A build is not evidence of real Clerk sessions, hosted persistence, speech accuracy, or DGX inference.
 
-Local validation passes: native TypeScript checks across all five packages, 60 backend integration tests, 12 language tests, the production build, HTTP route checks, and isolated browser checks at desktop/375/360px. Core pilot text is localized; longer English fallbacks are listed in `apps/web/README.md`. Human language review and real microphone/playback remain pending.
+Local validation passes: native TypeScript checks across all five packages, 60 backend integration tests, 12 language tests, the production build, HTTP route checks, and browser checks at desktop/375/360px. Hindi/Punjabi read-aloud now uses a bundled local engine; real worker/audio lifecycle and eleven controlled browser scenario groups passed. Core pilot text is localized; longer English fallbacks are listed in `apps/web/README.md`. Human language/pronunciation review, physical speaker audibility and microphone recognition remain pending. Engine files need corresponding-source/build provenance review before public redistribution.
 
 ## Layout
 

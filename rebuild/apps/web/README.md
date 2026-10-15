@@ -20,7 +20,9 @@ Exact untranslated remainder (English-only, not promised): workspace overview ca
 
 Browser Web Speech capture is optional. It starts only after explicit consent that browser vendors may process audio on their servers. Recognition availability is detected at runtime; language recognition and accuracy are unverified. Interim words are never appended or submitted. Final transcripts remain editable and require a separate “add reviewed text” action. Intake saving then requires another reviewed-text acknowledgement. No audio recording is persisted by this app.
 
-Read-aloud lists only matching `localService` voices reported by the device. It does not silently use remote voices or promise availability/pronunciation. AI draft creation requires separate consent and passes the current summary version and context revision. Unavailable provider results are displayed explicitly; manual summaries remain available.
+English read-aloud uses only matching `localService` voices reported by the device. Hindi/Punjabi use the bundled eSpeak NG engine in a worker with Web Audio, so installing device voices is unnecessary for those languages. The engine data is about 19 MB; generation times out after 60 seconds and rejects output longer than five minutes without changing the text. Stop, edits, language changes and navigation cancel the worker and close its audio context. No text is sent to a speech service by this adapter. Pronunciation remains unverified. Attribution, hashes, GPL license and source/build provenance limits are in `public/speech/espeak-ng/NOTICE.md`; public redistribution needs corresponding-source review before deployment.
+
+AI draft creation requires separate consent and passes the current summary version and context revision. Unavailable provider results are displayed explicitly; manual summaries remain available.
 
 ## Contract and state handling
 

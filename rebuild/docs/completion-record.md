@@ -23,6 +23,8 @@ English/Hindi/Punjabi pilot; hosted Convex and Clerk; payments/reviews/emergency
 
 All implementation and review rounds have finished. Codex high completed provider consent/private-read audits/direct route resolution; Muse xhigh completed client/admin/mobile fixes; Luna xhigh audited language/setup/legacy contracts; the parent verified Gemini findings and rejected false positives with source/test evidence. Native checks, all 72 tests, production build and fresh isolated-browser checks at 1280/375/360px pass. Final scoped commits and their evidence are recorded in `verification.md`.
 
+The 15 October continuation completes local Hindi/Punjabi read-aloud with a pinned bundled engine. Actual T3 browser worker/Web Audio checks and eleven controlled lifecycle groups passed. The engine's voice lookup/sample rate and integer WPM contract were verified; incorrect inherited relative-rate handling was fixed. Human pronunciation review and physical speaker audibility remain unverified. Engine corresponding-source/build provenance must be checked before public redistribution.
+
 ## External gates
 
 - Hosted Clerk and Convex project configuration and real independent accounts.

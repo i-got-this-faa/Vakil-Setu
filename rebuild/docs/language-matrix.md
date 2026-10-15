@@ -27,7 +27,7 @@ The locale tags below use BCP 47 language subtags with the India region tag. The
 | Bodo | `brx-IN` | Target, unverified | Available, generic Unicode entry | Target, unverified | Unavailable, no locale path | Unavailable, no locale path | Not selected |
 | Dogri | `doi-IN` | Target, unverified | Available, generic Unicode entry | Target, unverified | Unavailable, no locale path | Unavailable, no locale path | Not selected |
 | Gujarati | `gu-IN` | Target, unverified | Available, generic Unicode entry | Target, unverified | Unavailable, no locale path | Unavailable, no locale path | Not selected |
-| Hindi | `hi-IN` | Unverified, bundle not human-reviewed | Available, generic Unicode entry | Unverified, no live provider evidence | Unverified, browser path | Unverified, local-voice path | Confirmed pilot |
+| Hindi | `hi-IN` | Unverified, bundle not human-reviewed | Available, generic Unicode entry | Unverified, no live provider evidence | Unverified, browser path | Bundled local engine lifecycle checked; pronunciation unverified | Confirmed pilot |
 | Kannada | `kn-IN` | Target, unverified | Available, generic Unicode entry | Target, unverified | Unavailable, no locale path | Unavailable, no locale path | Not selected |
 | Kashmiri | `ks-IN` | Target, unverified | Available, generic Unicode entry | Target, unverified | Unavailable, no locale path | Unavailable, no locale path | Not selected |
 | Konkani | `kok-IN` | Target, unverified | Available, generic Unicode entry | Target, unverified | Unavailable, no locale path | Unavailable, no locale path | Not selected |
@@ -37,7 +37,7 @@ The locale tags below use BCP 47 language subtags with the India region tag. The
 | Marathi | `mr-IN` | Target, unverified | Available, generic Unicode entry | Target, unverified | Unavailable, no locale path | Unavailable, no locale path | Not selected |
 | Nepali | `ne-IN` | Target, unverified | Available, generic Unicode entry | Target, unverified | Unavailable, no locale path | Unavailable, no locale path | Not selected |
 | Odia | `or-IN` | Target, unverified | Available, generic Unicode entry | Target, unverified | Unavailable, no locale path | Unavailable, no locale path | Not selected |
-| Punjabi | `pa-IN` | Unverified, bundle not human-reviewed | Available, generic Unicode entry | Unverified, no live provider evidence | Unverified, browser path | Unverified, local-voice path | Confirmed pilot |
+| Punjabi | `pa-IN` | Unverified, bundle not human-reviewed | Available, generic Unicode entry | Unverified, no live provider evidence | Unverified, browser path | Bundled local engine lifecycle checked; pronunciation unverified | Confirmed pilot |
 | Sanskrit | `sa-IN` | Target, unverified | Available, generic Unicode entry | Target, unverified | Unavailable, no locale path | Unavailable, no locale path | Not selected |
 | Santhali (Santali) | `sat-IN` | Target, unverified | Available, generic Unicode entry | Target, unverified | Unavailable, no locale path | Unavailable, no locale path | Not selected |
 | Sindhi | `sd-IN` | Target, unverified | Available, generic Unicode entry | Target, unverified | Unavailable, no locale path | Unavailable, no locale path | Not selected |
@@ -64,7 +64,7 @@ The 22 scheduled language names follow the current Eighth Schedule. The schedule
 
 The confirmed pilot is English (`en-IN`), Hindi (`hi-IN`), and Punjabi (`pa-IN`), as recorded in [`decisions.md`](decisions.md). It meets the SRS target of two Indian languages plus English. Dogri was an earlier candidate and is not in the current pilot.
 
-The confirmed pilot does not assert speech support for any of its languages. The web code has optional browser recognition for English, Hindi, and Punjabi; it asks for user consent and allows transcript review. It does not pin recognition to on-device processing. Playback selects local device voices with matching language tags. Neither path has language-specific accuracy or pronunciation results, so both remain unverified and are not release-supported. No locale path exists for the other 20 scheduled languages. The AI adapter also has no live provider or language-comprehension evidence.
+The confirmed pilot does not assert evaluated speech quality for any of its languages. Optional browser recognition asks for user consent and allows transcript review; it is not pinned to on-device processing. English playback selects matching local device voices. Hindi/Punjabi use the bundled eSpeak NG worker: actual nonzero audio and start/end events passed synthetic-text checks on 15 October 2026. Pronunciation/comprehension, physical speaker audibility and recognition accuracy remain unverified, so the capability registry is not upgraded to supported. No locale path exists for the other 20 scheduled languages. The AI adapter also has no live provider or language-comprehension evidence.
 
 ## Legacy behavior is not rebuild evidence
 
