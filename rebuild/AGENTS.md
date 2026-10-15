@@ -1,6 +1,6 @@
 # Vakil Setu rebuild
 
-This directory is the new implementation. Preserve the legacy application and unrelated files in the parent repository. Commit only scoped rebuild files. Do not push without user authorization.
+This workspace is the new implementation. In the original parent checkout it is under `rebuild/`; in the standalone repository it is the root. Preserve any legacy application and unrelated files when working in the parent checkout. Commit only scoped workspace changes. Do not push without user authorization.
 
 ## Fleet references
 

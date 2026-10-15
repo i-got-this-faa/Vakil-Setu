@@ -1,6 +1,8 @@
 # Web implementation handoff
 
-Owned scope: `rebuild/apps/web/**`. No dependency installation, commits, nested delegation, or edits to legacy/root tooling were performed by the web worker.
+This document retains the web worker's historical handoff. Its `rebuild/` and local tool paths describe the original parent checkout. In a standalone clone, run `bun run typecheck` or `bun run build` from the repository root; see the root README and `docs/setup.md` for current setup. For web-only checks after workspace code generation, run `bun run typecheck` from `apps/web`.
+
+Owned scope in the original checkout: `rebuild/apps/web/**`. No dependency installation, commits, nested delegation, or edits to legacy/root tooling were performed by the web worker.
 
 The responsive App Router portal has a paper/cream and muted teal public landing, approved advocate discovery, public profiles and slots, Clerk sign-in/up, and a sidebar workspace. Workspace routes provide onboarding, reviewed intake, private case and summary history, follow-up context, consultation lifecycle controls, notifications, advocate applications/private credentials/availability, and administrator credential/application review. All persistent operations call the generated Convex functions; the browser never invents a successful operation.
 

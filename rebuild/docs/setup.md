@@ -4,7 +4,7 @@ The local public website can run without accounts or service keys. Real registra
 
 ## Local development
 
-From `rebuild` with Bun 1.4.3 and Node.js 22 or newer. This workstation currently has Bun 1.4.3 and Node.js 24.14.1, matching the workspace package-manager and engine fields:
+Run from the workspace root containing `package.json` (`rebuild/` in the original checkout, or the root of a standalone clone), with Bun 1.4.3 and Node.js 22 or newer. The workstation used for validation had Bun 1.4.3 and Node.js 24.14.1:
 
 ```powershell
 bun install --frozen-lockfile

@@ -1,5 +1,7 @@
 # Backend second-round handoff — 2026-10-14
 
+Historical evidence below uses paths from the original parent checkout. In a standalone clone, use `bun run test` and `bun run typecheck` from `packages/backend`, or `bun run check` from the repository root. `.tooling` is workstation-local and is not required when Bun is installed normally. Current hosted evidence is in `docs/hosted-activation.md` at the repository root.
+
 The four verified backend findings are implemented within `packages/backend`. Starting parent commits were `1348e24` and `e397df1`; starting HEAD was `e397df1`. The existing uncommitted oversized-discovery-cohort test was preserved. Parent owns web/domain integration, full-workspace checks, codegen and commits.
 
 ## Exact evidence

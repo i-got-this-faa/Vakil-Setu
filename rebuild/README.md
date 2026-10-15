@@ -1,4 +1,4 @@
-# Vakil Setu rebuild
+# Vakil Setu
 
 A new responsive multilingual legal intake and consultation application, separate from the legacy Vite/Express implementation. The pilot languages are English, Hindi and Punjabi. AI output is preliminary information and requires professional review.
 
@@ -8,7 +8,7 @@ Next.js 16.4.0, React 19.3.0, Convex 1.46.0, Clerk, Bun 1.4.3, Turborepo 2.11.8,
 
 ## Development
 
-Install Bun 1.4.3 or later and Node.js 24. Run commands from the workspace root (the directory containing this README and `package.json`). In the original checkout this is `rebuild/`; in a standalone clone it is the repository root. The current Windows workstation also has a task-local Bun binary at `.tooling/node_modules/bun/bin/bun.exe`; it is ignored by Git.
+Install Bun 1.4.3 or later and Node.js 24. Run commands from the workspace root (the directory containing this README and `package.json`). In the original checkout this is `rebuild/`; in a standalone clone it is the repository root.
 
 ```powershell
 bun install --frozen-lockfile
@@ -29,6 +29,8 @@ bun run doctor
 ```
 
 See `docs/verification.md` for the exact checks performed and remaining live acceptance work. A build is not evidence of real Clerk sessions, hosted persistence, speech accuracy, or DGX inference.
+
+`bun run doctor` also checks the optional development reference at `vendor/fleet`. Restore it using [docs/fleet-reference.md](docs/fleet-reference.md) before running doctor; the app, build and tests do not require that checkout.
 
 Local validation passes: native TypeScript checks across all five packages, 60 backend integration tests, 12 language tests, the production build, HTTP route checks, and browser checks at desktop/375/360px. Hindi/Punjabi read-aloud now uses a bundled local engine; real worker/audio lifecycle and eleven controlled browser scenario groups passed. Core pilot text is localized; longer English fallbacks are listed in `apps/web/README.md`. Human language/pronunciation review, physical speaker audibility and microphone recognition remain pending. Engine files need corresponding-source/build provenance review before public redistribution.
 
