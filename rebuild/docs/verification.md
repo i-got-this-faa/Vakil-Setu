@@ -1,6 +1,6 @@
 # Local verification — 14 October 2026
 
-The authorized local rebuild is implemented under `rebuild`. This record proves local boundaries only. Hosted services have not been provisioned by user decision.
+The authorized local rebuild is implemented under `rebuild`. The checks dated 14 October below prove local boundaries only. Hosted development services were subsequently provisioned on 15 October; current evidence and remaining login/submission checks are in [hosted-activation.md](hosted-activation.md).
 
 ## Commands and results
 

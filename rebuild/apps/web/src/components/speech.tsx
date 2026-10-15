@@ -47,6 +47,12 @@ const languageTags: Record<PilotLocale, string> = {
   pa: "pa-IN",
 };
 
+function detachRecognition(instance: BrowserRecognition): void {
+  instance.onresult = null;
+  instance.onerror = null;
+  instance.onend = null;
+}
+
 export function SpeechCapture({
   locale,
   onAppend,
@@ -56,6 +62,9 @@ export function SpeechCapture({
 }) {
   const { copy, messages } = useLocale();
   const recognition = useRef<BrowserRecognition | null>(null);
+  // Generation guard: every restart/locale change/unmount invalidates prior
+  // callbacks before abort, since abort leaves listeners callable.
+  const generation = useRef(0);
   const [supported, setSupported] = useState<boolean | null>(null);
   const [consent, setConsent] = useState(false);
   const [recording, setRecording] = useState(false);
@@ -67,12 +76,33 @@ export function SpeechCapture({
       Boolean(window.SpeechRecognition ?? window.webkitSpeechRecognition),
     );
     return () => {
-      recognition.current?.abort();
+      const stale = recognition.current;
       recognition.current = null;
+      generation.current += 1;
+      if (stale) {
+        detachRecognition(stale);
+        try {
+          stale.abort();
+        } catch {
+          // Abort is best-effort cleanup; start failure already reports.
+        }
+      }
     };
   }, []);
   useEffect(() => {
-    recognition.current?.abort();
+    const stale = recognition.current;
+    // Invalidate before abort so a late onresult from the prior locale
+    // cannot populate the transcript after the switch.
+    if (stale) {
+      recognition.current = null;
+      generation.current += 1;
+      detachRecognition(stale);
+      try {
+        stale.abort();
+      } catch {
+        // Abort is best-effort cleanup.
+      }
+    }
     setRecording(false);
     setInterimText("");
   }, [locale]);
@@ -80,12 +110,29 @@ export function SpeechCapture({
     const Constructor =
       window.SpeechRecognition ?? window.webkitSpeechRecognition;
     if (!Constructor || !consent) return;
+    // Invalidate any running instance before aborting it, so its queued
+    // callbacks cannot affect the new capture.
+    const previous = recognition.current;
+    recognition.current = null;
+    if (previous) {
+      generation.current += 1;
+      detachRecognition(previous);
+      try {
+        previous.abort();
+      } catch {
+        // Abort is best-effort cleanup.
+      }
+    }
     const instance = new Constructor();
+    const active = generation.current + 1;
+    generation.current = active;
     recognition.current = instance;
     instance.lang = languageTags[locale];
     instance.continuous = true;
     instance.interimResults = true;
     instance.onresult = (event) => {
+      if (recognition.current !== instance || generation.current !== active)
+        return;
       let final = "",
         interim = "";
       for (
@@ -98,10 +145,12 @@ export function SpeechCapture({
         if (result?.isFinal) final += transcript + " ";
         else interim += transcript;
       }
-      if (final) setFinalText((previous) => (previous + " " + final).trim());
+      if (final) setFinalText((previousText) => (previousText + " " + final).trim());
       setInterimText(interim);
     };
     instance.onerror = (event) => {
+      if (recognition.current !== instance || generation.current !== active)
+        return;
       setError(
         event.error === "not-allowed"
           ? "Microphone permission was denied. You can type your concern below."
@@ -110,6 +159,10 @@ export function SpeechCapture({
       setRecording(false);
     };
     instance.onend = () => {
+      if (recognition.current !== instance || generation.current !== active)
+        return;
+      detachRecognition(instance);
+      if (recognition.current === instance) recognition.current = null;
       setRecording(false);
       setInterimText("");
     };
@@ -118,6 +171,10 @@ export function SpeechCapture({
       instance.start();
       setRecording(true);
     } catch {
+      detachRecognition(instance);
+      if (recognition.current === instance) recognition.current = null;
+      generation.current += 1;
+      setRecording(false);
       setError("Speech capture could not start. Type your concern below.");
     }
   }

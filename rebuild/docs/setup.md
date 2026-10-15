@@ -1,6 +1,6 @@
 # Local build and hosted activation
 
-The local public website can run without accounts or service keys. Real registration, cases, advocate approval and bookings require the hosted services below. The user confirmed these projects have not yet been created. Never paste secret keys into chat or commit environment files.
+The local public website can run without accounts or service keys. Real registration, cases, advocate approval and bookings require the hosted services below. Development services were provisioned on 15 October 2026; see `hosted-activation.md` for the current evidence. Never paste secret keys into chat or commit environment files.
 
 ## Local development
 

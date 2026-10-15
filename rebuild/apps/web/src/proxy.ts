@@ -1,4 +1,4 @@
-import { clerkMiddleware, createRouteMatcher } from "@clerk/nextjs/server";
+import { clerkMiddleware } from "@clerk/nextjs/server";
 import {
   NextResponse,
   type NextRequest,
@@ -6,10 +6,14 @@ import {
 } from "next/server";
 import { serviceConfig } from "./lib/config";
 
-const isPrivate = createRouteMatcher(["/workspace(.*)"]);
-const configuredMiddleware = clerkMiddleware(async (auth, request) => {
-  if (isPrivate(request)) await auth.protect();
-});
+const configuredMiddleware = clerkMiddleware(
+  async (auth, request) => {
+    const pathname = request.nextUrl.pathname;
+    if (pathname === "/workspace" || pathname.startsWith("/workspace/"))
+      await auth.protect();
+  },
+  { signInUrl: "/sign-in", signUpUrl: "/sign-up" },
+);
 
 export default function proxy(request: NextRequest, event: NextFetchEvent) {
   if (serviceConfig().kind === "unconfigured") return NextResponse.next();
