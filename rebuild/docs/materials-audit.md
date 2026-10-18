@@ -24,3 +24,7 @@ Dependencies, build caches, render previews, duplicated candidate exports, one-b
 This update changes documentation and adds archival source/artifacts. No current application runtime code or dependency manifest changed. Application tests and a production rebuild were not repeated for this archival update. Existing binary artifacts were copied unchanged and checked for structural integrity; no new layout, speech, provider, hosted booking or document-rendering acceptance is claimed. Archived source was not executed.
 
 Publication uses the authorized `rebuild/` subtree export to `sid4761/Vakil-Setu:main`. Verify the final remote commit against `publish/rebuild` after pushing; do not publish the original parent branch directly.
+
+## Remote visibility
+
+GitHub reported `isPrivate: false` with default branch `main` during the 18 October publication check. Earlier records describe its private creation state; they are not its current visibility. This update did not change visibility. Original student names and roll identifiers remain in the preserved reports/scripts. The published materials baseline `973ff092922e73f8edbe61710e3ad0c5fdf6353a` matched the exported branch and remote head.

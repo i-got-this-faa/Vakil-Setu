@@ -16,3 +16,7 @@ git push https://github.com/sid4761/Vakil-Setu.git publish/rebuild:main
 ```
 
 Verify the remote head against the exported branch after every push. Do not push the original checkout's `master` directly to this repository: it includes the legacy parent project. In a standalone clone, use normal commits and pushes on `main`.
+
+## Visibility and materials update — 18 October 2026
+
+GitHub now reports this repository as public (`isPrivate: false`); the private status above records its creation state on 16 October. This audit did not change repository visibility. Project documents, presentations, authoring sources and legacy code are now catalogued in `materials/README.md` and `docs/materials-audit.md`. The remote materials baseline `973ff092922e73f8edbe61710e3ad0c5fdf6353a` was verified against the local export.

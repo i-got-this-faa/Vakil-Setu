@@ -43,7 +43,7 @@ Some reports, diagrams and decks describe Vite/Express/MongoDB, payments, emerge
 
 The old pitch includes “zero legal hallucinations” and OCR claims; this audit found no implementation evidence establishing them. Do not repeat those claims as verified behavior.
 
-The authoring scripts are preserved as historical source, not installed application tooling. Some reference the original folder layout, local fonts, Windows tools, excluded reference images or agent-provided packages. They require path/dependency review before reuse; no reproducible document-build environment is claimed. The architecture illustration describes the older stack. Student names and roll identifiers remain in the original documents; the repository remains private. Review personal information and asset rights before making it public.
+The authoring scripts are preserved as historical source, not installed application tooling. Some reference the original folder layout, local fonts, Windows tools, excluded reference images or agent-provided packages. They require path/dependency review before reuse; no reproducible document-build environment is claimed. The architecture illustration describes the older stack. Student names and roll identifiers remain in the original documents. GitHub reported this repository as public during the 18 October publication check; this update did not change visibility. Inclusion preserves the supplied artifacts and does not certify asset redistribution rights.
 
 ## Excluded local files
 
