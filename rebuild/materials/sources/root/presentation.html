@@ -1,0 +1,1063 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vakil Setu — Academic Presentation</title>
+  <style>
+    :root {
+      --bg-dark: #0f172a;
+      --card-dark: #1e293b;
+      --bg-light: #f8fafc;
+      --surface: #ffffff;
+      --primary: #0f172a;
+      --navy: #0c447c;
+      --navy-light: #e6f1fb;
+      --amber: #d97706;
+      --amber-dark: #b45309;
+      --amber-light: #fef3c7;
+      --crimson: #b91c1c;
+      --crimson-light: #fee2e2;
+      --green: #15803d;
+      --green-light: #dcfce7;
+      --border: #e2e8f0;
+      --border-dark: #334155;
+      --text-main: #0f172a;
+      --text-muted: #64748b;
+      --text-light: #cbd5e1;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: #0b0f19;
+      color: var(--text-main);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+      padding: 20px 10px;
+    }
+
+    /* Presentation Controls */
+    .deck-nav {
+      position: fixed;
+      bottom: 20px;
+      z-index: 1000;
+      background: rgba(15, 23, 42, 0.92);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 9999px;
+      padding: 8px 18px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5);
+    }
+
+    .deck-btn {
+      background: #1e293b;
+      color: #f8fafc;
+      border: 1px solid #475569;
+      border-radius: 9999px;
+      padding: 6px 14px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .deck-btn:hover {
+      background: #334155;
+      border-color: #94a3b8;
+    }
+
+    .deck-counter {
+      color: #94a3b8;
+      font-size: 13px;
+      font-weight: 600;
+      min-width: 70px;
+      text-align: center;
+    }
+
+    /* Slide Dimensions & Layout (16:9 Widescreen) */
+    .slide-viewport {
+      width: 100%;
+      max-width: 1200px;
+      aspect-ratio: 16 / 9;
+      background: var(--bg-light);
+      border-radius: 12px;
+      overflow: hidden;
+      position: relative;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
+      margin-bottom: 70px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .slide {
+      display: none;
+      width: 100%;
+      height: 100%;
+      padding: 40px 50px;
+      flex-direction: column;
+      background: var(--bg-light);
+      position: relative;
+      overflow-y: auto;
+    }
+
+    .slide.active {
+      display: flex;
+    }
+
+    .slide-dark {
+      background: var(--bg-dark);
+      color: #f8fafc;
+    }
+
+    /* Header styling */
+    .slide-header {
+      margin-bottom: 24px;
+    }
+
+    .slide-category {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--amber-dark);
+      margin-bottom: 4px;
+    }
+
+    .slide-dark .slide-category {
+      color: #f59e0b;
+    }
+
+    .slide-title {
+      font-size: 26px;
+      font-weight: 800;
+      color: var(--primary);
+      letter-spacing: -0.02em;
+    }
+
+    .slide-dark .slide-title {
+      color: #ffffff;
+    }
+
+    .slide-subtitle {
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-top: 4px;
+      max-width: 95%;
+      line-height: 1.45;
+    }
+
+    .slide-dark .slide-subtitle {
+      color: #94a3b8;
+    }
+
+    /* Cards & Grids */
+    .grid-4 {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      flex: 1;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+      flex: 1;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+      flex: 1;
+    }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 18px;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    }
+
+    .card-dark {
+      background: var(--card-dark);
+      border-color: var(--border-dark);
+      color: #f8fafc;
+    }
+
+    .card-num {
+      font-size: 18px;
+      font-weight: 800;
+      color: var(--amber-dark);
+      margin-bottom: 6px;
+    }
+
+    .card-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 4px;
+      line-height: 1.3;
+    }
+
+    .card-dark .card-title {
+      color: #ffffff;
+    }
+
+    .card-sub {
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--navy);
+      margin-bottom: 8px;
+    }
+
+    .card-desc {
+      font-size: 12px;
+      color: var(--text-muted);
+      line-height: 1.45;
+      flex: 1;
+    }
+
+    .card-impact {
+      margin-top: 12px;
+      padding-top: 8px;
+      border-top: 1px dashed var(--border);
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--crimson);
+    }
+
+    /* Column Headers with Colored Top Banners */
+    .col-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .col-banner {
+      padding: 10px 14px;
+      font-size: 12px;
+      font-weight: 700;
+      color: #ffffff;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .col-body {
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      flex: 1;
+    }
+
+    .col-item-title {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 2px;
+    }
+
+    .col-item-desc {
+      font-size: 11px;
+      color: var(--text-muted);
+      line-height: 1.4;
+    }
+
+    /* Architecture Specific Styles */
+    .arch-container {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      flex: 1;
+    }
+
+    .arch-layer {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      display: flex;
+      overflow: hidden;
+    }
+
+    .arch-tag {
+      width: 240px;
+      padding: 12px 14px;
+      color: #ffffff;
+      font-size: 11px;
+      font-weight: 700;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      line-height: 1.3;
+    }
+
+    .arch-modules {
+      display: flex;
+      flex: 1;
+      padding: 8px 12px;
+      gap: 10px;
+      background: #fdfefe;
+    }
+
+    .arch-mod {
+      flex: 1;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 8px 10px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .arch-mod-title {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 2px;
+    }
+
+    .arch-mod-desc {
+      font-size: 9.5px;
+      color: var(--text-muted);
+      line-height: 1.35;
+    }
+
+    .arch-footer {
+      text-align: center;
+      font-size: 10px;
+      font-weight: 600;
+      color: var(--navy);
+      background: var(--navy-light);
+      padding: 6px 12px;
+      border-radius: 4px;
+      border: 1px solid #bfdbfe;
+    }
+
+    /* Print styles */
+    @media print {
+      body {
+        background: none;
+        padding: 0;
+      }
+      .deck-nav {
+        display: none;
+      }
+      .slide-viewport {
+        box-shadow: none;
+        max-width: 100%;
+        border-radius: 0;
+        margin: 0;
+      }
+      .slide {
+        display: flex !important;
+        page-break-after: always;
+        height: 100vh;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Slide Viewport (16:9 Presentation Frame) -->
+  <div class="slide-viewport">
+
+    <!-- SLIDE 1: COVER / TITLE -->
+    <div class="slide slide-dark active" id="slide-1">
+      <div style="flex: 1; display: flex; flex-direction: column; justify-content: center; max-width: 1050px; margin: 0 auto; width: 100%;">
+        <div style="border-left: 4px solid var(--amber); padding-left: 20px; margin-bottom: 28px;">
+          <p style="font-size: 11px; font-weight: 700; color: #f59e0b; text-transform: uppercase; letter-spacing: 0.12em; margin-bottom: 6px;">
+            Academic Capstone Project Presentation
+          </p>
+          <h1 style="font-size: 42px; font-weight: 800; color: #ffffff; letter-spacing: -0.02em; line-height: 1.15;">
+            VAKIL SETU (वकील सेतु)
+          </h1>
+          <p style="font-size: 18px; color: #cbd5e1; font-weight: 500; margin-top: 6px;">
+            Voice-First Bilingual Legal Triage & Advocate Discovery Platform
+          </p>
+          <p style="font-size: 12px; color: #94a3b8; margin-top: 6px; max-width: 780px;">
+            Democratizing First-Mile Legal Access across India through In-Browser Voice Processing, Domain-Specific Statutory Urgency Triage, and Secure Escrow Consultation Booking.
+          </p>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1.1fr 1fr; gap: 20px;">
+          <!-- Team Details Card -->
+          <div class="card card-dark" style="padding: 16px 20px;">
+            <p style="font-size: 11px; font-weight: 700; color: #f59e0b; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 10px;">
+              Presented By (Student Details)
+            </p>
+            <div style="display: flex; flex-direction: column; gap: 6px; font-size: 12px; color: #e2e8f0;">
+              <div><strong>Project Lead:</strong> [Your Full Name] &nbsp;|&nbsp; Roll No: <code>[Your Roll No]</code></div>
+              <div><strong>Teammate 2:</strong> [Teammate 2 Name] &nbsp;|&nbsp; Roll No: <code>[Roll Number]</code></div>
+              <div><strong>Teammate 3:</strong> [Teammate 3 Name] &nbsp;|&nbsp; Roll No: <code>[Roll Number]</code></div>
+              <div><strong>Teammate 4:</strong> [Teammate 4 Name] &nbsp;|&nbsp; Roll No: <code>[Roll Number]</code></div>
+            </div>
+          </div>
+
+          <!-- Academic / Guide Card -->
+          <div class="card card-dark" style="padding: 16px 20px;">
+            <p style="font-size: 11px; font-weight: 700; color: #f59e0b; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 10px;">
+              Supervision & Institution
+            </p>
+            <div style="display: flex; flex-direction: column; gap: 6px; font-size: 12px; color: #e2e8f0;">
+              <div><strong>Project Mentor:</strong> [Faculty Guide / Professor Name]</div>
+              <div><strong>Designation:</strong> [Assistant Professor / Associate Professor]</div>
+              <div><strong>Department:</strong> Department of Computer Science & Engineering</div>
+              <div><strong>Institution:</strong> [College / University Name]</div>
+              <div><strong>Academic Session:</strong> 2025 – 2026</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 2: PROBLEM STATEMENT -->
+    <div class="slide" id="slide-2">
+      <div class="slide-header">
+        <p class="slide-category">Problem Statement & Context</p>
+        <h2 class="slide-title">The First-Mile Crisis in Access to Legal Justice</h2>
+        <p class="slide-subtitle">
+          Over 50 Million cases are pending across Indian courts. Yet for the average citizen facing a legal dispute, the primary bottleneck is not inside the courtroom—it is knowing where, when, and how to seek help.
+        </p>
+      </div>
+
+      <div class="grid-4">
+        <div class="card">
+          <div class="card-num">01</div>
+          <h3 class="card-title">Domain & Urgency Ambiguity</h3>
+          <p class="card-sub">The First-Mile Confusion</p>
+          <p class="card-desc">
+            Citizens cannot identify whether their conflict falls under Criminal, Civil, Family, or Property law. Inability to gauge statutory urgency (bail limitation, notice deadlines) leads to irreversible procedural loss.
+          </p>
+          <p class="card-impact">Impact: Missed limitation periods & forfeited statutory remedies.</p>
+        </div>
+
+        <div class="card">
+          <div class="card-num">02</div>
+          <h3 class="card-title">Linguistic & Jargon Exclusion</h3>
+          <p class="card-sub">The Language Divide</p>
+          <p class="card-desc">
+            90%+ of legal websites are English-heavy and saturated with legal jargon (IPC/BNS, CrPC, CPC). Semi-urban and rural litigants comfortable speaking in Hindi or regional dialects are entirely excluded.
+          </p>
+          <p class="card-impact">Impact: Extreme cognitive distress & reliance on predatory touts.</p>
+        </div>
+
+        <div class="card">
+          <div class="card-num">03</div>
+          <h3 class="card-title">Trust Deficit & Opaque Discovery</h3>
+          <p class="card-sub">Unverified Referral Trap</p>
+          <p class="card-desc">
+            Finding an advocate who genuinely specializes in the dispute domain is a lottery. Litigants face arbitrary consultation fee demands and opaque practitioner credentials with zero performance guarantees.
+          </p>
+          <p class="card-impact">Impact: Exorbitant upfront fees & mismatched representation.</p>
+        </div>
+
+        <div class="card">
+          <div class="card-num">04</div>
+          <h3 class="card-title">Lack of Accessibility & Triage Tools</h3>
+          <p class="card-sub">Typing vs. Speaking Barrier</p>
+          <p class="card-desc">
+            Traditional portals require extensive typing and structured legal forms. Under acute stress (threat of arrest, domestic distress, illegal eviction), users struggle to type out structured text.
+          </p>
+          <p class="card-impact">Impact: Complete paralysis during early stages when settlement is easiest.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 3: SOLUTION - VAKIL SETU -->
+    <div class="slide" id="slide-3">
+      <div class="slide-header">
+        <p class="slide-category">Proposed Solution & Value Proposition</p>
+        <h2 class="slide-title">Vakil Setu: An Accessible, Voice-First Legal Bridge</h2>
+        <p class="slide-subtitle">
+          An end-to-end, closed-loop legal triage ecosystem that converts unstructured spoken complaints in Hindi or English into structured legal intelligence, verified advocate discovery, and guaranteed consultation booking.
+        </p>
+      </div>
+
+      <div class="grid-3">
+        <!-- Col 1 -->
+        <div class="col-card">
+          <div class="col-banner" style="background: var(--navy);">
+            1. Voice Intake & AI Triage
+          </div>
+          <div class="col-body">
+            <div>
+              <p class="col-item-title">Hands-Free Spoken Input</p>
+              <p class="col-item-desc">Native browser Web Speech API allows users to speak in Hindi or English without typing, streaming interim transcriptions in real time.</p>
+            </div>
+            <div>
+              <p class="col-item-title">Statutory Legal Domain Triage</p>
+              <p class="col-item-desc">Identifies primary domain (Criminal, Civil, Family, Property) under Indian Law using structured JSON prompt contracts.</p>
+            </div>
+            <div>
+              <p class="col-item-title">Urgency Level Assessment</p>
+              <p class="col-item-desc">Scores urgency into Low, Medium, High, or Emergency to highlight critical deadlines and prevent statutory lapses.</p>
+            </div>
+            <div>
+              <p class="col-item-title">Devanagari / English TTS Audio</p>
+              <p class="col-item-desc">Speech synthesis speaks action items aloud, ensuring semi-literate citizens understand their immediate legal rights.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Col 2 -->
+        <div class="col-card">
+          <div class="col-banner" style="background: var(--amber-dark);">
+            2. Advocate Matching & Directory
+          </div>
+          <div class="col-body">
+            <div>
+              <p class="col-item-title">Domain-Specific Matching</p>
+              <p class="col-item-desc">Algorithmic matching pairs litigants only with advocates possessing verified expertise in the identified legal domain.</p>
+            </div>
+            <div>
+              <p class="col-item-title">Transparent Credentialing</p>
+              <p class="col-item-desc">Displays verified practice experience (years), court jurisdictions, spoken languages, and real user ratings.</p>
+            </div>
+            <div>
+              <p class="col-item-title">Autonomous Directory Scraping</p>
+              <p class="col-item-desc">Cheerio-powered scraper crawls public legal portals (LawRato) to aggregate and update practicing advocate profiles.</p>
+            </div>
+            <div>
+              <p class="col-item-title">Emergency Crisis Escalation</p>
+              <p class="col-item-desc">Urgent cases trigger immediate priority routing to the highest-rated active advocate on duty.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Col 3 -->
+        <div class="col-card">
+          <div class="col-banner" style="background: var(--green);">
+            3. Payments & Legal Assistant
+          </div>
+          <div class="col-body">
+            <div>
+              <p class="col-item-title">Direct Consultation Scheduling</p>
+              <p class="col-item-desc">Frictionless appointment booking flow linking the user's case brief with the chosen advocate's schedule.</p>
+            </div>
+            <div>
+              <p class="col-item-title">Cryptographic Razorpay Escrow</p>
+              <p class="col-item-desc">Server-side HMAC SHA-256 signature verification guarantees secure, transparent consultation fee transactions.</p>
+            </div>
+            <div>
+              <p class="col-item-title">Multi-Turn Case Assistant</p>
+              <p class="col-item-desc">Context-aware chat retains the last 10 conversation turns for follow-up inquiries about evidence, fees, and procedures.</p>
+            </div>
+            <div>
+              <p class="col-item-title">Frictionless Guest Sessions</p>
+              <p class="col-item-desc">Local storage caching allows immediate legal triage without tedious registration or login barriers.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 4: SYSTEM ARCHITECTURE (VISUAL HEAVY!) -->
+    <div class="slide" id="slide-4">
+      <div class="slide-header">
+        <p class="slide-category">System Design & Technical Architecture</p>
+        <h2 class="slide-title">Multi-Tier Architecture & End-to-End Pipeline</h2>
+        <p class="slide-subtitle">
+          Modular, decoupled client-server architecture balancing low-latency client speech processing with a high-availability backend and dual-engine AI failover.
+        </p>
+      </div>
+
+      <div class="arch-container">
+        <!-- Layer 1 -->
+        <div class="arch-layer">
+          <div class="arch-tag" style="background: var(--navy);">
+            1. Client & Presentation Layer
+            <span style="font-size: 9px; opacity: 0.85; font-weight: normal; margin-top: 2px;">React 18 + Vite SPA</span>
+          </div>
+          <div class="arch-modules">
+            <div class="arch-mod">
+              <p class="arch-mod-title">Voice STT Engine</p>
+              <p class="arch-mod-desc">Web Speech API (hi-IN / en-IN) with live interim streaming</p>
+            </div>
+            <div class="arch-mod">
+              <p class="arch-mod-title">Case Hero & Triage UI</p>
+              <p class="arch-mod-desc">Visual domain badges, urgency gauges, and action items</p>
+            </div>
+            <div class="arch-mod">
+              <p class="arch-mod-title">Bilingual TTS Engine</p>
+              <p class="arch-mod-desc">window.speechSynthesis reading legal actions aloud</p>
+            </div>
+            <div class="arch-mod">
+              <p class="arch-mod-title">AppContext & Cache</p>
+              <p class="arch-mod-desc">Resilient state persistence via browser LocalStorage</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Layer 2 -->
+        <div class="arch-layer">
+          <div class="arch-tag" style="background: #1e3a8a;">
+            2. API Gateway & Server
+            <span style="font-size: 9px; opacity: 0.85; font-weight: normal; margin-top: 2px;">Node.js + Express REST API</span>
+          </div>
+          <div class="arch-modules">
+            <div class="arch-mod">
+              <p class="arch-mod-title">POST /api/ai/triage</p>
+              <p class="arch-mod-desc">Unified issue classification & advocate matching</p>
+            </div>
+            <div class="arch-mod">
+              <p class="arch-mod-title">POST /api/advocates/match</p>
+              <p class="arch-mod-desc">Domain query, rating sort & availability filtering</p>
+            </div>
+            <div class="arch-mod">
+              <p class="arch-mod-title">POST /api/bookings</p>
+              <p class="arch-mod-desc">Guest user provisioning & consultation creation</p>
+            </div>
+            <div class="arch-mod">
+              <p class="arch-mod-title">POST /api/payments/*</p>
+              <p class="arch-mod-desc">Razorpay order generation & signature verify</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Layer 3 -->
+        <div class="arch-layer">
+          <div class="arch-tag" style="background: #92400e;">
+            3. AI & Intelligence Layer
+            <span style="font-size: 9px; opacity: 0.85; font-weight: normal; margin-top: 2px;">Dual-Engine Triage Engine</span>
+          </div>
+          <div class="arch-modules">
+            <div class="arch-mod">
+              <p class="arch-mod-title">Primary: Gemini 2.0 / LLM</p>
+              <p class="arch-mod-desc">Structured JSON schema tuned for Indian jurisprudence</p>
+            </div>
+            <div class="arch-mod">
+              <p class="arch-mod-title">Language Normalizer</p>
+              <p class="arch-mod-desc">Devanagari vs Roman-Hindi token inspection</p>
+            </div>
+            <div class="arch-mod">
+              <p class="arch-mod-title">Deterministic Rule Failover</p>
+              <p class="arch-mod-desc">Regex heuristics ensure 100% uptime during API outages</p>
+            </div>
+            <div class="arch-mod">
+              <p class="arch-mod-title">Context Tracker</p>
+              <p class="arch-mod-desc">10-turn conversation sliding history window</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Layer 4 -->
+        <div class="arch-layer">
+          <div class="arch-tag" style="background: #166534;">
+            4. Data & Ingestion Layer
+            <span style="font-size: 9px; opacity: 0.85; font-weight: normal; margin-top: 2px;">MongoDB Atlas + Cheerio</span>
+          </div>
+          <div class="arch-modules">
+            <div class="arch-mod">
+              <p class="arch-mod-title">Advocate Collection</p>
+              <p class="arch-mod-desc">Indexed by domain, rating, experience & languages</p>
+            </div>
+            <div class="arch-mod">
+              <p class="arch-mod-title">Booking & Payment Ledger</p>
+              <p class="arch-mod-desc">Stores consultation slots, payment status & order IDs</p>
+            </div>
+            <div class="arch-mod">
+              <p class="arch-mod-title">Cheerio Scraper Pipeline</p>
+              <p class="arch-mod-desc">Crawls legal directories, parses JSON-LD & DOM cards</p>
+            </div>
+            <div class="arch-mod">
+              <p class="arch-mod-title">User & Identity Store</p>
+              <p class="arch-mod-desc">Guest user documents tagged with phone & language</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Data Flow Footer -->
+        <div class="arch-footer">
+          ⚡ <strong>Data Flow:</strong> Browser Web Speech API &rarr; HTTPS REST / JSON &rarr; Express Routing &rarr; LLM Triage / Regex Fallback &rarr; MongoDB Mongoose &rarr; Razorpay HMAC SHA-256 Escrow
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 5: TECHNICAL APPROACH & IMPLEMENTATION -->
+    <div class="slide" id="slide-5">
+      <div class="slide-header">
+        <p class="slide-category">Technical Approach & Deep Dive</p>
+        <h2 class="slide-title">Core Engineering Modules & Implementation Logic</h2>
+        <p class="slide-subtitle">
+          How each module is engineered to provide maximum resilience, privacy, and responsiveness under real-world constraints.
+        </p>
+      </div>
+
+      <div class="grid-2">
+        <div class="card">
+          <h3 class="card-title" style="color: var(--navy);">Voice Processing Pipeline</h3>
+          <p class="card-sub">In-Browser Low Latency Speech</p>
+          <ul style="padding-left: 18px; font-size: 11.5px; color: var(--text-muted); line-height: 1.5; display: flex; flex-direction: column; gap: 4px;">
+            <li><strong>Zero Server Audio Overhead:</strong> Leverages client device processing via <code>webkitSpeechRecognition</code>, eliminating expensive audio cloud upload bandwidth.</li>
+            <li><strong>Dynamic BCP-47 Locale Tagging:</strong> Injects <code>hi-IN</code> or <code>en-IN</code> codes based on character-set detection (Devanagari vs Latin).</li>
+            <li><strong>Real-Time Interim Transcription:</strong> Streams spoken words live into a draft preview bubble, allowing instant visual feedback.</li>
+            <li><strong>Hands-Free Speech Synthesis:</strong> Executes <code>window.speechSynthesis</code> with regional accents for complete auditory loopback.</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <h3 class="card-title" style="color: var(--amber-dark);">Dual-Engine Legal Triage</h3>
+          <p class="card-sub">Resilient AI Orchestration</p>
+          <ul style="padding-left: 18px; font-size: 11.5px; color: var(--text-muted); line-height: 1.5; display: flex; flex-direction: column; gap: 4px;">
+            <li><strong>Strict JSON Schema Enforcement:</strong> Constrains LLM outputs strictly to <code>{ domain, urgency, summary, actions }</code> to eliminate parsing errors.</li>
+            <li><strong>Indian Jurisprudence Tuning:</strong> Prompt incorporates Indian statutes (BNS/IPC criminal limits, CPC property suits, family laws).</li>
+            <li><strong>Sliding History Window:</strong> Formats previous 10 dialogue turns to handle complex multi-turn legal inquiries.</li>
+            <li><strong>Deterministic Rule Fallback:</strong> If upstream LLM suffers rate-limiting (429) or gateway timeouts (503), regex heuristics return vetted guidance.</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <h3 class="card-title" style="color: var(--green);">Web Scraping & Data Pipeline</h3>
+          <p class="card-sub">Automated Directory Aggregation</p>
+          <ul style="padding-left: 18px; font-size: 11.5px; color: var(--text-muted); line-height: 1.5; display: flex; flex-direction: column; gap: 4px;">
+            <li><strong>Cheerio DOM & LD+JSON Parser:</strong> Scrapes directory listings, parsing both embedded schema.org JSON-LD nodes and card DOM structures.</li>
+            <li><strong>Profile-Level Enrichment:</strong> Deep-crawls individual advocate profile pages to extract granular experience years, ratings, and domains.</li>
+            <li><strong>Domain Normalization:</strong> Maps hundreds of arbitrary legal practice tags into 4 canonical domains (Criminal, Civil, Family, Property).</li>
+            <li><strong>Atomic Upsert Operations:</strong> Deduplicates records by normalized advocate names and profile slugs before saving to MongoDB.</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <h3 class="card-title" style="color: var(--crimson);">Transaction Security & Booking</h3>
+          <p class="card-sub">Cryptographic Escrow Lifecycle</p>
+          <ul style="padding-left: 18px; font-size: 11.5px; color: var(--text-muted); line-height: 1.5; display: flex; flex-direction: column; gap: 4px;">
+            <li><strong>HMAC SHA-256 Signature Verification:</strong> Verifies Razorpay payment signatures server-side using <code>crypto.createHmac</code> to prevent transaction spoofing.</li>
+            <li><strong>Consultation State Transitions:</strong> Implements booking lifecycle states (<code>pending</code> &rarr; <code>confirmed</code> / <code>failed</code>) tied to order receipts.</li>
+            <li><strong>Client-Side Session Storage:</strong> Sensitive case facts are stored in client LocalStorage, preventing unauthorized database leaks.</li>
+            <li><strong>Emergency Fast-Path:</strong> Bypasses scheduling queues to return the highest-rated active advocate on call for urgent crises.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 6: FEASIBILITY & VIABILITY -->
+    <div class="slide" id="slide-6">
+      <div class="slide-header">
+        <p class="slide-category">Feasibility & Viability Analysis</p>
+        <h2 class="slide-title">Multidimensional Feasibility & Viability Matrix</h2>
+        <p class="slide-subtitle">
+          Evaluating technical deployability, economic sustainability, legal ethics compliance, and operational scalability under Indian conditions.
+        </p>
+      </div>
+
+      <div class="grid-2">
+        <div class="col-card">
+          <div class="col-banner" style="background: var(--navy);">
+            Technical Feasibility
+          </div>
+          <div class="col-body" style="gap: 8px;">
+            <div>
+              <p class="col-item-title">Client-Side Speech API Efficiency</p>
+              <p class="col-item-desc">Eliminates heavy cloud STT server costs. Supported across 80%+ modern browsers (Chrome, Edge, Safari).</p>
+            </div>
+            <div>
+              <p class="col-item-title">Asynchronous Node.js Architecture</p>
+              <p class="col-item-desc">Non-blocking I/O easily handles thousands of concurrent triage queries with negligible memory overhead.</p>
+            </div>
+            <div>
+              <p class="col-item-title">Zero-Downtime Rule Fallback</p>
+              <p class="col-item-desc">Ensures the platform never fails during emergency situations, even under total external AI API downtime.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-card">
+          <div class="col-banner" style="background: var(--green);">
+            Economic Viability
+          </div>
+          <div class="col-body" style="gap: 8px;">
+            <div>
+              <p class="col-item-title">Minimal Operational Overhead</p>
+              <p class="col-item-desc">Runs on lightweight serverless/cloud instances; token expenditure is capped by compact prompt design.</p>
+            </div>
+            <div>
+              <p class="col-item-title">Clear Monetization Model</p>
+              <p class="col-item-desc">Platform sustains via nominal convenience fee per confirmed consultation booking (5–10%) and advocate directory tiers.</p>
+            </div>
+            <div>
+              <p class="col-item-title">Massive TAM (Total Addressable Market)</p>
+              <p class="col-item-desc">Addresses a market of 1.4B citizens with near-zero physical infrastructure requirements.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-card">
+          <div class="col-banner" style="background: var(--amber-dark);">
+            Legal & Ethical Feasibility
+          </div>
+          <div class="col-body" style="gap: 8px;">
+            <div>
+              <p class="col-item-title">Advocates Act 1961 Compliance</p>
+              <p class="col-item-desc">Acts strictly as an informational triage bridge, not a legal practitioner, with prominent non-legal advice disclaimers.</p>
+            </div>
+            <div>
+              <p class="col-item-title">BCI Advertising Rule 36 Adherence</p>
+              <p class="col-item-desc">Lawyer listings are objective, factual directories without promotional superlatives or solicitations.</p>
+            </div>
+            <div>
+              <p class="col-item-title">Data Privacy & Client Confidentiality</p>
+              <p class="col-item-desc">Litigation secrets are not stored unencrypted; users retain control over case history via session resets.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-card">
+          <div class="col-banner" style="background: #7c2d12;">
+            Operational & Market Viability
+          </div>
+          <div class="col-body" style="gap: 8px;">
+            <div>
+              <p class="col-item-title">High Tier-2 & Rural Penetration</p>
+              <p class="col-item-desc">Overcomes the traditional English-only digital barrier, unlocking access for vernacular populations.</p>
+            </div>
+            <div>
+              <p class="col-item-title">Automated Supply Onboarding</p>
+              <p class="col-item-desc">Scraping pipeline continuously indexes practicing lawyers without expensive manual data acquisition.</p>
+            </div>
+            <div>
+              <p class="col-item-title">Judicial Decongestion Alignment</p>
+              <p class="col-item-desc">Directly complements Govt. of India's Tele-Law and NALSA access-to-justice missions.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 7: IMPACTS & BENEFITS -->
+    <div class="slide" id="slide-7">
+      <div class="slide-header">
+        <p class="slide-category">Impacts & Ecosystem Benefits</p>
+        <h2 class="slide-title">Measurable Multi-Stakeholder Ecosystem Impacts</h2>
+        <p class="slide-subtitle">
+          How Vakil Setu generates transformative value for citizens, legal professionals, and the broader judicial ecosystem.
+        </p>
+      </div>
+
+      <div class="grid-3">
+        <div class="col-card">
+          <div class="col-banner" style="background: var(--navy);">
+            For Citizens & Litigants
+          </div>
+          <div class="col-body" style="gap: 14px;">
+            <div>
+              <p class="col-item-title">✔ 80% Reduction in First-Mile Friction</p>
+              <p class="col-item-desc">Provides instant clarity on legal domain, urgency level, and necessary documents, eliminating weeks of confusion.</p>
+            </div>
+            <div>
+              <p class="col-item-title">✔ Vernacular Voice Democratization</p>
+              <p class="col-item-desc">Enables non-English speaking and semi-literate citizens to articulate their rights in spoken Hindi.</p>
+            </div>
+            <div>
+              <p class="col-item-title">✔ Elimination of Middleman Exploitation</p>
+              <p class="col-item-desc">Direct, transparent booking with verified advocates bypasses court touts and arbitrary consultation charges.</p>
+            </div>
+            <div>
+              <p class="col-item-title">✔ Emergency Safety Net</p>
+              <p class="col-item-desc">Instant 1-tap priority connection for citizens facing acute threats, unlawful eviction, or illegal detention.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-card">
+          <div class="col-banner" style="background: var(--amber-dark);">
+            For Advocates & Law Firms
+          </div>
+          <div class="col-body" style="gap: 14px;">
+            <div>
+              <p class="col-item-title">✔ Pre-Qualified Practice Leads</p>
+              <p class="col-item-desc">Advocates receive clients strictly matched to their specialization (e.g. Criminal vs Property), eliminating wasted discovery calls.</p>
+            </div>
+            <div>
+              <p class="col-item-title">✔ Guaranteed Fee Collection</p>
+              <p class="col-item-desc">Pre-paid Razorpay escrow eliminates non-payment for initial consultations and clarifies expectations upfront.</p>
+            </div>
+            <div>
+              <p class="col-item-title">✔ Pre-Synthesized Client Briefs</p>
+              <p class="col-item-desc">Advocates receive a structured AI summary of the case facts before the consultation begins, saving 30+ minutes.</p>
+            </div>
+            <div>
+              <p class="col-item-title">✔ Ethical Digital Visibility</p>
+              <p class="col-item-desc">Establishes professional digital presence fully compliant with Bar Council of India non-solicitation rules.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-card">
+          <div class="col-banner" style="background: var(--green);">
+            For the Judicial Ecosystem
+          </div>
+          <div class="col-body" style="gap: 14px;">
+            <div>
+              <p class="col-item-title">✔ Filter for Frivolous Litigation</p>
+              <p class="col-item-desc">Informs citizens when disputes are non-cognizable or best settled via mediation, keeping unnecessary suits off court dockets.</p>
+            </div>
+            <div>
+              <p class="col-item-title">✔ Free Legal Aid Promotion</p>
+              <p class="col-item-desc">Guides underprivileged citizens toward statutory legal aid clinics (NALSA / DLSA) when commercial lawyers are unaffordable.</p>
+            </div>
+            <div>
+              <p class="col-item-title">✔ Support for Digital India & e-Courts</p>
+              <p class="col-item-desc">Acts as the citizen-facing conversational frontend bridging the public to digital legal databases and services.</p>
+            </div>
+            <div>
+              <p class="col-item-title">✔ Legal Literacy as a Public Good</p>
+              <p class="col-item-desc">Converts complex jurisprudence into actionable citizen knowledge, empowering people to uphold their legal rights.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 8: ROADMAP & REFERENCES -->
+    <div class="slide" id="slide-8">
+      <div class="slide-header">
+        <p class="slide-category">Roadmap & Academic References</p>
+        <h2 class="slide-title">Engineering Roadmap & Formal References</h2>
+        <p class="slide-subtitle">
+          Planned technical advancements and foundational academic, statutory, and architectural references backing the system.
+        </p>
+      </div>
+
+      <div class="grid-2">
+        <div class="card">
+          <h3 class="card-title" style="color: var(--navy); margin-bottom: 12px;">Strategic Future Roadmap</h3>
+          <div style="display: flex; flex-direction: column; gap: 10px; font-size: 11.5px; color: var(--text-muted); line-height: 1.45;">
+            <div>
+              <strong style="color: var(--primary);">Phase 1: Multi-Regional Indic Voice Expansion</strong><br>
+              Extend beyond Hindi/English into 8 regional Indian languages (Bengali, Marathi, Tamil, Telugu, Punjabi, Gujarati) via Indic-tuned Whisper models.
+            </div>
+            <div>
+              <strong style="color: var(--primary);">Phase 2: Legal Document OCR & Clause Analyzer</strong><br>
+              Allow users to upload FIR scans, lease agreements, and notices; automatically extract liabilities, dates, and contradicting clauses.
+            </div>
+            <div>
+              <strong style="color: var(--primary);">Phase 3: e-Courts CNR & Live Case Tracking</strong><br>
+              Integrate with e-Courts API to track ongoing hearing dates, court causes, and daily interim orders directly via 16-digit CNR numbers.
+            </div>
+            <div>
+              <strong style="color: var(--primary);">Phase 4: WebRTC In-Browser Encrypted Video Consult</strong><br>
+              Incorporate peer-to-peer encrypted WebRTC video calling and document screen-sharing between advocates and clients directly in the platform.
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3 class="card-title" style="color: var(--amber-dark); margin-bottom: 12px;">Academic, Statutory & Technical References</h3>
+          <div style="display: flex; flex-direction: column; gap: 8px; font-size: 10.5px; color: var(--text-muted); line-height: 1.4;">
+            <div>
+              <strong style="color: var(--primary);">[Law Commission of India]</strong> Report No. 245 & 272 on Access to Justice, Court Arrears, and Institutional Legal Aid.
+            </div>
+            <div>
+              <strong style="color: var(--primary);">[Advocates Act, 1961 & BCI Rules]</strong> Standards of Professional Conduct & Etiquette (Rule 36 governing legal directories).
+            </div>
+            <div>
+              <strong style="color: var(--primary);">[Ministry of Law & Justice, Govt. of India]</strong> Tele-Law Programme: Mainstreaming Legal Aid across Gram Panchayats.
+            </div>
+            <div>
+              <strong style="color: var(--primary);">[Google DeepMind & Gemini Research]</strong> Technical Reports on structured multilingual extraction and low-resource Indic language reasoning.
+            </div>
+            <div>
+              <strong style="color: var(--primary);">[W3C Web Speech API Specification]</strong> In-browser speech recognition (<code>webkitSpeechRecognition</code>) and synthesis standards.
+            </div>
+            <div>
+              <strong style="color: var(--primary);">[Razorpay Developer & RBI Security Guidelines]</strong> Cryptographic HMAC SHA-256 signature verification standards for digital escrow.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Presentation Navigation Toolbar -->
+  <div class="deck-nav">
+    <button class="deck-btn" onclick="prevSlide()">&#8592; Previous</button>
+    <div class="deck-counter" id="slide-indicator">Slide 1 of 8</div>
+    <button class="deck-btn" onclick="nextSlide()">Next &#8594;</button>
+    <button class="deck-btn" onclick="toggleFullscreen()" style="margin-left: 10px;">⛶ Fullscreen</button>
+    <button class="deck-btn" onclick="window.print()" style="background: var(--amber-dark); border-color: var(--amber);">🖨 Print / PDF</button>
+  </div>
+
+  <script>
+    let currentSlide = 1;
+    const totalSlides = 8;
+
+    function showSlide(n) {
+      if (n < 1) n = 1;
+      if (n > totalSlides) n = totalSlides;
+      currentSlide = n;
+
+      for (let i = 1; i <= totalSlides; i++) {
+        const slide = document.getElementById(`slide-${i}`);
+        if (slide) {
+          slide.classList.remove('active');
+        }
+      }
+
+      const activeSlide = document.getElementById(`slide-${currentSlide}`);
+      if (activeSlide) {
+        activeSlide.classList.add('active');
+      }
+
+      document.getElementById('slide-indicator').textContent = `Slide ${currentSlide} of ${totalSlides}`;
+    }
+
+    function prevSlide() {
+      if (currentSlide > 1) showSlide(currentSlide - 1);
+    }
+
+    function nextSlide() {
+      if (currentSlide < totalSlides) showSlide(currentSlide + 1);
+    }
+
+    function toggleFullscreen() {
+      if (!document.fullscreenElement) {
+        document.documentElement.requestFullscreen().catch(err => {
+          alert(`Error attempting fullscreen: ${err.message}`);
+        });
+      } else {
+        document.exitFullscreen();
+      }
+    }
+
+    // Keyboard navigation
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') {
+        e.preventDefault();
+        nextSlide();
+      } else if (e.key === 'ArrowLeft' || e.key === 'PageUp') {
+        e.preventDefault();
+        prevSlide();
+      } else if (e.key === 'Home') {
+        showSlide(1);
+      } else if (e.key === 'End') {
+        showSlide(totalSlides);
+      }
+    });
+  </script>
+</body>
+</html>

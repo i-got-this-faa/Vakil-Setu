@@ -1,0 +1,227 @@
+{
+  "slides": [
+    {
+      "section": "PROJECT PRESENTATION",
+      "title": "Vakil Setu",
+      "subtitle": "Multilingual legal intake and consultation",
+      "layout": "cover",
+      "seconds": 30,
+      "script": "Good morning. We are presenting Vakil Setu, a multilingual legal intake and consultation project. Our focus is the first step a person takes when facing a legal concern: explaining the situation, reviewing a clear summary, and finding an appropriate advocate. The current project is a web application with English, Hindi and Punjabi pilot interfaces. We will explain the problem, our development approach, how the application works, and the evidence behind our results.",
+      "cue": "Introduce the team verbally. Keep the opening under 30 seconds.",
+      "sources": ["rebuild/README.md", "rebuild/docs/decisions.md"]
+    },
+    {
+      "section": "P  /  PROBLEM",
+      "title": "The difficult first step",
+      "subtitle": "A person can describe a problem without knowing its legal category",
+      "layout": "rows",
+      "rows": [
+        ["People", "Citizens unfamiliar with legal processes or legal English"],
+        ["Friction", "Unstructured facts, language mismatch and uncertainty about whom to contact"],
+        ["Today", "Personal referrals, online searches and separate consultation services"],
+        ["Project gap", "A private, reviewed intake that carries into a consultation request"]
+      ],
+      "footnote": "Problem hypothesis. No field survey or measured user impact is claimed.",
+      "seconds": 40,
+      "script": "The problem we address is uncertainty at the beginning of a legal interaction. A person may know what happened but may not know the relevant legal category, which facts matter, or whom to contact. Searching online or relying on personal referrals can leave the person repeating the same story across different channels. Our working hypothesis is that a private intake in a familiar language, followed by a reviewed summary, can make this first interaction easier. We have not yet measured that benefit through a field study, so we present it as the problem we are testing.",
+      "cue": "Use a hypothetical tenant whose security deposit has not been returned. Do not give a legal conclusion.",
+      "sources": ["rebuild/docs/requirements.md", "rebuild/docs/srs-source.txt"]
+    },
+    {
+      "section": "R  /  REASON",
+      "title": "Existing services and our focus",
+      "subtitle": "Access to legal help already has established approaches",
+      "layout": "rows",
+      "rows": [
+        ["Tele-Law", "Connects people with lawyers through phone and video services"],
+        ["LawRato", "Offers advocate discovery and consultation options"],
+        ["Vakil Setu", "Focuses on multilingual intake, user review and controlled summary sharing"],
+        ["Why this scope", "Citizens prepare their account. Advocates receive the version the user approved."]
+      ],
+      "footnote": "Differentiation is a project focus. Comparative superiority remains untested.",
+      "seconds": 40,
+      "script": "The need for digital legal access is already recognised. Tele-Law connects people with lawyers through telephone and video services, while LawRato provides lawyer discovery and consultation options. We therefore cannot claim that online access to lawyers is a new idea. Our project focuses on the intake before the consultation: retaining the user's words, letting the user review a summary, and sharing a specific version with a chosen advocate. Citizens and advocates are the intended beneficiaries. Whether this approach improves completion or reduces repeated explanations still requires a comparative user study.",
+      "cue": "Explain the project's chosen focus without claiming competitors lack these capabilities.",
+      "sources": ["https://www.tele-law.in/faq.html", "https://lawrato.com/cmses/page/how-does-lawrato-work", "rebuild/packages/backend/convex/bookings.ts"]
+    },
+    {
+      "section": "O  /  OBJECTIVE",
+      "title": "A reviewable path to consultation",
+      "subtitle": "The MVP centres on a private intake and an explicit request lifecycle",
+      "layout": "columns",
+      "columns": [
+        {"title": "Included in the MVP", "items": ["Accounts and application roles", "Private intake and versioned summaries", "Advocate approval and discovery", "Future slots and consultation requests"]},
+        {"title": "Completion criteria", "items": ["Preserve the user's reviewed words", "Enforce ownership on the backend", "Share only the approved summary version", "Show pending and accepted states clearly"]}
+      ],
+      "footnote": "Payments, reviews, native mobile and guaranteed emergency dispatch are deferred.",
+      "seconds": 40,
+      "script": "Our objective is to implement a reviewable path from a person's concern to a consultation request. The MVP includes user accounts, application roles, private cases, versioned summaries, advocate approval, discovery and future consultation slots. Successful completion means that the system preserves the user's words, checks ownership on the backend, shares the exact approved summary version, and clearly records the request state. A request remains pending until an advocate accepts it. Payments, public reviews, a native mobile application and guaranteed emergency connections are outside the current MVP.",
+      "cue": "Separate the implemented workflow from the remaining hosted acceptance checks.",
+      "sources": ["rebuild/README.md", "rebuild/docs/requirements.md", "rebuild/packages/backend/convex/bookings.ts"]
+    },
+    {
+      "section": "J  /  JOURNEY",
+      "title": "Development approach and decisions",
+      "subtitle": "The rebuild preserves the legacy application in a separate directory",
+      "layout": "rows",
+      "rows": [
+        ["01  Audit", "Compared the SRS with legacy code and checked advertised capabilities"],
+        ["02  Define", "Selected three pilot languages and bounded the consultation MVP"],
+        ["03  Build", "Implemented backend rules, private workflows and responsive pages"],
+        ["04  Verify", "Used automated checks, browser scenarios and a hosted intake check"]
+      ],
+      "footnote": "Key choice: expand in stages instead of treating a language registry as complete support.",
+      "seconds": 45,
+      "script": "We began by comparing the source requirements with the inherited React and Express application. That audit exposed a gap between some advertised features and the actual code, so we kept the legacy version and built the maintained implementation separately. We narrowed the first language pilot to English, Hindi and Punjabi. We then developed the backend permissions and consultation lifecycle alongside the web interface. An alternative was to expand every feature and language immediately. We chose staged coverage so that each capability could have separate evidence. Validation combined automated tests, responsive browser checks and a limited real hosted intake check.",
+      "cue": "Describe the actual sequence. Do not invent interviews, sprint dates or survey findings.",
+      "sources": ["rebuild/docs/legacy-ai-audit.md", "rebuild/docs/decisions.md", "rebuild/docs/verification.md", "rebuild/docs/hosted-activation.md"]
+    },
+    {
+      "section": "E  /  EXECUTION",
+      "title": "Application architecture",
+      "subtitle": "Identity and application permissions have separate responsibilities",
+      "layout": "rows",
+      "rows": [
+        ["Web interface", "Next.js, React and TypeScript render the multilingual workflows"],
+        ["Identity", "Clerk handles sign-in and sessions"],
+        ["Application backend", "Convex checks roles and ownership, stores cases and reserves slots"],
+        ["Optional AI", "A server-side gateway adapter requires configuration and explicit consent"]
+      ],
+      "footnote": "Shared domain and language packages support consistent rules across the application.",
+      "seconds": 45,
+      "script": "The current implementation uses Next.js and React for the web interface, with TypeScript across the workspace. Clerk handles identity and sessions. Convex owns the application data and checks roles, record ownership and permitted actions. It also handles slot reservations and lifecycle changes through backend mutations. Shared domain and language packages keep common rules separate from the interface. These choices support a typed web application with a hosted backend and managed identity. AI sits behind a server-side gateway adapter. The browser never needs the provider credentials, and a successful sign-in does not grant unrestricted access to application data.",
+      "cue": "If asked why the stack changed, explain the explicit identity and backend permission boundaries.",
+      "sources": ["rebuild/packages/backend/ARCHITECTURE.md", "rebuild/packages/backend/convex/lib/access.ts", "rebuild/packages/backend/convex/lib/provider.ts", "rebuild/package.json"]
+    },
+    {
+      "section": "E  /  EXECUTION",
+      "title": "The implemented web experience",
+      "subtitle": "Users begin with their own words and choose what to share",
+      "layout": "screenshot",
+      "rows": [
+        ["Enter", "Type a concern or use optional browser speech"],
+        ["Review", "Correct the text before saving privately"],
+        ["Continue", "Review a summary and browse advocates"]
+      ],
+      "footnote": "Project screenshot. The script includes a separate live-demo sequence.",
+      "seconds": 35,
+      "script": "This is the implemented web experience. A user starts by describing a concern, either by typing or by trying browser speech where available. The text remains editable before saving. Saving an intake stores the user's words privately. It does not automatically produce AI analysis. The saved case confirms that distinction and offers a manual summary starting from the original intake, or advocate discovery. This gives us a useful workflow even when the AI provider is unavailable. A person should always know whether they are reading their own summary or a provider-generated draft.",
+      "cue": "Point to the start action. For a live demo, use the synthetic example in the script appendix.",
+      "sources": ["rebuild/apps/web/src/components/intake.tsx", "rebuild/apps/web/src/components/cases.tsx", "rebuild/.runtime/browser-qa/landing-en-1280.png", "rebuild/docs/verification.md"]
+    },
+    {
+      "section": "E  /  EXECUTION",
+      "title": "Consultation request lifecycle",
+      "subtitle": "The backend checks the slot and the specific summary-sharing consent",
+      "layout": "rows",
+      "rows": [
+        ["Prepare", "Review a summary and choose an approved advocate with a future slot"],
+        ["Consent", "Approve the recipient and the exact summary version"],
+        ["Request", "Reserve the slot and create a pending consultation request"],
+        ["Resolve", "Record acceptance, decline, cancellation, expiry or completion"]
+      ],
+      "footnote": "Lifecycle rules have automated test evidence. Full hosted booking acceptance remains pending.",
+      "seconds": 45,
+      "script": "The consultation flow begins with a reviewed summary and an approved advocate who has a future slot. Before submitting, the user consents to share a specific summary version with that advocate. The backend checks ownership, approval and slot availability together, then reserves the slot and records a pending request. Repeated identical submissions use an idempotency key, which prevents duplicate request records. The advocate can accept or decline, and the system handles cancellation and expiry through recorded state changes. Automated tests exercise these rules, including competing reservations. A complete hosted user-to-advocate acceptance trial remains part of the next validation stage.",
+      "cue": "Explain pending versus accepted. Avoid describing a request as a completed consultation.",
+      "sources": ["rebuild/packages/backend/convex/bookings.ts", "rebuild/packages/domain/src/index.ts", "rebuild/packages/backend/tests/backend.test.ts", "rebuild/docs/hosted-activation.md"]
+    },
+    {
+      "section": "E  /  EXECUTION",
+      "title": "Language capability and AI status",
+      "subtitle": "Each capability needs its own evidence",
+      "layout": "rows",
+      "rows": [
+        ["Interface pilot", "English, Hindi and Punjabi bundles. Some operational text remains English."],
+        ["Read aloud", "Hindi and Punjabi engine lifecycle checked. Human pronunciation review pending."],
+        ["Recognition", "Optional browser path. Microphone accuracy remains unverified."],
+        ["AI analysis", "Adapter implemented. DGX endpoint and live inference remain unverified."]
+      ],
+      "footnote": "The registry covers 22 scheduled languages plus English. Registry entries are expansion targets.",
+      "seconds": 45,
+      "script": "Language support has several independent parts. Our pilot has English, Hindi and Punjabi interface bundles, although some operational text still falls back to English. Hindi and Punjabi read-aloud use a bundled engine whose audio generation and browser lifecycle have been checked. That does not establish pronunciation quality or physical audibility. Speech recognition uses an optional browser path and still needs microphone accuracy testing. The broader registry includes 22 scheduled languages plus English, but those entries are expansion targets. The AI adapter exists, while the DGX endpoint and live inference remain unverified. We therefore claim neither complete multilingual AI nor measured legal accuracy.",
+      "cue": "Emphasise the distinction between a translated interface, speech and AI comprehension.",
+      "sources": ["rebuild/docs/language-matrix.md", "rebuild/docs/verification.md", "rebuild/docs/hosted-activation.md", "rebuild/packages/backend/convex/lib/provider.ts"]
+    },
+    {
+      "section": "C  /  CONTRIBUTION",
+      "title": "Application workstreams and ownership",
+      "subtitle": "Each presenter should identify the work they can explain and demonstrate",
+      "layout": "rows",
+      "rows": [
+        ["Web workflows", "Intake, case review, discovery and responsive interaction"],
+        ["Backend rules", "Ownership, credential review and consultation lifecycle"],
+        ["Language access", "Pilot copy, locale handling and read-aloud behaviour"],
+        ["Validation", "Automated scenarios, browser checks and evidence records"]
+      ],
+      "footnote": "These are application workstreams. Individual ownership requires team confirmation.",
+      "seconds": 40,
+      "script": "The project work falls into four areas. The web workflow covers intake, case review, discovery and responsive interaction. The backend area covers ownership, credential review and the consultation lifecycle. Language access covers pilot text, locale handling and read-aloud behaviour. Validation covers the automated scenarios, browser checks and evidence records. For individual evaluation, each team member should name the component they personally handled, explain one decision, describe a challenge and show the resulting behaviour. We will attribute individual work only after confirming it within the team.",
+      "cue": "Replace the final two sentences with the confirmed personal contribution paragraph in the preparation section.",
+      "sources": ["rebuild/docs/completion-record.md", "rebuild/docs/verification.md", "rebuild/apps/web/src/components/", "rebuild/packages/backend/convex/"]
+    },
+    {
+      "section": "T  /  TAKEAWAY",
+      "title": "Results and the evidence boundary",
+      "subtitle": "Recorded checks support specific behaviours, not a general production claim",
+      "layout": "rows",
+      "rows": [
+        ["78 tests", "Recorded passing checks: 60 backend, 12 language and 6 case-render tests"],
+        ["Build and layout", "Typechecks and production build passed. Responsive browser checks recorded."],
+        ["Hosted intake", "Synthetic Punjabi intake saved through Clerk and Convex and survived reload"],
+        ["Still pending", "Cross-account hosted checks, full booking acceptance and live AI evaluation"]
+      ],
+      "footnote": "Evidence dates: 14–16 October 2026. These are recorded project results, not a new test run.",
+      "seconds": 45,
+      "script": "The recorded verification provides three useful forms of evidence. First, the latest record reports 78 passing tests: 60 backend tests, 12 language tests and six case-render tests. Typechecks and the production build also passed. Second, browser checks covered narrow and desktop layouts and specific speech lifecycle scenarios. Third, a labelled synthetic Punjabi intake crossed real Clerk authentication and Convex persistence, preserved the Gurmukhi text and remained available after reload. These checks support those specific behaviours. They do not establish production readiness, full hosted booking reliability or AI quality. The evidence dates are the fourteenth to sixteenth of October 2026.",
+      "cue": "Call these recorded results. Do not claim a coverage percentage or a fresh test run.",
+      "sources": ["rebuild/docs/verification.md", "rebuild/docs/hosted-activation.md"]
+    },
+    {
+      "section": "T  /  TAKEAWAY",
+      "title": "Lessons and current limitations",
+      "subtitle": "Implementation, configuration and real-world validation are different milestones",
+      "layout": "columns",
+      "columns": [
+        {"title": "What the work taught us", "items": ["Backend checks must enforce privacy", "Users need clear outcomes after saving", "Speech failures need visible recovery", "Evidence must name the behaviour tested"]},
+        {"title": "What limits the current result", "items": ["No measured user or legal accuracy study", "Incomplete human language review", "Hosted multi-role acceptance still pending", "Speech asset provenance needs release review"]}
+      ],
+      "footnote": "The Punjabi interface preference currently resets on reload. Saved case text remains preserved.",
+      "seconds": 40,
+      "script": "The main lesson is that implementation, configuration and real-world validation are separate milestones. A hidden button cannot replace a backend ownership check. A saved intake needs an explicit success state so the user understands what happened. Speech features need recovery behaviour when a voice or browser capability fails. The remaining limitations are substantial: we have no measured user study or legal accuracy evaluation, human language review is incomplete, and hosted multi-role acceptance still needs work. The bundled speech assets also need source and build provenance review before public redistribution. These limits define the next work rather than disappearing behind a successful build.",
+      "cue": "Connect these lessons to engineering judgement and professional growth.",
+      "sources": ["rebuild/docs/verification.md", "rebuild/docs/hosted-activation.md", "rebuild/docs/language-matrix.md"]
+    },
+    {
+      "section": "T  /  TAKEAWAY",
+      "title": "Next validation and development steps",
+      "subtitle": "Release work takes priority over adding more features",
+      "layout": "rows",
+      "rows": [
+        ["First", "Complete independent-account, administrator and advocate booking trials"],
+        ["Then", "Test microphone accuracy and run human language and usability reviews"],
+        ["AI gate", "Obtain the gateway contract and evaluate consent, failures and legal output"],
+        ["Later", "Expand languages and assess native mobile after the pilot meets its criteria"]
+      ],
+      "footnote": "Pilot metrics to collect: task completion, text corrections, consent comprehension and booking conflicts.",
+      "seconds": 35,
+      "script": "Our immediate priority is validation of the existing workflow. We need independent user and advocate accounts to exercise approval, sharing, booking and cancellation on the hosted system. We then need microphone trials and human review of language quality and usability. AI activation requires an actual gateway contract, explicit consent tests and a legally reviewed evaluation set. Only after those checks should we expand the language coverage or assess native mobile work. We would measure task completion, corrections to captured facts, understanding of sharing consent and booking conflicts. These are proposed pilot metrics, not results already achieved.",
+      "cue": "Avoid promising a delivery date without an agreed schedule or dependencies.",
+      "sources": ["rebuild/docs/verification.md", "rebuild/docs/operations.md", "rebuild/README.md"]
+    },
+    {
+      "section": "T  /  TAKEAWAY",
+      "title": "Vakil Setu",
+      "subtitle": "A working foundation for reviewed legal intake",
+      "layout": "closing",
+      "rows": [
+        ["Outcome", "A multilingual web workflow with private intake and controlled sharing"],
+        ["Remaining work", "Hosted workflow acceptance, language review and verified AI inference"]
+      ],
+      "seconds": 20,
+      "script": "To conclude, Vakil Setu provides a working foundation for multilingual legal intake, user-reviewed summaries and controlled consultation requests. The original objective is partly achieved: the core workflows exist and specific behaviours have evidence, while complete hosted acceptance and validated AI remain unfinished. The next milestone is a measured pilot that tests whether users can complete the process and understand what they share. Thank you. We are ready for questions.",
+      "cue": "Pause for questions. Use the viva answers in the script as preparation.",
+      "sources": ["rebuild/README.md", "rebuild/docs/verification.md", "rebuild/docs/hosted-activation.md"]
+    }
+  ]
+}

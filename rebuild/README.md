@@ -32,7 +32,7 @@ See `docs/verification.md` for the exact checks performed and remaining live acc
 
 `bun run doctor` also checks the optional development reference at `vendor/fleet`. Restore it using [docs/fleet-reference.md](docs/fleet-reference.md) before running doctor; the app, build and tests do not require that checkout.
 
-Local validation passes: native TypeScript checks across all five packages, 60 backend integration tests, 12 language tests, the production build, HTTP route checks, and browser checks at desktop/375/360px. Hindi/Punjabi read-aloud now uses a bundled local engine; real worker/audio lifecycle and eleven controlled browser scenario groups passed. Core pilot text is localized; longer English fallbacks are listed in `apps/web/README.md`. Human language/pronunciation review, physical speaker audibility and microphone recognition remain pending. Engine files need corresponding-source/build provenance review before public redistribution.
+Local validation passes: native TypeScript checks across all five packages, 60 backend integration tests, 12 language tests, 6 React render tests, the production build, HTTP route checks, and browser checks at desktop/375/360px. Hindi/Punjabi read-aloud now uses a bundled local engine; real worker/audio lifecycle and eleven controlled browser scenario groups passed. Core pilot text is localized; longer English fallbacks are listed in `apps/web/README.md`. Human language/pronunciation review, physical speaker audibility and microphone recognition remain pending. Engine files need corresponding-source/build provenance review before public redistribution.
 
 ## Layout
 
@@ -44,6 +44,12 @@ Local validation passes: native TypeScript checks across all five packages, 60 b
 - `apps/mobile`: documented future React Native boundary; mobile implementation is deferred.
 - `vendor/fleet`: cloned agent skills, excluded from the application tree; restore instructions in `docs/fleet-reference.md`.
 - `docs`: source SRS extraction, decisions, legacy audit, setup and evidence.
+- `materials`: [project documents, presentations, scripts and diagrams](materials/README.md), with original-source paths and preservation hashes in `materials/inventory.json`.
+- `archive/legacy`: preserved Vite/Express source for reference, excluded from the active workspaces.
+
+## Documents and presentations
+
+The [materials catalogue](materials/README.md) links the SRS, synopsis, pitch reports, handoff guide, PowerPoint variants and speaker scripts. Older documents and legacy source describe previous designs; use `docs/requirements.md`, `docs/decisions.md` and `docs/verification.md` for the current implementation and its limits.
 
 ## Release boundary
 

@@ -19,7 +19,7 @@ English/Hindi/Punjabi pilot; hosted Convex and Clerk; payments/reviews/emergency
 - `92214b2` adds dispatch consent/private retrieval audit and checked direct lookup; `7a281bc` commits the complete responsive web workflows.
 - Discovery, account management and admin status review now have complete backend/client paths. Local tests additionally cover ranked paging, strict filters, candidate limits and cancellation timing.
 
-## Current work
+## Initial implementation record
 
 All implementation and review rounds have finished. Codex high completed provider consent/private-read audits/direct route resolution; Muse xhigh completed client/admin/mobile fixes; Luna xhigh audited language/setup/legacy contracts; the parent verified Gemini findings and rejected false positives with source/test evidence. Native checks, all 72 tests, production build and fresh isolated-browser checks at 1280/375/360px pass. Final scoped commits and their evidence are recorded in `verification.md`.
 
@@ -27,9 +27,13 @@ The 15 October continuation completes local Hindi/Punjabi read-aloud with a pinn
 
 ## External gates
 
-- Hosted Clerk and Convex project configuration and real independent accounts.
+- Independent-account authorization and complete hosted booking/approval acceptance. Clerk/Convex configuration and authenticated intake/summary persistence were completed later; see `hosted-activation.md`.
 - DGX endpoint contract and credentials, model/language capabilities and privacy terms.
 - Microphone/playback trials and human comprehension review in all three pilot languages.
 - Administrator credential review criteria, retention and contact-sharing policies, backups/restore rehearsal before real pilot data.
 
 Final checks and Git state will be recorded in `verification.md`; none of these external gates is waived by a successful build.
+
+## Subsequent verified work
+
+On 16 October, hosted Clerk login and Convex intake/summary persistence were verified. The final local check passed 78 tests (60 backend, 12 language, 6 React render), native typechecks and the production build. The rebuilt application was pushed to the private `sid4761/Vakil-Setu` repository. These later facts supersede the initial 72-test baseline above; full MVP acceptance is not implied. On 18 October, project materials and historical source were inventoried and added; see `materials-audit.md`.

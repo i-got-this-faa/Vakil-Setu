@@ -3,3 +3,9 @@
 *.jpg binary
 *.webp binary
 *.woff2 binary
+*.docx binary
+*.pptx binary
+*.pdf binary
+# Preserve the original bytes recorded by the archival inventory.
+materials/** -text -whitespace
+archive/legacy/** -text -whitespace
