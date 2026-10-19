@@ -138,7 +138,7 @@ export const productCopy: Record<PilotLocale, ProductCopy> = {
     summaryConsent:
       "I have reviewed this summary and want to save a new version.",
     aiConsent:
-      "I consent to send this saved intake and its saved follow-up context to the deployment's configured AI provider for a private draft summary. I will review any result.",
+      "I consent to send this saved intake and its saved follow-up context to Google Gemini for a private draft summary. I will review any result.",
     cancelBeforeStart:
       "Cancellation is available only before the slot start.",
     selfDisableNote:
@@ -227,7 +227,7 @@ export const productCopy: Record<PilotLocale, ProductCopy> = {
     summaryConsent:
       "मैंने यह सारांश जाँचा है और नया संस्करण सहेजना चाहता/चाहती हूँ।",
     aiConsent:
-      "मैं सहमति देता/देती हूँ कि यह सहेजा विवरण और इसकी सहेजी अतिरिक्त जानकारी निजी मसौदा सारांश के लिए निर्धारित AI प्रदाता को भेजी जाए। मैं हर परिणाम जाँचूँगा/जाँचूँगी।",
+      "मैं सहमति देता/देती हूँ कि यह सहेजा विवरण और इसकी सहेजी अतिरिक्त जानकारी निजी मसौदा सारांश के लिए Google Gemini को भेजी जाए। मैं हर परिणाम जाँचूँगा/जाँचूँगी।",
     cancelBeforeStart:
       "रद्द करना केवल स्लॉट शुरू होने से पहले उपलब्ध है।",
     selfDisableNote:
@@ -316,7 +316,7 @@ export const productCopy: Record<PilotLocale, ProductCopy> = {
     summaryConsent:
       "ਮੈਂ ਇਹ ਸਾਰਾਂਸ਼ ਜਾਂਚਿਆ ਹੈ ਅਤੇ ਨਵਾਂ ਸੰਸਕਰਣ ਸੰਭਾਲਣਾ ਚਾਹੁੰਦਾ/ਚਾਹੁੰਦੀ ਹਾਂ।",
     aiConsent:
-      "ਮੈਂ ਸਹਿਮਤੀ ਦਿੰਦਾ/ਦਿੰਦੀ ਹਾਂ ਕਿ ਇਹ ਸੰਭਾਲਿਆ ਵੇਰਵਾ ਅਤੇ ਇਸਦੀ ਸੰਭਾਲੀ ਵਾਧੂ ਜਾਣਕਾਰੀ ਨਿੱਜੀ ਮਸੌਦਾ ਸਾਰਾਂਸ਼ ਲਈ ਨਿਰਧਾਰਤ AI ਪ੍ਰਦਾਤਾ ਨੂੰ ਭੇਜੀ ਜਾਵੇ। ਮੈਂ ਹਰ ਨਤੀਜਾ ਜਾਂਚਾਂਗਾ/ਜਾਂਚਾਂਗੀ।",
+      "ਮੈਂ ਸਹਿਮਤੀ ਦਿੰਦਾ/ਦਿੰਦੀ ਹਾਂ ਕਿ ਇਹ ਸੰਭਾਲਿਆ ਵੇਰਵਾ ਅਤੇ ਇਸਦੀ ਸੰਭਾਲੀ ਵਾਧੂ ਜਾਣਕਾਰੀ ਨਿੱਜੀ ਮਸੌਦਾ ਸਾਰਾਂਸ਼ ਲਈ Google Gemini ਨੂੰ ਭੇਜੀ ਜਾਵੇ। ਮੈਂ ਹਰ ਨਤੀਜਾ ਜਾਂਚਾਂਗਾ/ਜਾਂਚਾਂਗੀ।",
     cancelBeforeStart:
       "ਰੱਦ ਕਰਨਾ ਸਿਰਫ਼ ਸਲਾਟ ਸ਼ੁਰੂ ਹੋਣ ਤੋਂ ਪਹਿਲਾਂ ਉਪਲਬਧ ਹੈ।",
     selfDisableNote:

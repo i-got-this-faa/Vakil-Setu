@@ -19,7 +19,7 @@ The web app runs at http://localhost:3000. It renders public pages and explicit 
 
 Configure hosted Clerk and Convex using the examples in `apps/web` and `packages/backend`; see `docs/setup.md`. Never commit environment files. Clerk owns passwords and sessions; the Convex backend owns application roles and permissions. Bootstrap the first administrator through an internal backend operation, never a public role selector.
 
-Saving an intake stores your own words privately; it does not run AI analysis. The saved case confirms that outcome and lets you review a manual summary starting from your intake or browse advocates. An AI draft requires a configured provider, explicit consent and review. No DGX endpoint has been supplied yet.
+Saving an intake stores your own words privately; it does not run AI analysis. The saved case confirms that outcome and lets you review a manual summary starting from your intake or browse advocates. An AI draft requires a configured provider, explicit consent and review. AI drafts now use Google Gemini. Set GEMINI_API_KEY in the Convex deployment; GEMINI_MODEL defaults to gemini-3.8-flash.
 
 ```powershell
 bun run typecheck
@@ -55,4 +55,4 @@ The [materials catalogue](materials/README.md) links the SRS, synopsis, pitch re
 
 Accounts, approved advocate profiles, reviewed intake, discovery, private summaries, future slots, consultation requests, acceptance, cancellation/expiry and notifications form the MVP. Payments, reviews, guaranteed emergency connection, legal drafting and native mobile are deferred.
 
-The legacy gateway contract is documented in `docs/legacy-ai-audit.md`. The user has no DGX endpoint documentation yet. Until configured and verified, AI is unavailable; no successful model result is invented. Browser recognition may use a browser vendor's remote service and is never described as universally local or private.
+New AI drafts use Google Gemini directly from Convex. See `docs/gemini-integration.md` for configuration and validation. Legacy gateway credentials are ignored. Until configured and live-tested, AI remains unverified; no successful model result is invented. Browser recognition may use a browser vendor's remote service and is never described as universally local or private.

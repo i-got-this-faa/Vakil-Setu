@@ -109,12 +109,8 @@ describe("administrative reachability and ranked discovery", () => {
 });
 
 function configureTestProvider() {
-  vi.stubEnv("LLM_API_KEY", "test-only-noncredential");
-  vi.stubEnv("LLM_PROVIDER", "gateway");
-  vi.stubEnv("LLM_API_URL", "https://provider.example.test/chat");
-  vi.stubEnv("LLM_MODEL", "test-model");
-  vi.stubEnv("LLM_API_KEY_HEADER", "Authorization");
-  vi.stubEnv("LLM_API_KEY_PREFIX", "Bearer");
+  vi.stubEnv("GEMINI_API_KEY", "test-only-noncredential");
+  vi.stubEnv("GEMINI_MODEL", "gemini-test-model");
 }
 
 describe("direct route resolution", () => {
@@ -167,10 +163,25 @@ describe("direct route resolution", () => {
   });
 });
 function providerResponse(locale: "en" | "hi" | "pa", urgency: "unknown" | "emergency" = "unknown") {
-  return Response.json({ choices: [{ message: { content: JSON.stringify({ sourceMode: "provider", provider: "gateway", locale, domain: "unknown", urgency, summary: "Test-only preliminary summary.", actions: [] }) } }] });
+  return Response.json({ candidates: [{ finishReason: "STOP", content: { parts: [{ text: JSON.stringify({ locale, domain: "unknown", urgency, summary: "Test-only preliminary summary.", actions: [] }) }] } }] });
 }
 
 describe("provider boundary and follow-up persistence", () => {
+  it("keeps historical gateway summaries and consent records readable", async () => {
+    const f = await fixture();
+    await f.t.run(async (ctx) => {
+      await ctx.db.insert("caseSummaries", { caseId: f.caseId, version: 0, summary: { ...manualSummary, actions: [] }, source: { kind: "provider", provider: "gateway", model: "historical-model" }, createdAt: now });
+      await ctx.db.insert("aiConsents", { caseId: f.caseId, ownerId: f.userId, summaryVersion: 0, contextRevision: 0, at: now, provider: "gateway", recipientOrigin: "https://historical.example.test" });
+    });
+    expect((await f.user.query(api.cases.getMine, { caseId: f.caseId })).summaries).toEqual(expect.arrayContaining([expect.objectContaining({ source: { kind: "provider", provider: "gateway", model: "historical-model" } })]));
+  });
+  it.each(["SAFETY", "MAX_TOKENS", "RECITATION"])("never saves a Gemini response stopped for %s", async (finishReason) => {
+    const f = await fixture();
+    configureTestProvider();
+    vi.stubGlobal("fetch", vi.fn(async () => Response.json({ candidates: [{ finishReason, content: { parts: [{ text: JSON.stringify({ locale: "en", domain: "unknown", urgency: "unknown", summary: "Must not persist", actions: [] }) }] } }] })));
+    expect(await f.user.action(api.triage.analyze, { caseId: f.caseId, expectedVersion: 1, expectedContextRevision: 0, consent: true })).toEqual({ kind: "unavailable", reason: "invalid_result" });
+    expect((await f.user.query(api.cases.getMine, { caseId: f.caseId })).summaries).toHaveLength(1);
+  });
   it("requires explicit consent before any configured dispatch or consent audit", async () => {
     const f = await fixture();
     configureTestProvider();
@@ -188,23 +199,27 @@ describe("provider boundary and follow-up persistence", () => {
   it("audits only server-derived consent metadata immediately before configured dispatch", async () => {
     const f = await fixture();
     configureTestProvider();
-    vi.stubEnv("LLM_API_URL", "https://provider.example.test/private/chat?key=test-query-secret");
     await f.user.mutation(api.cases.appendFollowUp, { caseId: f.caseId, expectedVersion: 1, expectedContextRevision: 0, reviewed: true, text: "Private reviewed follow-up." });
     const fetch = vi.fn(async (input: RequestInfo | URL, init?: RequestInit) => {
-      expect(input).toBe("https://provider.example.test/private/chat?key=test-query-secret");
-      expect(init).toMatchObject({ method: "POST", redirect: "error", headers: { Authorization: "Bearer test-only-noncredential", "Content-Type": "application/json" } });
+      expect(input).toBe("https://generativelanguage.googleapis.com/v1beta/models/gemini-test-model:generateContent");
+      expect(init).toMatchObject({ method: "POST", redirect: "error", headers: { "x-goog-api-key": "test-only-noncredential", "Content-Type": "application/json" } });
       expect(init?.signal).toBeInstanceOf(AbortSignal);
       const rows = await f.t.run((ctx) => ctx.db.query("aiConsents").collect());
       expect(rows).toHaveLength(1);
       const row = rows[0];
       if (!row) throw new Error("Missing consent audit before dispatch.");
       const { _id, _creationTime, ...metadata } = row;
-      expect(metadata).toEqual({ caseId: f.caseId, ownerId: f.userId, summaryVersion: 1, contextRevision: 1, at: now, provider: "gateway", recipientOrigin: "https://provider.example.test" });
+      expect(metadata).toEqual({ caseId: f.caseId, ownerId: f.userId, summaryVersion: 1, contextRevision: 1, at: now, provider: "gemini", recipientOrigin: "https://generativelanguage.googleapis.com" });
       const serialized = JSON.stringify(rows);
       for (const privateValue of ["test-only-noncredential", "test-query-secret", "/private/chat", "Private reviewed follow-up.", "A property transfer is disputed.", profile.barRegistration, "Test-only credential content"]) expect(serialized).not.toContain(privateValue);
       if (typeof init?.body !== "string") throw new Error("Expected JSON provider request.");
       expect(init.body).toContain("Private reviewed follow-up.");
       expect(init.body).not.toContain('"consent"');
+      expect(JSON.parse(init.body)).toMatchObject({
+        systemInstruction: { parts: [{ text: expect.stringContaining("not legal advice") }] },
+        contents: [{ role: "user", parts: [{ text: expect.stringContaining("Private reviewed follow-up.") }] }],
+        generationConfig: { candidateCount: 1, maxOutputTokens: 4096, responseFormat: { text: { mimeType: "APPLICATION_JSON", schema: { required: ["locale", "domain", "urgency", "summary", "actions"] } } } },
+      });
       return providerResponse("en");
     });
     vi.stubGlobal("fetch", fetch);
@@ -252,7 +267,7 @@ describe("provider boundary and follow-up persistence", () => {
     expect(bodies[0]).not.toContain(profile.barRegistration);
     expect(bodies[0]).not.toContain("Test-only credential content");
     expect(bodies[0]).not.toContain("A property transfer is disputed");
-    expect((await f.user.query(api.cases.getMine, { caseId })).summaries[0]).toMatchObject({ summary: { locale: "hi", domain: "unknown", urgency }, source: { kind: "provider", provider: "gateway", model: "test-model" } });
+    expect((await f.user.query(api.cases.getMine, { caseId })).summaries[0]).toMatchObject({ summary: { locale: "hi", domain: "unknown", urgency }, source: { kind: "provider", provider: "gemini", model: "gemini-test-model" } });
   });
   it.each(["follow_up", "disabled", "summary_edit"] as const)("does not persist an in-flight response after %s changes", async (change) => {
     const f = await fixture();
@@ -268,7 +283,7 @@ describe("provider boundary and follow-up persistence", () => {
   });
   it("rejects foreign and stale context before fetch and exposes unavailable/rate-limited states", async () => {
     const f = await fixture();
-    vi.stubEnv("LLM_API_KEY", "");
+    vi.stubEnv("GEMINI_API_KEY", "");
     const fetch = vi.fn();
     vi.stubGlobal("fetch", fetch);
     const args = { caseId: f.caseId, expectedVersion: 1, expectedContextRevision: 0, consent: true } as const;
@@ -285,7 +300,7 @@ describe("provider boundary and follow-up persistence", () => {
     configureTestProvider();
     const fetch = vi.fn()
       .mockResolvedValueOnce(providerResponse("pa"))
-      .mockResolvedValueOnce(Response.json({ choices: [{ message: { content: "invalid JSON" } }] }))
+      .mockResolvedValueOnce(Response.json({ candidates: [{ finishReason: "STOP", content: { parts: [{ text: "invalid JSON" }] } }] }))
       .mockResolvedValueOnce(new Response("provider error", { status: 503 }))
       .mockRejectedValueOnce(new Error("Test-only timeout"));
     vi.stubGlobal("fetch", fetch);

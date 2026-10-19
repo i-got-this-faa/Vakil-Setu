@@ -37,19 +37,13 @@ The first administrator is created through the internal `accounts.bootstrapAdmin
 
 Use separate user, advocate and administrator accounts. Upload/review a private advocate credential, approve the profile, publish a future slot, save an intake, approve a summary version and request the slot. Accept from the assigned advocate account and confirm the user sees the persisted decision after refresh. Attempt unauthorized reads and a simultaneous second reservation. These are activation checks, not checks already completed by the local build.
 
-## DGX activation
+## Gemini activation
 
-No DGX URL or API documentation is available. The legacy values in `legacy-ai-audit.md` came from `.env.example`; they are not confirmed rebuild settings or evidence of a DGX deployment. Set any provider values only in the Convex deployment environment. Never use `NEXT_PUBLIC_` for AI credentials.
+Set `GEMINI_API_KEY` in the Convex deployment environment. Optionally set `GEMINI_MODEL`; the default is `gemini-3.8-flash`. The backend calls Google's HTTPS GenerateContent endpoint directly using the server-only `x-goog-api-key` header. Old gateway/LLM variables are ignored. Never use `NEXT_PUBLIC_` for AI credentials.
 
-The rebuild currently implements only a server-side `gateway` provider adapter. Its code contract is:
+Deploy the updated backend functions/schema and rebuild/restart the web app. A local environment file does not configure hosted functions. See [gemini-integration.md](gemini-integration.md) for the protocol, deployment steps, historical-record compatibility and failure handling.
 
-- `LLM_API_KEY` is required. `LLM_PROVIDER` defaults to `gateway`; every other provider value is unavailable.
-- The legacy `GEMINI_*` and `LLM_FALLBACK_MODE` settings are not read by the rebuild adapter. Do not copy them as rebuild configuration.
-- Set `LLM_API_URL` to an absolute HTTPS URL, or set `GATEWAY_BASE_URL` and optionally `LLM_API_URL` (which defaults to `/gateway/llm/chat`). The adapter rejects non-HTTPS URLs. `LLM_MODEL` selects the body model; the sample `qwen3:latest` string is not a deployed-model assertion. The default header is `Authorization` with a `Bearer` prefix; header name and prefix can be overridden.
-- The adapter sends a chat-completions-shaped JSON request with a system instruction and the reviewed case text. A response must contain JSON with `sourceMode: "provider"`, `provider: "gateway"`, the exact requested pilot locale (`en`, `hi`, or `pa`), an allowed domain and urgency, a non-empty summary, and bounded actions. Tag validation does not prove that the text is understandable or legally correct in that language.
-- The request timeout is hard-coded to 30 seconds; it is not an environment setting. The language capability registry is also not provider configuration. An unset or invalid provider returns an explicit unavailable result. Manual intake and user-written summaries do not require an AI key.
-
-Before sending real case text, obtain the gateway operator's actual request/response protocol, supported model and locale details, data processing and retention terms, and quotas. A matching URL, key prefix, model tag, or successful response proves only that a gateway returned a response; none identifies the hardware serving it. Do not configure the old host or claim DGX-backed inference without operator evidence tying a live request to DGX Spark hardware.
+AI requires explicit consent and user review. The backend requests structured JSON in the selected pilot locale, enforces a 30-second timeout and validates the result. Missing configuration, blocked/truncated responses and invalid output remain explicit unavailable states. Manual summaries need no provider key. Check Google data-processing/retention terms before sending real case text.
 
 There is no server speech endpoint in the rebuild. The web client has optional browser speech recognition for English, Hindi, and Punjabi with user consent and transcript review; the browser may send audio to its speech service, and language accuracy is unverified. English read-aloud selects a matching local device voice. Hindi/Punjabi read-aloud uses the bundled browser worker and Web Audio; it needs no installed device voices and downloads about 19 MB of voice data. Its audio lifecycle has been checked with synthetic text, but pronunciation, comprehension and physical speaker audibility are unverified. Keep typed input available. Review the engine's GPL/source/build provenance notice in `apps/web/public/speech/espeak-ng/NOTICE.md` before public redistribution.
 

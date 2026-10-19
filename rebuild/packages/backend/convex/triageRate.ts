@@ -8,7 +8,7 @@ export const recordConsent = internalMutation({ args: { caseId: v.id("cases"), e
   const { legalCase } = await ownCase(ctx, args.caseId);
   if (legalCase.summaryVersion !== integer(args.expectedVersion, "Summary version", 0, 100)) fail("CONFLICT", "Summary changed. Renew consent for the latest version.");
   if (legalCase.contextRevision !== integer(args.expectedContextRevision, "Context revision", 0, Number.MAX_SAFE_INTEGER)) fail("CONFLICT", "Follow-up context changed. Renew consent for the latest context.");
-  await ctx.db.insert("aiConsents", { caseId: legalCase._id, ownerId: legalCase.ownerId, summaryVersion: legalCase.summaryVersion, contextRevision: legalCase.contextRevision, at: Date.now(), provider: "gateway", recipientOrigin: args.recipientOrigin });
+  await ctx.db.insert("aiConsents", { caseId: legalCase._id, ownerId: legalCase.ownerId, summaryVersion: legalCase.summaryVersion, contextRevision: legalCase.contextRevision, at: Date.now(), provider: "gemini", recipientOrigin: args.recipientOrigin });
   return null;
 } });
 

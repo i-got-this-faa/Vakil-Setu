@@ -42,3 +42,9 @@ Tests invoke registered Convex queries, mutations, actions, local storage and sc
 This round changed only backend API.md, ARCHITECTURE.md, VALIDATION.md, tests/backend.test.ts, and convex/{admin,advocates,cases,credentials,schema,triage,triageRate}.ts plus convex/lib/lifecycle.ts. Generated bindings were untouched. No domain/web/root/vendor files, installs, locks, commits, staging, browser launches, hosted deployment or secret reads were performed.
 
 The review false positives remain outside this implementation: i18n correctly uses Bun tests; candidate-cap overflow explicitly throws instead of silently truncating; discovery uses strict expertise matching followed by earliest-slot ordering. The parent owns the UI match explanation.
+
+## Gemini migration checks — 19 October 2026
+
+The current suite passes 74 backend tests: 64 registered-function integration cases and 10 transport/parser cases. New dispatches use native Gemini GenerateContent and server-derived `gemini` provenance. Historical gateway labels remain accepted for stored records. Tests inspect Google's pinned URL, `x-goog-api-key`, structured JSON configuration, pre-fetch consent metadata, language preservation and private version persistence. Safety/truncation stops, wrong-language/malformed output and changed authorization/revisions cannot create a summary. All external model responses remain synthetic. Typecheck and the workspace production build pass.
+
+Hosted publication is blocked by an invalid/expired Convex deploy key (401). No live Gemini result or hosted migration is certified. Earlier gateway test descriptions above describe the previous snapshot; current configuration is documented in `../../docs/gemini-integration.md`.

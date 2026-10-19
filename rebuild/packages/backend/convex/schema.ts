@@ -1,6 +1,6 @@
 import { defineSchema, defineTable } from "convex/server";
 import { v } from "convex/values";
-import { adminHandling, application, bookingActor, bookingEvent, bookingState, consent, consultationMode, contextMessage, credentialReview, credentialType, domain, locale, role, summary, summarySource } from "./lib/validators";
+import { aiProvider, adminHandling, application, bookingActor, bookingEvent, bookingState, consent, consultationMode, contextMessage, credentialReview, credentialType, domain, locale, role, summary, summarySource } from "./lib/validators";
 
 export default defineSchema({
   accounts: defineTable({ clerkSubject: v.string(), role, displayName: v.string(), locale, disabled: v.boolean() }).index("by_subject", ["clerkSubject"]),
@@ -16,5 +16,5 @@ export default defineSchema({
   bookingEvents: defineTable({ bookingId: v.id("bookings"), at: v.number(), actor: bookingActor, event: bookingEvent }).index("by_booking", ["bookingId"]),
   notifications: defineTable({ accountId: v.id("accounts"), kind: v.union(v.literal("booking_requested"), v.literal("booking_changed"), v.literal("application_reviewed"), v.literal("credential_reviewed"), v.literal("account_changed")), message: v.string(), bookingId: v.optional(v.id("bookings")), readAt: v.optional(v.number()) }).index("by_account", ["accountId"]),
   aiAttempts: defineTable({ accountId: v.id("accounts"), at: v.number() }).index("by_account_at", ["accountId", "at"]),
-  aiConsents: defineTable({ caseId: v.id("cases"), ownerId: v.id("accounts"), summaryVersion: v.number(), contextRevision: v.number(), at: v.number(), provider: v.literal("gateway"), recipientOrigin: v.string() }),
+  aiConsents: defineTable({ caseId: v.id("cases"), ownerId: v.id("accounts"), summaryVersion: v.number(), contextRevision: v.number(), at: v.number(), provider: aiProvider, recipientOrigin: v.string() }),
 });

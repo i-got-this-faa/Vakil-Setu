@@ -37,3 +37,9 @@ Final checks and Git state will be recorded in `verification.md`; none of these 
 ## Subsequent verified work
 
 On 16 October, hosted Clerk login and Convex intake/summary persistence were verified. The final local check passed 78 tests (60 backend, 12 language, 6 React render), native typechecks and the production build. The rebuilt application was pushed to the private `sid4761/Vakil-Setu` repository. These later facts supersede the initial 72-test baseline above; full MVP acceptance is not implied. On 18 October, project materials and historical source were inventoried and added; see `materials-audit.md`.
+
+## Gemini provider migration — 19 October 2026
+
+User requested replacing the gateway/Qwen adapter with Gemini. Local implementation, historical record compatibility, pilot-language recipient consent, focused tests and active setup/API documentation are complete. Five-package native checks, 92 tests and production build passed. No remote push performed.
+
+Remaining activation: user adds `GEMINI_API_KEY` in Convex and refreshes invalid local deployment credential or authenticates CLI. Retry `convex dev --once --typecheck disable` from packages/backend, then start the rebuilt web app and run a labelled synthetic case through consent, Gemini generation, private draft persistence and review. Last deploy attempt failed 401 before publication. Do not send real case text during acceptance or claim hosted Gemini works before that check.

@@ -7,7 +7,9 @@ export const consultationMode = v.union(v.literal("phone"), v.literal("video"), 
 export const role = v.union(v.literal("user"), v.literal("advocate"), v.literal("admin"));
 export const contextMessage = v.object({ role: v.union(v.literal("user"), v.literal("assistant")), content: v.string() });
 export const summary = v.object({ locale, domain, urgency, text: v.string(), actions: v.array(v.string()) });
-export const summarySource = v.union(v.object({ kind: v.literal("manual") }), v.object({ kind: v.literal("provider"), provider: v.literal("gateway"), model: v.string() }));
+// Keep historical provider labels readable after switching new requests to Gemini.
+export const aiProvider = v.union(v.literal("gateway"), v.literal("gemini"));
+export const summarySource = v.union(v.object({ kind: v.literal("manual") }), v.object({ kind: v.literal("provider"), provider: aiProvider, model: v.string() }));
 export const reviewDetails = { reviewerId: v.id("accounts"), reviewedAt: v.number(), reason: v.string() };
 export const application = v.union(
   v.object({ kind: v.literal("pending") }),

@@ -1,5 +1,13 @@
 # Local verification — 14 October 2026
 
+## Gemini migration — 19 October 2026
+
+New AI requests now use Google's native Gemini GenerateContent API, defaulting to `gemini-3.8-flash` with a server-only `GEMINI_API_KEY` and optional `GEMINI_MODEL`. The runtime no longer reads the old gateway variables. Stored gateway summary/booking/audit provenance remains compatible. Pilot-language consent text now names Google Gemini. See `gemini-integration.md` for protocol and configuration.
+
+Native typechecks passed across all five packages. The test run passed 74 backend tests (64 registered-function integration cases and 10 provider boundary cases), 12 language tests and 6 UI render tests, for 92 total. The production web build passed. Gemini responses are synthetic in these checks. Tests verify native request/auth/schema shape, pre-dispatch consent audit, historical data reads, Unicode/locale preservation, access/revision checks, rejected safety/token-limit results, bounded output and no legacy-key fallback. Independent read-only review found no concrete code blocker. `git diff --check` passed.
+
+The first workspace check could not find Bun for Turbo child tasks; adding the existing local Bun directory to the task PATH resolved it, without installing dependencies. Deployment was attempted with the existing local credential and failed before publication: `401 Unauthorized: AuthenticationFailed: Invalid Convex deploy key`. The user will add the Gemini key in Convex; a fresh deployment credential or CLI login is also needed. No hosted backend change, real Gemini generation, browser acceptance of the new provider flow, or web-server restart is claimed. The existing health endpoint correctly retains `ai: not_verified`.
+
 The authorized local rebuild is implemented under `rebuild`. The checks dated 14 October below prove local boundaries only. Hosted development services were subsequently provisioned on 15 October; current evidence and remaining login/submission checks are in [hosted-activation.md](hosted-activation.md).
 
 ## Commands and results

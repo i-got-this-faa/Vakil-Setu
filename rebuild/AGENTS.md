@@ -15,7 +15,7 @@ Apply these skills: `vendor/fleet/skills/typescript-best-practices/SKILL.md`, `p
 - Pilot English, Hindi, Punjabi. Registry covers all 22 scheduled Indian languages plus English; speech and AI capability must remain truthful and independent of interface translations.
 - MVP: account roles, advocate onboarding and private credential review, administrator approval, reviewed multilingual intake, discovery, private versioned summaries, slots, consultation requests and advocate acceptance, notifications and cancellation/expiry.
 - Deferred: payments, commissions, reviews, guaranteed emergency connections, native mobile implementation. Share platform-independent domain/language packages so React Native can be added later.
-- DGX Spark URL/API docs are unavailable. Keep provider credentials server-only; preserve explicit unavailable states. Never fabricate successful triage or booking.
+- AI drafts now use Google Gemini directly, replacing the gateway runtime. Configure GEMINI_API_KEY and optional GEMINI_MODEL only in Convex. Keep historical gateway record labels readable, preserve explicit unavailable states, and never fabricate successful triage or booking.
 - Never read or print actual legacy `.env` credentials. Read `.env.example` only.
 
 ## Collaboration

@@ -11,8 +11,8 @@ Behavior: a user reviews multilingual intake, chooses an approved advocate, expl
 | Other scheduled languages | Applies to registry/text | No claim of full UI, AI or speech support |
 | Browser recognition and playback | Applies | Capability detection and explicit unavailable state; device/language trials pending |
 | Bundled Hindi/Punjabi playback | Applies | Actual worker/audio start/end with nonzero samples; controlled cancellation/error tests; pronunciation and physical speakers unverified |
-| DGX chat provider | Applies | Boundary/parser/timeout tests; live endpoint documentation missing |
-| DGX speech provider | Unavailable | No documented protocol exists; typed and browser alternatives |
+| Gemini chat provider | Applies | Direct GenerateContent adapter, consent audit and parser/timeout tests; live acceptance needs deployment authentication and GEMINI_API_KEY |
+| Server speech provider | Does not apply to AI migration | Browser speech remains separate |
 | Advocate registration/application | Applies | Private credentials, pending hidden, review and reapproval |
 | Administrator approval/suspension | Applies | Backend role enforcement and effect on discovery/requests |
 | Private cases, follow-ups and summary consent | Applies | Owner checks, bounded context, immutable recipient snapshot |
