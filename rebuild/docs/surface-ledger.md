@@ -1,5 +1,7 @@
 # Surface coverage
 
+The 19 October conversation/document extension is covered in [chat-and-documents.md](chat-and-documents.md). It adds consented intake-to-chat submission, private message history and owner-only document operations. Speech and native mobile remain unchanged. Hosted deployment is pending; real Gemini exchange was verified through a local Convex harness using synthetic text only.
+
 Behavior: a user reviews multilingual intake, chooses an approved advocate, explicitly shares a summary version, requests an exclusive future slot, and sees the advocate's persistent decision.
 
 | Surface | Applicability | Required evidence |

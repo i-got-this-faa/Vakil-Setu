@@ -28,6 +28,7 @@ import { errorMessage } from "@/lib/errors";
 import { caseNoSummaryCopy } from "@/lib/case-copy";
 import { ReadAloud } from "./speech";
 import { useLocale } from "./locale";
+import { CaseChat } from "./case-chat";
 
 export function CasesPage() {
   return (
@@ -162,6 +163,7 @@ function CaseDetail({ caseId }: { caseId: Id<"cases"> }) {
       </header>
       <div className="case-layout">
         <div className="case-content">
+          <CaseChat key={caseId} caseId={caseId} locale={data.case.locale} />
           <section className="case-next-step" aria-label="Next step">
             <h2>
               {hasReviewedSummary
@@ -262,7 +264,7 @@ function CaseDetail({ caseId }: { caseId: Id<"cases"> }) {
             </ol>
           </section>
           <details className="case-tool">
-            <summary>AI draft</summary>
+            <summary>AI summary draft</summary>
             <AiAnalysis
               caseId={caseId}
               expectedVersion={data.case.summaryVersion}
@@ -301,7 +303,7 @@ function CaseDetail({ caseId }: { caseId: Id<"cases"> }) {
             <details className="case-tool case-danger">
               <summary>Delete draft</summary>
               <p className="muted" style={{ marginBlock: 12 }}>
-                This permanently removes the intake and all summary versions.
+                This permanently removes the intake, chat, documents and all summary versions.
               </p>
               <Label className="checkbox-line">
                 <Input

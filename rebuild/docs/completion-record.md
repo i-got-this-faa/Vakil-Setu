@@ -43,3 +43,9 @@ On 16 October, hosted Clerk login and Convex intake/summary persistence were ver
 User requested replacing the gateway/Qwen adapter with Gemini. Local implementation, historical record compatibility, pilot-language recipient consent, focused tests and active setup/API documentation are complete. Five-package native checks, 92 tests and production build passed. No remote push performed.
 
 Remaining activation: user adds `GEMINI_API_KEY` in Convex and refreshes invalid local deployment credential or authenticates CLI. Retry `convex dev --once --typecheck disable` from packages/backend, then start the rebuilt web app and run a labelled synthetic case through consent, Gemini generation, private draft persistence and review. Last deploy attempt failed 401 before publication. Do not send real case text during acceptance or claim hosted Gemini works before that check.
+
+## Conversational chat and uploads — 19 October 2026
+
+Implemented case-linked Google Gemini conversations, explicit per-send context consent, private PDF/JPEG/PNG/TXT uploads, selected attachments, stored history, idempotent retries and deletion cleanup. The intake offers save-and-chat or a private save without AI. Final review's retry consent bypass was fixed and browser-checked. Native typechecks, 125 automated tests and production build pass. Actual Gemini processed a synthetic TXT attachment and a second conversational turn in a local Convex harness.
+
+Hosted activation is incomplete because Convex deployment authentication still returns 401. The Gemini key is configured locally in ignored files only. Existing browser login reached an unaccepted Terms of Service screen. No hosted deployment, hosted key configuration or remote push is claimed. Detailed evidence and limitations are in verification.md and chat-and-documents.md.

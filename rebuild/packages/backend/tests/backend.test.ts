@@ -113,6 +113,18 @@ function configureTestProvider() {
   vi.stubEnv("GEMINI_MODEL", "gemini-test-model");
 }
 
+describe("idempotent intake creation", () => {
+  it("returns the saved case on retry and rejects changed content for the same request", async () => {
+    const f = await fixture();
+    const args = { title: "Retry-safe intake", text: "Synthetic intake text", locale: "en", context: [], requestId: "intake-network-retry" } as const;
+    const id = await f.user.mutation(api.cases.create, { ...args, context: [] });
+    expect(await f.user.mutation(api.cases.create, { ...args, context: [] })).toBe(id);
+    await expect(f.user.mutation(api.cases.create, { ...args, context: [], text: "Changed facts" })).rejects.toMatchObject({ data: { code: "CONFLICT" } });
+    expect((await f.user.query(api.cases.listMine, { paginationOpts })).page.filter(entry => entry.title === args.title)).toHaveLength(1);
+    expect(await f.stranger.mutation(api.cases.create, { ...args, context: [] })).not.toBe(id);
+  });
+});
+
 describe("direct route resolution", () => {
   it("normalizes bounded routes, hides private/nonapproved targets, and preserves existing read contracts", async () => {
     const f = await fixture();

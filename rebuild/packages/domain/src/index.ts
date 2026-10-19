@@ -12,6 +12,12 @@ export type BookingState = (typeof BOOKING_STATES)[number];
 export type BookingAction = "accept" | "decline" | "cancel" | "complete";
 export const ERROR_CODES = ["UNAUTHENTICATED", "ONBOARDING_REQUIRED", "ACCOUNT_DISABLED", "FORBIDDEN", "NOT_FOUND", "INVALID_INPUT", "CONFLICT", "NOT_APPROVED", "SLOT_UNAVAILABLE", "CONSENT_REQUIRED", "RATE_LIMITED", "LIMIT_EXCEEDED"] as const;
 export type ErrorCode = (typeof ERROR_CODES)[number];
+export const CHAT_LIMITS = {
+  turns: 100, messageChars: 4000, replyChars: 8000, historyTurns: 10,
+  attemptsPerHour: 20, timeoutMs: 30_000, leaseMs: 45_000,
+  documentBytes: 3 * 1024 * 1024, documentsPerCase: 5,
+  attachments: 3, attachmentBytes: 6 * 1024 * 1024,
+} as const;
 export const LIMITS = {
   intakeText: 10_000, contextMessages: 10, contextMessage: 2_000, contextTotal: 10_000,
   summaryText: 4_000, actions: 8, actionText: 300, credentialBytes: 5 * 1024 * 1024,

@@ -2,6 +2,8 @@
 
 New AI drafts use the Google Gemini API directly from the Convex Node action. The former gateway/Qwen runtime adapter is removed. Historical `gateway` provenance remains readable in stored summaries, booking snapshots and consent audits; new records use `gemini`.
 
+Conversational assistance and private user document uploads now also use this provider. See [chat-and-documents.md](chat-and-documents.md) for the intake-to-chat flow, context-bound consent, attachment selection, limits, actual synthetic Gemini checks and hosted activation boundary. The summary draft flow below remains a separate operation.
+
 ## Configuration
 
 In the **Convex development deployment** dashboard, set `GEMINI_API_KEY` to a Google AI Studio API key. Optionally set `GEMINI_MODEL`; the default is `gemini-3.8-flash`. Do not put the key in the frontend, a `NEXT_PUBLIC_` variable, Git, or chat. Setting it only in a local web environment does not configure hosted actions. Old `LLM_*`, `GATEWAY_BASE_URL`, and `GEMINI_API_URL` settings are ignored. Requests are pinned to Google's HTTPS origin.

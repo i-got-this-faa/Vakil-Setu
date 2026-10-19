@@ -57,3 +57,6 @@ Import `api` from `@vakil/backend/api` and `Doc`/`Id` from `@vakil/backend/data-
 Structured errors use `ConvexError({code, message})`; domain exports their codes. No payments, reviews, emergency matching guarantee, fabricated confidence, or public case/credential endpoint. Pagination page sizes are bounded 1–50; discovery returns <=20 future slots per profile.
 
 Deployment commands and exact checks are recorded in `VALIDATION.md` after implementation.
+# Case chat and document additions — 19 October 2026
+
+Private APIs now include `chat.listMine`, `chat.send` and `caseDocuments.{upload,listMine,read,remove}`. `chat.send` requires `contextKey` from `listMine` plus a stable `requestId` and literal `consent:true`. It sends native conversational content to Gemini and stores a turn result, not an approved summary. `cases.create` accepts optional `requestId` for retry-safe creation. See `../../docs/chat-and-documents.md` for signatures, access/replay rules, limits and actual evidence. Existing summary APIs below remain available.

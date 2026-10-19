@@ -6,10 +6,12 @@ import { getMessages } from "@vakil/i18n";
 import type { PilotLocale } from "@vakil/domain";
 import { productCopy } from "../src/lib/copy";
 import { caseNoSummaryCopy } from "../src/lib/case-copy";
+import { chatCopy } from "../src/lib/chat-copy";
 
 let locale: PilotLocale = "en";
 let intake = "Synthetic intake for the saved outcome check.";
 let source: "none" | "manual" | "provider" = "none";
+let chatScenario: "empty" | "reply" | "pending" | "unavailable" = "empty";
 
 // Only data/auth and audio boundaries are replaced; render the actual case UI.
 mock.module("../src/components/workspace-gate", () => ({
@@ -26,6 +28,8 @@ mock.module("convex/react", () => ({
   usePaginatedQuery: () => { throw new Error("Case detail must not list cases."); },
   useQuery: (reference: Parameters<typeof getFunctionName>[0]) => {
     const name = getFunctionName(reference);
+    if (name === "chat:listMine") return { turns: chatScenario === "empty" ? [] : [{ _id: "turn-fixture", text: "Synthetic user question", createdAt: 0, documentIds: ["removed-document-fixture"], result: chatScenario === "reply" ? { kind: "reply", text: '<script>alert("unsafe")</script> Synthetic model reply' } : chatScenario === "pending" ? { kind: "pending" } : { kind: "unavailable", reason: "blocked" } }], limitReached: false, contextKey: "0:0:" };
+    if (name === "caseDocuments:listMine") return [];
     if (name === "cases:resolveMine") return "case-fixture";
     if (name !== "cases:getMine") throw new Error(`Unexpected query: ${name}`);
     return {
@@ -46,6 +50,7 @@ beforeEach(() => {
   locale = "en";
   intake = "Synthetic intake for the saved outcome check.";
   source = "none";
+  chatScenario = "empty";
 });
 
 for (const pilot of ["en", "hi", "pa"] as const) {
@@ -82,3 +87,36 @@ test("a manually reviewed summary offers advocate discovery", () => {
   expect(html).toContain("Reviewed fixture summary");
   expect(html).not.toContain(caseNoSummaryCopy.en.noAnalysis);
 });
+
+test("chat renders model text safely and identifies removed attachments", () => {
+  chatScenario = "reply";
+  const html = render();
+  expect(html).toContain("Synthetic user question");
+  expect(html).toContain("Synthetic model reply");
+  expect(html).toContain("&lt;script&gt;");
+  expect(html).not.toContain('<script>alert("unsafe")</script>');
+  expect(html).toContain(chatCopy.en.disclaimer);
+  expect(html).toContain(chatCopy.en.removedAttachment);
+});
+
+test("pending chat prevents another send and does not render a reply", () => {
+  chatScenario = "pending";
+  const html = render();
+  expect(html).toContain(chatCopy.en.pendingStatus);
+  expect(html).not.toContain("Synthetic model reply");
+  const sendButton = [...html.matchAll(/<button\b([^>]*)>([\s\S]*?)<\/button>/g)].find(match => match[2]?.includes("Send message"));
+  expect(sendButton?.[1]).toContain('disabled=""');
+});
+
+for (const pilot of ["en", "hi", "pa"] as const) {
+  test(`${pilot}: failed chat explains the result and exposes document limits and recipient`, () => {
+    locale = pilot;
+    chatScenario = "unavailable";
+    const html = render();
+    expect(html).toContain(chatCopy[pilot].title.replaceAll("&", "&amp;"));
+    expect(html).toContain(chatCopy[pilot].errors.blocked);
+    expect(html).toContain("Google Gemini");
+    expect(html).toContain("3 MiB");
+    expect(html).toContain('accept=".pdf,.png,.jpg,.jpeg,.txt,application/pdf,image/png,image/jpeg,text/plain"');
+  });
+}

@@ -1,4 +1,4 @@
-import { LIMITS } from "@vakil/domain";
+import { CHAT_LIMITS, LIMITS } from "@vakil/domain";
 import { paginationOptsValidator } from "convex/server";
 import { v } from "convex/values";
 import { internalMutation, internalQuery, mutation, query } from "./_generated/server";
@@ -6,9 +6,20 @@ import { contextMessage, locale, summary, summarySource } from "./lib/validators
 import { fail, ownCase, requireAccount } from "./lib/access";
 import { boundedText, cleanContext, cleanSummary, integer, page } from "./lib/input";
 
-export const create = mutation({ args: { title: v.string(), text: v.string(), locale, context: v.array(contextMessage) }, handler: async (ctx, args) => {
+export const create = mutation({ args: { title: v.string(), text: v.string(), locale, context: v.array(contextMessage), requestId: v.optional(v.string()) }, handler: async (ctx, args) => {
   const account = await requireAccount(ctx, "user");
-  return await ctx.db.insert("cases", { ownerId: account._id, title: boundedText(args.title, "Title", 160), text: boundedText(args.text, "Intake text", LIMITS.intakeText), locale: args.locale, context: cleanContext(args.context), contextRevision: 0, state: "draft", summaryVersion: 0 });
+  const title = boundedText(args.title, "Title", 160);
+  const text = boundedText(args.text, "Intake text", LIMITS.intakeText);
+  const context = cleanContext(args.context);
+  const requestId = args.requestId === undefined ? undefined : boundedText(args.requestId, "Request ID", 128);
+  if (requestId) {
+    const existing = await ctx.db.query("cases").withIndex("by_owner_request", q => q.eq("ownerId", account._id).eq("requestId", requestId)).unique();
+    if (existing) {
+      if (existing.title !== title || existing.text !== text || existing.locale !== args.locale) fail("CONFLICT", "This request already saved a different intake.");
+      return existing._id;
+    }
+  }
+  return await ctx.db.insert("cases", { ownerId: account._id, title, text, locale: args.locale, context, ...(requestId ? {requestId} : {}), contextRevision: 0, state: "draft", summaryVersion: 0 });
 } });
 export const appendFollowUp = mutation({ args: { caseId: v.id("cases"), expectedVersion: v.number(), expectedContextRevision: v.number(), text: v.string(), reviewed: v.literal(true) }, handler: async (ctx, args) => {
   const { legalCase } = await ownCase(ctx, args.caseId);
@@ -51,6 +62,12 @@ export const updateSummary = mutation({ args: { caseId: v.id("cases"), expectedV
 export const deleteDraft = mutation({ args: { caseId: v.id("cases") }, handler: async (ctx, args) => {
   const { legalCase } = await ownCase(ctx, args.caseId);
   if (legalCase.state !== "draft" || await ctx.db.query("bookings").withIndex("by_case", (q) => q.eq("caseId", legalCase._id)).first()) fail("CONFLICT", "Shared cases cannot be deleted as drafts.");
+  const turns = await ctx.db.query("chatTurns").withIndex("by_case", q => q.eq("caseId", legalCase._id)).take(CHAT_LIMITS.turns);
+  if (turns.some(turn => turn.result.kind === "pending" && turn.expiresAt > Date.now())) fail("CONFLICT", "Wait for the active chat send before deleting this case.");
+  const documents = await ctx.db.query("caseDocuments").withIndex("by_case", q => q.eq("caseId", legalCase._id)).take(CHAT_LIMITS.documentsPerCase);
+  for (const document of documents) { await ctx.storage.delete(document.storageId); await ctx.db.delete(document._id); }
+  for (const turn of turns) await ctx.db.delete(turn._id);
+  for (const audit of await ctx.db.query("chatConsents").withIndex("by_case", q => q.eq("caseId", legalCase._id)).take(CHAT_LIMITS.turns)) await ctx.db.delete(audit._id);
   const versions = await ctx.db.query("caseSummaries").withIndex("by_case_version", (q) => q.eq("caseId", legalCase._id)).collect();
   for (const version of versions) await ctx.db.delete(version._id);
   await ctx.db.delete(legalCase._id);

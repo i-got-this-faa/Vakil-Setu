@@ -19,7 +19,7 @@ The web app runs at http://localhost:3000. It renders public pages and explicit 
 
 Configure hosted Clerk and Convex using the examples in `apps/web` and `packages/backend`; see `docs/setup.md`. Never commit environment files. Clerk owns passwords and sessions; the Convex backend owns application roles and permissions. Bootstrap the first administrator through an internal backend operation, never a public role selector.
 
-Saving an intake stores your own words privately; it does not run AI analysis. The saved case confirms that outcome and lets you review a manual summary starting from your intake or browse advocates. An AI draft requires a configured provider, explicit consent and review. AI drafts now use Google Gemini. Set GEMINI_API_KEY in the Convex deployment; GEMINI_MODEL defaults to gemini-3.8-flash.
+Intake offers Save and start AI chat with separate Google Gemini consent, or Save privately without AI. Cases keep private conversation history and accept PDF, JPG, PNG and TXT attachments up to 3 MiB each. Files go to Gemini only when selected for a consented message. Conversation replies do not replace reviewed summaries. See `docs/chat-and-documents.md` for limits and evidence. Set GEMINI_API_KEY in the Convex deployment; GEMINI_MODEL defaults to gemini-3.8-flash. A local environment file alone does not configure hosted functions.
 
 ```powershell
 bun run typecheck

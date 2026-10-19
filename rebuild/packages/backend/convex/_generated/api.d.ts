@@ -13,9 +13,14 @@
 import type * as admin from "../admin.js";
 import type * as advocates from "../advocates.js";
 import type * as bookings from "../bookings.js";
+import type * as caseDocuments from "../caseDocuments.js";
 import type * as cases from "../cases.js";
+import type * as chat from "../chat.js";
+import type * as chatProvider from "../chatProvider.js";
+import type * as chatState from "../chatState.js";
 import type * as credentials from "../credentials.js";
 import type * as lib_access from "../lib/access.js";
+import type * as lib_chat from "../lib/chat.js";
 import type * as lib_discovery from "../lib/discovery.js";
 import type * as lib_discoveryPagination from "../lib/discoveryPagination.js";
 import type * as lib_input from "../lib/input.js";
@@ -41,9 +46,14 @@ import type * as triageRate from "../triageRate.js";
 "admin": typeof admin,
 "advocates": typeof advocates,
 "bookings": typeof bookings,
+"caseDocuments": typeof caseDocuments,
 "cases": typeof cases,
+"chat": typeof chat,
+"chatProvider": typeof chatProvider,
+"chatState": typeof chatState,
 "credentials": typeof credentials,
 "lib/access": typeof lib_access,
+"lib/chat": typeof lib_chat,
 "lib/discovery": typeof lib_discovery,
 "lib/discoveryPagination": typeof lib_discoveryPagination,
 "lib/input": typeof lib_input,
