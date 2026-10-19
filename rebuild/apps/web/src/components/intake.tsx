@@ -2,9 +2,9 @@
 
 import { Button, Input, Textarea, Label } from "@vakil/ui";
 
-import { useEffect, useRef, useState, type FormEvent } from "react";
+import { useRef, useState, type FormEvent } from "react";
 import { useRouter } from "next/navigation";
-import { useAction, useMutation } from "convex/react";
+import { useMutation } from "convex/react";
 import { api } from "@vakil/backend/api";
 import { isPilotLocale, LIMITS, type PilotLocale } from "@vakil/domain";
 import { useLocale } from "./locale";
@@ -151,47 +151,37 @@ function SaveIntake({
   onBusy: (value: boolean) => void;
 }) {
   const create = useMutation(api.cases.create);
-  const send = useAction(api.chat.send);
   const router = useRouter();
   const { locale: uiLocale } = useLocale();
   const chatCopy = intakeChatCopy[uiLocale];
-  const [consent, setConsent] = useState(false);
   const submitting = useRef(false);
   const savedCase = useRef<Id<"cases"> | null>(null);
   const creation = useRef<{ fingerprint: string; requestId: string } | null>(null);
   const [pending, setPending] = useState(false);
   const [error, setError] = useState("");
-  useEffect(() => { setConsent(false); }, [title, text, locale]);
+
   async function save(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     if (submitting.current || !reviewed || !title.trim() || !text.trim()) return;
-    const wantsChat = (event.nativeEvent instanceof SubmitEvent && event.nativeEvent.submitter instanceof HTMLButtonElement)
-      ? event.nativeEvent.submitter.value !== "private" : true;
-    if (wantsChat && !consent) return;
     submitting.current = true;
     onBusy(true);
     setPending(true);
     setError("");
     try {
       const fingerprint = JSON.stringify([title.trim(), text.trim(), locale]);
-      if (creation.current?.fingerprint !== fingerprint) creation.current = { fingerprint, requestId: crypto.randomUUID() };
-      const caseId = savedCase.current ?? await create({
-        title: title.trim(),
-        text: text.trim(),
-        locale,
-        context: [],
-        requestId: creation.current.requestId,
-      });
-      savedCase.current = caseId;
-      if (wantsChat) {
-        try {
-          await send({ caseId, message: intakeChatCopy[locale].initialMessage, documentIds: [], requestId: `initial-${caseId}`, contextKey: "0:0:", consent: true });
-        } catch {
-          // The intake remains saved even if dispatch or its acknowledgement fails.
-          setError(chatCopy.failed);
-          return;
-        }
+      if (creation.current?.fingerprint !== fingerprint) {
+        creation.current = { fingerprint, requestId: crypto.randomUUID() };
       }
+      const caseId =
+        savedCase.current ??
+        (await create({
+          title: title.trim(),
+          text: text.trim(),
+          locale,
+          context: [],
+          requestId: creation.current.requestId,
+        }));
+      savedCase.current = caseId;
       router.push(`/workspace/cases/${caseId}`);
     } catch (failure) {
       setError(errorMessage(failure));
@@ -201,13 +191,12 @@ function SaveIntake({
       onBusy(Boolean(savedCase.current));
     }
   }
+
   return (
     <form onSubmit={save}>
-      <Label className="checkbox-line" style={{ marginBottom: 14 }}>
-        <Input type="checkbox" checked={consent} disabled={pending || !reviewed} onChange={(event) => setConsent(event.target.checked)} />
-        {chatCopy.consent}
-      </Label>
-      <p className="muted small-text" style={{ marginBottom: 16 }}>{chatCopy.documents}</p>
+      <p className="muted small-text" style={{ marginBottom: 16 }}>
+        {chatCopy.documents}
+      </p>
       {error && (
         <p
           className="status-message error"
@@ -218,17 +207,28 @@ function SaveIntake({
         </p>
       )}
       {savedCase.current && error && (
-        <a className="btn secondary" href={`/workspace/cases/${savedCase.current}`} style={{ marginBottom: 14 }}>Open saved case</a>
+        <a
+          className="btn secondary"
+          href={`/workspace/cases/${savedCase.current}`}
+          style={{ marginBottom: 14 }}
+        >
+          Open saved case
+        </a>
       )}
       <div className="actions">
-      <Button
-        className="btn"
-        type="submit" value="chat"
-        disabled={pending || !reviewed || !consent || !title.trim() || !text.trim() || Boolean(savedCase.current)}
-      >
-        {pending ? chatCopy.pending : chatCopy.send}
-      </Button>
-      <Button className="btn secondary" type="submit" value="private" disabled={pending || !reviewed || !title.trim() || !text.trim() || Boolean(savedCase.current)}>{chatCopy.saveOnly}</Button>
+        <Button
+          className="btn"
+          type="submit"
+          disabled={
+            pending ||
+            !reviewed ||
+            !title.trim() ||
+            !text.trim() ||
+            Boolean(savedCase.current)
+          }
+        >
+          {pending ? chatCopy.pending : chatCopy.saveAndContinue}
+        </Button>
       </div>
     </form>
   );

@@ -2,7 +2,7 @@
 
 ## User flow
 
-Intake offers **Save and start AI chat**, enabled after text review and explicit consent to send the intake to Google Gemini. **Save privately without AI** still stores the intake without a model call. A stable intake request ID prevents duplicate case creation when a save acknowledgement is lost. Inputs lock while submission runs and after a case has been saved. If chat dispatch fails unexpectedly after saving, the user can open the saved case without resubmitting the intake.
+Intake offers **Save and continue** after text review. It saves the private intake and opens the case immediately, without calling Gemini or asking for AI consent. A stable request ID prevents duplicate cases after a lost save acknowledgement. Inputs lock during submission and after a confirmed save. Chat and document uploads are available as separate next steps on the saved case.
 
 Each case has a private conversational chat. Sending a message requests a Gemini reply using the original intake, saved reviewed factual corrections, the latest ten successful conversation turns, and only documents selected for that send. Replies do not overwrite the intake or create an approved summary. Consultation sharing still uses a separately reviewed summary version; advocates cannot access case chat or raw uploaded documents.
 
@@ -16,14 +16,14 @@ Users can upload PDF, PNG, JPEG and UTF-8 TXT files to their case. Uploading sto
 - Backend validates sizes, allowed MIME types, PDF/image signatures, and UTF-8 text. Signature validation is not malware scanning or full document parsing.
 - Only the owner can upload, list, read or remove files. The backend rechecks access after storage/reading and cleans up a blob if attachment registration fails. No public file URL is exposed.
 - Native Gemini `generateContent` sends PDF/images as `inlineData` and TXT as decoded text, using a server-only key. Files are not uploaded to Google's Files API. Input/document instructions remain untrusted data.
-- The default chat model is `gemini-3.8-flash`. Gemini 3/4 chat requests explicitly use `thinkingLevel: LOW` with 4,096 output tokens for interactive latency. Other model overrides retain their default thinking configuration.
-- External calls have a 30-second timeout and 64 KiB response cap. Only a completed `STOP` candidate with bounded visible text is saved. No tool execution, retrieval or verified legal citations are provided.
+- The default chat model is `gemini-3.8-flash`. Gemini 3/4 chat requests explicitly use `thinkingLevel: LOW` with 2,048 output tokens and a concise 150-word response instruction. Other model overrides retain their default thinking configuration.
+- Chat calls have a 60-second timeout (75-second reservation lease) and 64 KiB response cap. Only a completed `STOP` candidate with bounded visible text is saved. No tool execution, retrieval or verified legal citations are provided.
 
 ## State and consent
 
 `chat.listMine({caseId})` returns `{turns,limitReached,contextKey}`. `chat.send({caseId,message,documentIds,requestId,contextKey,consent:true})` returns `{kind:"available"}` or `{kind:"unavailable",reason}`. The context key binds consent to current case revisions and visible conversation state. A stale new send is rejected before reservation, audit, quota consumption or fetch. The initial untouched case key is `0:0:`.
 
-The backend reserves one in-flight send per case, stores the user message and terminal result, and schedules lease expiry. Repeating the same request ID/payload returns its existing status without another provider call. An acknowledged unavailable result needs a fresh consented attempt with a new ID; an uncertain network acknowledgement reuses the original ID. Permission or context errors clear the client's held retry. Disabled accounts or changed/deleted cases cannot persist a late successful model response.
+The backend reserves one in-flight send per case, stores the user message and terminal result, and schedules lease expiry. Repeating the same request ID/payload returns its existing status without another provider call. A recoverable unavailable result offers Review and try again, which restores the message and still-available attachments into an empty composer, requires renewed consent and uses a fresh request ID. It does not overwrite an existing draft. An acknowledged unavailable result needs a fresh consented attempt with a new ID; an uncertain network acknowledgement reuses the original ID. Permission or context errors clear the client's held retry. Disabled accounts or changed/deleted cases cannot persist a late successful model response.
 
 Metadata-only `chatConsents` records the recipient origin, case/owner/turn IDs, selected document IDs, history turn IDs, timestamp, model and case revisions before dispatch. Draft deletion removes its stored files, turns and chat consent records, and is blocked during an active send. It does not make a claim about Google's processing/retention after a prior request.
 

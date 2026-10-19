@@ -41,6 +41,7 @@ export interface ChatCopy {
   sendButton: string;
   sending: string;
   retryButton: string;
+  restoreMessage: string;
 
   // Errors / validation
   errors: {
@@ -119,6 +120,7 @@ export const chatCopy: Record<PilotLocale, ChatCopy> = {
     sendButton: "Send message",
     sending: "Sending message…",
     retryButton: "Retry message",
+    restoreMessage: "Review and try again",
 
     errors: {
       emptyMessage: "Please enter a message before sending.",
@@ -139,7 +141,7 @@ export const chatCopy: Record<PilotLocale, ChatCopy> = {
         "You can select at most 3 attachments per message.",
       attachmentsTooLarge:
         "The combined size of selected attachments exceeds 6 MiB. Deselect a file to continue.",
-      timeout: "The request timed out. You may retry your message.",
+      timeout: "The AI reply took too long. Your case is saved. Review this message and send it again.",
       in_progress: "A message is currently being processed for this case.",
       rate_limited:
         "The service message limit was reached. Please wait before sending again.",
@@ -208,6 +210,7 @@ export const chatCopy: Record<PilotLocale, ChatCopy> = {
     sendButton: "संदेश भेजें",
     sending: "संदेश भेजा जा रहा है…",
     retryButton: "पुनः प्रयास करें",
+    restoreMessage: "जाँचें और फिर कोशिश करें",
 
     errors: {
       emptyMessage: "कृपया भेजने से पहले एक संदेश लिखें।",
@@ -296,6 +299,7 @@ export const chatCopy: Record<PilotLocale, ChatCopy> = {
     sendButton: "ਸੁਨੇਹਾ ਭੇਜੋ",
     sending: "ਸੁਨੇਹਾ ਭੇਜਿਆ ਜਾ ਰਿਹਾ ਹੈ…",
     retryButton: "ਦੁਬਾਰਾ ਕੋਸ਼ਿਸ਼ ਕਰੋ",
+    restoreMessage: "ਜਾਂਚੋ ਅਤੇ ਮੁੜ ਕੋਸ਼ਿਸ਼ ਕਰੋ",
 
     errors: {
       emptyMessage: "ਕਿਰਪਾ ਕਰਕੇ ਭੇਜਣ ਤੋਂ ਪਹਿਲਾਂ ਸੁਨੇਹਾ ਲਿਖੋ।",

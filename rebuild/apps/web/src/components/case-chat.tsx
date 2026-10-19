@@ -180,6 +180,17 @@ export function CaseChat({ caseId, locale }: CaseChatProps) {
     [],
   );
 
+  function prepareFailedMessage(turn: ChatHistoryProps["turns"][number]) {
+    if (isSendingRef.current || uploading || removingDocId || message.trim()) return;
+    setMessage(turn.text);
+    setSelectedDocIds(new Set(turn.documentIds.filter(id => docMap.has(id))));
+    setConsent(false);
+    setSendError(null);
+    setHeldRetry(null);
+    heldRetryRef.current = null;
+    document.getElementById("case-chat-message-input")?.focus();
+  }
+
   const toggleDocSelection = useCallback(
     (docId: Id<"caseDocuments">) => {
       setSelectedDocIds((prev) => {
@@ -464,6 +475,8 @@ export function CaseChat({ caseId, locale }: CaseChatProps) {
             locale={locale}
             uiLocale={uiLocale}
             uiCopy={copy}
+            onRetry={prepareFailedMessage}
+            retryDisabled={!isLoaded || isSending || uploading || Boolean(removingDocId) || hasPersistedPending || turnsLimitReached || Boolean(message.trim())}
           />
         )}
       </div>
@@ -701,6 +714,8 @@ export interface ChatHistoryProps {
   locale: PilotLocale;
   uiLocale: PilotLocale;
   uiCopy: ChatCopy;
+  onRetry?: (turn: ChatHistoryProps["turns"][number]) => void;
+  retryDisabled?: boolean;
 }
 
 export function ChatHistory({
@@ -709,6 +724,8 @@ export function ChatHistory({
   locale,
   uiLocale,
   uiCopy,
+  onRetry,
+  retryDisabled,
 }: ChatHistoryProps) {
   if (turns.length === 0) {
     return (
@@ -808,6 +825,11 @@ export function ChatHistory({
                   <AlertCircle size={15} />
                   {getReasonMessage(turn.result.reason, uiCopy.errors)}
                 </p>
+                {onRetry && ["timeout", "provider_failed", "rate_limited", "truncated", "malformed", "response_too_large", "state_changed"].includes(turn.result.reason) && (
+                  <Button type="button" className="btn secondary" disabled={retryDisabled} onClick={() => onRetry(turn)}>
+                    {uiCopy.restoreMessage}
+                  </Button>
+                )}
               </div>
             )}
           </article>

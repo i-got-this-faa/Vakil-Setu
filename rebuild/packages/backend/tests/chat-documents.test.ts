@@ -222,7 +222,19 @@ describe("persistent private case chat", () => {
     expect((await f.t.run(ctx => ctx.db.query("chatAttempts").collect())).length).toBe(20);
   });
 
-  it("aborts an external request after 30 seconds and persists timeout", async () => {
+  it("accepts a reply after the former 30-second cutoff", async () => {
+    const f = await fixture();
+    vi.useFakeTimers();
+    const pending = delayedFetch();
+    const sending = f.user.action(api.chat.send, f.request);
+    await pending.dispatched;
+    await vi.advanceTimersByTimeAsync(35_000);
+    pending.release(reply("A concise delayed answer."));
+    expect(await sending).toEqual({ kind: "available" });
+    expect((await f.user.query(api.chat.listMine, { caseId: f.caseId })).turns[0]?.result).toEqual({ kind: "reply", text: "A concise delayed answer." });
+  });
+
+  it("aborts at the chat deadline and persists timeout before the reservation expires", async () => {
     const f = await fixture();
     vi.useFakeTimers();
     let started = () => {};
@@ -233,7 +245,10 @@ describe("persistent private case chat", () => {
     })));
     const sending = f.user.action(api.chat.send, f.request);
     await dispatched;
-    await vi.advanceTimersByTimeAsync(CHAT_LIMITS.timeoutMs);
+    await vi.advanceTimersByTimeAsync(30_000);
+    expect((await f.user.query(api.chat.listMine, { caseId: f.caseId })).turns[0]?.result.kind).toBe("pending");
+    expect(CHAT_LIMITS.timeoutMs).toBeLessThan(CHAT_LIMITS.leaseMs);
+    await vi.advanceTimersByTimeAsync(CHAT_LIMITS.timeoutMs - 30_000);
     expect(await sending).toEqual({ kind: "unavailable", reason: "timeout" });
     expect((await f.user.query(api.chat.listMine, { caseId: f.caseId })).turns[0]?.result).toEqual({ kind: "unavailable", reason: "timeout" });
   });

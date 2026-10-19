@@ -14,7 +14,7 @@ export const ERROR_CODES = ["UNAUTHENTICATED", "ONBOARDING_REQUIRED", "ACCOUNT_D
 export type ErrorCode = (typeof ERROR_CODES)[number];
 export const CHAT_LIMITS = {
   turns: 100, messageChars: 4000, replyChars: 8000, historyTurns: 10,
-  attemptsPerHour: 20, timeoutMs: 30_000, leaseMs: 45_000,
+  attemptsPerHour: 20, timeoutMs: 60_000, leaseMs: 75_000,
   documentBytes: 3 * 1024 * 1024, documentsPerCase: 5,
   attachments: 3, attachmentBytes: 6 * 1024 * 1024,
 } as const;
