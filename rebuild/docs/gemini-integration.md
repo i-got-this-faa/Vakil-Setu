@@ -33,3 +33,7 @@ This is prompted intake assistance, without legal retrieval or verified citation
 | Hosted deployment and live generation | Requires valid deployment authentication and Gemini key; record actual outcome in verification.md |
 
 Sources: [Google model catalog](https://ai.google.dev/gemini-api/docs/models), [GenerateContent API](https://ai.google.dev/api/generate-content), [structured output REST](https://ai.google.dev/gemini-api/docs/generate-content/structured-output).
+
+## Hosted activation follow-up — 19 October 2026
+
+Deployment authentication is now working. The backend/schema was published to the existing vakil-setu development deployment, chatty-sandpiper-446, and GEMINI_API_KEY was set there privately. Real website two-turn chat/reload persistence and a separate synthetic hosted document/model test passed. Browser file-picker automation remains unverified because of the extension permission restriction. See verification.md for evidence. This supersedes the earlier activation blocker; production is unchanged.

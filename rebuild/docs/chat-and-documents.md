@@ -40,3 +40,7 @@ Browser checks render the real intake/chat components with substituted identity/
 Hosted activation is still incomplete: the old Convex deployment credential is invalid. The existing browser sign-in reached a Convex Terms of Service acceptance screen, which was left unaccepted. No new deployment or hosted environment key write is claimed. Deploy the backend/schema and configure the key in the hosted deployment before starting this new frontend against it.
 
 Sources: [Convex argument limits](https://docs.convex.dev/production/state/limits), [Gemini document processing](https://ai.google.dev/gemini-api/docs/document-processing), [Gemini thinking configuration](https://ai.google.dev/gemini-api/docs/generate-content/thinking).
+
+## Hosted activation follow-up
+
+On 19 October, CLI authentication was repaired, the schema/functions were deployed to chatty-sandpiper-446 and GEMINI_API_KEY was set on that existing development deployment. Website intake-to-chat, a context-dependent follow-up and reload persistence passed with actual Clerk and Gemini. A separate synthetic operator-identity test passed hosted TXT upload/private read, Gemini marker extraction and second-turn recall, then cleaned up its case. Browser file chooser automation remains unverified due to extension permission/T3 timeout. Earlier hosted-blocker statements describe the pre-activation snapshot; detailed evidence is in verification.md.
