@@ -2,7 +2,7 @@
 
 ## User flow
 
-Intake offers **Save and continue** after text review. It saves the private intake and opens the case immediately, without calling Gemini or asking for AI consent. A stable request ID prevents duplicate cases after a lost save acknowledgement. Inputs lock during submission and after a confirmed save. Chat and document uploads are available as separate next steps on the saved case.
+Intake offers **Save and continue** after text review and explicit Google Gemini consent. It saves the private intake, starts the initial chat, then opens the case. The button says only **Saving…** throughout. **Save privately without AI** saves without a model call. Stable creation and initial-chat request IDs prevent duplicate dispatch after uncertain acknowledgements. Inputs lock during submission. Unexpected chat errors preserve the saved case and provide an Open saved case link.
 
 Each case has a private conversational chat. Sending a message requests a Gemini reply using the original intake, saved reviewed factual corrections, the latest ten successful conversation turns, and only documents selected for that send. Replies do not overwrite the intake or create an approved summary. Consultation sharing still uses a separately reviewed summary version; advocates cannot access case chat or raw uploaded documents.
 

@@ -19,7 +19,7 @@ The web app runs at http://localhost:3000. It renders public pages and explicit 
 
 Configure hosted Clerk and Convex using the examples in `apps/web` and `packages/backend`; see `docs/setup.md`. Never commit environment files. Clerk owns passwords and sessions; the Convex backend owns application roles and permissions. Bootstrap the first administrator through an internal backend operation, never a public role selector.
 
-Intake offers Save and continue, saving privately and opening the case without waiting for AI. Chat is a separate consented action on the case page. Cases keep private conversation history and accept PDF, JPG, PNG and TXT attachments up to 3 MiB each. Files go to Gemini only when selected for a consented message. Conversation replies do not replace reviewed summaries. See `docs/chat-and-documents.md` for limits and evidence. Set GEMINI_API_KEY in the Convex deployment; GEMINI_MODEL defaults to gemini-3.8-flash. A local environment file alone does not configure hosted functions.
+Intake offers Save and continue with explicit Google Gemini consent to save and start chat, or Save privately without AI. The pending button says Saving… while the consented workflow runs. Cases keep private conversation history and accept PDF, JPG, PNG and TXT attachments up to 3 MiB each. Files go to Gemini only when selected for a consented message. Conversation replies do not replace reviewed summaries. See `docs/chat-and-documents.md` for limits and evidence. Set GEMINI_API_KEY in the Convex deployment; GEMINI_MODEL defaults to gemini-3.8-flash. A local environment file alone does not configure hosted functions.
 
 ```powershell
 bun run typecheck

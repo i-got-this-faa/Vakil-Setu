@@ -7,6 +7,7 @@ import type { PilotLocale } from "@vakil/domain";
 import { productCopy } from "../src/lib/copy";
 import { caseNoSummaryCopy } from "../src/lib/case-copy";
 import { chatCopy } from "../src/lib/chat-copy";
+import { intakeChatCopy } from "../src/lib/intake-chat-copy";
 
 let locale: PilotLocale = "en";
 let intake = "Synthetic intake for the saved outcome check.";
@@ -65,12 +66,15 @@ test("a persisted timeout offers review and retry without dispatching automatica
 });
 
 for (const pilot of ["en", "hi", "pa"] as const) {
-  test(`${pilot}: intake saves before chat with no model consent or AI action`, () => {
+  test(`${pilot}: intake retains consented chat with neutral save button wording`, () => {
     locale = pilot;
     const html = renderToStaticMarkup(<Intake />);
-    expect(html).not.toContain("Gemini");
-    expect(html).not.toContain('value="chat"');
-    expect(html.match(/type="submit"/g)).toHaveLength(1);
+    expect(html).toContain('value="chat"');
+    expect(html).toContain(intakeChatCopy[pilot].send);
+    expect(html).toContain(intakeChatCopy[pilot].saveOnly);
+    expect(html).toContain("Google Gemini");
+    expect(intakeChatCopy[pilot].pending).not.toContain("Gemini");
+    expect(intakeChatCopy[pilot].send).not.toContain("Gemini");
   });
 }
 

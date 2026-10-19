@@ -132,3 +132,9 @@ Chat now allows 60 seconds with a 75-second lease, requests concise replies of a
 Recoverable failed turns offer Review and try again. It restores the message and still-available selected attachments only into an empty composer, resets consent and uses a new request ID for the next send. A browser fixture with real React components and substituted data/model boundaries verified save creates one case with zero sends, restored message with unchecked consent/disabled Send, and successful consented recovery using a fresh ID. It cannot overwrite an existing message draft.
 
 Full bun run check passed native typechecks, 130 tests (103 backend, 12 language, 15 React render) and production build. Backend tests include a successful reply at 35 seconds and a bounded timeout before lease expiry. Independent review found no actionable P1/P2 issues. No production deployment or remote push occurred.
+
+## Clarified button wording — 19 October 2026
+
+The user clarified that only the phrase Saving and asking Gemini should change; removing automatic chat was a misunderstanding. Restored the original consented save-and-chat handler and private-only option, preserving input review, context consent reset, idempotent case creation and initial request ID. The primary button now reads Save and continue and its pending state is only Saving… in English, Hindi and Punjabi. The Gemini recipient remains disclosed in the consent checkbox. The timeout/recovery backend improvements are unchanged and need no new deployment.
+
+Full checks pass: native typechecks, all 130 tests and production build. Browser fixture interaction with the actual intake component and substituted backend/model boundaries observed Saving… while one case creation and one chat send were pending, then navigation with a reply. No additional real case data was sent. This supersedes the prior save-only intake behavior; historical checks above remain records of the preceding version.

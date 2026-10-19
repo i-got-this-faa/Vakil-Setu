@@ -57,3 +57,7 @@ The earlier Convex authentication blocker is resolved. CLI device authentication
 ## Save-first intake and bounded chat recovery — 19 October 2026
 
 Removed intake AI consent and automatic chat dispatch. A single Save and continue action now saves privately before opening the case. Chat remains explicitly consented on the case page. Increased chat deadline/lease to 60/75 seconds, reduced output budget and requested concise replies. Recoverable failed turns can be restored for review and renewed consent without overwriting a draft. Backend deployed; hosted Hindi two-turn acceptance, real website save-without-AI, browser-fixture recovery, native checks, all 130 tests and production build passed. The reported old timeout remains an accurate historical result and can be retried through the new review action. No real case was automatically re-sent, no production change or remote push performed.
+
+## Button wording correction — 19 October 2026
+
+User clarified intent: retain save-and-chat and change only the visible action wording. Restored Gemini consent and automatic initial chat, plus private-only save. Primary/pending labels are Save and continue / Saving… across pilot languages. All 130 tests, native checks, production build and actual component browser interaction with substituted services pass. Timeout and retry improvements remain active. Prior save-only behavior is superseded.
