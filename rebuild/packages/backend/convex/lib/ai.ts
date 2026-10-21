@@ -12,7 +12,7 @@ export type AiFailureReason = "timeout" | "rate_limited" | "provider_failed" | "
 export type AiResult = { kind: "reply"; text: string } | { kind: "unavailable"; reason: AiFailureReason };
 export type AiTransportMetadata = { httpStatus: number | null; headersMs: number | null; firstByteMs: number | null; latencyMs: number };
 export type AiProvider = {
-  kind: "gemini_native";
+  kind: "gemini_native" | "vertex_native";
   model: string;
   recipientOrigin: string;
   generate: (request: AiRequest, options: { signal: AbortSignal; onMetadata: (metadata: AiTransportMetadata) => void }) => Promise<AiResult>;

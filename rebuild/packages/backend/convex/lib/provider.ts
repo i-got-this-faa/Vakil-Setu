@@ -1,3 +1,4 @@
+import { vertexConfig } from "./vertexConfig";
 import { isLegalDomain, isPilotLocale, isUrgency, LEGAL_DOMAINS, URGENCIES, LIMITS, LOCALES } from "@vakil/domain";
 import type { PilotLocale } from "@vakil/domain";
 
@@ -25,7 +26,8 @@ export function aiAllowedLanguages(env: Record<string, string | undefined>): str
 
 export function aiCapabilities(env: Record<string, string | undefined>) {
   const config = geminiConfig(env);
-  return { configured: config.kind === "configured", locales: aiAllowedLanguages(env), provider: "gemini_native", evidence: env.AI_CHAT_LOCALES === undefined ? "observed_runtime_only_not_quality_validated" : "operator_allowlist_not_quality_validated", ...(config.kind === "unavailable" ? { reason: config.reason } : {}) };
+  const vertex = vertexConfig(env);
+  return { configured: config.kind === "configured", ...(config.kind === "configured" && vertex.kind === "configured" ? { vertexFallback: true } : {}), locales: aiAllowedLanguages(env), provider: "gemini_native", evidence: env.AI_CHAT_LOCALES === undefined ? "observed_runtime_only_not_quality_validated" : "operator_allowlist_not_quality_validated", ...(config.kind === "unavailable" ? { reason: config.reason } : {}) };
 }
 
 export function geminiResponseSchema(locale: PilotLocale) {

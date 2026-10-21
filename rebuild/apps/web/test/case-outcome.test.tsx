@@ -10,6 +10,7 @@ import { chatCopy } from "../src/lib/chat-copy";
 import { intakeChatCopy } from "../src/lib/intake-chat-copy";
 
 let locale: PilotLocale = "en";
+let vertexFallback = false;
 let intake = "Synthetic intake for the saved outcome check.";
 let source: "none" | "manual" | "provider" = "none";
 let chatScenario: "empty" | "reply" | "pending" | "unavailable" | "timeout" = "empty";
@@ -31,7 +32,7 @@ mock.module("convex/react", () => ({
   usePaginatedQuery: () => { throw new Error("Case detail must not list cases."); },
   useQuery: (reference: Parameters<typeof getFunctionName>[0]) => {
     const name = getFunctionName(reference);
-    if (name === "chat:capabilities") return { configured: true, locales: ["en", "hi", "pa"], provider: "gemini_native", evidence: "synthetic_render_only" };
+    if (name === "chat:capabilities") return { configured: true, locales: ["en", "hi", "pa"], provider: "gemini_native", vertexFallback, evidence: "synthetic_render_only" };
     if (name === "chat:listMine") return { turns: chatScenario === "empty" ? [] : [{ _id: "turn-fixture", text: "Synthetic user question", createdAt: 0, documentIds: ["removed-document-fixture"], result: chatScenario === "reply" ? { kind: "reply", text: '<script>alert("unsafe")</script> Synthetic model reply' } : chatScenario === "pending" ? { kind: "pending" } : { kind: "unavailable", reason: chatScenario === "timeout" ? "timeout" : "blocked" } }], limitReached: false, contextKey: "0:0:" };
     if (name === "caseDocuments:listMine") return [];
     if (name === "cases:resolveMine") return "case-fixture";
@@ -53,6 +54,7 @@ const render = () => renderToStaticMarkup(<CasePage caseId="case-fixture" />);
 
 beforeEach(() => {
   locale = "en";
+  vertexFallback = false;
   intake = "Synthetic intake for the saved outcome check.";
   source = "none";
   chatScenario = "empty";
@@ -144,5 +146,18 @@ for (const pilot of ["en", "hi", "pa"] as const) {
     expect(html).toContain("Google Gemini");
     expect(html).toContain("3 MiB");
     expect(html).toContain('accept=".pdf,.png,.jpg,.jpeg,.txt,application/pdf,image/png,image/jpeg,text/plain"');
+  });
+}
+
+for (const pilot of ["en", "hi", "pa"] as const) {
+  test(`${pilot}: configured fallback is disclosed before intake, chat and summary consent`, () => {
+    locale = pilot;
+    vertexFallback = true;
+    const intakeHtml = renderToStaticMarkup(<Intake />);
+    const caseHtml = render();
+    expect(intakeHtml).toContain("Google Cloud Vertex AI");
+    expect(caseHtml.match(/Google Cloud Vertex AI/g)?.length).toBeGreaterThanOrEqual(2);
+    expect(intakeHtml).toMatch(/<input[^>]*type="checkbox"[^>]*>/);
+    expect(intakeChatCopy[pilot].pending).not.toContain("Gemini");
   });
 }

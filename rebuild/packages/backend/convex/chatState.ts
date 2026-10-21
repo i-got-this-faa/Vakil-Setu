@@ -23,7 +23,7 @@ export const reserve = internalMutation({ args: sendArgs, handler: async (ctx, a
   if (args.documentIds.length > CHAT_LIMITS.attachments || new Set(args.documentIds).size !== args.documentIds.length) fail("INVALID_INPUT", "Select at most three distinct documents.");
   const existing = await ctx.db.query("chatTurns").withIndex("by_request", q => q.eq("caseId", args.caseId).eq("requestId", requestId)).unique();
   if (existing) {
-    if (existing.text !== text || JSON.stringify(existing.documentIds) !== JSON.stringify(args.documentIds)) fail("CONFLICT", "Request ID already belongs to a different message.");
+    if (Boolean(existing.allowVertexFallback) !== Boolean(args.allowVertexFallback) || existing.text !== text || JSON.stringify(existing.documentIds) !== JSON.stringify(args.documentIds)) fail("CONFLICT", "Request ID already belongs to a different message.");
     return { kind: "replay" as const, result: existing.result.kind === "pending" ? { kind: "unavailable" as const, reason: existing.expiresAt <= Date.now() ? "timeout" : "in_progress" } : existing.result.kind === "reply" ? { kind: "available" as const } : existing.result };
   }
   const turns = await ctx.db.query("chatTurns").withIndex("by_case", q => q.eq("caseId", args.caseId)).order("asc").take(CHAT_LIMITS.turns);
@@ -40,7 +40,7 @@ export const reserve = internalMutation({ args: sendArgs, handler: async (ctx, a
   }
   if (documents.reduce((size, document) => size + document.size, 0) > CHAT_LIMITS.attachmentBytes) fail("LIMIT_EXCEEDED", "Selected documents exceed 6 MiB.");
   for (const turn of turns) if (turn.result.kind === "pending") await ctx.db.patch(turn._id, { result: { kind: "unavailable", reason: "timeout" } });
-  const turnId = await ctx.db.insert("chatTurns", { caseId: legalCase._id, ownerId: account._id, requestId, text, createdAt: Date.now(), expiresAt: Date.now() + CHAT_LIMITS.leaseMs, documentIds: args.documentIds, documentNames: documents.map(document => document.fileName), contextRevision: legalCase.contextRevision, summaryVersion: legalCase.summaryVersion, result: { kind: "pending" } });
+  const turnId = await ctx.db.insert("chatTurns", { caseId: legalCase._id, ownerId: account._id, requestId, allowVertexFallback: Boolean(args.allowVertexFallback), text, createdAt: Date.now(), expiresAt: Date.now() + CHAT_LIMITS.leaseMs, documentIds: args.documentIds, documentNames: documents.map(document => document.fileName), contextRevision: legalCase.contextRevision, summaryVersion: legalCase.summaryVersion, result: { kind: "pending" } });
   await ctx.scheduler.runAfter(CHAT_LIMITS.leaseMs, internal.chatState.expire, { turnId });
   await ctx.db.insert("chatAttempts", { accountId: account._id, at: Date.now() });
   return { kind: "reserved" as const, turnId };
@@ -62,15 +62,18 @@ export const context = internalQuery({ args: { turnId: v.id("chatTurns") }, hand
   return { legalCase, turn, history, documents };
 } });
 
-export const auditDispatch = internalMutation({ args: { turnId: v.id("chatTurns"), model: v.string() }, handler: async (ctx, args) => {
+export const auditDispatch = internalMutation({ args: { turnId: v.id("chatTurns"), model: v.string(), recipientOrigin: v.optional(v.string()) }, handler: async (ctx, args) => {
   const turn = await ctx.db.get(args.turnId);
   if (!turn) fail("NOT_FOUND", "Chat turn not found.");
   const { legalCase } = await ownCase(ctx, turn.caseId);
   if (turn.result.kind !== "pending" || turn.expiresAt <= Date.now() || legalCase.contextRevision !== turn.contextRevision || legalCase.summaryVersion !== turn.summaryVersion) fail("CONFLICT", "Case changed or send expired.");
-  const audits = await ctx.db.query("chatConsents").withIndex("by_case", q => q.eq("caseId", turn.caseId)).take(CHAT_LIMITS.turns);
-  if (audits.some(audit => audit.turnId === turn._id)) fail("CONFLICT", "Send already dispatched.");
+  const recipientOrigin = args.recipientOrigin ?? "https://generativelanguage.googleapis.com";
+  const vertex = /^https:\/\/(?:[a-z]+(?:-[a-z]+)+[0-9]+-)?aiplatform\.googleapis\.com$/u.test(recipientOrigin);
+  if (recipientOrigin !== "https://generativelanguage.googleapis.com" && (!vertex || !turn.allowVertexFallback)) fail("FORBIDDEN", "Explicit Vertex fallback consent required.");
+  const audits = await ctx.db.query("chatConsents").withIndex("by_case", q => q.eq("caseId", turn.caseId)).take(CHAT_LIMITS.turns * 2);
+  if (audits.some(audit => audit.turnId === turn._id && audit.recipientOrigin === recipientOrigin)) fail("CONFLICT", "Send already dispatched.");
   const turns = await ctx.db.query("chatTurns").withIndex("by_case", q => q.eq("caseId", turn.caseId)).take(CHAT_LIMITS.turns);
-  await ctx.db.insert("chatConsents", { caseId: turn.caseId, ownerId: turn.ownerId, turnId: turn._id, at: Date.now(), recipientOrigin: "https://generativelanguage.googleapis.com", model: args.model, contextRevision: turn.contextRevision, summaryVersion: turn.summaryVersion, documentIds: turn.documentIds, historyTurnIds: turns.filter(entry => entry.result.kind === "reply").slice(-CHAT_LIMITS.historyTurns).map(entry => entry._id) });
+  await ctx.db.insert("chatConsents", { caseId: turn.caseId, ownerId: turn.ownerId, turnId: turn._id, at: Date.now(), recipientOrigin, model: args.model, contextRevision: turn.contextRevision, summaryVersion: turn.summaryVersion, documentIds: turn.documentIds, historyTurnIds: turns.filter(entry => entry.result.kind === "reply").slice(-CHAT_LIMITS.historyTurns).map(entry => entry._id) });
   return null;
 } });
 

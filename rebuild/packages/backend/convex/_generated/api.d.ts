@@ -22,6 +22,8 @@ import type * as credentials from "../credentials.js";
 import type * as lib_access from "../lib/access.js";
 import type * as lib_ai from "../lib/ai.js";
 import type * as lib_aiGemini from "../lib/aiGemini.js";
+import type * as lib_aiRouting from "../lib/aiRouting.js";
+import type * as lib_aiVertex from "../lib/aiVertex.js";
 import type * as lib_chat from "../lib/chat.js";
 import type * as lib_discovery from "../lib/discovery.js";
 import type * as lib_discoveryPagination from "../lib/discoveryPagination.js";
@@ -31,6 +33,7 @@ import type * as lib_notifications from "../lib/notifications.js";
 import type * as lib_provider from "../lib/provider.js";
 import type * as lib_reviews from "../lib/reviews.js";
 import type * as lib_validators from "../lib/validators.js";
+import type * as lib_vertexConfig from "../lib/vertexConfig.js";
 import type * as notifications from "../notifications.js";
 import type * as reviews from "../reviews.js";
 import type * as slots from "../slots.js";
@@ -59,6 +62,8 @@ import type * as triageRate from "../triageRate.js";
 "lib/access": typeof lib_access,
 "lib/ai": typeof lib_ai,
 "lib/aiGemini": typeof lib_aiGemini,
+"lib/aiRouting": typeof lib_aiRouting,
+"lib/aiVertex": typeof lib_aiVertex,
 "lib/chat": typeof lib_chat,
 "lib/discovery": typeof lib_discovery,
 "lib/discoveryPagination": typeof lib_discoveryPagination,
@@ -68,6 +73,7 @@ import type * as triageRate from "../triageRate.js";
 "lib/provider": typeof lib_provider,
 "lib/reviews": typeof lib_reviews,
 "lib/validators": typeof lib_validators,
+"lib/vertexConfig": typeof lib_vertexConfig,
 "notifications": typeof notifications,
 "reviews": typeof reviews,
 "slots": typeof slots,

@@ -4,11 +4,11 @@ import { internalMutation } from "./_generated/server";
 import { fail, ownCase } from "./lib/access";
 import { integer } from "./lib/input";
 
-export const recordConsent = internalMutation({ args: { caseId: v.id("cases"), expectedVersion: v.number(), expectedContextRevision: v.number(), recipientOrigin: v.string() }, handler: async (ctx, args) => {
+export const recordConsent = internalMutation({ args: { caseId: v.id("cases"), expectedVersion: v.number(), expectedContextRevision: v.number(), recipientOrigin: v.string(), provider: v.optional(v.union(v.literal("gemini"), v.literal("vertex"))) }, handler: async (ctx, args) => {
   const { legalCase } = await ownCase(ctx, args.caseId);
   if (legalCase.summaryVersion !== integer(args.expectedVersion, "Summary version", 0, 100)) fail("CONFLICT", "Summary changed. Renew consent for the latest version.");
   if (legalCase.contextRevision !== integer(args.expectedContextRevision, "Context revision", 0, Number.MAX_SAFE_INTEGER)) fail("CONFLICT", "Follow-up context changed. Renew consent for the latest context.");
-  await ctx.db.insert("aiConsents", { caseId: legalCase._id, ownerId: legalCase.ownerId, summaryVersion: legalCase.summaryVersion, contextRevision: legalCase.contextRevision, at: Date.now(), provider: "gemini", recipientOrigin: args.recipientOrigin });
+  await ctx.db.insert("aiConsents", { caseId: legalCase._id, ownerId: legalCase.ownerId, summaryVersion: legalCase.summaryVersion, contextRevision: legalCase.contextRevision, at: Date.now(), provider: args.provider ?? "gemini", recipientOrigin: args.recipientOrigin });
   return null;
 } });
 

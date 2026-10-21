@@ -52,3 +52,11 @@ Sources: [Convex and Clerk integration](https://docs.convex.dev/auth/clerk), [Cl
 ## 21 October scope reduction
 
 Prioritize existing intake, private case chat/documents, summaries and bookings. The selected development deployment now uses `GEMINI_MODEL=gemini-3.6-flash`. `AI_CHAT_LOCALES` defaults to `en,hi,pa`; keep it restricted until evaluation supports expansion. Missing configuration, quota errors and provider failures remain explicit; saving manually still works. OpenAI routing is deferred: the supplied login token was rejected by the public API and is not configured as an application key. See `urgent-working-site-20261021.md` for current evidence and deferred work.
+
+## Optional Vertex AI quota fallback
+
+Keep `GEMINI_API_KEY` configured as the primary. In the same Convex deployment, set `VERTEX_SERVICE_ACCOUNT_JSON` from a private Google service-account JSON file, `VERTEX_FALLBACK_ENABLED=true`, `VERTEX_LOCATION=global`, and `VERTEX_MODEL=gemini-3.6-flash`. The JSON is a server credential, not a browser API key. Never paste it into source, public environment variables, logs, or chat. CLI supports secret input over stdin; for example, pipe the compact JSON into `convex env set VERTEX_SERVICE_ACCOUNT_JSON` from `packages/backend`. Local environment files do not configure hosted functions.
+
+The Google Cloud project needs the Vertex AI API enabled, linked billing, a permitted model/location and the service account's inference permission. Do not use the uploaded example's historical Gemini 1.5 model. Vertex uses service-account RS256 OAuth with cloud-platform scope, a short-lived in-memory token cache, and pinned Google HTTPS endpoints. See [Vertex fallback verification](vertex-fallback-20261021.md).
+
+Updated clients disclose Google Cloud Vertex AI with the existing consent checkbox and submit `allowVertexFallback:true`. Only an explicit Gemini quota response (429) triggers one fallback, within the existing overall deadline. Missing/invalid Gemini configuration, safety refusal, timeout and other failures never dispatch to Vertex. Old clients without this consent flag remain Gemini-only. Manual intake and summaries remain available. The fallback does not guarantee separate billing capacity or uptime.

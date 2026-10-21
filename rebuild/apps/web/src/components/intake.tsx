@@ -8,6 +8,7 @@ import { useAction, useMutation, useQuery } from "convex/react";
 import { api } from "@vakil/backend/api";
 import { isPilotLocale, LIMITS, type PilotLocale } from "@vakil/domain";
 import { useLocale } from "./locale";
+import { VertexFallbackConsentText } from "./vertex-fallback-consent";
 import { useServices } from "./providers";
 import { useAccount } from "./workspace-gate";
 import { SpeechCapture, ReadAloud } from "./speech";
@@ -152,6 +153,7 @@ function SaveIntake({
   const create = useMutation(api.cases.create);
   const send = useAction(api.chat.send);
   const capabilities = useQuery(api.chat.capabilities, {});
+  const vertexFallback = capabilities?.vertexFallback === true;
   const aiAllowed = Boolean(capabilities?.configured && capabilities.locales.includes(locale));
   const router = useRouter();
   const { locale: uiLocale, messages } = useLocale();
@@ -162,7 +164,7 @@ function SaveIntake({
   const creation = useRef<{ fingerprint: string; requestId: string } | null>(null);
   const [pending, setPending] = useState(false);
   const [error, setError] = useState("");
-  useEffect(() => { setConsent(false); }, [title, text, locale, aiAllowed]);
+  useEffect(() => { setConsent(false); }, [title, text, locale, aiAllowed, vertexFallback]);
   async function save(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     if (submitting.current || !reviewed || !title.trim() || !text.trim()) return;
@@ -186,7 +188,7 @@ function SaveIntake({
       savedCase.current = caseId;
       if (wantsChat) {
         try {
-          await send({ caseId, message: intakeChatCopy[locale].initialMessage, documentIds: [], requestId: `initial-${caseId}`, contextKey: "0:0:", consent: true });
+          await send({ caseId, message: intakeChatCopy[locale].initialMessage, documentIds: [], requestId: `initial-${caseId}`, contextKey: "0:0:", consent: true, ...(vertexFallback ? { allowVertexFallback: true as const } : {}) });
         } catch {
           // The intake remains saved even if dispatch or its acknowledgement fails.
           setError(chatCopy.failed);
@@ -206,7 +208,7 @@ function SaveIntake({
     <form onSubmit={save}>
       <Label className="checkbox-line" style={{ marginBottom: 14 }}>
         <Input type="checkbox" checked={consent} disabled={pending || !reviewed || !aiAllowed} onChange={(event) => setConsent(event.target.checked)} />
-        {chatCopy.consent}
+        <span>{chatCopy.consent}<VertexFallbackConsentText enabled={vertexFallback} locale={uiLocale} /></span>
       </Label>
       <p className="muted small-text" style={{ marginBottom: 16 }}>{chatCopy.documents}</p>
       {!aiAllowed && <p role="status" className="status-message">{capabilities === undefined ? messages.common.loading : messages.failure.aiUnavailable}</p>}

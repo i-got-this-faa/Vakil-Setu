@@ -26,6 +26,7 @@ import {
   CheckCircle2,
 } from "lucide-react";
 import { useLocale } from "./locale";
+import { VertexFallbackConsentText } from "./vertex-fallback-consent";
 import { ReadAloud } from "./speech";
 import { formatTime } from "./shared";
 import { chatCopy, type ChatCopy } from "@/lib/chat-copy";
@@ -43,6 +44,7 @@ interface ActiveSendPayload {
   message: string;
   documentIds: Id<"caseDocuments">[];
   contextKey: string;
+  allowVertexFallback: boolean;
 }
 
 function formatBytes(bytes: number): string {
@@ -98,6 +100,7 @@ export function CaseChat({ caseId, locale, onUseSummary }: CaseChatProps) {
   // Queries & Actions
   const chatData = useQuery(api.chat.listMine, { caseId });
   const capabilities = useQuery(api.chat.capabilities, {});
+  const vertexFallback = capabilities?.vertexFallback === true;
   const aiAllowed = Boolean(capabilities?.configured && capabilities.locales.includes(locale));
   const documents = useQuery(api.caseDocuments.listMine, { caseId });
   const sendChat = useAction(api.chat.send);
@@ -119,6 +122,8 @@ export function CaseChat({ caseId, locale, onUseSummary }: CaseChatProps) {
   const [heldRetry, setHeldRetry] = useState<ActiveSendPayload | null>(null);
   const heldRetryRef = useRef<ActiveSendPayload | null>(null);
   heldRetryRef.current = heldRetry;
+
+  useEffect(() => { setConsent(false); }, [vertexFallback]);
 
   // Reset consent on contextKey change (do not lose in-flight payload)
   const priorContextKeyRef = useRef<string | undefined>(undefined);
@@ -388,6 +393,7 @@ export function CaseChat({ caseId, locale, onUseSummary }: CaseChatProps) {
         message: trimmed,
         documentIds: Array.from(selectedDocIds),
         contextKey: chatData.contextKey,
+        allowVertexFallback: vertexFallback,
       };
       setHeldRetry(payload);
       heldRetryRef.current = payload;
@@ -405,6 +411,7 @@ export function CaseChat({ caseId, locale, onUseSummary }: CaseChatProps) {
         documentIds: payload.documentIds,
         requestId: payload.requestId,
         consent: true,
+        ...(payload.allowVertexFallback ? { allowVertexFallback: true as const } : {}),
         contextKey: payload.contextKey,
       });
 
@@ -659,7 +666,7 @@ export function CaseChat({ caseId, locale, onUseSummary }: CaseChatProps) {
                   setSendError(null);
                 }}
               />
-              <span>{copy.consentLabel}</span>
+              <span>{copy.consentLabel}<VertexFallbackConsentText enabled={vertexFallback} locale={uiLocale} /></span>
             </Label>
           </div>
 

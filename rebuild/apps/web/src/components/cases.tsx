@@ -28,6 +28,7 @@ import { errorMessage } from "@/lib/errors";
 import { caseNoSummaryCopy } from "@/lib/case-copy";
 import { ReadAloud } from "./speech";
 import { useLocale } from "./locale";
+import { VertexFallbackConsentText } from "./vertex-fallback-consent";
 import { CaseChat } from "./case-chat";
 import { getFeatureCopy } from "@/lib/feature-copy";
 
@@ -649,13 +650,14 @@ function AiAnalysis({
   expectedContextRevision: number;
 }) {
   const analyze = useAction(api.triage.analyze);
-  const { copy, messages } = useLocale();
+  const { copy, messages, locale: uiLocale } = useLocale();
   const capabilities = useQuery(api.chat.capabilities, {});
+  const vertexFallback = capabilities?.vertexFallback === true;
   const aiAllowed = Boolean(capabilities?.configured && capabilities.locales.includes(caseLocale));
   const [consent, setConsent] = useState(false);
   const [pending, setPending] = useState(false);
   const [result, setResult] = useState("");
-  useEffect(() => { setConsent(false); }, [caseId, expectedVersion, expectedContextRevision]);
+  useEffect(() => { setConsent(false); }, [caseId, expectedVersion, expectedContextRevision, vertexFallback]);
   async function run() {
     if (!consent || pending || !aiAllowed) return;
     setPending(true);
@@ -666,6 +668,7 @@ function AiAnalysis({
         expectedVersion,
         expectedContextRevision,
         consent: true,
+        ...(vertexFallback ? { allowVertexFallback: true as const } : {}),
       });
       setResult(
         response.kind === "available"
@@ -693,7 +696,7 @@ function AiAnalysis({
           disabled={pending || !aiAllowed}
           onChange={(event) => setConsent(event.target.checked)}
         />
-        {copy.aiConsent}
+        <span>{copy.aiConsent}<VertexFallbackConsentText enabled={vertexFallback} locale={uiLocale} /></span>
       </Label>
       <Button
         className="btn secondary"

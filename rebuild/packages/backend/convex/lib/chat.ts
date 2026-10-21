@@ -5,7 +5,7 @@ import type { Doc } from "../_generated/dataModel";
 
 export const documentType = v.union(v.literal("application/pdf"), v.literal("image/jpeg"), v.literal("image/png"), v.literal("text/plain"));
 export const chatResult = v.union(v.object({ kind: v.literal("pending") }), v.object({ kind: v.literal("reply"), text: v.string() }), v.object({ kind: v.literal("unavailable"), reason: v.string() }));
-export const sendArgs = { caseId: v.id("cases"), message: v.string(), documentIds: v.array(v.id("caseDocuments")), requestId: v.string(), consent: v.literal(true), contextKey: v.string() };
+export const sendArgs = { caseId: v.id("cases"), message: v.string(), documentIds: v.array(v.id("caseDocuments")), requestId: v.string(), consent: v.literal(true), allowVertexFallback: v.optional(v.literal(true)), contextKey: v.string() };
 export type SendResult = { kind: "available" } | { kind: "unavailable"; reason: string };
 
 // Callers supply turns in chronological order; no private text enters the key.

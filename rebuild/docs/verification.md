@@ -142,3 +142,7 @@ Full checks pass: native typechecks, all 130 tests and production build. Browser
 ## 21 October urgent scope checkpoint
 
 See [current working-site evidence](urgent-working-site-20261021.md). Fresh full check passes 252 tests, five native package typechecks and production build; one opt-in live test skipped. Updated development backend deployed. Current synthetic Gemini check returned HTTP 429, not success. Authenticated browser journeys remain unverified in the new preview profile. Expanded feature acceptance and complete language review are deferred.
+
+## Vertex quota fallback ? 21 October 2026
+
+[Current implementation and verification](vertex-fallback-20261021.md): deployed development fallback, server credential readback verified, 323 tests/typechecks/build pass. Actual authentication succeeds but generation returns 403 BILLING_DISABLED. No successful live fallback or authenticated browser handoff claimed.
