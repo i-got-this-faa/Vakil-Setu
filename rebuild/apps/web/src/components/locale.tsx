@@ -4,11 +4,12 @@ import {
   createContext,
   useContext,
   useEffect,
+  useId,
   useState,
   type ReactNode,
 } from "react";
 import { isPilotLocale, type PilotLocale } from "@vakil/domain";
-import { getLanguage, getMessages, locales } from "@vakil/i18n";
+import { getInterfaceLocale, getLanguage, getMessages, localeOptions } from "@vakil/i18n";
 import {
   Select,
   SelectTrigger,
@@ -17,6 +18,7 @@ import {
   SelectItem,
 } from "@vakil/ui";
 import { productCopy } from "@/lib/copy";
+import { getLocalizationNotice, LOCALE_STORAGE_KEY, readLocalePreference, saveLocalePreference } from "@/lib/localization-preference";
 
 const LocaleContext = createContext<{
   locale: PilotLocale;
@@ -25,9 +27,23 @@ const LocaleContext = createContext<{
 
 export function LocaleProvider({ children }: { children: ReactNode }) {
   const [locale, setLocale] = useState<PilotLocale>("en");
+  const [preferenceLoaded, setPreferenceLoaded] = useState(false);
   useEffect(() => {
-    document.documentElement.lang = getLanguage(locale)?.code ?? "en-IN";
-  }, [locale]);
+    setLocale(readLocalePreference());
+    setPreferenceLoaded(true);
+    const synchronize = (event: StorageEvent) => {
+      if (event.key === LOCALE_STORAGE_KEY || event.key === null) setLocale(readLocalePreference());
+    };
+    window.addEventListener("storage", synchronize);
+    return () => window.removeEventListener("storage", synchronize);
+  }, []);
+  useEffect(() => {
+    if (!preferenceLoaded) return;
+    const language = getLanguage(getInterfaceLocale(locale));
+    document.documentElement.lang = language?.languageTag ?? "en-IN";
+    document.documentElement.dir = language?.direction ?? "ltr";
+    saveLocalePreference(locale);
+  }, [locale, preferenceLoaded]);
   return (
     <LocaleContext.Provider value={{ locale, setLocale }}>
       {children}
@@ -41,36 +57,44 @@ export function useLocale() {
     ...context,
     messages: getMessages(context.locale),
     copy: productCopy[context.locale],
+    translationNotice: getLocalizationNotice(context.locale),
   };
 }
 
 export function LocaleSelect() {
-  const { locale, setLocale, messages } = useLocale();
+  const { locale, setLocale, messages, translationNotice } = useLocale();
+  const noticeId = useId();
   return (
-    <Select
-      value={locale}
-      onValueChange={(value) => {
-        if (isPilotLocale(value)) setLocale(value);
-      }}
-    >
-      <SelectTrigger
-        aria-label={messages.navigation.selectLanguage}
-        className="locale-select"
+    <div className="locale-control">
+      <Select
+        value={locale}
+        onValueChange={(value) => {
+          if (isPilotLocale(value)) setLocale(value);
+        }}
       >
-        <SelectValue />
-      </SelectTrigger>
-      <SelectContent className="bg-paper text-ink">
-        {locales
-          .filter((language) => language.isPilot)
-          .map((language) => (
+        <SelectTrigger
+          aria-label={messages.navigation.selectLanguage}
+          aria-describedby={noticeId}
+          className="locale-select"
+        >
+          <SelectValue />
+        </SelectTrigger>
+        <SelectContent className="bg-paper text-ink">
+          {localeOptions.map((language) => (
             <SelectItem
-              key={language.code}
-              value={language.code.split("-")[0] ?? "en"}
+              key={language.value}
+              value={language.value}
+              lang={language.lang}
+              dir={language.direction}
             >
-              {language.nativeName}
+              {language.label}
             </SelectItem>
           ))}
-      </SelectContent>
-    </Select>
+        </SelectContent>
+      </Select>
+      <p id={noticeId} className="mt-1 max-w-64 text-xs text-muted">
+        {translationNotice}
+      </p>
+    </div>
   );
 }

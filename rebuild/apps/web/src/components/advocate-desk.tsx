@@ -20,6 +20,7 @@ import { errorMessage } from "@/lib/errors";
 import { CredentialsPanel } from "./credentials";
 import { EmptyState, consultationModeLabel, formatTime } from "./shared";
 import { useLocale } from "./locale";
+import { getLanguage } from "@vakil/i18n";
 
 function isConsultationMode(value: unknown): value is ConsultationMode {
   return value === "phone" || value === "video" || value === "in_person";
@@ -255,11 +256,7 @@ function ProfileForm({ profile }: { profile: Doc<"advocates"> | null }) {
                     )
                   }
                 />
-                {locale === "en"
-                  ? "English"
-                  : locale === "hi"
-                    ? "हिन्दी"
-                    : "ਪੰਜਾਬੀ"}
+                {getLanguage(locale)?.nativeName ?? locale}
               </Label>
             ))}
           </div>

@@ -1,231 +1,120 @@
 import { describe, expect, it } from 'bun:test';
-import {
-  getLanguage,
-  getMessages,
-  isPilotLocale,
-  locales,
-  normalizeLocale,
-  pilotLocales,
-  translationDictionary,
-} from '../src';
-import type { Messages } from '../src';
+import { draftBundles, draftedLocales, getInterfaceLocale, getLanguage, getLanguageCapabilities, getLocaleOptions, getMessages, hasDraftTranslation, isPilotLocale, locales, normalizeLocale, pilotLocales, translationDictionary, translationQuality } from '../src';
 
-describe('@vakil/i18n language registry', () => {
-  it('registers exactly 23 languages (English + 22 Eighth Schedule Indian languages)', () => {
-    expect(locales.length).toBe(23);
+const codes = ['en', 'as', 'bn', 'brx', 'doi', 'gu', 'hi', 'kn', 'ks', 'kok', 'mai', 'ml', 'mni', 'mr', 'ne', 'or', 'pa', 'sa', 'sat', 'sd', 'ta', 'te', 'ur'];
+function flatten(value: unknown, prefix = ''): Record<string, string> {
+  if (typeof value === 'string') return { [prefix]: value };
+  if (!value || typeof value !== 'object') throw new Error(`Non-string copy at ${prefix}`);
+  return Object.assign({}, ...Object.entries(value).map(([key, child]) => flatten(child, prefix ? `${prefix}.${key}` : key)));
+}
+const expectedScripts: Record<string, RegExp> = {
+  as: /[\u0980-\u09ff]/, bn: /[\u0980-\u09ff]/, brx: /[\u0900-\u097f]/, doi: /[\u0900-\u097f]/,
+  gu: /[\u0a80-\u0aff]/, hi: /[\u0900-\u097f]/, kn: /[\u0c80-\u0cff]/, ks: /[\u0600-\u06ff]/,
+  kok: /[\u0900-\u097f]/, mai: /[\u0900-\u097f]/, ml: /[\u0d00-\u0d7f]/, mni: /[\uabc0-\uabff]/,
+  mr: /[\u0900-\u097f]/, ne: /[\u0900-\u097f]/, or: /[\u0b00-\u0b7f]/, pa: /[\u0a00-\u0a7f]/,
+  sa: /[\u0900-\u097f]/, sat: /[\u1c50-\u1c7f]/, sd: /[\u0600-\u06ff]/, ta: /[\u0b80-\u0bff]/,
+  te: /[\u0c00-\u0c7f]/, ur: /[\u0600-\u06ff]/,
+};
 
-    const codes = locales.map((l) => l.code);
-    const uniqueCodes = new Set(codes);
-    expect(uniqueCodes.size).toBe(23);
-
-    // Verify key languages
-    expect(codes).toContain('en-IN');
-    expect(codes).toContain('hi-IN');
-    expect(codes).toContain('pa-IN');
-    expect(codes).toContain('bn-IN');
-    expect(codes).toContain('ta-IN');
-    expect(codes).toContain('te-IN');
-    expect(codes).toContain('ur-IN');
-    expect(codes).toContain('mr-IN');
-    expect(codes).toContain('gu-IN');
-    expect(codes).toContain('kn-IN');
-    expect(codes).toContain('ml-IN');
-    expect(codes).toContain('or-IN');
-    expect(codes).toContain('as-IN');
-    expect(codes).toContain('ks-IN');
-    expect(codes).toContain('sd-IN');
-  });
-
-  it('preserves stable BCP47 codes with -IN country tag', () => {
-    for (const lang of locales) {
-      expect(lang.code).toMatch(/^[a-z]{2,3}-IN$/);
+describe('23-locale registry and stored-code compatibility', () => {
+  it('exposes exactly English and the 22 scheduled languages, with native options', () => {
+    expect(locales.map(language => String(language.shortCode))).toEqual(codes);
+    expect(new Set(locales.map(language => language.code)).size).toBe(23);
+    expect(Array.from(pilotLocales, String)).toEqual(codes.map(code => `${code}-IN`));
+    expect(getLocaleOptions().map(option => String(option.value))).toEqual(codes);
+    expect(locales.every(language => language.isPilot)).toBe(true);
+    for (const language of locales) {
+      expect(language.nativeName.trim()).not.toBe('');
+      expect(normalizeLocale(language.shortCode)).toBe(language.code);
+      expect(normalizeLocale(language.languageTag)).toBe(language.code);
+      expect(isPilotLocale(language.code)).toBe(true);
+      expect(isPilotLocale(language.shortCode)).toBe(false);
     }
   });
-
-  it('defines exactly 3 pilot locales: English, Hindi, and Punjabi', () => {
-    expect(pilotLocales).toEqual(['en-IN', 'hi-IN', 'pa-IN']);
-
-    const pilotEntries = locales.filter((l) => l.isPilot);
-    expect(pilotEntries.length).toBe(3);
-    expect(pilotEntries.map((l) => l.code).sort()).toEqual(['en-IN', 'hi-IN', 'pa-IN']);
-  });
-
-  it('truthfully labels capabilities without fabricating AI or speech readiness', () => {
-    for (const lang of locales) {
-      // All 23 languages support Unicode typed text input
-      expect(lang.capabilities.typedInput).toBe('available');
-
-      if (lang.isPilot) {
-        // Message bundles exist, but no independent language review is recorded.
-        expect(lang.capabilities.interface).toBe('unverified');
-        // AI triage and speech are unverified without live provider and language tests.
-        expect(lang.capabilities.aiTriage).toBe('unverified');
-        expect(lang.capabilities.speechInput).toBe('unverified');
-        expect(lang.capabilities.speechPlayback).toBe('unverified');
-      } else {
-        // Non-pilot languages have unavailable interface and deferred AI/speech
-        expect(lang.capabilities.interface).toBe('unavailable');
-        expect(lang.capabilities.aiTriage).toBe('unavailable');
-        expect(lang.capabilities.speechInput).toBe('unavailable');
-        expect(lang.capabilities.speechPlayback).toBe('unavailable');
-      }
-    }
-  });
-
-  it('accurately specifies text direction for RTL scripts', () => {
-    const rtlCodes = ['ks-IN', 'sd-IN', 'ur-IN'];
-    for (const lang of locales) {
-      if (rtlCodes.includes(lang.code)) {
-        expect(lang.direction).toBe('rtl');
-      } else {
-        expect(lang.direction).toBe('ltr');
-      }
-    }
-  });
-
-  it('normalizes locale aliases accurately', () => {
-    expect(normalizeLocale('en')).toBe('en-IN');
-    expect(normalizeLocale('en-in')).toBe('en-IN');
+  it('preserves canonical codes and historical aliases while using explicit native-script tags', () => {
     expect(normalizeLocale('en_US')).toBe('en-IN');
-    expect(normalizeLocale('hi')).toBe('hi-IN');
     expect(normalizeLocale('HI-IN')).toBe('hi-IN');
-    expect(normalizeLocale('pa')).toBe('pa-IN');
     expect(normalizeLocale('pan')).toBe('pa-IN');
-    expect(normalizeLocale('ta')).toBe('ta-IN');
-    expect(normalizeLocale('ur')).toBe('ur-IN');
-    expect(normalizeLocale('invalid-code')).toBeUndefined();
-  });
-
-  it('retrieves language definitions with getLanguage', () => {
-    const hindi = getLanguage('hi');
-    expect(hindi).toBeDefined();
-    expect(hindi?.name).toBe('Hindi');
-    expect(hindi?.nativeName).toBe('हिन्दी');
-    expect(hindi?.script).toBe('Devanagari');
-
-    const punjabi = getLanguage('pa-IN');
-    expect(punjabi).toBeDefined();
-    expect(punjabi?.name).toBe('Punjabi');
-    expect(punjabi?.nativeName).toBe('ਪੰਜਾਬੀ');
-    expect(punjabi?.script).toBe('Gurmukhi');
-
-    const english = getLanguage('en');
-    expect(english).toBeDefined();
-    expect(english?.name).toBe('English');
-
-    expect(getLanguage('unknown')).toBeUndefined();
-  });
-
-  it('narrows only exact canonical pilot locale tags', () => {
-    expect(isPilotLocale('en-IN')).toBe(true);
-    expect(isPilotLocale('hi-IN')).toBe(true);
-    expect(isPilotLocale('pa-IN')).toBe(true);
-    expect(isPilotLocale('en')).toBe(false);
-    expect(isPilotLocale('hi')).toBe(false);
-    expect(isPilotLocale('pa')).toBe(false);
-    expect(isPilotLocale('pan')).toBe(false);
+    expect(normalizeLocale('mni-IN')).toBe('mni-IN');
+    expect(normalizeLocale('sat-IN')).toBe('sat-IN');
+    expect(normalizeLocale('mni_Mtei_IN')).toBe('mni-IN');
+    expect(getLanguage('mni')?.script).toBe('Meitei Mayek');
+    expect(getLanguage('sat')?.languageTag).toBe('sat-Olck-IN');
+    expect(getLanguage('mni')?.languageTag).toBe('mni-Mtei-IN');
+    expect(normalizeLocale('unknown')).toBeUndefined();
+    expect(getLanguage('')).toBeUndefined();
     expect(isPilotLocale('EN-IN')).toBe(false);
-    expect(isPilotLocale('hi_in')).toBe(false);
-    expect(isPilotLocale('ta-IN')).toBe(false);
-    expect(isPilotLocale('ur-IN')).toBe(false);
-    expect(isPilotLocale('xyz')).toBe(false);
+  });
+  it('sets RTL only for Kashmiri, Sindhi and Urdu', () => {
+    expect(locales.filter(language => language.direction === 'rtl').map(language => language.shortCode)).toEqual(['ks', 'sd', 'ur']);
   });
 });
 
-describe('@vakil/i18n translation dictionary and message parity', () => {
-  const sections: (keyof Messages)[] = [
-    'navigation',
-    'common',
-    'intake',
-    'discovery',
-    'booking',
-    'dashboard',
-    'profile',
-    'admin',
-    'failure',
-    'voice',
-    'consent',
-    'capabilities',
-  ];
-
-  it('contains complete dictionaries for all pilot locales', () => {
-    for (const pilot of pilotLocales) {
-      const msgs = translationDictionary[pilot];
-      expect(msgs).toBeDefined();
-      for (const section of sections) {
-        expect(msgs[section]).toBeDefined();
-      }
+describe('truthful independent language capabilities', () => {
+  it('labels completed interfaces unverified and unfinished interfaces unavailable', () => {
+    expect(translationQuality).toEqual({ stage: 'draft', humanReview: 'unverified', legalTerminologyReview: 'unverified' });
+    for (const language of locales) {
+      expect(language.capabilities).toEqual({ interface: hasDraftTranslation(language.shortCode) ? 'unverified' : 'unavailable', typedInput: 'available', aiInput: 'unavailable', aiOutput: 'unavailable', aiTriage: 'unavailable', speechInput: 'unavailable', speechPlayback: 'unavailable' });
     }
   });
+  it('requires server configuration for AI and checks speech input/playback independently', () => {
+    for (const code of codes) {
+      expect(getLanguageCapabilities(code, { aiConfigured: false, speechInputAvailable: true })?.aiInput).toBe('unavailable');
+      expect(getLanguageCapabilities(code, { aiConfigured: true })?.aiOutput).toBe('unverified');
+      const mixed = getLanguageCapabilities(code, { aiConfigured: true, aiOutputAvailable: false, speechInputAvailable: true });
+      expect(mixed?.aiInput).toBe('unverified');
+      expect(mixed?.aiOutput).toBe('unavailable');
+      expect(mixed?.aiTriage).toBe('unavailable');
+      expect(mixed?.speechInput).toBe('unverified');
+      expect(mixed?.speechPlayback).toBe('unavailable');
+      expect(getLanguageCapabilities(code, { aiConfigured: false, speechPlaybackAvailable: true })?.speechPlayback).toBe('unverified');
+    }
+    expect(getLanguageCapabilities('unknown', { aiConfigured: true })).toBeUndefined();
+  });
+});
 
-  it('ensures identical typed message keys across English, Hindi, and Punjabi', () => {
-    const en = translationDictionary['en-IN'];
-    const hi = translationDictionary['hi-IN'];
-    const pa = translationDictionary['pa-IN'];
-
-    for (const section of sections) {
-      const enEntries = Object.entries(en[section]);
-      const hiEntries = Object.entries(hi[section]);
-      const paEntries = Object.entries(pa[section]);
-
-      const enKeys = enEntries.map(([k]) => k).sort();
-      const hiKeys = hiEntries.map(([k]) => k).sort();
-      const paKeys = paEntries.map(([k]) => k).sort();
-
-      expect(hiKeys).toEqual(enKeys);
-      expect(paKeys).toEqual(enKeys);
-
-      const hiMap = new Map(hiEntries);
-      const paMap = new Map(paEntries);
-
-      // Verify no empty strings in any language
-      for (const [key, enVal] of enEntries) {
-        const hiVal = hiMap.get(key);
-        const paVal = paMap.get(key);
-
-        expect(typeof enVal).toBe('string');
-        expect(typeof hiVal).toBe('string');
-        expect(typeof paVal).toBe('string');
-
-        expect(enVal.trim().length).toBeGreaterThan(0);
-        expect(hiVal?.trim().length).toBeGreaterThan(0);
-        expect(paVal?.trim().length).toBeGreaterThan(0);
+describe('complete draft copy and explicitly unavailable translations', () => {
+  const english = flatten(draftBundles.en);
+  const placeholders = (value: string) => (value.match(/\{\w+\}/g) ?? []).sort();
+  for (const language of locales) {
+    it(`${language.shortCode}: every shared/product/case/chat/intake/feature key and placeholder is present`, () => {
+      const copy = flatten(draftBundles[language.shortCode]);
+      expect(Object.keys(copy).sort()).toEqual(Object.keys(english).sort());
+      for (const [key, source] of Object.entries(english)) {
+        const value = copy[key];
+        expect(value, key).toBeDefined();
+        if (!value) throw new Error(`Missing ${language.shortCode}.${key}`);
+        expect(value.trim().length, key).toBeGreaterThan(0);
+        expect(placeholders(value), key).toEqual(placeholders(source));
+        // A proper brand name may retain its registered Latin spelling; functional copy may not.
+        if (language.shortCode !== 'en' && hasDraftTranslation(language.shortCode) && key !== 'sharedMessages.navigation.brandName') {
+          expect(value, key).not.toBe(source);
+          const script = expectedScripts[language.shortCode];
+          expect(script?.test(value), key).toBe(true);
+        }
+      }
+    });
+  }
+  it('resolves drafted languages and explicitly discloses every unfinished English fallback', () => {
+    for (const language of locales) {
+      expect(getMessages(language.shortCode)).toBe(translationDictionary[language.code]);
+      if (hasDraftTranslation(language.shortCode)) {
+        if (language.shortCode !== 'en') expect(getMessages(language.code)).not.toBe(translationDictionary['en-IN']);
+        expect(getInterfaceLocale(language.shortCode)).toBe(language.shortCode);
+      } else {
+        expect(getMessages(language.code)).toBe(translationDictionary['en-IN']);
+        expect(draftBundles[language.shortCode].qualityNotice).toContain('interface translation is unavailable');
+        expect(draftBundles[language.shortCode].qualityNotice).toContain('English interface text is shown');
+        expect(language.capabilities.interface).toBe('unavailable');
+        expect(getInterfaceLocale(language.shortCode)).toBe('en');
       }
     }
+    expect(getMessages('unknown')).toBe(translationDictionary['en-IN']);
+    expect(getMessages('hi').navigation.brandName).toBe('वक़ील सेतु');
+    expect(getMessages('pa').navigation.brandName).toBe('ਵਕੀਲ ਸੇਤੂ');
   });
-
-  it('includes Devanagari and Gurmukhi characters in the pilot bundles', () => {
-    const hi = translationDictionary['hi-IN'];
-    const pa = translationDictionary['pa-IN'];
-
-    // Devanagari Unicode range: \u0900-\u097F
-    const devanagariRegex = /[\u0900-\u097F]/;
-    expect(devanagariRegex.test(hi.navigation.brandName)).toBe(true);
-    expect(devanagariRegex.test(hi.intake.title)).toBe(true);
-    expect(devanagariRegex.test(hi.booking.requestTitle)).toBe(true);
-
-    // Gurmukhi Unicode range: \u0A00-\u0A7F
-    const gurmukhiRegex = /[\u0A00-\u0A7F]/;
-    expect(gurmukhiRegex.test(pa.navigation.brandName)).toBe(true);
-    expect(gurmukhiRegex.test(pa.intake.title)).toBe(true);
-    expect(gurmukhiRegex.test(pa.booking.requestTitle)).toBe(true);
-  });
-
-  it('resolves messages with getMessages and falls back to English for non-pilot locales', () => {
-    const hi = getMessages('hi');
-    expect(hi.navigation.brandName).toBe('वक़ील सेतु');
-
-    const pa = getMessages('pa');
-    expect(pa.navigation.brandName).toBe('ਵਕੀਲ ਸੇਤੂ');
-
-    const en = getMessages('en');
-    expect(en.navigation.brandName).toBe('Vakil Setu');
-
-    // Non-pilot locale fallback
-    const ta = getMessages('ta-IN');
-    expect(ta.navigation.brandName).toBe('Vakil Setu');
-
-    const unknown = getMessages('unknown-locale');
-    expect(unknown.navigation.brandName).toBe('Vakil Setu');
+  it('retains exactly thirteen draft bundles and defers ten translations honestly', () => {
+    expect(draftedLocales).toHaveLength(13);
+    expect(locales.filter(language => !hasDraftTranslation(language.shortCode)).map(language => language.shortCode)).toEqual(['ml', 'mni', 'ne', 'or', 'sa', 'sat', 'sd', 'ta', 'te', 'ur']);
   });
 });

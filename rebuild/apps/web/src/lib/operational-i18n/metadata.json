@@ -1,0 +1,115 @@
+{
+  "stage": "draft",
+  "humanReview": "unverified",
+  "legalTerminologyReview": "unverified",
+  "provider": "Google Gemini",
+  "model": "gemini-3.6-flash",
+  "thinkingLevel": "MINIMAL",
+  "sourceKeys": 345,
+  "completeLocales": [
+    "en"
+  ],
+  "coverage": {
+    "en": {
+      "status": "source",
+      "keys": 345
+    },
+    "as": {
+      "status": "incomplete",
+      "checkpointKeys": 51
+    },
+    "bn": {
+      "status": "incomplete",
+      "checkpointKeys": 0
+    },
+    "brx": {
+      "status": "incomplete",
+      "checkpointKeys": 0
+    },
+    "doi": {
+      "status": "incomplete",
+      "checkpointKeys": 0
+    },
+    "gu": {
+      "status": "incomplete",
+      "checkpointKeys": 0
+    },
+    "hi": {
+      "status": "incomplete",
+      "checkpointKeys": 0
+    },
+    "kn": {
+      "status": "incomplete",
+      "checkpointKeys": 0
+    },
+    "ks": {
+      "status": "incomplete",
+      "checkpointKeys": 0
+    },
+    "kok": {
+      "status": "incomplete",
+      "checkpointKeys": 0
+    },
+    "mai": {
+      "status": "incomplete",
+      "checkpointKeys": 0
+    },
+    "ml": {
+      "status": "incomplete",
+      "checkpointKeys": 0
+    },
+    "mni": {
+      "status": "incomplete",
+      "checkpointKeys": 0
+    },
+    "mr": {
+      "status": "incomplete",
+      "checkpointKeys": 0
+    },
+    "ne": {
+      "status": "incomplete",
+      "checkpointKeys": 0
+    },
+    "or": {
+      "status": "incomplete",
+      "checkpointKeys": 0
+    },
+    "pa": {
+      "status": "incomplete",
+      "checkpointKeys": 0
+    },
+    "sa": {
+      "status": "incomplete",
+      "checkpointKeys": 0
+    },
+    "sat": {
+      "status": "incomplete",
+      "checkpointKeys": 0
+    },
+    "sd": {
+      "status": "incomplete",
+      "checkpointKeys": 0
+    },
+    "ta": {
+      "status": "incomplete",
+      "checkpointKeys": 0
+    },
+    "te": {
+      "status": "incomplete",
+      "checkpointKeys": 0
+    },
+    "ur": {
+      "status": "incomplete",
+      "checkpointKeys": 0
+    }
+  },
+  "retainedEnglish": [
+    "Vakil Setu",
+    "IST",
+    "IST ·",
+    "IST.",
+    "KiB ·",
+    "eSpeak NG · GPL-3.0"
+  ],
+  "notice": "Machine-generated static interface label drafts. Script/key checks are not human language, legal terminology, or contextual acceptance review."
+}

@@ -4,7 +4,7 @@ import { Button, Input, Textarea, Label } from "@vakil/ui";
 
 import { useEffect, useRef, useState, type FormEvent } from "react";
 import { useRouter } from "next/navigation";
-import { useAction, useMutation } from "convex/react";
+import { useAction, useMutation, useQuery } from "convex/react";
 import { api } from "@vakil/backend/api";
 import { isPilotLocale, LIMITS, type PilotLocale } from "@vakil/domain";
 import { useLocale } from "./locale";
@@ -14,6 +14,7 @@ import { SpeechCapture, ReadAloud } from "./speech";
 import { errorMessage } from "@/lib/errors";
 import { intakeChatCopy } from "@/lib/intake-chat-copy";
 import type { Id } from "@vakil/backend/data-model";
+import { LanguageOptions } from "./language-options";
 
 export function Intake() {
   const { locale: uiLocale, messages, copy } = useLocale();
@@ -56,9 +57,7 @@ export function Intake() {
                 }
               }}
             >
-              <option value="en">English</option>
-              <option value="hi">हिन्दी</option>
-              <option value="pa">ਪੰਜਾਬੀ</option>
+              <LanguageOptions />
             </select>
             <small>{copy.noTranslation}</small>
           </div>
@@ -152,8 +151,10 @@ function SaveIntake({
 }) {
   const create = useMutation(api.cases.create);
   const send = useAction(api.chat.send);
+  const capabilities = useQuery(api.chat.capabilities, {});
+  const aiAllowed = Boolean(capabilities?.configured && capabilities.locales.includes(locale));
   const router = useRouter();
-  const { locale: uiLocale } = useLocale();
+  const { locale: uiLocale, messages } = useLocale();
   const chatCopy = intakeChatCopy[uiLocale];
   const [consent, setConsent] = useState(false);
   const submitting = useRef(false);
@@ -161,13 +162,13 @@ function SaveIntake({
   const creation = useRef<{ fingerprint: string; requestId: string } | null>(null);
   const [pending, setPending] = useState(false);
   const [error, setError] = useState("");
-  useEffect(() => { setConsent(false); }, [title, text, locale]);
+  useEffect(() => { setConsent(false); }, [title, text, locale, aiAllowed]);
   async function save(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     if (submitting.current || !reviewed || !title.trim() || !text.trim()) return;
     const wantsChat = (event.nativeEvent instanceof SubmitEvent && event.nativeEvent.submitter instanceof HTMLButtonElement)
       ? event.nativeEvent.submitter.value !== "private" : true;
-    if (wantsChat && !consent) return;
+    if (wantsChat && (!consent || !aiAllowed)) return;
     submitting.current = true;
     onBusy(true);
     setPending(true);
@@ -204,10 +205,11 @@ function SaveIntake({
   return (
     <form onSubmit={save}>
       <Label className="checkbox-line" style={{ marginBottom: 14 }}>
-        <Input type="checkbox" checked={consent} disabled={pending || !reviewed} onChange={(event) => setConsent(event.target.checked)} />
+        <Input type="checkbox" checked={consent} disabled={pending || !reviewed || !aiAllowed} onChange={(event) => setConsent(event.target.checked)} />
         {chatCopy.consent}
       </Label>
       <p className="muted small-text" style={{ marginBottom: 16 }}>{chatCopy.documents}</p>
+      {!aiAllowed && <p role="status" className="status-message">{capabilities === undefined ? messages.common.loading : messages.failure.aiUnavailable}</p>}
       {error && (
         <p
           className="status-message error"
@@ -224,7 +226,7 @@ function SaveIntake({
       <Button
         className="btn"
         type="submit" value="chat"
-        disabled={pending || !reviewed || !consent || !title.trim() || !text.trim() || Boolean(savedCase.current)}
+        disabled={pending || !reviewed || !consent || !aiAllowed || !title.trim() || !text.trim() || Boolean(savedCase.current)}
       >
         {pending ? chatCopy.pending : chatCopy.send}
       </Button>

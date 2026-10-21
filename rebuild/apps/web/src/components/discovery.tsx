@@ -31,11 +31,15 @@ import {
 import { errorMessage } from "@/lib/errors";
 import { SummaryEditor } from "./cases";
 import { useLocale } from "./locale";
+import { AdvocateComparison, RatingSummary } from "./advocate-comparison";
+import { getFeatureCopy } from "@/lib/feature-copy";
+import { LanguageOptions } from "./language-options";
+import { PublicClientReviews } from "./client-reviews";
 
 type Filters = { domain?: LegalDomain; locale?: PilotLocale; city?: string };
 
 export function Discovery() {
-  const { messages, copy } = useLocale();
+  const { messages, copy, locale: uiLocale } = useLocale();
   const [domain, setDomain] = useState<LegalDomain | "">("");
   const [locale, setLocale] = useState<PilotLocale | "">("");
   const [city, setCity] = useState("");
@@ -102,10 +106,8 @@ export function Discovery() {
                 setLocale(event.target.value);
             }}
           >
-            <option value="">All pilot languages</option>
-            <option value="en">English</option>
-            <option value="hi">हिन्दी</option>
-            <option value="pa">ਪੰਜਾਬੀ</option>
+            <option value="">{getFeatureCopy(uiLocale).allLanguages}</option>
+            <LanguageOptions />
           </select>
         </div>
         <div className="field">
@@ -154,7 +156,9 @@ export function Discovery() {
 }
 
 function DiscoveryResults({ filters }: { filters: Filters }) {
-  const { messages, copy } = useLocale();
+  const { messages, copy, locale } = useLocale();
+  const features = getFeatureCopy(locale);
+  const [selected, setSelected] = useState<Id<"advocates">[]>([]);
   const { results, status, loadMore } = usePaginatedQuery(
     api.advocates.listPublic,
     filters,
@@ -162,6 +166,8 @@ function DiscoveryResults({ filters }: { filters: Filters }) {
   );
   return (
     <>
+      <p className="muted small-text">{features.compareHint}</p>
+      <AdvocateComparison selected={selected} onRemove={id => setSelected(current => current.filter(value => value !== id))} onClear={() => setSelected([])} />
       <p className="muted small-text" style={{ marginBottom: 18 }}>{copy.discoveryOrder}</p>
       {results.length ? (
         <div className="card-grid">
@@ -175,6 +181,12 @@ function DiscoveryResults({ filters }: { filters: Filters }) {
                 <span className="muted small-text">{profile.city}</span>
               </div>
               <h2>{profile.displayName}</h2>
+              <RatingSummary rating={profile.rating} />
+              <Label className="checkbox-line">
+                <Input type="checkbox" checked={selected.includes(profile._id)} disabled={!selected.includes(profile._id) && selected.length >= 3}
+                  onChange={event => setSelected(current => event.target.checked ? current.length < 3 && !current.includes(profile._id) ? [...current, profile._id] : current : current.filter(id => id !== profile._id))} />
+                {features.compareSelect}: {profile.displayName}
+              </Label>
               <p className="muted" style={{ marginBlock: 10 }}>
                 {profile.yearsExperience} {messages.discovery.yearsExperience} ·{" "}
                 {profile.locales
@@ -273,6 +285,7 @@ function PublicProfile({ advocateId }: { advocateId: Id<"advocates"> }) {
         <p>{profile.bio}</p>
       </div>
       <div className="actions" style={{ marginBottom: 30 }}>
+        <RatingSummary rating={profile.rating} />
         <span className="badge">
           {profile.yearsExperience} years of practice
         </span>
@@ -326,6 +339,7 @@ function PublicProfile({ advocateId }: { advocateId: Id<"advocates"> }) {
           </EmptyState>
         )}
       </section>
+      <PublicClientReviews advocateId={advocateId} />
       {selected && (
         <div style={{ marginTop: 25 }}>
           <BookingAccess

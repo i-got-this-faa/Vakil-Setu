@@ -30,10 +30,12 @@ import { ReadAloud } from "./speech";
 import { formatTime } from "./shared";
 import { chatCopy, type ChatCopy } from "@/lib/chat-copy";
 import { errorMessage } from "@/lib/errors";
+import { getFeatureCopy } from "@/lib/feature-copy";
 
 export interface CaseChatProps {
   caseId: Id<"cases">;
   locale: PilotLocale; // PilotLocale representing the case's language
+  onUseSummary?: (text: string) => void;
 }
 
 interface ActiveSendPayload {
@@ -89,12 +91,14 @@ function getReasonMessage(reason: string, errors: ChatCopy["errors"]): string {
   }
 }
 
-export function CaseChat({ caseId, locale }: CaseChatProps) {
-  const { locale: uiLocale } = useLocale();
+export function CaseChat({ caseId, locale, onUseSummary }: CaseChatProps) {
+  const { locale: uiLocale, messages } = useLocale();
   const copy = chatCopy[uiLocale];
 
   // Queries & Actions
   const chatData = useQuery(api.chat.listMine, { caseId });
+  const capabilities = useQuery(api.chat.capabilities, {});
+  const aiAllowed = Boolean(capabilities?.configured && capabilities.locales.includes(locale));
   const documents = useQuery(api.caseDocuments.listMine, { caseId });
   const sendChat = useAction(api.chat.send);
   const uploadDoc = useAction(api.caseDocuments.upload);
@@ -321,7 +325,7 @@ export function CaseChat({ caseId, locale }: CaseChatProps) {
     if (e) e.preventDefault();
 
     // Block submit until chatData + documents loaded
-    if (!isLoaded) return;
+    if (!isLoaded || !aiAllowed) return;
     if (uploading || removingDocId) return;
     if (!consent) {
       setSendError(copy.errors.consentRequired);
@@ -440,6 +444,7 @@ export function CaseChat({ caseId, locale }: CaseChatProps) {
 
   const isRetryAvailable = Boolean(heldRetry);
   const submitDisabled =
+    !aiAllowed ||
     !isLoaded ||
     isSending ||
     uploading ||
@@ -459,6 +464,7 @@ export function CaseChat({ caseId, locale }: CaseChatProps) {
 
       <div className="case-chat-disclosure-banner">
         <p className="small-text">{copy.intakeDisclosure}</p>
+        {!aiAllowed && <p role="status">{capabilities === undefined ? messages.common.loading : messages.failure.aiUnavailable}</p>}
       </div>
 
       {/* Persistent History */}
@@ -476,6 +482,7 @@ export function CaseChat({ caseId, locale }: CaseChatProps) {
             uiLocale={uiLocale}
             uiCopy={copy}
             onRetry={prepareFailedMessage}
+            onUseSummary={onUseSummary}
             retryDisabled={!isLoaded || isSending || uploading || Boolean(removingDocId) || hasPersistedPending || turnsLimitReached || Boolean(message.trim())}
           />
         )}
@@ -669,7 +676,7 @@ export function CaseChat({ caseId, locale }: CaseChatProps) {
               <Button
                 type="button"
                 className="btn secondary"
-                disabled={!isLoaded || isSending || uploading || Boolean(removingDocId) || !consent}
+                disabled={!aiAllowed || !isLoaded || isSending || uploading || Boolean(removingDocId) || !consent}
                 onClick={() => void handleSubmit()}
               >
                 <RotateCw size={15} />
@@ -716,6 +723,7 @@ export interface ChatHistoryProps {
   uiCopy: ChatCopy;
   onRetry?: (turn: ChatHistoryProps["turns"][number]) => void;
   retryDisabled?: boolean;
+  onUseSummary?: (text: string) => void;
 }
 
 export function ChatHistory({
@@ -726,6 +734,7 @@ export function ChatHistory({
   uiCopy,
   onRetry,
   retryDisabled,
+  onUseSummary,
 }: ChatHistoryProps) {
   if (turns.length === 0) {
     return (
@@ -739,7 +748,7 @@ export function ChatHistory({
     uiLocale === "hi" ? "hi-IN" : uiLocale === "pa" ? "pa-IN" : "en-IN";
 
   return (
-    <div className="case-chat-turns-list" role="log" aria-live="polite">
+    <div className="case-chat-turns-list" role="log" aria-live="polite" aria-relevant="additions text" aria-atomic="false">
       {turns.map((turn) => {
         return (
           <article key={turn._id} className="case-chat-turn-group">
@@ -791,6 +800,7 @@ export function ChatHistory({
                 </div>
 
                 <div className="case-chat-turn-text">{turn.result.text}</div>
+                {onUseSummary && <Button type="button" className="btn secondary small" onClick={() => onUseSummary(`${turn.text}\n\n${turn.result.kind === "reply" ? turn.result.text : ""}`)}>{getFeatureCopy(uiLocale).summaryUse}</Button>}
 
                 <div className="case-chat-disclaimer">
                   <p className="small-text">{uiCopy.disclaimer}</p>

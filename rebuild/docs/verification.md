@@ -138,3 +138,7 @@ Full bun run check passed native typechecks, 130 tests (103 backend, 12 language
 The user clarified that only the phrase Saving and asking Gemini should change; removing automatic chat was a misunderstanding. Restored the original consented save-and-chat handler and private-only option, preserving input review, context consent reset, idempotent case creation and initial request ID. The primary button now reads Save and continue and its pending state is only Saving… in English, Hindi and Punjabi. The Gemini recipient remains disclosed in the consent checkbox. The timeout/recovery backend improvements are unchanged and need no new deployment.
 
 Full checks pass: native typechecks, all 130 tests and production build. Browser fixture interaction with the actual intake component and substituted backend/model boundaries observed Saving… while one case creation and one chat send were pending, then navigation with a reply. No additional real case data was sent. This supersedes the prior save-only intake behavior; historical checks above remain records of the preceding version.
+
+## 21 October urgent scope checkpoint
+
+See [current working-site evidence](urgent-working-site-20261021.md). Fresh full check passes 252 tests, five native package typechecks and production build; one opt-in live test skipped. Updated development backend deployed. Current synthetic Gemini check returned HTTP 429, not success. Authenticated browser journeys remain unverified in the new preview profile. Expanded feature acceptance and complete language review are deferred.

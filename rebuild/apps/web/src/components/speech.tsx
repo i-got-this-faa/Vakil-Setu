@@ -7,6 +7,7 @@ import { Mic, Square, Volume2 } from "lucide-react";
 import { useLocale } from "./locale";
 import type { PilotLocale } from "@vakil/domain";
 import { LocalReadAloud } from "./local-read-aloud";
+import { getLanguage } from "@vakil/i18n";
 
 interface RecognitionAlternative {
   transcript: string;
@@ -41,11 +42,7 @@ declare global {
   }
 }
 
-const languageTags: Record<PilotLocale, string> = {
-  en: "en-IN",
-  hi: "hi-IN",
-  pa: "pa-IN",
-};
+const languageTag = (locale: PilotLocale) => getLanguage(locale)?.code ?? "en-IN";
 
 function detachRecognition(instance: BrowserRecognition): void {
   instance.onresult = null;
@@ -73,7 +70,7 @@ export function SpeechCapture({
   const [error, setError] = useState("");
   useEffect(() => {
     setSupported(
-      Boolean(window.SpeechRecognition ?? window.webkitSpeechRecognition),
+      ["en", "hi", "pa"].includes(locale) && Boolean(window.SpeechRecognition ?? window.webkitSpeechRecognition),
     );
     return () => {
       const stale = recognition.current;
@@ -88,7 +85,7 @@ export function SpeechCapture({
         }
       }
     };
-  }, []);
+  }, [locale]);
   useEffect(() => {
     const stale = recognition.current;
     // Invalidate before abort so a late onresult from the prior locale
@@ -109,7 +106,7 @@ export function SpeechCapture({
   function start() {
     const Constructor =
       window.SpeechRecognition ?? window.webkitSpeechRecognition;
-    if (!Constructor || !consent) return;
+    if (!Constructor || !consent || !supported) return;
     // Invalidate any running instance before aborting it, so its queued
     // callbacks cannot affect the new capture.
     const previous = recognition.current;
@@ -127,7 +124,7 @@ export function SpeechCapture({
     const active = generation.current + 1;
     generation.current = active;
     recognition.current = instance;
-    instance.lang = languageTags[locale];
+    instance.lang = languageTag(locale);
     instance.continuous = true;
     instance.interimResults = true;
     instance.onresult = (event) => {
@@ -240,7 +237,7 @@ export function SpeechCapture({
             <Label htmlFor="speech-transcript">{copy.transcriptReview}</Label>
             <Textarea
               id="speech-transcript"
-              lang={languageTags[locale]}
+              lang={languageTag(locale)}
               value={finalText}
               onChange={(event) => setFinalText(event.target.value)}
               maxLength={10000}
@@ -292,9 +289,9 @@ export function ReadAloud({
   text: string;
   locale: PilotLocale;
 }) {
-  return locale === "en"
-    ? <DeviceReadAloud text={text} locale={locale} />
-    : <LocalReadAloud text={text} locale={locale} />;
+  return locale === "hi" || locale === "pa"
+    ? <LocalReadAloud text={text} locale={locale} />
+    : <DeviceReadAloud text={text} locale={locale} />;
 }
 
 function DeviceReadAloud({
@@ -363,7 +360,7 @@ function DeviceReadAloud({
             ? copy.readAloud.ready
             : copy.readAloud[playback];
   function speak() {
-    const voice = matching.find((voice) => voice.lang.toLowerCase() === languageTags[locale].toLowerCase())
+    const voice = matching.find((voice) => voice.lang.toLowerCase() === languageTag(locale).toLowerCase())
       ?? matching.find((voice) => voice.default)
       ?? matching[0];
     if (!voice || !text.trim() || utterance.current) return;

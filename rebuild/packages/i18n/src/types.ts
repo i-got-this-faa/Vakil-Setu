@@ -20,6 +20,9 @@ export interface LanguageCapabilities {
   readonly typedInput: CapabilityStatus;
   /** Legal problem classification and draft intake summarization via AI. */
   readonly aiTriage: CapabilityStatus;
+  /** Provider configuration is supplied separately; a bundle is not AI evidence. */
+  readonly aiInput: CapabilityStatus;
+  readonly aiOutput: CapabilityStatus;
   /** Speech-to-text audio dictation for spoken intake queries. */
   readonly speechInput: CapabilityStatus;
   /** Text-to-speech audio synthesis for spoken playback of summaries and instructions. */
@@ -55,13 +58,18 @@ export type EnglishLanguageCode = 'en-IN';
 
 export type SupportedLocaleCode = EnglishLanguageCode | ScheduledLanguageCode;
 
-export const pilotLocales = ['en-IN', 'hi-IN', 'pa-IN'] as const;
+/** Compatibility name: registered choices, independent of interface translation availability. */
+export const pilotLocales = ['en-IN', 'as-IN', 'bn-IN', 'brx-IN', 'doi-IN', 'gu-IN', 'hi-IN', 'kn-IN', 'ks-IN', 'kok-IN', 'mai-IN', 'ml-IN', 'mni-IN', 'mr-IN', 'ne-IN', 'or-IN', 'pa-IN', 'sa-IN', 'sat-IN', 'sd-IN', 'ta-IN', 'te-IN', 'ur-IN'] as const;
 export type PilotLocale = (typeof pilotLocales)[number];
+export type Locale = SupportedLocaleCode extends `${infer Code}-IN` ? Code : never;
 
 export type TextDirection = 'ltr' | 'rtl';
 
 export interface LanguageDefinition {
   readonly code: SupportedLocaleCode;
+  readonly shortCode: Locale;
+  /** Script-specific document/speech tag; stored registry codes stay unchanged. */
+  readonly languageTag: string;
   readonly aliases: readonly string[];
   readonly name: string;
   readonly nativeName: string;

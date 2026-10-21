@@ -21,6 +21,7 @@ import { useAccount } from "./workspace-gate";
 import { ServiceBoundary } from "./providers";
 import { errorMessage } from "@/lib/errors";
 import { useLocale } from "./locale";
+import { BookingReview } from "./client-reviews";
 
 export function BookingsPage() {
   const { messages } = useLocale();
@@ -213,6 +214,7 @@ function BookingCard({
         </p>
       </details>
       <BookingHistory bookingId={booking._id} />
+      {actor === "user" && booking.state === "completed" && <BookingReview bookingId={booking._id} />}
       {(booking.state === "pending" || booking.state === "accepted") && (
         <p className="muted small-text" style={{ marginTop: 16 }}>
           {copy.cancelBeforeStart}

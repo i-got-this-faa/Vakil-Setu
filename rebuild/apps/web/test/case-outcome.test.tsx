@@ -31,6 +31,7 @@ mock.module("convex/react", () => ({
   usePaginatedQuery: () => { throw new Error("Case detail must not list cases."); },
   useQuery: (reference: Parameters<typeof getFunctionName>[0]) => {
     const name = getFunctionName(reference);
+    if (name === "chat:capabilities") return { configured: true, locales: ["en", "hi", "pa"], provider: "gemini_native", evidence: "synthetic_render_only" };
     if (name === "chat:listMine") return { turns: chatScenario === "empty" ? [] : [{ _id: "turn-fixture", text: "Synthetic user question", createdAt: 0, documentIds: ["removed-document-fixture"], result: chatScenario === "reply" ? { kind: "reply", text: '<script>alert("unsafe")</script> Synthetic model reply' } : chatScenario === "pending" ? { kind: "pending" } : { kind: "unavailable", reason: chatScenario === "timeout" ? "timeout" : "blocked" } }], limitReached: false, contextKey: "0:0:" };
     if (name === "caseDocuments:listMine") return [];
     if (name === "cases:resolveMine") return "case-fixture";

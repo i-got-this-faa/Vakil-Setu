@@ -1,40 +1,35 @@
-/**
- * @vakil/i18n - Messages and Translation Dictionary
- * Provides typed message bundle lookups for pilot languages (en, hi, pa)
- * and safe fallback for non-pilot locales.
- */
-
+import { draftBundles } from './draft-bundles';
 import { normalizeLocale } from './registry';
-import { enMessages } from './translations/en';
-import { hiMessages } from './translations/hi';
-import { paMessages } from './translations/pa';
-import type { Messages, PilotLocale } from './types';
+import type { Messages, SupportedLocaleCode } from './types';
 
-/**
- * Message bundles share a typed shape; their presence and script do not establish human language review.
- */
-export const translationDictionary: Record<PilotLocale, Messages> = {
-  'en-IN': enMessages,
-  'hi-IN': hiMessages,
-  'pa-IN': paMessages,
+/** Registered languages resolve to draft copy or an explicitly labeled English fallback. */
+export const translationDictionary: Record<SupportedLocaleCode, Messages> = {
+  'en-IN': draftBundles.en.sharedMessages,
+  'as-IN': draftBundles.as.sharedMessages,
+  'bn-IN': draftBundles.bn.sharedMessages,
+  'brx-IN': draftBundles.brx.sharedMessages,
+  'doi-IN': draftBundles.doi.sharedMessages,
+  'gu-IN': draftBundles.gu.sharedMessages,
+  'hi-IN': draftBundles.hi.sharedMessages,
+  'kn-IN': draftBundles.kn.sharedMessages,
+  'ks-IN': draftBundles.ks.sharedMessages,
+  'kok-IN': draftBundles.kok.sharedMessages,
+  'mai-IN': draftBundles.mai.sharedMessages,
+  'ml-IN': draftBundles.ml.sharedMessages,
+  'mni-IN': draftBundles.mni.sharedMessages,
+  'mr-IN': draftBundles.mr.sharedMessages,
+  'ne-IN': draftBundles.ne.sharedMessages,
+  'or-IN': draftBundles.or.sharedMessages,
+  'pa-IN': draftBundles.pa.sharedMessages,
+  'sa-IN': draftBundles.sa.sharedMessages,
+  'sat-IN': draftBundles.sat.sharedMessages,
+  'sd-IN': draftBundles.sd.sharedMessages,
+  'ta-IN': draftBundles.ta.sharedMessages,
+  'te-IN': draftBundles.te.sharedMessages,
+  'ur-IN': draftBundles.ur.sharedMessages,
 };
 
-/**
- * Retrieves the typed message dictionary for a specified locale.
- * Normalizes aliases ('en', 'hi', 'pa', 'en-US', etc.).
- * Falls back to canonical English (en-IN) for non-pilot or unlocalized locales.
- */
+/** Unfinished translations have explicit English fallback and unavailable interface metadata. */
 export function getMessages(locale: string): Messages {
-  const normalized = normalizeLocale(locale);
-
-  if (normalized === 'hi-IN') {
-    return hiMessages;
-  }
-
-  if (normalized === 'pa-IN') {
-    return paMessages;
-  }
-
-  // en-IN or fallback
-  return enMessages;
+  return translationDictionary[normalizeLocale(locale) ?? 'en-IN'];
 }

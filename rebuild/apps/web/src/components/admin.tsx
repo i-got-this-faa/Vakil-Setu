@@ -17,6 +17,7 @@ import {
 import { CredentialDownload, type CredentialMetadata } from "./credentials";
 import { errorMessage } from "@/lib/errors";
 import { useLocale } from "./locale";
+import { ClientReviewModeration } from "./client-reviews";
 
 export function AdminPage() {
   const { messages } = useLocale();
@@ -38,6 +39,7 @@ export function AdminPage() {
         <ReviewQueue />
         <AccountManagement />
         <AffectedBookings />
+        <ClientReviewModeration />
       </RequireRole>
     </>
   );

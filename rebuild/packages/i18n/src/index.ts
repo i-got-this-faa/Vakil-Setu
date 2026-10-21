@@ -5,12 +5,20 @@
  */
 
 export * from './types';
+export { draftBundles, draftedLocales, hasDraftTranslation } from './draft-bundles';
+export type { DraftBundle } from './draft-bundles';
 export {
   locales,
   getLanguage,
+  getInterfaceLocale,
   isPilotLocale,
   normalizeLocale,
+  getLocaleOptions,
+  localeOptions,
+  getLanguageCapabilities,
+  translationQuality,
 } from './registry';
+export type { RuntimeLanguageConfiguration } from './registry';
 export {
   translationDictionary,
   getMessages,

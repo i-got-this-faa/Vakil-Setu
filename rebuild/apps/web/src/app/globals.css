@@ -1,12 +1,24 @@
 @import "tailwindcss";
 @source "../../../../packages/ui/src";
+@font-face { font-family: "Noto Devanagari"; src: url("/fonts/Devanagari.ttf") format("truetype"); font-weight: 100 900; font-display: swap; unicode-range: U+0900-097F,U+A8E0-A8FF; }
+@font-face { font-family: "Noto Bengali"; src: url("/fonts/Bengali.ttf") format("truetype"); font-weight: 100 900; font-display: swap; unicode-range: U+0980-09FF; }
+@font-face { font-family: "Noto Gujarati"; src: url("/fonts/Gujarati.ttf") format("truetype"); font-weight: 100 900; font-display: swap; unicode-range: U+0A80-0AFF; }
+@font-face { font-family: "Noto Gurmukhi"; src: url("/fonts/Gurmukhi.ttf") format("truetype"); font-weight: 100 900; font-display: swap; unicode-range: U+0A00-0A7F; }
+@font-face { font-family: "Noto Kannada"; src: url("/fonts/Kannada.ttf") format("truetype"); font-weight: 100 900; font-display: swap; unicode-range: U+0C80-0CFF; }
+@font-face { font-family: "Noto Malayalam"; src: url("/fonts/Malayalam.ttf") format("truetype"); font-weight: 100 900; font-display: swap; unicode-range: U+0D00-0D7F; }
+@font-face { font-family: "Noto Oriya"; src: url("/fonts/Oriya.ttf") format("truetype"); font-weight: 100 900; font-display: swap; unicode-range: U+0B00-0B7F; }
+@font-face { font-family: "Noto Tamil"; src: url("/fonts/Tamil.ttf") format("truetype"); font-weight: 100 900; font-display: swap; unicode-range: U+0B80-0BFF; }
+@font-face { font-family: "Noto Telugu"; src: url("/fonts/Telugu.ttf") format("truetype"); font-weight: 100 900; font-display: swap; unicode-range: U+0C00-0C7F; }
+@font-face { font-family: "Noto Arabic"; src: url("/fonts/Arabic.ttf") format("truetype"); font-weight: 100 900; font-display: swap; unicode-range: U+0600-06FF,U+0750-077F,U+08A0-08FF; }
+@font-face { font-family: "Noto Meetei"; src: url("/fonts/MeeteiMayek.ttf") format("truetype"); font-weight: 100 900; font-display: swap; unicode-range: U+ABC0-ABFF,U+AAE0-AAFF; }
+@font-face { font-family: "Noto Ol Chiki"; src: url("/fonts/OlChiki.ttf") format("truetype"); font-weight: 100 900; font-display: swap; unicode-range: U+1C50-1C7F; }
 
 @theme {
   --color-paper: #f8f6f1;
   --color-ink: #192f36;
   --color-teal: #346d65;
-  --font-sans: Arial, "Nirmala UI", sans-serif;
-  --font-serif: Georgia, "Nirmala UI", serif;
+  --font-sans: Arial, "Noto Devanagari", "Noto Bengali", "Noto Gujarati", "Noto Gurmukhi", "Noto Kannada", "Noto Malayalam", "Noto Oriya", "Noto Tamil", "Noto Telugu", "Noto Arabic", "Noto Meetei", "Noto Ol Chiki", "Nirmala UI", sans-serif;
+  --font-serif: Georgia, var(--font-sans);
 }
 
 :root {
@@ -25,7 +37,7 @@ body {
   margin: 0;
   background: #f8f6f1;
   color: #192f36;
-  font-family: Arial, "Nirmala UI", sans-serif;
+  font-family: var(--font-sans);
   font-size: 15px;
   line-height: 1.65;
 }
@@ -69,7 +81,7 @@ p {
 h1,
 h2,
 h3 {
-  font-family: Georgia, "Nirmala UI", serif;
+  font-family: var(--font-serif);
   font-weight: 400;
   line-height: 1.12;
   letter-spacing: -0.035em;
@@ -644,7 +656,7 @@ svg {
 .transcript {
   margin-block: 15px;
   padding: 15px;
-  border-left: 2px solid #346d65;
+  border-inline-start: 2px solid #346d65;
   background: #fffefa;
   white-space: pre-wrap;
   overflow-wrap: anywhere;
@@ -746,7 +758,7 @@ svg {
 .case-next-step {
   padding: 24px;
   background: #e9f0eb;
-  border-left: 3px solid #346d65;
+  border-inline-start: 3px solid #346d65;
   border-radius: 0 10px 10px 0;
 }
 .case-next-step p {
@@ -833,11 +845,11 @@ svg {
   font-size: 16px;
 }
 .case-guidance ol {
-  padding-left: 20px;
+  padding-inline-start: 20px;
   margin: 18px 0 0;
 }
 .case-guidance li {
-  padding-left: 5px;
+  padding-inline-start: 5px;
   color: #5b6a63;
   font-size: 14px;
   line-height: 1.7;
@@ -1050,7 +1062,7 @@ svg {
 }
 .case-chat-disclosure-banner {
   background: #f1f5ee;
-  border-left: 3px solid #346d65;
+  border-inline-start: 3px solid #346d65;
   padding: 12px 16px;
   border-radius: 4px;
   color: #3b5049;
@@ -1100,7 +1112,7 @@ svg {
 .case-chat-bubble.assistant {
   background: #fffefa;
   border: 1px solid #dce2d8;
-  border-left: 4px solid #346d65;
+  border-inline-start: 4px solid #346d65;
   width: 100%;
 }
 .case-chat-bubble.pending {
@@ -1359,3 +1371,33 @@ svg {
     width: 100%;
   }
 }
+
+/* Comparison, reviews and long translated content. */
+.comparison-panel, .public-reviews, .review-editor { margin-block: 24px; min-inline-size: 0; }
+.comparison-scroll { overflow-x: auto; max-inline-size: 100%; margin-block-start: 16px; }
+.comparison-table { border-collapse: collapse; inline-size: 100%; min-inline-size: 600px; }
+.comparison-table th, .comparison-table td { padding: 14px; border: 1px solid #c5cec6; text-align: start; vertical-align: top; white-space: pre-line; overflow-wrap: anywhere; }
+.comparison-table th { background: #e8eee7; }
+.comparison-table th > div { margin-block-end: 10px; }
+.public-review { border-block-start: 1px solid #c5cec6; padding-block: 20px; display: grid; gap: 12px; }
+.public-review details { min-inline-size: 0; }
+.rating-summary { font-weight: 600; }
+input[type="checkbox"], input[type="radio"] { accent-color: #285e57; min-inline-size: 18px; min-block-size: 18px; }
+button, summary, .btn, select { touch-action: manipulation; }
+summary { min-block-size: 44px; padding-block: 10px; }
+textarea, .summary-text, .case-chat-turn-text, .public-review p { overflow-wrap: anywhere; unicode-bidi: plaintext; }
+html:not([lang^="en"]) h1, html:not([lang^="en"]) h2, html:not([lang^="en"]) h3 { letter-spacing: normal; line-height: 1.45; }
+[dir="rtl"] .workspace-nav { border-right: 0; border-inline-end: 1px solid #dedfd6; }
+[dir="rtl"] .skip-link { left: auto; right: 12px; }
+@media (max-width: 640px) {
+  .comparison-panel { padding: 16px; }
+  .actions { flex-wrap: wrap; }
+  .actions .btn { white-space: normal; }
+  .public-review, .review-editor { min-inline-size: 0; }
+  .comparison-table { font-size: 14px; }
+}
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; transition-duration: .01ms !important; } }
+.btn { min-block-size: 44px; }
+.locale-control { max-inline-size: 280px; }
+.locale-control p { line-height: 1.5; }
+.public-review textarea, .review-editor textarea { inline-size: 100%; }

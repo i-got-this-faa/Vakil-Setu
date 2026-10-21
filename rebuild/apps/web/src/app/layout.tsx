@@ -11,7 +11,7 @@ export const metadata: Metadata = {
     template: "%s | Vakil Setu",
   },
   description:
-    "Review your legal intake, discover approved advocates, and request a consultation in English, Hindi, or Punjabi.",
+    "Review your private legal intake, compare approved advocates, and request a consultation. Interface translations are drafts and require human review.",
 };
 export const dynamic = "force-dynamic";
 

@@ -21,7 +21,7 @@ import {
   type LegalDomain,
   type Urgency,
 } from "@vakil/domain";
-import { useEffect, useRef, useState, type FormEvent } from "react";
+import { useCallback, useEffect, useRef, useState, type FormEvent } from "react";
 import { RequireRole } from "./workspace-gate";
 import { EmptyState, formatTime, LoadMore, urgencyLabel } from "./shared";
 import { errorMessage } from "@/lib/errors";
@@ -29,6 +29,7 @@ import { caseNoSummaryCopy } from "@/lib/case-copy";
 import { ReadAloud } from "./speech";
 import { useLocale } from "./locale";
 import { CaseChat } from "./case-chat";
+import { getFeatureCopy } from "@/lib/feature-copy";
 
 export function CasesPage() {
   return (
@@ -120,6 +121,8 @@ function CaseDetail({ caseId }: { caseId: Id<"cases"> }) {
   const remove = useMutation(api.cases.deleteDraft);
   const router = useRouter();
   const [confirmDelete, setConfirmDelete] = useState(false);
+  const [conversationDraft, setConversationDraft] = useState<string | null>(null);
+  const consumeDraft = useCallback(() => setConversationDraft(null), []);
   const [deleting, setDeleting] = useState(false);
   const [error, setError] = useState("");
   const { copy, locale } = useLocale();
@@ -163,7 +166,7 @@ function CaseDetail({ caseId }: { caseId: Id<"cases"> }) {
       </header>
       <div className="case-layout">
         <div className="case-content">
-          <CaseChat key={caseId} caseId={caseId} locale={data.case.locale} />
+          <CaseChat key={caseId} caseId={caseId} locale={data.case.locale} onUseSummary={text => { setConversationDraft(text); openSummary(); }} />
           <section className="case-next-step" aria-label="Next step">
             <h2>
               {hasReviewedSummary
@@ -239,6 +242,8 @@ function CaseDetail({ caseId }: { caseId: Id<"cases"> }) {
               key={data.case.summaryVersion}
               legalCase={data.case}
               latest={latest}
+              conversationDraft={conversationDraft}
+              onDraftConsumed={consumeDraft}
             />
           </details>
           <details className="case-tool">
@@ -267,6 +272,7 @@ function CaseDetail({ caseId }: { caseId: Id<"cases"> }) {
             <summary>AI summary draft</summary>
             <AiAnalysis
               caseId={caseId}
+              caseLocale={data.case.locale}
               expectedVersion={data.case.summaryVersion}
               expectedContextRevision={data.case.contextRevision}
             />
@@ -435,9 +441,13 @@ function FollowUp({ legalCase }: { legalCase: Doc<"cases"> }) {
 export function SummaryEditor({
   legalCase,
   latest,
+  conversationDraft,
+  onDraftConsumed,
 }: {
   legalCase: Doc<"cases">;
   latest: Doc<"caseSummaries"> | undefined;
+  conversationDraft?: string | null;
+  onDraftConsumed?: () => void;
 }) {
   const { messages, copy, locale } = useLocale();
   const noSummaryCopy = caseNoSummaryCopy[locale];
@@ -455,6 +465,12 @@ export function SummaryEditor({
   const [reviewed, setReviewed] = useState(false);
   const [pending, setPending] = useState(false);
   const [error, setError] = useState("");
+  useEffect(() => {
+    if (!conversationDraft) return;
+    setText(current => `${current}${current ? "\n\n" : ""}${conversationDraft}`);
+    setReviewed(false);
+    onDraftConsumed?.();
+  }, [conversationDraft, onDraftConsumed]);
   async function submit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setPending(true);
@@ -483,6 +499,7 @@ export function SummaryEditor({
   return (
     <article className="card">
       <h2>Review your private summary</h2>
+      <p className="status-message">{getFeatureCopy(locale).summaryReview}</p>
       {!latest && (
         <p className="muted" style={{ marginBlock: 14 }}>
           {noSummaryCopy.yourWordsNote}
@@ -622,21 +639,25 @@ export function SummaryEditor({
 
 function AiAnalysis({
   caseId,
+  caseLocale,
   expectedVersion,
   expectedContextRevision,
 }: {
   caseId: Id<"cases">;
+  caseLocale: Doc<"cases">["locale"];
   expectedVersion: number;
   expectedContextRevision: number;
 }) {
   const analyze = useAction(api.triage.analyze);
-  const { copy } = useLocale();
+  const { copy, messages } = useLocale();
+  const capabilities = useQuery(api.chat.capabilities, {});
+  const aiAllowed = Boolean(capabilities?.configured && capabilities.locales.includes(caseLocale));
   const [consent, setConsent] = useState(false);
   const [pending, setPending] = useState(false);
   const [result, setResult] = useState("");
   useEffect(() => { setConsent(false); }, [caseId, expectedVersion, expectedContextRevision]);
   async function run() {
-    if (!consent || pending) return;
+    if (!consent || pending || !aiAllowed) return;
     setPending(true);
     setResult("");
     try {
@@ -660,6 +681,7 @@ function AiAnalysis({
   return (
     <article className="card">
       <h2>Optional AI assistance</h2>
+      {!aiAllowed && <p role="status">{capabilities === undefined ? messages.common.loading : messages.failure.aiUnavailable}</p>}
       <p className="muted" style={{ marginBlock: 14 }}>
         AI drafts may be unavailable. You can always write your own summary.
         Review any draft before sharing it.
@@ -668,14 +690,14 @@ function AiAnalysis({
         <Input
           type="checkbox"
           checked={consent}
-          disabled={pending}
+          disabled={pending || !aiAllowed}
           onChange={(event) => setConsent(event.target.checked)}
         />
         {copy.aiConsent}
       </Label>
       <Button
         className="btn secondary"
-        disabled={!consent || pending}
+        disabled={!consent || pending || !aiAllowed}
         style={{ marginTop: 18 }}
         onClick={run}
       >
