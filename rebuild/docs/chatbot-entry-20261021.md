@@ -1,0 +1,15 @@
+# Direct conversational chatbot ? 21 October 2026
+
+The user asked for a conversational chatbot. Existing private chat supported persistent follow-ups but was entered through a full intake/case workflow. Added `/workspace/chat` to ask a first question without a separate title or long form, and `/workspace/chat/[caseId]` to continue the saved conversation. Home, workspace overview and sidebar expose the entry. Manual intake remains separate and available.
+
+The first typed question is saved as a private case, with a derived short title and stable creation/send request IDs. Explicit Google Gemini/Vertex consent and server capability gates precede dispatch. Network failures retain the question, IDs and known saved case; retries do not create duplicate cases. The waiting state displays the submitted question and an actual pending status, never a generated placeholder. Available and unavailable outcomes open the saved conversation history. Deep links validate ownership through existing cases.resolveMine/getMine. Existing CaseChat supplies persistent follow-ups, selected private uploads, per-message consent, bounded context and failure recovery. Summaries remain reviewed separately before sharing. New interface copy is English/Hindi/Punjabi; other selected interface languages explicitly fall back to English for this screen. This does not expand AI language permissions.
+
+## Fresh validation
+
+- Full bun run check passes: five native package typechecks, 272 backend + 30 registry/language + 24 web tests (326 total; one opt-in live provider test skipped), production build including both new routes.
+- Three new starter workflow tests exercise lost creation acknowledgment, send retry identity/case retention and unavailable outcomes, primary-only consent and honest copy fallback.
+- Collaborative browser harness uses actual Chatbot/CaseChat React components with synthetic identity/database/provider substitutes. At 390px: first question produced one create/one send, waiting question/status shown, then saved conversation; uploading a synthetic text file and sending a follow-up kept one case, created a second turn and included only selected document ID. Document scroll width stayed390. At1280px: third simulated provider failure remained explicit, and the exact message stayed editable in the composer. No live AI success is implied by these substituted boundaries.
+- Actual site home exposes the direct chatbot link. Direct protected route redirects to Clerk sign-in in the preview profile; new authenticated hosted acceptance is not observed. No authentication bypass or real case content was used.
+- User-requested Vertex retry: OAuth200; generation403 BILLING_DISABLED,3761ms. Live AI remains blocked pending billing activation. Current UI and persistence implementation do not remove that external dependency.
+
+No backend change/deployment was needed for this entry: it reuses the deployed secured case/chat APIs. Existing unrelated UI redesign edits are preserved unstaged; the commit stages only chatbot additions and navigation changes. No push.

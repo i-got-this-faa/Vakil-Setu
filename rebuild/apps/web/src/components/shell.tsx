@@ -9,12 +9,14 @@ import {
   CalendarDays,
   FileText,
   LayoutDashboard,
+  MessageCircle,
   Scale,
   ShieldCheck,
   UserRound,
 } from "lucide-react";
 import { LocaleSelect, useLocale } from "./locale";
 import { useServices } from "./providers";
+import { chatNavigationLabel } from "@/lib/chat-navigation";
 
 export function Brand() {
   const { copy } = useLocale();
@@ -72,6 +74,7 @@ export function Footer() {
 
 const navigation = [
   { href: "/workspace", label: "Overview", icon: LayoutDashboard },
+  { href: "/workspace/chat", label: "AI chat", icon: MessageCircle },
   { href: "/workspace/intake", label: "New intake", icon: FileText },
   { href: "/workspace/cases", label: "My cases", icon: FileText },
   { href: "/workspace/bookings", label: "Consultations", icon: CalendarDays },
@@ -81,9 +84,10 @@ const navigation = [
 ];
 
 export function Sidebar() {
-  const { messages, copy } = useLocale();
+  const { messages, copy, locale } = useLocale();
   const labels: Record<string, string> = {
     "/workspace": messages.navigation.dashboard,
+    "/workspace/chat": chatNavigationLabel(locale),
     "/workspace/intake": messages.navigation.intake,
     "/workspace/cases": copy.cases,
     "/workspace/bookings": messages.navigation.consultations,

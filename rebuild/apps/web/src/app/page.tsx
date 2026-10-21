@@ -1,5 +1,6 @@
 "use client";
 import { useLocale } from "@/components/locale";
+import { chatNavigationLabel } from "@/lib/chat-navigation";
 import Link from "next/link";
 import {
   ArrowRight,
@@ -13,7 +14,7 @@ import {
 } from "lucide-react";
 
 export default function Home() {
-  const { copy, messages } = useLocale();
+  const { copy, messages, locale } = useLocale();
   return (
     <main id="main" className="container">
       <section className="hero">
@@ -26,6 +27,7 @@ export default function Home() {
           </h1>
           <p>{copy.heroDescription}</p>
           <div className="actions">
+            <Link href="/workspace/chat" className="btn" lang={["hi", "pa"].includes(locale) ? locale : "en-IN"}>{chatNavigationLabel(locale)} <ArrowRight size={18} aria-hidden="true" /></Link>
             <Link href="/workspace/intake" className="btn">
               {copy.startIntake} <ArrowRight size={16} />
             </Link>

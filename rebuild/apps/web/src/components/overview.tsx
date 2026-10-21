@@ -9,9 +9,13 @@ import {
   ShieldCheck,
 } from "lucide-react";
 import { useAccount } from "./workspace-gate";
+import { useLocale } from "./locale";
+import { chatNavigationLabel } from "@/lib/chat-navigation";
 
 export function Overview() {
   const account = useAccount();
+  const { locale } = useLocale();
+  const role = account?.role;
   return (
     <>
       <div className="workspace-heading">
@@ -35,6 +39,11 @@ export function Overview() {
         )}
       </div>
       <div className="card-grid">
+        {role === "user" && <section className="workspace-action">
+          <div><h2 lang={["hi", "pa"].includes(locale) ? locale : "en-IN"}>{chatNavigationLabel(locale)}</h2><p>Ask a legal-information question and continue with follow-up messages. You can attach documents in your conversation.</p></div>
+          <Link className="btn" href="/workspace/chat" lang={["hi", "pa"].includes(locale) ? locale : "en-IN"}>{chatNavigationLabel(locale)} <ArrowRight size={16} aria-hidden="true" /></Link>
+        </section>}
+
         <Card className="card">
           <FilePenLine size={26} strokeWidth={1.4} />
           <h2 style={{ marginTop: 20 }}>Put it into words.</h2>

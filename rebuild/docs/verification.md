@@ -146,3 +146,7 @@ See [current working-site evidence](urgent-working-site-20261021.md). Fresh full
 ## Vertex quota fallback ? 21 October 2026
 
 [Current implementation and verification](vertex-fallback-20261021.md): deployed development fallback, server credential readback verified, 323 tests/typechecks/build pass. Actual authentication succeeds but generation returns 403 BILLING_DISABLED. No successful live fallback or authenticated browser handoff claimed.
+
+## Direct chatbot entry ? 21 October 2026
+
+[Current entry and evidence](chatbot-entry-20261021.md): question-first screen and saved deep-link conversations added; full check passes 326 tests plus typechecks/build. Actual-component synthetic browser flow covers first send, follow-up with upload and failure text retention. Authenticated hosted conversation and live reply remain unverified; latest Vertex retry returns BILLING_DISABLED.
