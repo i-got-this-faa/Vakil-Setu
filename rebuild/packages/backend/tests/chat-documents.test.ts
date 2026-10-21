@@ -252,6 +252,35 @@ describe("persistent private case chat", () => {
     expect(await sending).toEqual({ kind: "unavailable", reason: "timeout" });
     expect((await f.user.query(api.chat.listMine, { caseId: f.caseId })).turns[0]?.result).toEqual({ kind: "unavailable", reason: "timeout" });
   });
+
+  it("settles and persists timeout when the transport ignores abort, without accepting its late reply", async () => {
+    const f = await fixture();
+    vi.useFakeTimers();
+    const pending = delayedFetch();
+    const sending = f.user.action(api.chat.send, f.request);
+    await pending.dispatched;
+    await vi.advanceTimersByTimeAsync(CHAT_LIMITS.timeoutMs);
+    expect(await sending).toEqual({ kind: "unavailable", reason: "timeout" });
+    expect(await f.user.action(api.chat.send, f.request)).toEqual({ kind: "unavailable", reason: "timeout" });
+    pending.release(reply("Late success must not persist."));
+    await Promise.resolve();
+    expect((await f.user.query(api.chat.listMine, { caseId: f.caseId })).turns[0]?.result).toEqual({ kind: "unavailable", reason: "timeout" });
+    expect(pending.fetchMock).toHaveBeenCalledTimes(1);
+  });
+
+  it("does not send one case's transcript or documents as another case's context", async () => {
+    const f = await fixture();
+    const otherCaseId = await f.user.mutation(api.cases.create, { title: "Second private case", text: "Second-case-only facts.", locale: "en", context: [] });
+    const fetchMock = vi.fn(async (_url: string, _options: RequestInit) => reply()); vi.stubGlobal("fetch", fetchMock);
+    expect(await f.user.action(api.chat.send, { ...f.request, documentIds: [await f.upload()] })).toEqual({ kind: "available" });
+    const contextKey = (await f.user.query(api.chat.listMine, { caseId: otherCaseId })).contextKey;
+    expect(await f.user.action(api.chat.send, { ...f.request, caseId: otherCaseId, contextKey })).toEqual({ kind: "available" });
+    const body = String(fetchMock.mock.calls[1]?.[1].body);
+    expect(body).toContain("Second-case-only facts.");
+    expect(body).not.toContain("Original private property dispute.");
+    expect(body).not.toContain("Private document facts");
+    expect(body).not.toContain("facts.txt");
+  });
 });
 
 describe("private case documents", () => {

@@ -5,6 +5,10 @@ import { action, query } from "./_generated/server";
 import { ownCase } from "./lib/access";
 import { chatContextKey, sendArgs } from "./lib/chat";
 import type { SendResult } from "./lib/chat";
+import { aiCapabilities } from "./lib/provider";
+
+// Public, secret-free configuration; not a provider health or quality assertion.
+export const capabilities = query({ args: {}, handler: async () => aiCapabilities(process.env) });
 
 export const listMine = query({ args: { caseId: v.id("cases") }, handler: async (ctx, args) => {
   const { legalCase } = await ownCase(ctx, args.caseId);

@@ -1,16 +1,31 @@
-import { isLegalDomain, isPilotLocale, isUrgency, LEGAL_DOMAINS, URGENCIES, LIMITS } from "@vakil/domain";
+import { isLegalDomain, isPilotLocale, isUrgency, LEGAL_DOMAINS, URGENCIES, LIMITS, LOCALES } from "@vakil/domain";
 import type { PilotLocale } from "@vakil/domain";
 
-export type UnavailableReason = "not_configured" | "invalid_config" | "provider_failed" | "invalid_result";
+export type UnavailableReason = "not_configured" | "invalid_config" | "provider_failed" | "invalid_result" | "unsupported_language";
 type ProviderConfig = { kind: "configured"; url: string; model: string; apiKey: string } | { kind: "unavailable"; reason: UnavailableReason };
 
-// Only server actions call this function. No environment value is sent to clients.
+// Server functions only. Never return this private config to clients.
 export function geminiConfig(env: Record<string, string | undefined>): ProviderConfig {
   const key = env.GEMINI_API_KEY?.trim();
   if (!key) return { kind: "unavailable", reason: "not_configured" };
-  const model = env.GEMINI_MODEL?.trim() ?? "gemini-3.8-flash";
+  const model = env.GEMINI_MODEL?.trim() ?? "gemini-3.6-flash";
   if (/\s/u.test(key) || model.length > 100 || !/^gemini-[A-Za-z0-9._-]+$/u.test(model)) return { kind: "unavailable", reason: "invalid_config" };
   return { kind: "configured", url: `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`, model, apiKey: key };
+}
+
+// Operator permission, not a translation or legal-quality certification.
+export function aiAllowedLanguages(env: Record<string, string | undefined>): string[] {
+  if (env.AI_CHAT_LOCALES === undefined) return ["en", "hi", "pa"];
+  const values = env.AI_CHAT_LOCALES.split(",").map(value => value.trim());
+  if (values.length === 1 && values[0] === "") return [];
+  // Unknown codes fail closed rather than silently broadening provider access.
+  if (values.some(value => !LOCALES.some(locale => locale === value))) return [];
+  return [...new Set(values)];
+}
+
+export function aiCapabilities(env: Record<string, string | undefined>) {
+  const config = geminiConfig(env);
+  return { configured: config.kind === "configured", locales: aiAllowedLanguages(env), provider: "gemini_native", evidence: env.AI_CHAT_LOCALES === undefined ? "observed_runtime_only_not_quality_validated" : "operator_allowlist_not_quality_validated", ...(config.kind === "unavailable" ? { reason: config.reason } : {}) };
 }
 
 export function geminiResponseSchema(locale: PilotLocale) {
@@ -49,9 +64,11 @@ export function extractGeminiContent(value: unknown): string | null {
   }
   return text || null;
 }
-export async function boundedResponseText(response: Response) {
+export async function boundedResponseText(response: Response, onFirstByte?: () => void, signal?: AbortSignal) {
   if (!response.body) return null;
   const reader = response.body.getReader();
+  const cancel = () => { void reader.cancel().catch(() => {}); };
+  signal?.addEventListener("abort", cancel, { once: true });
   const decoder = new TextDecoder();
   let result = "";
   let size = 0;
@@ -59,10 +76,11 @@ export async function boundedResponseText(response: Response) {
     while (true) {
       const chunk = await reader.read();
       if (chunk.done) break;
+      onFirstByte?.();
       size += chunk.value.byteLength;
       if (size > 64 * 1024) { await reader.cancel(); return null; }
       result += decoder.decode(chunk.value, { stream: true });
     }
     return result + decoder.decode();
-  } finally { reader.releaseLock(); }
+  } finally { signal?.removeEventListener("abort", cancel); reader.releaseLock(); }
 }

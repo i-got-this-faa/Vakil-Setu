@@ -2,8 +2,12 @@ import { defineSchema, defineTable } from "convex/server";
 import { v } from "convex/values";
 import { aiProvider, adminHandling, application, bookingActor, bookingEvent, bookingState, consent, consultationMode, contextMessage, credentialReview, credentialType, domain, locale, role, summary, summarySource } from "./lib/validators";
 import { chatResult, documentType } from "./lib/chat";
+import { reviewAuditEvent, reviewSnapshot, reviewStatus } from "./lib/reviews";
 
 export default defineSchema({
+  reviews: defineTable({ bookingId: v.id("bookings"), advocateId: v.id("advocates"), ownerId: v.id("accounts"), rating: v.number(), text: v.string(), status: reviewStatus, revision: v.number(), publicConsent: v.literal(true), consentVersion: v.literal("public-confidentiality-v1"), consentedAt: v.number(), createdAt: v.number(), updatedAt: v.number(), needsModeration: v.boolean() }).index("by_booking", ["bookingId"]).index("by_advocate", ["advocateId"]).index("by_queue", ["needsModeration"]),
+  reviewReports: defineTable({ reviewId: v.id("reviews"), reporterId: v.id("accounts"), reason: v.string(), revision: v.number(), at: v.number() }).index("by_review", ["reviewId"]).index("by_review_reporter_revision", ["reviewId", "reporterId", "revision"]),
+  reviewAudits: defineTable({ reviewId: v.id("reviews"), actorId: v.id("accounts"), at: v.number(), event: reviewAuditEvent, snapshot: reviewSnapshot }).index("by_review", ["reviewId"]),
   caseDocuments: defineTable({ caseId: v.id("cases"), storageId: v.id("_storage"), fileName: v.string(), contentType: documentType, size: v.number() }).index("by_case", ["caseId"]),
   chatTurns: defineTable({ caseId: v.id("cases"), ownerId: v.id("accounts"), requestId: v.string(), text: v.string(), createdAt: v.number(), expiresAt: v.number(), documentIds: v.array(v.id("caseDocuments")), documentNames: v.array(v.string()), contextRevision: v.number(), summaryVersion: v.number(), result: chatResult }).index("by_case", ["caseId"]).index("by_request", ["caseId", "requestId"]),
   chatConsents: defineTable({ caseId: v.id("cases"), ownerId: v.id("accounts"), turnId: v.id("chatTurns"), at: v.number(), recipientOrigin: v.string(), model: v.string(), documentIds: v.array(v.id("caseDocuments")), historyTurnIds: v.array(v.id("chatTurns")), contextRevision: v.optional(v.number()), summaryVersion: v.optional(v.number()) }).index("by_case", ["caseId"]),

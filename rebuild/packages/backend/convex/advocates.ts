@@ -18,7 +18,7 @@ export const upsert = mutation({
   handler: async (ctx, args) => {
     const account = await requireAccount(ctx, "advocate");
     if (args.domains.length < 1 || args.domains.length > 8 || args.domains.includes("unknown") || new Set(args.domains).size !== args.domains.length) fail("INVALID_INPUT", "Choose distinct supported practice domains.");
-    if (args.locales.length < 1 || args.locales.length > 3 || new Set(args.locales).size !== args.locales.length) fail("INVALID_INPUT", "Choose distinct pilot languages.");
+    if (args.locales.length < 1 || args.locales.length > 23 || new Set(args.locales).size !== args.locales.length) fail("INVALID_INPUT", "Choose distinct supported languages.");
     if (args.consultationModes.length < 1 || args.consultationModes.length > 3 || new Set(args.consultationModes).size !== args.consultationModes.length) fail("INVALID_INPUT", "Choose distinct consultation modes.");
     const city = boundedText(args.city, "City", 100);
     const profile = { displayName: boundedText(args.displayName, "Display name", 100), city, cityKey: city.toLocaleLowerCase("en-IN"), bio: boundedText(args.bio, "Bio", 2000), barRegistration: boundedText(args.barRegistration, "Bar registration", 100), yearsExperience: integer(args.yearsExperience, "Experience", 0, 80), domains: args.domains, locales: args.locales, consultationModes: args.consultationModes };
@@ -32,6 +32,13 @@ export const upsert = mutation({
 export const getPublic = query({ args: { advocateId: v.id("advocates") }, handler: async (ctx, args) => {
   const advocate = await approvedAdvocate(ctx, args.advocateId);
   return advocate ? await publicProfile(ctx, advocate) : null;
+} });
+export const comparePublic = query({ args: { advocateIds: v.array(v.id("advocates")) }, handler: async (ctx, args) => {
+  if (args.advocateIds.length > 3 || new Set(args.advocateIds).size !== args.advocateIds.length) fail("INVALID_INPUT", "Compare at most three distinct advocates.");
+  return await Promise.all(args.advocateIds.map(async advocateId => {
+    const advocate = await approvedAdvocate(ctx, advocateId);
+    return { advocateId, profile: advocate ? await publicProfile(ctx, advocate) : null };
+  }));
 } });
 export const resolvePublic = query({ args: { routeId: v.string() }, handler: async (ctx, args) => {
   if (args.routeId.length < 1 || args.routeId.length > 128) return null;

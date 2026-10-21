@@ -1,4 +1,6 @@
-export const PILOT_LOCALES = ["en", "hi", "pa"] as const;
+// Keep short stored codes stable. PilotLocale is retained as the public compatibility name.
+export const LOCALES = ["en", "as", "bn", "brx", "doi", "gu", "hi", "kn", "ks", "kok", "mai", "ml", "mni", "mr", "ne", "or", "pa", "sa", "sat", "sd", "ta", "te", "ur"] as const;
+export const PILOT_LOCALES = LOCALES;
 export type PilotLocale = (typeof PILOT_LOCALES)[number];
 export const LEGAL_DOMAINS = ["criminal", "civil", "family", "property", "employment", "consumer", "other", "unknown"] as const;
 export type LegalDomain = (typeof LEGAL_DOMAINS)[number];
@@ -27,7 +29,7 @@ export const LIMITS = {
 } as const;
 
 export function isPilotLocale(value: unknown): value is PilotLocale {
-  return value === "en" || value === "hi" || value === "pa";
+  return typeof value === "string" && LOCALES.some((locale) => locale === value);
 }
 export function isLegalDomain(value: unknown): value is LegalDomain {
   return typeof value === "string" && LEGAL_DOMAINS.some((domain) => domain === value);

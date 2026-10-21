@@ -54,9 +54,17 @@ Import `api` from `@vakil/backend/api` and `Doc`/`Id` from `@vakil/backend/data-
 - query `notifications.mine({paginationOpts})`: page of own notifications.
 - mutation `notifications.markRead({notificationId})`: null; own only.
 
-Structured errors use `ConvexError({code, message})`; domain exports their codes. No payments, reviews, emergency matching guarantee, fabricated confidence, or public case/credential endpoint. Pagination page sizes are bounded 1–50; discovery returns <=20 future slots per profile.
+Structured errors use `ConvexError({code, message})`; domain exports their codes. No payments, emergency matching guarantee, fabricated confidence, or public case/credential endpoint. Pagination page sizes are bounded 1–50; discovery returns <=20 future slots per profile.
 
 Deployment commands and exact checks are recorded in `VALIDATION.md` after implementation.
 # Case chat and document additions — 19 October 2026
 
 Private APIs now include `chat.listMine`, `chat.send` and `caseDocuments.{upload,listMine,read,remove}`. `chat.send` requires `contextKey` from `listMine` plus a stable `requestId` and literal `consent:true`. It sends native conversational content to Gemini and stores a turn result, not an approved summary. `cases.create` accepts optional `requestId` for retry-safe creation. See `../../docs/chat-and-documents.md` for signatures, access/replay rules, limits and actual evidence. Existing summary APIs below remain available.
+
+## Comparison and consultation feedback ? 21 October 2026
+
+`advocates.comparePublic({advocateIds})` accepts up to three distinct IDs and returns only current approved, active public profiles (or null for unavailable profiles). Ratings are derived from eligible published consultation reviews.
+
+`reviews.forBooking/save/withdraw` enforce user ownership and completed-consultation eligibility. `save` requires rating 1?5, bounded public text and explicit consent; edits return to moderation. `reviews.publicForAdvocate` requires pagination options and exposes neither booking IDs nor account identities. Signed-in users may `reviews.report` once per content revision. Admin-only `adminQueue`, `audit`, and `moderate` retain immutable audits. Moderation requires both `expectedRevision` and `expectedReportCount`, so an unseen new report prevents clearing the queue. Aggregates use current booking/account/profile eligibility, with explicit 500-candidate overflow.
+
+`chat.capabilities({})` exposes configured allowed locales independently of interface or speech support. Adapter dispatch is server-only and currently Gemini. Chat content can populate a private summary editor; the user still reviews and explicitly saves it before sharing.

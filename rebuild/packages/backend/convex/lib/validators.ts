@@ -1,6 +1,6 @@
 import { v } from "convex/values";
 
-export const locale = v.union(v.literal("en"), v.literal("hi"), v.literal("pa"));
+export const locale = v.union(v.literal("en"), v.literal("as"), v.literal("bn"), v.literal("brx"), v.literal("doi"), v.literal("gu"), v.literal("hi"), v.literal("kn"), v.literal("ks"), v.literal("kok"), v.literal("mai"), v.literal("ml"), v.literal("mni"), v.literal("mr"), v.literal("ne"), v.literal("or"), v.literal("pa"), v.literal("sa"), v.literal("sat"), v.literal("sd"), v.literal("ta"), v.literal("te"), v.literal("ur"));
 export const domain = v.union(v.literal("criminal"), v.literal("civil"), v.literal("family"), v.literal("property"), v.literal("employment"), v.literal("consumer"), v.literal("other"), v.literal("unknown"));
 export const urgency = v.union(v.literal("low"), v.literal("medium"), v.literal("high"), v.literal("emergency"), v.literal("unknown"));
 export const consultationMode = v.union(v.literal("phone"), v.literal("video"), v.literal("in_person"));

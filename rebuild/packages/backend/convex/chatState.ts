@@ -5,6 +5,7 @@ import { ownCase, fail } from "./lib/access";
 import { boundedText } from "./lib/input";
 import { chatContextKey, chatResult, sendArgs } from "./lib/chat";
 import { internal } from "./_generated/api";
+import { aiAllowedLanguages } from "./lib/provider";
 
 export const expire = internalMutation({ args: { turnId: v.id("chatTurns") }, handler: async (ctx, args) => {
   const turn = await ctx.db.get(args.turnId);
@@ -82,7 +83,7 @@ export const finish = internalMutation({ args: { turnId: v.id("chatTurns"), resu
   const legalCase = await ctx.db.get(turn.caseId);
   if (turn.result.kind !== "pending") return { kind: "unavailable" as const, reason: "state_changed" };
   const valid = !account.disabled && account.role === "user" && legalCase?.ownerId === account._id && legalCase.contextRevision === turn.contextRevision && legalCase.summaryVersion === turn.summaryVersion && turn.expiresAt > Date.now();
-  const result = !valid ? { kind: "unavailable" as const, reason: "state_changed" } : args.result;
+  const result = !valid ? { kind: "unavailable" as const, reason: "state_changed" } : args.result.kind === "reply" && !aiAllowedLanguages(process.env).includes(legalCase.locale) ? { kind: "unavailable" as const, reason: "unsupported_language" } : args.result;
   if (result.kind === "pending") fail("INVALID_INPUT", "Final result required.");
   if (result.kind === "reply" && (!result.text.trim() || result.text.length > CHAT_LIMITS.replyChars)) fail("INVALID_INPUT", "Invalid reply length.");
   await ctx.db.patch(turn._id, { result });
