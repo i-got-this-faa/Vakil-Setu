@@ -10,3 +10,4 @@ vendor/fleet/
 *.log
 .tooling/
 .runtime/
+.vercel/

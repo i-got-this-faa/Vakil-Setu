@@ -21,7 +21,8 @@ export function GET() {
         browserSpeech: {
           recognition: "browser_vendor_dependent",
           englishPlayback: "local_device_voice",
-          hindiPunjabiPlayback: "bundled_local_engine",
+          hindiPunjabiPlayback: process.env.NEXT_PUBLIC_BUNDLED_SPEECH_ENABLED === "false"
+            ? "local_device_voice_if_available" : "bundled_local_engine",
           pronunciation: "unverified",
         },
       },

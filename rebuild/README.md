@@ -2,6 +2,8 @@
 
 A new responsive multilingual legal intake and consultation application, separate from the legacy Vite/Express implementation. The pilot languages are English, Hindi and Punjabi. AI output is preliminary information and requires professional review.
 
+Hosted pilot: https://vakil-setu-three.vercel.app. Vercel connects to the production Convex deployment; Clerk still uses development identity. See [deployment configuration, checks and remaining limits](docs/deployment-20261027.md). Hosted read-aloud uses matching installed device voices while bundled-engine redistribution provenance is unresolved.
+
 ## Stack
 
 Next.js 16.4.0, React 19.3.0, Convex 1.46.0, Clerk, Bun 1.4.3, Turborepo 2.11.8, Tailwind 4.3.3, shadcn UI components, and TypeScript 7.0.2's native Go compiler. Versions are pinned and recorded in `bun.lock` after installation.

@@ -289,7 +289,7 @@ export function ReadAloud({
   text: string;
   locale: PilotLocale;
 }) {
-  return locale === "hi" || locale === "pa"
+  return process.env.NEXT_PUBLIC_BUNDLED_SPEECH_ENABLED !== "false" && (locale === "hi" || locale === "pa")
     ? <LocalReadAloud text={text} locale={locale} />
     : <DeviceReadAloud text={text} locale={locale} />;
 }
