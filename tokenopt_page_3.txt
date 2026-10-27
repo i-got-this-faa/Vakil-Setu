@@ -1,0 +1,37 @@
+=== PAGE 3 ===
+TokenOpt: A Cache-Preserving Context Harness | Mini Project Synopsis
+1. Project Overview
+TokenOpt is a systems-level execution harness and reverse proxy designed to eliminate context bloat 
+and preserve cloud Key-Value (KV) prompt caching in autonomous AI agents. Situated at the inter­
+section of Artificial Intelligence Systems and Cloud Infrastructure, the project addresses the severe 
+operational cost explosion and latency degradation that occur when multi-step coding assistants, 
+research agents, and data analysis pipelines interact with frontier Large Language Models (LLMs).
+In modern software development workflows, autonomous agents (such as Cursor, Claude Code, and 
+Aider) do not operate as single-turn question-answering systems. Instead, they execute complex 
+multi-turn reasoning loops: reading repository directories, executing terminal commands, running 
+unit test suites, analyzing compiler stack traces, and iteratively modifying source files. Over a typical 
+10 to 30-step trajectory, the agent repeatedly re-submits its entire accumulated history to cloud model 
+endpoints, resulting in massive token compounding where hundreds of thousands of tokens are billed 
+on every subsequent step.
+Empirical systems profiling reveals that over 80% of this compounded volume consists of low-signal 
+tool execution noise—specifically verbose passing test assertions, repetitive build logs, and syntacti­
+cally heavy JSON responses. Cloud AI providers offer cost discounts of up to 90% for prompt caching 
+when request prefixes remain byte-identical. However, existing context pruning tools inadvertently 
+mutate prompt prefixes on each turn, invalidating provider caches and ironically multiplying opera­
+tional expenditures.
+TokenOpt resolves this architectural tension by serving as a transparent, local drop-in reverse proxy 
+operating at localhost:8080. By enforcing strict byte-level prefix stability for system rules while 
+deterministically stripping execution noise on the local CPU, TokenOpt delivers a 70% to 90% 
+reduction in billed agent costs without requiring modifications to client agent codebases or compro­
+mising reasoning fidelity.
+Architectural Scope & Boundary Constraints
+• Zero Agent Code Modification: Client agents interact with standard OpenAI or Anthropic 
+SDK endpoints. Changing OPENAI_BASE_URL to http://localhost:8080/v1 routes traffic through 
+TokenOpt transparently without codebase alteration.
+• Local-First Execution Topology: All stream parsing, log distillation, and virtual memory paging 
+operations run entirely on the developer host CPU (sub-2ms), eliminating external network over­
+head or secondary cloud service charges.
+• Semantic Invariance Guarantee: TokenOpt operates under a zero-loss constraint for critical 
+signals: compiler errors, stack traces, and active file paths are strictly preserved without lossy or 
+hallucinatory LLM summarization.
+3

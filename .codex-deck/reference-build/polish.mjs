@@ -1,0 +1,13 @@
+import fs from 'node:fs/promises';
+const f=new URL('./build.mjs',import.meta.url);let s=await fs.readFile(f,'utf8');
+s=s.replace("const p=Presentation.create", "const headers=[];\nconst p=Presentation.create");
+s=s.replace("text(s,label,x+6,y+5,w-12,22,14,C.ink,false,'center');", "const tw=Math.min(w-12,label.length*7.4+12);const q=text(s,label,x+(w-tw)/2,y+5,tw,21,14,C.ink,false,'center');q.fill=C.pale;headers.push(q);");
+const start=s.indexOf('function pipeline('),end=s.indexOf('\n\n',start);
+s=s.slice(0,start)+"function pipeline(s,stages){let last;stages.forEach((g,i)=>{let y=116+i*112;region(s,g[0],444,y,468,93);let xs=i%2?[775,616,457]:[457,616,775];let widths=i%2?[124,135,135]:[135,135,124];let a=node(s,g[1],xs[0],y+32,widths[0],44),b=node(s,g[2],xs[1],y+32,widths[1],44),c=node(s,g[3],xs[2],y+32,widths[2],44);let side=i%2?'left':'right',target=i%2?'right':'left';arrow(s,a,b,side,target);arrow(s,b,c,side,target);if(last)arrow(s,last,a);last=c;});}"+s.slice(end);
+s=s.replace("await (await PresentationFile.exportPptx(p)).save", "for(const h of headers)h.bringToFront();\nawait (await PresentationFile.exportPptx(p)).save");
+s=s.replace('Vakil_Setu_Reference_Style.pptx','Vakil_Setu_Reference_Style_Final.pptx');
+s=s.replace('A bounded prototype already contains the main code paths. Provider setup and integration testing remain necessary.','The main prototype code paths exist. Provider configuration and integration testing remain.');
+s=s.replace('Speech input, contextual JSON triage, fallback handling, database matching and payment verification cross several system boundaries.','The project integrates speech, contextual triage, matching and verified payment callbacks.');
+s=s.replace('Conversational interfaces and language technology support the project direction. Broader language coverage still needs evaluation.','Conversational intake and speech services support the design. Broader language coverage needs testing.');
+s=s.replace('Expected benefit: clearer first-step guidance and easier advocate discovery. User trials must establish comprehension and successful task completion.','Expected benefit: clearer guidance and easier advocate discovery. User trials must verify comprehension and completion.');
+await fs.writeFile(f,s);

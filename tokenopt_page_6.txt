@@ -1,0 +1,25 @@
+=== PAGE 6 ===
+TokenOpt: A Cache-Preserving Context Harness | Mini Project Synopsis
+4. Proposed Solution / Methodology
+TokenOpt is architected as an edge-native, local reverse proxy operating on localhost:8080 that ad­
+heres to standard OpenAI-compatible API specifications (/v1/chat/completions). Any autonomous 
+agent runtime (such as Cursor, Aider, Claude Code, or LangChain) integrates seamlessly with zero 
+source code modifications simply by redirecting its base URL parameter.
+The internal processing pipeline operates across four decoupled systems modules:
+Stage 1 — Prefix Guard (Cache Normalization): The proxy intercepts the outgoing request 
+and reorganizes the payload into two strict zones. The Frozen Prefix (system prompt, behavioral 
+constraints, and tool schemas) is sorted deterministically and byte-normalized. Dynamic timestamps 
+and session state are isolated into Zone 2. This guarantees that cloud provider radix caches achieve 
+an unbroken prefix match, securing 90% input token cost discounts.
+Stage 2 — Tool Output Distillation Engine: Tool responses from terminal executions are parsed 
+on the local CPU in sub-2ms. Passing unit test logs are filtered out, leaving only failing assertion 
+frames and exception lines. Dense JSON arrays are transduced into Token-Oriented Object Notation 
+(TOON), eliminating 50% of structural punctuation tokens.
+Stage 3 — Context MMU & Virtual Swap Paging: When conversation depth exceeds a configured 
+threshold, older turns are migrated to an in-process SQLite swap store. The content is replaced with 
+a compact virtual handle ([PAGE:0x7B21]). If the agent references the page ID, TokenOpt faults the 
+page back into context automatically.
+Stage 4 — System One Decision Layer (Jev Co-Processor): Before LLM dispatch, incoming state 
+is triaged by TypeSafe’s Jev model, evaluating tool relevance and task complexity in sub-100ms 
+without generating generative token costs.
+6

@@ -1,0 +1,59 @@
+=== PAGE 2 ===
+CONTENTS OF SYNOPSIS
+S. No
+Topic
+Page No
+1
+Project Overview
+3
+2
+Problem Statement
+4
+3
+Objectives of the Project
+5
+4
+Proposed Solution / Methodology
+6
+5
+Key Technologies and Tools
+7
+6
+V.E.T.S Justification
+8
+7
+Expected Outcomes
+9
+8
+Implementation Timeline
+10
+9
+References
+11
+Key Technical Abbreviations & Nomenclature
+Acronym
+Definition and Systems Scope
+LLM
+Large Language Model (e.g., Claude Opus 4.8, GPT-5, Gemini 2.5 Flash)
+KV Cache
+Key-Value Attention State Cache precomputed and reused across requests 
+on GPU clusters
+Context MMU
+Context Memory Management Unit; virtual paging controller for agent 
+history
+TPT
+Tokens-Per-Task; cumulative input/output token volume required to com­
+plete an issue
+TTFT
+Time-To-First-Token; latency measured between request dispatch and ini­
+tial token stream
+TOON
+Token-Oriented Object Notation; punctuation-optimized tabular serializa­
+tion format
+AST
+Abstract Syntax Tree; structured code representation used for function 
+body folding
+SSE
+Server-Sent Events; HTTP streaming protocol used for real-time model 
+output generation
+2

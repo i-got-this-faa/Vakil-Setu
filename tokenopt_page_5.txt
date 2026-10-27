@@ -1,0 +1,59 @@
+=== PAGE 5 ===
+TokenOpt: A Cache-Preserving Context Harness | Mini Project Synopsis
+3. Objectives of the Project
+The core technical objectives of the TokenOpt project are formulated across five architectural 
+milestones:
+• Objective 1 — Two-Zone Context Memory Architecture: Strictly partition agent prompt 
+payloads into an immutable, byte-normalized Frozen Prefix Zone (system instructions and 
+alphabetically sorted tool definitions) to guarantee 100% provider KV-cache hits, paired with an 
+Ephemeral Delta Zone dedicated to dynamic turn execution.
+• Objective 2 — High-Throughput Output Distillation Engine: Construct deterministic, domain-
+aware parsing algorithms executed on the local CPU in sub-2ms that intercept test runner outputs 
+(pytest, jest, vitest, cargo) and strip over 90% of passing assertions while preserving critical stack 
+traces and file path markers with zero semantic loss.
+• Objective 3 — OS-Grade Context Memory Management Unit (MMU): Build an embedded 
+virtual paging subsystem utilizing local bun:sqlite swap storage that automatically evicts stale 
+interaction turns (>4 steps old) from active LLM attention space, substituting them with lightweight 
+ghost handles and providing transparent page-fault restoration.
+• Objective 4 — Sub-100ms System One Decision Co-Processor: Incorporate a fast, structured 
+decision model (TypeSafe Jev) to execute zero-token tool schema pruning (filtering 30 schemas 
+down to 2–3 active tools) and complexity-gated model escalation without generating expensive 
+conversational tokens.
+• Objective 5 — Empirical Pareto Benchmarking: Validate system performance against the 
+standard SWE-bench Lite benchmark suite, demonstrating a 70% to 90% reduction in effective 
+billed costs and a 5x reduction in Time-To-First-Token (TTFT) latency while maintaining parity in 
+binary task completion rates.
+Table 3.1: Objectives, Systems Mechanisms, and Verification Gates
+Obj.
+Architectural Focus
+Technical Implementation
+Target Metric / Accep­
+tance Gate
+Obj 1
+Prefix Protection
+Zone partitioner with key sort
+100% byte stability on pre­
+fix
+Obj 2
+Log Distillation
+AST / regex stream parser
+Over 90% test assertion re­
+duction
+Obj 3
+Virtual Memory
+SQLite WAL paged storage
+Sub-2ms ghost hydration la­
+tency
+Obj 4
+Schema Pruning
+TypeSafe Jev System One 
+classifier
+Zero-token schema pruning 
+overhead
+Obj 5
+Cost Optimization
+SWE-bench Lite comparative 
+suite
+70%–90% cost reduction at 
+100% parity
+5

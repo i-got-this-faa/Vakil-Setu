@@ -1,0 +1,39 @@
+=== PAGE 11 ===
+TokenOpt: A Cache-Preserving Context Harness | Mini Project Synopsis
+9. References
+[1] C. Packer, V. Fang, S. G. Patil, K. Lin, S. Wooders, and J. E. Gonzalez, “MemGPT: Towards LLMs as operating 
+systems,” in Proc. International Conference on Learning Representations (ICLR), 2024. [arXiv:2310.08560]
+[2] I. Gim, G. Chen, S. Lee, A. Khandelwal, and L. Zhong, “Prompt Cache: Modular attention reuse for low-latency 
+inference,” in Proc. Conference on Machine Learning and Systems (MLSys), 2024. [arXiv:2311.04934]
+[3] L. Zheng, L. Yin, Z. Xie, J. Huang, C. Sun, C. H. Yu, S. Cao, C. Kozyrakis, I. Stoica, J. E. Gonzalez, C. Barrett, and 
+S. Shen, “SGLang: Efficient execution of structured language model programs,” in Proc. International Conference 
+on Machine Learning (ICML), 2024. [arXiv:2312.07104]
+[4] Y. Liu, H. Li, K. Du, J. Yao, Y. Cheng, Y. Huang, S. Lu, M. Maire, H. Hoffmann, A. Holtzman, and G. 
+Ananthanarayanan, “CacheGen: KV cache compression and streaming for fast large language model serving,” in 
+Proc. ACM SIGCOMM, 2024. [arXiv:2310.07240]
+[5] C.-P. Hsieh et al., “RULER: What’s the real context size of your long-context language models?” arXiv preprint 
+arXiv:2404.06654, 2024.
+[6] Z. Pan, Q. Wu, H. Jiang, M. Xia, X. Luo, J. Zhang, Q. Lin, V. Rühle, Y. Yang, C. Y. Lin, H. V. Zhao, and 
+L. Qiu, “LLMLingua-2: Data distillation for efficient and faithful prompt compression,” in Proc. Association for 
+Computational Linguistics (ACL), 2024. [arXiv:2403.12968]
+[7] L. Chen, M. Zaharia, and J. Zou, “FrugalGPT: How to use large language models while reducing cost 
+and improving performance,” in Advances in Neural Information Processing Systems (NeurIPS), vol. 36, 2023. 
+[arXiv:2305.05176]
+[8] C. E. Jimenez, J. Yang, A. Wettig, S. Yao, K. Pei, O. Press, and K. Narasimhan, “SWE-bench: Can language 
+models resolve real-world GitHub issues?” in Proc. International Conference on Learning Representations (ICLR), 
+2024.
+[9] N. F. Liu, K. Lin, J. Hewitt, A. Paranjape, M. Bevilacqua, F. Petroni, and P. Liang, “Lost in the Middle: How 
+language models use long contexts,” Transactions of the Association for Computational Linguistics (TACL), vol. 12, 
+pp. 157–173, 2024. [arXiv:2307.03172]
+[10] Z. Li, Y. Liu, Y. Su, and N. Collier, “Prompt compression for large language models: A survey,” arXiv preprint 
+arXiv:2410.12388, Oct. 2024.
+[11] I. Ong, A. Almahairi, V. Wu, W. L. Chiang, T. Li, J. E. Gonzalez, M. Chen, and C. Xiao, “RouteLLM: Learning 
+to route LLMs with preference data,” arXiv preprint arXiv:2406.18665, 2024.
+[12] W. Kwon, Z. Li, S. Zhuang, Y. Sheng, L. Zheng, C. H. Yu, J. E. Gonzalez, H. Zhang, and I. Stoica, “Efficient 
+memory management for large language model serving with PagedAttention,” in Proc. 29th ACM Symposium on 
+Operating Systems Principles (SOSP), pp. 611–626, 2023.
+[13] X. Wang, Z. Zhu, B. Ji, Z. Gan, H. Zhang, and J. Gao, “AgentBench: Evaluating LLMs as agents,” in Proc. 
+International Conference on Learning Representations (ICLR), 2024.
+[14] Y. Leviathan, M. Kalman, and Y. Matias, “Fast inference from transformers via speculative decoding,” in Proc. 
+40th International Conference on Machine Learning (ICML), pp. 19274–19286, 2023.
+11
