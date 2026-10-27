@@ -16,7 +16,6 @@ export function NotificationsPage() {
     <>
       <div className="workspace-heading">
         <div>
-          <div className="eyebrow">Keep informed</div>
           <h1>Notifications.</h1>
           <p className="page-description">
             In-app updates from actual booking and application changes. Email

@@ -38,7 +38,6 @@ export function Intake() {
     <>
       <div className="workspace-heading">
         <div>
-          <div className="eyebrow">01 / Your words</div>
           <h1>{copy.concernTitle}</h1>
           <p className="page-description">{copy.concernDescription}</p>
         </div>

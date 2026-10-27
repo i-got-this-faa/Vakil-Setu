@@ -4,7 +4,6 @@ import {
   createContext,
   useContext,
   useEffect,
-  useId,
   useState,
   type ReactNode,
 } from "react";
@@ -61,9 +60,8 @@ export function useLocale() {
   };
 }
 
-export function LocaleSelect() {
-  const { locale, setLocale, messages, translationNotice } = useLocale();
-  const noticeId = useId();
+export function LocaleSelect({ noticeId }: { noticeId: string }) {
+  const { locale, setLocale, messages } = useLocale();
   return (
     <div className="locale-control">
       <Select
@@ -92,9 +90,6 @@ export function LocaleSelect() {
           ))}
         </SelectContent>
       </Select>
-      <p id={noticeId} className="mt-1 max-w-64 text-xs text-muted">
-        {translationNotice}
-      </p>
     </div>
   );
 }

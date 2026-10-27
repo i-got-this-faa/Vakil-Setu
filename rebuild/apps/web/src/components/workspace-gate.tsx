@@ -92,7 +92,6 @@ function Onboarding() {
   }
   return (
     <div className="card" style={{ maxWidth: 620 }}>
-      <div className="eyebrow">One time account setup</div>
       <h2>How will you use Vakil Setu?</h2>
       <p className="page-description">{copy.onboardingRoleFixed}</p>
       <form className="form-stack" style={{ marginTop: 24 }} onSubmit={submit}>

@@ -37,7 +37,6 @@ export function CasesPage() {
     <>
       <div className="workspace-heading">
         <div>
-          <div className="eyebrow">Your private records</div>
           <h1>My cases.</h1>
           <p className="page-description">
             Intake and summary versions are visible to you. Only a summary you

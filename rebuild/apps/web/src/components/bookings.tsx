@@ -30,7 +30,6 @@ export function BookingsPage() {
     <>
       <div className="workspace-heading">
         <div>
-          <div className="eyebrow">Your next steps</div>
           <h1>{messages.navigation.consultations}</h1>
           <p className="page-description">
             Requests, acceptance, cancellations, completion, and expiry. All

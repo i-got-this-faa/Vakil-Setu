@@ -5,7 +5,7 @@ import { SetupNotice, useServices } from "./providers";
 
 export function AuthPage({ mode }: { mode: "sign-in" | "sign-up" }) {
   return (
-    <main id="main" className="auth-page">
+    <main id="main" className="auth-page" lang="en-IN" dir="ltr">
       {useServices().kind === "configured" ? (
         mode === "sign-in" ? (
           <SignIn routing="path" path="/sign-in" />

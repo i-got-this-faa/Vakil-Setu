@@ -47,7 +47,6 @@ export function Discovery() {
   return (
     <main id="main" className="container" style={{ paddingBottom: 70 }}>
       <div className="page-intro">
-        <div className="eyebrow">A considered connection</div>
         <h1>{messages.discovery.title}</h1>
         <p>
           Browse approved advocate profiles by practice area, language, and
@@ -280,8 +279,8 @@ function PublicProfile({ advocateId }: { advocateId: Id<"advocates"> }) {
         ← All advocates
       </Link>
       <div className="page-intro">
-        <div className="eyebrow">Approved advocate · {profile.city}</div>
         <h1>{profile.displayName}</h1>
+        <p className="profile-meta" lang="en-IN" dir="ltr">Approved advocate · {profile.city}</p>
         <p>{profile.bio}</p>
       </div>
       <div className="actions" style={{ marginBottom: 30 }}>
@@ -571,7 +570,6 @@ function SendRequest({
     );
   return (
     <article className="card">
-      <div className="eyebrow">Review before you share</div>
       <h2>Summary version {latest.version}</h2>
       <p className="muted" style={{ marginBlock: 15 }}>
         Recipient: {advocateName} · {formatTime(start)} IST ·{" "}

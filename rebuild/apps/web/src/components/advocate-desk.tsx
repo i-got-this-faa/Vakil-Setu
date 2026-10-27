@@ -31,7 +31,6 @@ export function AdvocateDesk() {
     <>
       <div className="workspace-heading">
         <div>
-          <div className="eyebrow">Your professional workspace</div>
           <h1>Advocate desk.</h1>
           <p className="page-description">
             Submit a profile and private credential evidence for approval.

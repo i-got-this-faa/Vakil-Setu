@@ -55,6 +55,11 @@ function ConfiguredProviders({
   return (
     <ClerkProvider
       publishableKey={config.clerkKey}
+      localization={{
+        signIn: { start: { title: "Sign in to Vakil Setu", titleCombined: "Sign in to Vakil Setu" } },
+        signUp: { start: { title: "Create your Vakil Setu account", titleCombined: "Create your Vakil Setu account" } },
+      }}
+      appearance={{ variables: { colorPrimary: "#346d65", fontFamily: "var(--font-sans)" } }}
       signInUrl="/sign-in"
       signUpUrl="/sign-up"
       signInFallbackRedirectUrl="/workspace"

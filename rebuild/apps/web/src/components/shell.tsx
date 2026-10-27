@@ -1,10 +1,11 @@
 "use client";
 
 import Link from "next/link";
+import { useId } from "react";
 import { usePathname } from "next/navigation";
 import { UserButton } from "@clerk/nextjs";
 import {
-  ArrowUpRight,
+  ArrowRight,
   Bell,
   CalendarDays,
   FileText,
@@ -22,11 +23,11 @@ export function Brand() {
   const { copy } = useLocale();
   return (
     <Link href="/" className="brand" aria-label="Vakil Setu home">
-      <span className="brand-mark">
-        <Scale size={25} strokeWidth={1.3} />
+      <span className="brand-mark" aria-hidden="true">
+        <Scale size={27} strokeWidth={1.5} />
       </span>
       <span>
-        <span className="brand-name">Vakil Setu</span>
+        <span className="brand-name" lang="en-IN" dir="ltr">Vakil Setu</span>
         <span className="brand-note">{copy.tagline}</span>
       </span>
     </Link>
@@ -34,23 +35,32 @@ export function Brand() {
 }
 
 export function Header() {
-  const { messages, copy } = useLocale();
+  const { messages, copy, translationNotice } = useLocale();
+  const noticeId = useId();
   const configured = useServices().kind === "configured";
   return (
-    <header className="site-header">
-      <div className="container header-inner">
-        <Brand />
-        <nav aria-label="Main navigation" className="header-nav">
-          <Link href="/discover">{messages.navigation.findAdvocate}</Link>
-          <Link href="/workspace/advocate">{copy.advocateDesk}</Link>
-          <LocaleSelect />
-          <Link className="btn secondary small" href="/workspace">
-            {copy.workspace} <ArrowUpRight size={14} />
+    <>
+      <header className="site-header">
+        <div className="container header-inner">
+          <Brand />
+          <nav aria-label="Main navigation" className="header-nav">
+            <Link href="/discover">{messages.navigation.findAdvocate}</Link>
+            <Link href="/workspace/advocate">{copy.advocateDesk}</Link>
+            <LocaleSelect noticeId={noticeId} />
+            {configured && <UserButton />}
+          </nav>
+          <Link className="btn secondary small header-workspace" href="/workspace">
+            {copy.workspace} <ArrowRight size={16} aria-hidden="true" />
           </Link>
-          {configured && <UserButton />}
-        </nav>
+        </div>
+      </header>
+      <div className="translation-note">
+        <details className="container">
+          <summary lang="en-IN" dir="ltr">About interface translations</summary>
+          <p id={noticeId}>{translationNotice}</p>
+        </details>
       </div>
-    </header>
+    </>
   );
 }
 
@@ -59,13 +69,13 @@ export function Footer() {
     <footer className="site-footer">
       <div className="container footer-inner">
         <Brand />
-        <p>
+        <p lang="en-IN" dir="ltr">
           Legal information supports your next step. It does not replace advice
           from an advocate. Consultation requests need advocate acceptance; no
           emergency connection is guaranteed.
         </p>
-        <Link className="text-link small-text" href="/how-it-works">
-          How it works ↗
+        <Link className="text-link" href="/how-it-works" lang="en-IN" dir="ltr">
+          How it works <ArrowRight size={16} aria-hidden="true" />
         </Link>
       </div>
     </footer>
@@ -122,7 +132,7 @@ export function Sidebar() {
       </nav>
       <p className="sidebar-note">
         Your intake stays private until you approve sharing a summary with a
-        specific advocate. Role permissions are checked by the service.
+        specific advocate.
       </p>
     </aside>
   );

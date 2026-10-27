@@ -1,133 +1,83 @@
 "use client";
+
+import Link from "next/link";
+import { ArrowRight } from "lucide-react";
 import { useLocale } from "@/components/locale";
 import { chatNavigationLabel } from "@/lib/chat-navigation";
-import Link from "next/link";
-import {
-  ArrowRight,
-  FilePenLine,
-  Languages,
-  LockKeyhole,
-  Scale,
-  ShieldCheck,
-  UserRoundCheck,
-  CalendarDays,
-} from "lucide-react";
 
 export default function Home() {
   const { copy, messages, locale } = useLocale();
   return (
     <main id="main" className="container">
-      <section className="hero">
+      <section className="hero" aria-labelledby="home-title">
         <div className="hero-copy">
-          <div className="eyebrow">Clarity begins with a conversation</div>
-          <h1>
-            {copy.headline}
-            <br />
-            <em>{copy.headlineAccent}</em>
-          </h1>
+          <h1 id="home-title">{copy.concernTitle}</h1>
           <p>{copy.heroDescription}</p>
           <div className="actions">
             <Link href="/workspace/chat" className="btn" lang={["hi", "pa"].includes(locale) ? locale : "en-IN"}>{chatNavigationLabel(locale)} <ArrowRight size={18} aria-hidden="true" /></Link>
             <Link href="/workspace/intake" className="btn">
-              {copy.startIntake} <ArrowRight size={16} />
+              {copy.startIntake} <ArrowRight size={18} aria-hidden="true" />
             </Link>
-            <Link href="/discover" className="text-link small-text">
-              Explore advocates ↗
+            <Link href="/discover" className="text-link">
+              {messages.navigation.findAdvocate}
             </Link>
           </div>
-          <div className="hero-foot">
-            <LockKeyhole size={13} />
-            You choose what to share, and with whom.
-          </div>
         </div>
-        <div className="hero-art" aria-hidden="true">
-          <div className="arch" />
-          <Scale className="art-scale" />
-          <div className="art-caption">
-            <strong>A bridge, built around you.</strong>
-            <p>From the first words to a considered next step.</p>
-          </div>
-        </div>
+        <aside className="intake-guide" aria-labelledby="intake-guide-title">
+          <h2 id="intake-guide-title" lang="en-IN" dir="ltr">What to include</h2>
+          <p>{copy.concernDescription}</p>
+          <p className="intake-guide-note">{copy.intakeStaysNote}</p>
+        </aside>
       </section>
-      <div className="principles">
-        <div className="principle">
-          <Languages size={23} strokeWidth={1.4} />
-          <div>
-            Choose your language
-            <span>English · हिन्दी · ਪੰਜਾਬੀ interface pilot</span>
-          </div>
+
+      <section className="home-workflow" aria-labelledby="workflow-title" lang="en-IN" dir="ltr">
+        <div className="workflow-intro">
+          <h2 id="workflow-title">How it works</h2>
+          <Link href="/how-it-works" className="text-link">
+            Read the full guide <ArrowRight size={16} aria-hidden="true" />
+          </Link>
         </div>
-        <div className="principle">
-          <ShieldCheck size={23} strokeWidth={1.4} />
-          <div>
-            Reviewed advocate profiles
-            <span>Approval follows private credential review</span>
-          </div>
-        </div>
-        <div className="principle">
-          <LockKeyhole size={23} strokeWidth={1.4} />
-          <div>
-            Private until you decide
-            <span>Approve a specific summary before sharing</span>
-          </div>
-        </div>
-      </div>
-      <section className="section" id="workflow">
-        <div className="section-head">
-          <div>
-            <div className="eyebrow">A thoughtful way forward</div>
-            <h2>From concern to connection.</h2>
-          </div>
-          <p>
-            A clear workflow, with room to read, edit, and decide at every step.
-          </p>
-        </div>
-        <div className="steps">
-          <article className="step">
-            <div className="step-number">
-              01 / YOUR WORDS
-              <FilePenLine size={27} strokeWidth={1.2} />
-            </div>
-            <h3>Tell your story.</h3>
+        <ol className="workflow-list">
+          <li>
+            <h3>Write down your concern</h3>
             <p>
-              Type your concern, or try browser voice input where available.
-              Review and edit the text before saving it to your private
-              workspace.
+              Type what happened, or use browser voice input where available.
+              Review and edit the text before saving it to your private workspace.
             </p>
-          </article>
-          <article className="step">
-            <div className="step-number">
-              02 / YOUR UNDERSTANDING
-              <UserRoundCheck size={27} strokeWidth={1.2} />
-            </div>
-            <h3>Make it clear.</h3>
+          </li>
+          <li>
+            <h3>Review your summary</h3>
             <p>
-              Write and revise a private summary. AI assistance is shown only if
-              a real provider returns a validated result; you remain in control.
+              Write or edit a summary for your consultation. AI assistance is
+              optional and needs your consent. Check the facts before sharing.
             </p>
-          </article>
-          <article className="step">
-            <div className="step-number">
-              03 / YOUR NEXT STEP
-              <CalendarDays size={27} strokeWidth={1.2} />
-            </div>
-            <h3>Choose an advocate.</h3>
+          </li>
+          <li>
+            <h3>Request a consultation</h3>
             <p>
-              Browse approved profiles and open slots. Approve sharing your
-              summary, then request a consultation. The advocate confirms
-              acceptance.
+              Choose an approved advocate and an available time. Share the
+              summary you reviewed. Your request needs the advocate's acceptance.
             </p>
-          </article>
-        </div>
+          </li>
+        </ol>
       </section>
-      <section className="cta-panel">
-        <div>
-          <h2>A place to begin.</h2>
-          <p>You don’t need all the answers to take the first step.</p>
-        </div>
-        <Link href="/workspace/intake" className="btn">
-          {copy.startIntake} <ArrowRight size={16} />
-        </Link>
+
+      <section className="privacy-section" aria-labelledby="privacy-title" lang="en-IN" dir="ltr">
+        <h2 id="privacy-title">You decide what to share.</h2>
+        <dl className="privacy-facts">
+          <div>
+            <dt>Private drafts</dt>
+            <dd>Only the summary version you approve is shared with your chosen advocate.</dd>
+          </div>
+          <div>
+            <dt>Reviewed profiles</dt>
+            <dd>Advocate approval follows a private credential review.</dd>
+          </div>
+          <div>
+            <dt>Your choice</dt>
+            <dd>Choose the advocate, the summary version, and the consultation time.</dd>
+          </div>
+        </dl>
       </section>
     </main>
   );

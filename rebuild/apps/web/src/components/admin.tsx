@@ -25,7 +25,6 @@ export function AdminPage() {
     <>
       <div className="workspace-heading">
         <div>
-          <div className="eyebrow">Private administrative review</div>
           <h1>{messages.admin.title}</h1>
           <p className="page-description">
             Review credential evidence before approving the current application
@@ -65,7 +64,6 @@ function ReviewQueue() {
     <section aria-label="Advocate application queue">
       <div className="workspace-heading" style={{ marginBottom: 18 }}>
         <div>
-          <div className="eyebrow">Application queue</div>
           <h2>Profile review.</h2>
         </div>
         <div className="field" style={{ minWidth: 220 }}>
@@ -279,7 +277,6 @@ function AccountManagement() {
     <section aria-label="Account management" style={{ marginTop: 32 }}>
       <div className="workspace-heading">
         <div>
-          <div className="eyebrow">Authenticated accounts</div>
           <h2>Account access.</h2>
           <p className="page-description">
             Disable or reactivate user, advocate, and administrator accounts
@@ -468,7 +465,6 @@ function AffectedBookings() {
     <div className="stack" style={{ marginTop: 32 }}>
       <div className="workspace-heading">
         <div>
-          <div className="eyebrow">Explicit handling required</div>
           <h2>Affected consultations.</h2>
           <p className="page-description">
             Accepted consultations flagged when a profile lost approval or a

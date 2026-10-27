@@ -2,20 +2,19 @@ import Link from "next/link";
 
 export default function HowItWorks() {
   return (
-    <main id="main" className="container section">
-      <div className="eyebrow">Before you begin</div>
-      <h1>Know what happens next.</h1>
-      <div className="stack" style={{ marginTop: 35, maxWidth: 780 }}>
-        <article className="card">
+    <main id="main" className="container section reading-page" lang="en-IN" dir="ltr">
+      <h1>How Vakil Setu works</h1>
+      <div>
+        <article className="reading-section">
           <h2>Review, then save</h2>
           <p className="page-description">
-            Create an account and type your legal concern in English, Hindi, or
-            Punjabi. Browser speech capture is optional and may use browser
+            Create an account and type your legal concern in your chosen language.
+            Browser speech capture is optional and may use browser
             vendor servers. Only final text that you explicitly review is added
             to your intake; saving always requires your action.
           </p>
         </article>
-        <article className="card">
+        <article className="reading-section">
           <h2>Keep the summary yours</h2>
           <p className="page-description">
             Create or edit a manual summary and review its language, category,
@@ -24,7 +23,7 @@ export default function HowItWorks() {
             information for your consultation, not legal advice.
           </p>
         </article>
-        <article className="card">
+        <article className="reading-section">
           <h2>Request a real consultation</h2>
           <p className="page-description">
             Select an approved advocate and an available slot. Approve sharing
@@ -34,11 +33,11 @@ export default function HowItWorks() {
             accepted request.
           </p>
         </article>
-        <article className="card">
+        <article className="reading-section">
           <h2>Clear limits</h2>
           <p className="page-description">
-            There are no payments, reviews, or emergency matching guarantees in
-            this pilot. Interface translations do not imply browser speech
+            Payments are unavailable and emergency connections are not guaranteed.
+            Interface translations do not imply browser speech
             support or verified AI understanding in that language. Unshared
             drafts can be deleted; shared consultation snapshots remain
             immutable.
