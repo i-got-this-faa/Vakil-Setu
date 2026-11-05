@@ -11,7 +11,7 @@ import { speakableAnalysisText } from "../utils/classificationSpeak";
 export default function ResultsPage() {
   const ttsEnabled = (import.meta.env.VITE_ENABLE_TTS || "true") === "true";
   const navigate = useNavigate();
-  const { classification, advocates, setSelectedAdvocate, ttsLang } = useAppState();
+  const { classification, advocates, setSelectedAdvocate, setBooking, ttsLang } = useAppState();
   const { chatMessages, loading, loadingLabel, error, submitMessage } = useLegalChat({
     navigateAfterFirstResult: false
   });
@@ -23,33 +23,35 @@ export default function ResultsPage() {
   const L = hi
     ? {
         emptyTitle: "पहले अपना मामला बताएं",
-        emptySub: "होम पर जाकर अपनी समस्या लिखें — हम विश्लेषण और वकील मिलान दिखाएंगे।",
-        emptyCta: "होम पर जाएं",
+        emptySub: "चैट में अपनी समस्या लिखें — हम विश्लेषण और वकील मिलान दिखाएंगे।",
+        emptyCta: "चैट शुरू करें",
         speak: "सुनें",
         book: "वकील बुक करें",
-        trust1: "NAAC मान्यता",
-        trust2: "एन्क्रिप्टेड सत्र",
+        trust1: "प्रारंभिक मार्गदर्शन",
+        trust2: "इस टैब में सत्र इतिहास",
         trust3: "भारतीय कानून पर आधारित"
       }
     : {
         emptyTitle: "Describe your issue first",
-        emptySub: "Start on Home — we'll analyze your case and match advocates.",
-        emptyCta: "Go to Home",
+        emptySub: "Start a chat — we'll analyze your case and match advocates.",
+        emptyCta: "Start chat",
         speak: "Listen",
         book: "Book a lawyer",
-        trust1: "NAAC accredited",
-        trust2: "Encrypted session",
+        trust1: "Initial guidance",
+        trust2: "History saved in this tab",
         trust3: "Indian law focused"
       };
 
   const handleBook = (advocate) => {
+    setBooking(null);
     setSelectedAdvocate(advocate);
     navigate("/booking");
   };
 
   const handleViewProfile = (advocate) => {
+    setBooking(null);
     setSelectedAdvocate(advocate);
-    navigate("/booking");
+    navigate("/profile");
   };
 
   const handleStickyBook = () => {
@@ -71,7 +73,7 @@ export default function ResultsPage() {
           <section className="dashboard-empty dash-fade-in">
             <h1>{L.emptyTitle}</h1>
             <p>{L.emptySub}</p>
-            <Link to="/" className="dash-btn dash-btn--primary">
+            <Link to="/chat" className="dash-btn dash-btn--primary">
               {L.emptyCta}
             </Link>
           </section>

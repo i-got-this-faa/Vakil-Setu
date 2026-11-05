@@ -1,4 +1,4 @@
-import { createContext, useCallback, useContext, useEffect, useMemo, useState } from "react";
+import { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState } from "react";
 import {
   clearChatStorage,
   loadChatFromStorage,
@@ -12,6 +12,7 @@ const AppContext = createContext(null);
 const restored = loadSessionFromStorage();
 
 export function AppProvider({ children }) {
+  const sessionGeneration = useRef(0);
   const [voiceText, setVoiceText] = useState(restored?.voiceText || "");
   const [classification, setClassification] = useState(restored?.classification || null);
   const [advocates, setAdvocates] = useState(restored?.advocates || []);
@@ -35,16 +36,20 @@ export function AppProvider({ children }) {
   }, []);
 
   const clearSession = useCallback(() => {
+    sessionGeneration.current += 1;
     setVoiceText("");
     setClassification(null);
     setAdvocates([]);
     setSelectedAdvocate(null);
+    setBooking(null);
+    window.speechSynthesis?.cancel();
     setChatMessages([]);
     clearChatStorage();
   }, []);
 
   const value = useMemo(
     () => ({
+      sessionGeneration,
       voiceText,
       setVoiceText,
       classification,

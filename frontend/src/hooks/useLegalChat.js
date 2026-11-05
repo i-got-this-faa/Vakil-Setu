@@ -8,7 +8,7 @@ import {
   historyForApi
 } from "../utils/chatMessages";
 import { bcp47FromUiLanguage, speakWithWebSpeech } from "../utils/webSpeech";
-import { speakableAnalysisText, ttsLocaleFromClassification } from "../utils/classificationSpeak";
+import { ttsLocaleFromClassification } from "../utils/classificationSpeak";
 
 const LOADING_STEPS = [
   "Understanding your issue…",
@@ -23,6 +23,7 @@ export function useLegalChat({ navigateAfterFirstResult = false } = {}) {
   const navigate = useNavigate();
   const {
     chatMessages,
+    sessionGeneration,
     appendChatMessages,
     setClassification,
     setAdvocates,
@@ -36,6 +37,13 @@ export function useLegalChat({ navigateAfterFirstResult = false } = {}) {
   const [error, setError] = useState("");
   const stepTimerRef = useRef(null);
   const navTimerRef = useRef(null);
+  const generation = sessionGeneration.current;
+
+  useEffect(() => {
+    setLoading(false);
+    setError("");
+    if (navTimerRef.current) clearTimeout(navTimerRef.current);
+  }, [generation]);
 
   useEffect(() => {
     if (!loading) {
@@ -67,17 +75,19 @@ export function useLegalChat({ navigateAfterFirstResult = false } = {}) {
       const trimmed = String(text || "").trim();
       if (!trimmed || loading) return;
 
-      const isFirstTurn = chatMessages.filter((m) => m.role === "user").length === 0;
+      const requestGeneration = sessionGeneration.current;
       const userMsg = createMessage("user", trimmed);
-      const nextMessages = [...chatMessages, userMsg];
 
       try {
         setLoading(true);
         setError("");
         appendChatMessages([userMsg]);
 
-        const history = historyForApi(nextMessages);
-        const { classification, advocates } = await triageIssue(trimmed, history);
+        const history = historyForApi(chatMessages);
+        const { classification, advocates, legalAnswer } = await triageIssue(trimmed, history, preferredLanguage);
+        if (requestGeneration !== sessionGeneration.current) {
+          return;
+        }
 
         const speakLocale = ttsLocaleFromClassification(
           classification,
@@ -85,25 +95,29 @@ export function useLegalChat({ navigateAfterFirstResult = false } = {}) {
         );
 
         setVoiceText(trimmed);
-        setClassification(classification);
+        const hasAnalysis = classification.status === "classified";
+        setClassification(hasAnalysis ? { ...classification, summary: assistantFromClassification(classification, legalAnswer), legalAnswer } : null);
         setAdvocates(advocates || []);
         setTtsLang(speakLocale);
 
-        const assistantMsg = createMessage("assistant", assistantFromClassification(classification), {
+        const assistantMsg = createMessage("assistant", assistantFromClassification(classification, legalAnswer), {
+          legalAnswer,
           classification
         });
         appendChatMessages([assistantMsg]);
 
-        const goResults = navigateAfterFirstResult && isFirstTurn;
+        if (ttsEnabled) speakWithWebSpeech(assistantMsg.content, speakLocale);
+
+        if (!hasAnalysis) {
+          setLoading(false);
+          navigate("/chat");
+          return;
+        }
+
+        const goResults = navigateAfterFirstResult;
         if (goResults) {
           navTimerRef.current = setTimeout(() => {
-            if (ttsEnabled) {
-              const toSpeak =
-                speakableAnalysisText(classification) ||
-                classification.summary ||
-                "Analysis complete";
-              speakWithWebSpeech(toSpeak, speakLocale);
-            }
+            if (requestGeneration !== sessionGeneration.current) { setLoading(false); return; }
             navigate("/results");
             setLoading(false);
           }, PREVIEW_NAV_DELAY_MS);
@@ -111,6 +125,7 @@ export function useLegalChat({ navigateAfterFirstResult = false } = {}) {
           setLoading(false);
         }
       } catch (err) {
+        if (requestGeneration !== sessionGeneration.current) return;
         setError(err.message || "Something went wrong. Please try again.");
         setLoading(false);
       }
@@ -134,7 +149,7 @@ export function useLegalChat({ navigateAfterFirstResult = false } = {}) {
     clearSession();
     setError("");
     setLoading(false);
-    navigate("/");
+    navigate("/chat");
   }, [clearSession, navigate]);
 
   return {

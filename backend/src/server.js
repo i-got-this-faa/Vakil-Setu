@@ -8,6 +8,7 @@ import advocateRoutes from "./routes/advocateRoutes.js";
 import bookingRoutes from "./routes/bookingRoutes.js";
 import emergencyRoutes from "./routes/emergencyRoutes.js";
 import paymentRoutes from "./routes/paymentRoutes.js";
+import knowledgeRoutes from "./routes/knowledgeRoutes.js";
 import { notFound, errorHandler } from "./middlewares/errorMiddleware.js";
 
 dotenv.config();
@@ -27,6 +28,7 @@ app.use("/api/advocates", advocateRoutes);
 app.use("/api/bookings", bookingRoutes);
 app.use("/api/emergency", emergencyRoutes);
 app.use("/api/payments", paymentRoutes);
+app.use("/api/knowledge", knowledgeRoutes);
 
 app.use(notFound);
 app.use(errorHandler);

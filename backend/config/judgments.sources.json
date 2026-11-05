@@ -1,0 +1,44 @@
+[
+  {
+    "url": "https://jkhighcourt.nic.in/includes/Jud_Search/Judgement/WP(C)%20No.1502023.pdf",
+    "title": "Lyceum Public School v. UT of J&K & Others",
+    "court": "High Court of Jammu & Kashmir and Ladakh",
+    "bench": "Srinagar",
+    "caseNumber": "WP(C) No.150/2023",
+    "decisionDate": "2024-03-29",
+    "judges": ["Rajnesh Oswal"],
+    "language": "en",
+    "documentType": "judgment",
+    "discoveredOn": "https://jkhighcourt.nic.in/",
+    "discoveryContext": "html_comment",
+    "metadataReview": "Checked against the first page of the official PDF; not a review of legal authority or subsequent treatment."
+  },
+  {
+    "url": "https://jkhighcourt.nic.in/includes/Jud_Search/Judgement/WP(C)%20No.%2025152023.pdf",
+    "title": "Naza Bano & Another v. Union Territory of Jammu and Kashmir & Others",
+    "court": "High Court of Jammu & Kashmir and Ladakh",
+    "bench": "Srinagar",
+    "caseNumber": "WP(C) No.2515/2023",
+    "decisionDate": "2024-03-06",
+    "judges": ["Atul Sreedharan", "Moksha Khajuria Kazmi"],
+    "language": "en",
+    "documentType": "judgment",
+    "discoveredOn": "https://jkhighcourt.nic.in/",
+    "discoveryContext": "html_comment",
+    "metadataReview": "Checked against the first page of the official PDF; not a review of legal authority or subsequent treatment."
+  },
+  {
+    "url": "https://jkhighcourt.nic.in/includes/Jud_Search/Judgement/LPA%20no.%202732023.pdf",
+    "title": "Bhupinder Kumar & Others v. Mohammad Ashraf Khan & Others",
+    "court": "High Court of Jammu & Kashmir and Ladakh",
+    "bench": "Srinagar",
+    "caseNumber": "LPA No.273/2023",
+    "decisionDate": "2024-03-07",
+    "judges": ["Atul Sreedharan", "Moksha Khajuria Kazmi"],
+    "language": "en",
+    "documentType": "judgment",
+    "discoveredOn": "https://jkhighcourt.nic.in/",
+    "discoveryContext": "html_comment",
+    "metadataReview": "Checked against the first page of the official PDF; not a review of legal authority or subsequent treatment."
+  }
+]

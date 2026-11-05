@@ -7,17 +7,41 @@
     "dev": "nodemon src/server.js",
     "start": "node src/server.js",
     "scrape:advocates": "node scripts/scrapeAdvocates.js",
-    "clean:advocates": "node scripts/clearAdvocates.js"
+    "clean:advocates": "node scripts/clearAdvocates.js",
+    "legal:discover": "node scripts/discoverJudgments.js",
+    "legal:ingest": "node scripts/ingestJudgments.js",
+    "legal:ingest:bns": "node scripts/ingestBns.js",
+    "legal:search": "node scripts/queryJudgments.js",
+    "test:legal": "node --test test/legal*.test.js",
+    "start:whatsapp": "node src/whatsappServer.js",
+    "start:twilio": "node scripts/startTwilio.js",
+    "start:meta": "node scripts/startMeta.js",
+    "demo:twilio": "node scripts/demoTwilio.js",
+    "doctor:whatsapp": "node scripts/doctorWhatsapp.js",
+    "setup:speech:local": "node scripts/setupLocalSpeech.js",
+    "demo:whatsapp": "node scripts/demoWhatsapp.js",
+    "test:whatsapp": "node --test test/whatsapp*.test.js",
+    "db:local": "node scripts/localMongo.js",
+    "setup:twilio": "node scripts/setupTwilio.js",
+    "twilio:live": "node scripts/twilioLive.js",
+    "legal:embed": "node scripts/embedLegalCorpus.js",
+    "legal:audit": "node scripts/auditLegalCorpus.js",
+    "legal:evaluate": "node scripts/evaluateLegalRetrieval.js"
   },
   "dependencies": {
+    "@huggingface/transformers": "^4.3.2",
     "cheerio": "^1.2.0",
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
+    "mespeak": "^2.0.2",
     "mongoose": "^8.5.1",
-    "razorpay": "^2.9.4"
+    "razorpay": "^2.9.4",
+    "robots-parser": "^3.0.1",
+    "twilio": "^6.2.0"
   },
   "devDependencies": {
+    "mongodb-memory-server": "^10.4.3",
     "nodemon": "^3.1.4"
   }
 }

@@ -1,3 +1,4 @@
+import LegalEvidence from "./LegalEvidence";
 import { useEffect, useRef, useState } from "react";
 import ChatTypingIndicator from "./ChatTypingIndicator";
 import { useAppState } from "../state/AppContext";
@@ -18,6 +19,7 @@ function CompactMessage({ message, isLatestAnalysis }) {
     <div className={`followup-msg followup-msg--ai ${isLatestAnalysis ? "is-latest" : ""}`}>
       <span className="followup-msg-label">{domain ? `Legal-Setu AI · ${domain}` : "Legal-Setu AI"}</span>
       <p>{message.content}</p>
+      <LegalEvidence message={message} />
     </div>
   );
 }

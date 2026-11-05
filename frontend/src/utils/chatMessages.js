@@ -14,7 +14,8 @@ export function createMessage(role, content, extra = {}) {
   };
 }
 
-export function assistantFromClassification(classification) {
+export function assistantFromClassification(classification, legalAnswer) {
+  if (legalAnswer?.answer) return legalAnswer.answer;
   if (!classification) return "";
   return classification.summary || "";
 }
@@ -76,5 +77,6 @@ export function saveSessionToStorage({ classification, advocates, ttsLang, voice
 export function historyForApi(messages) {
   return messages
     .filter((m) => m.content && (m.role === "user" || m.role === "assistant"))
+    .slice(-10)
     .map((m) => ({ role: m.role, content: m.content }));
 }

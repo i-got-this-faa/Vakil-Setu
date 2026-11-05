@@ -352,6 +352,7 @@ input {
   margin-top: 6px;
 }
 
+.vakil-avatar-face,
 .legal-avatar-face {
   position: relative;
   width: 96px;
@@ -363,6 +364,7 @@ input {
   margin-top: 4px;
 }
 
+.vakil-hair,
 .legal-hair {
   position: absolute;
   top: 14px;
@@ -372,6 +374,7 @@ input {
   background: #0b1222;
 }
 
+.vakil-head,
 .legal-head {
   position: absolute;
   top: 26px;
@@ -382,6 +385,7 @@ input {
   border: 1px solid rgba(10, 10, 10, 0.15);
 }
 
+.vakil-coat,
 .legal-coat {
   position: absolute;
   bottom: 0;
@@ -391,6 +395,7 @@ input {
   background: linear-gradient(180deg, #111c35, #0b1429);
 }
 
+.vakil-band,
 .legal-band {
   position: absolute;
   bottom: 8px;
@@ -553,6 +558,7 @@ input {
   max-width: 240px;
 }
 
+.vakil-wave-arm,
 .legal-wave-arm {
   transform-origin: 190px 170px;
   animation: wave 2s ease-in-out infinite;
@@ -568,6 +574,7 @@ input {
   }
 }
 
+.vakil-bubble-card,
 .legal-bubble-card {
   background: #fff;
   border: 1px solid #d3d1c7;
@@ -577,6 +584,7 @@ input {
   width: 95%;
 }
 
+.vakil-bubble-card p,
 .legal-bubble-card p {
   margin: 0;
   font-size: 13px;
@@ -614,6 +622,7 @@ input {
   font-size: 12px;
 }
 
+.message-avatar.vakil,
 .message-avatar.legal {
   background: #0c447c;
   color: #fff;
@@ -631,6 +640,7 @@ input {
   line-height: 1.4;
 }
 
+.message-bubble.vakil,
 .message-bubble.legal {
   background: #e6f1fb;
   border: 1px solid #85b7eb;
@@ -1752,3 +1762,86 @@ input {
     text-align: center;
   }
 }
+
+.vakil-3d-avatar {
+  width: 100%;
+  max-width: 240px;
+  aspect-ratio: 3 / 4;
+  animation: vakil-breathe 4s ease-in-out infinite;
+}
+
+.vakil-3d-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  user-select: none;
+  filter: drop-shadow(0 10px 18px rgba(12, 68, 124, 0.18));
+}
+
+.vakil-3d-avatar.is-talking {
+  animation: vakil-nod 1.2s ease-in-out infinite;
+}
+
+@keyframes vakil-breathe {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-3px);
+  }
+}
+
+@keyframes vakil-nod {
+  0%,
+  100% {
+    transform: rotate(0deg) translateY(0);
+  }
+  50% {
+    transform: rotate(-1.5deg) translateY(-2px);
+  }
+}
+
+/* Keep nested grids inside their available width at every breakpoint. */
+.vakeel-main {
+  grid-template-columns: minmax(0, 280px) minmax(0, 1fr);
+}
+.vakeel-left,
+.vakeel-right,
+.messages-box,
+.controls-box {
+  min-width: 0;
+}
+.vakeel-right {
+  grid-template-columns: minmax(0, 1.6fr) minmax(250px, 1fr);
+}
+.controls-box textarea {
+  width: 100%;
+  min-width: 0;
+  margin-bottom: 12px;
+  resize: vertical;
+}
+.message-bubble {
+  overflow-wrap: anywhere;
+}
+@media (max-width: 1100px) {
+  .vakeel-right { grid-template-columns: minmax(0, 1fr); }
+}
+@media (max-width: 900px) {
+  .vakeel-main { grid-template-columns: minmax(0, 1fr); }
+  .vakeel-left { justify-items: center; }
+}
+@media (max-width: 600px) {
+  .vakeel-ui { padding: 16px; }
+  .app-header-inner { flex-wrap: wrap; gap: 12px; }
+  .app-header-nav { flex-wrap: wrap; }
+}
+
+.legal-evidence { margin-top: 10px; border-top: 1px solid var(--border); padding-top: 9px; font-size: 12px; }
+.legal-evidence-status { display: flex; gap: 12px; justify-content: space-between; align-items: center; color: var(--muted); }
+.legal-evidence-status button { border: 1px solid var(--border); background: white; color: var(--brand); border-radius: 6px; padding: 4px 9px; cursor: pointer; }
+.legal-evidence summary { cursor: pointer; color: var(--brand); padding-top: 8px; }
+.legal-evidence figure { margin: 12px 0; }
+.legal-evidence a { color: var(--brand); text-decoration: underline; overflow-wrap: anywhere; }
+.legal-evidence blockquote { margin: 8px 0; padding-left: 10px; border-left: 2px solid var(--border); white-space: pre-wrap; font-size: 12px; line-height: 1.6; }
+.legal-evidence-warning { font-size: 11px; color: var(--muted); line-height: 1.5; }

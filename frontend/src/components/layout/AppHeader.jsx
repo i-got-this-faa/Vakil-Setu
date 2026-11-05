@@ -23,12 +23,13 @@ export default function AppHeader() {
           <NavLink to="/" end>
             Home
           </NavLink>
+          <NavLink to="/chat">Chat</NavLink>
           <NavLink to="/results">Consultations</NavLink>
           <button type="button" className="app-header-link-btn" onClick={startNewCase}>
             New Case
           </button>
           <NavLink to="/booking" className={classification ? "" : "nav-muted"}>
-            Profile
+            Booking
           </NavLink>
         </nav>
       </div>

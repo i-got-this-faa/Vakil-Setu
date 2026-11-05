@@ -11,7 +11,7 @@ function recommendationReason(advocate, domainLabel, lang) {
   if (lang === "hi") {
     return `यह वकील ${domain} मामलों में अनुभवी है और परामर्श के लिए उपलब्ध है।`;
   }
-  return `Recommended because this advocate handles ${domain} matters and is available for consultation within 24 hours.`;
+  return `Recommended because this advocate handles ${domain} matters. Confirm availability directly.`;
 }
 
 export default function AdvocateMatchCard({
@@ -35,16 +35,14 @@ export default function AdvocateMatchCard({
       <div className="match-card-top">
         <div className="match-card-photo-wrap">
           <img src={advocatePhotoUrl(index)} alt="" className="match-card-photo" loading="lazy" />
-          {online ? <span className="match-online">Online</span> : null}
+          {online ? <span className="match-online">Listed available</span> : null}
         </div>
         <div className="match-card-head">
           <div className="match-card-name-row">
             <h3 className="match-card-name">{name}</h3>
-            <span className="match-verified">Verified</span>
           </div>
           <div className="match-card-rating-row">
             <span className="match-rating">★ {rating}</span>
-            <span className="match-reviews">50+ reviews</span>
           </div>
           <div className="match-chips">
             {expertise.map((label) => (

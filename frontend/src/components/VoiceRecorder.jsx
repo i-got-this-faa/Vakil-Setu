@@ -1,271 +1,85 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
+import LegalEvidence from "./LegalEvidence";
 import ChatTypingIndicator from "./ChatTypingIndicator";
+import VakilAvatar from "./VakilAvatar";
 import { useAppState } from "../state/AppContext";
-import { bcp47FromUiLanguage } from "../utils/webSpeech";
+import { useDictation } from "../hooks/useDictation";
 
-function ChatBubble({ message }) {
-  if (message.role === "user") {
-    return (
-      <div className="message-item user">
-        <div className="message-bubble user">{message.content}</div>
-        <div className="message-avatar user" aria-hidden="true">
-          👤
-        </div>
-      </div>
-    );
-  }
-
-  const c = message.classification;
-  const domainLabel = c?.domain_label || c?.domain;
-
-  return (
-    <div className="message-item analysis-ready">
-      <div className="message-avatar legal" aria-hidden="true">
-        ⚖
-      </div>
-      <div className="message-bubble legal analysis-preview">
-        {domainLabel ? <span className="analysis-preview-badge">{domainLabel}</span> : null}
-        <p>{message.content}</p>
-      </div>
-    </div>
-  );
+function WaveIcon() {
+  return <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" aria-hidden="true"><path d="M4 10v4M8 6v12M12 3v18M16 6v12M20 10v4" /></svg>;
 }
-
-export default function VoiceRecorder({
-  messages = [],
-  onSubmit,
-  isSubmitting = false,
-  loadingLabel = "Analyzing your case…",
-  compact = false
-}) {
+function SendIcon() {
+  return <svg viewBox="0 0 24 24" width="21" height="21" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinejoin="round" aria-hidden="true"><path d="m3 3 19 9-19 9 4-9-4-9Z"/><path d="M7 12h15"/></svg>;
+}
+function ChatBubble({ message }) {
+  const user = message.role === "user";
+  const domain = message.classification?.domain_label || message.classification?.domain;
+  return <div className={`messenger-message ${user ? "from-user" : "from-guide"}`}>
+    {!user && <img className="messenger-bubble-avatar" src="/avatar/vakil-idle.png" alt=""/>}
+    <div className="messenger-bubble">
+      {!user && domain && <span className="messenger-category">{domain}</span>}
+      <p>{message.content}</p>
+      {!user && <LegalEvidence message={message}/>}
+      <div className="messenger-message-meta">{user ? "You" : "Legal-Setu AI"}{message.createdAt && <time dateTime={new Date(message.createdAt).toISOString()}>{new Date(message.createdAt).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}</time>}</div>
+    </div>
+  </div>;
+}
+export default function VoiceRecorder({ messages = [], onSubmit, isSubmitting = false, loadingLabel = "Thinking…" }) {
   const { preferredLanguage, setPreferredLanguage } = useAppState();
-  const [isRecording, setIsRecording] = useState(false);
-  const [error, setError] = useState("");
-  const [transcript, setTranscript] = useState("");
-  const transcriptRef = useRef("");
-  const recognitionRef = useRef(null);
-  const messagesEndRef = useRef(null);
-
-  const hasUserMessages = messages.some((m) => m.role === "user");
-  const showWelcome = !hasUserMessages;
-
-  const assistantMessage = isSubmitting
-    ? "Working on your case — almost there."
-    : isRecording
-      ? "I'm listening... tell me everything."
-      : transcript
-        ? "Got it! Tap Submit when you're ready."
-        : hasUserMessages
-          ? "Ask a follow-up — I'll use our chat history."
-          : "Welcome! Tell me your case.";
-
-  const canSubmit = Boolean(transcript.trim()) && !isRecording && !isSubmitting;
-
+  const [text, setText] = useState("");
+  const [speaking, setSpeaking] = useState(false);
+  const voice = useDictation({ text, setText, language: preferredLanguage });
+  const thread = useRef(null);
+  const input = useRef(null);
+  const canSend = Boolean(text.trim()) && !voice.isRecording && !isSubmitting;
   useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth", block: "end" });
-  }, [messages, transcript, isSubmitting, loadingLabel]);
-
-  const startRecording = async () => {
-    try {
-      const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-      if (!SpeechRecognition) {
-        throw new Error("Web Speech API is not supported in this browser. Try Chrome or Edge.");
-      }
-
-      const recognition = new SpeechRecognition();
-      recognition.lang = bcp47FromUiLanguage(preferredLanguage);
-      recognition.interimResults = true;
-      recognition.continuous = true;
-
-      recognition.onresult = (event) => {
-        let text = "";
-        for (let i = 0; i < event.results.length; i += 1) {
-          text += event.results[i][0].transcript;
-        }
-        const cleanText = text.trim();
-        transcriptRef.current = cleanText;
-        setTranscript(cleanText);
-      };
-
-      recognition.onerror = (ev) => {
-        const code = ev?.error || "unknown";
-        const hints = {
-          "not-allowed": "Microphone permission denied.",
-          "no-speech": "No speech detected. Try again.",
-          network: "Speech recognition network error."
-        };
-        setError(hints[code] || `Speech recognition error: ${code}`);
-        setIsRecording(false);
-      };
-
-      recognition.onend = () => {
-        setIsRecording(false);
-      };
-
-      recognitionRef.current = recognition;
-      setError("");
-      setIsRecording(true);
-      recognition.start();
-    } catch (_err) {
-      setError("Could not start speech recognition.");
-    }
-  };
-
-  const stopRecording = () => {
-    recognitionRef.current?.stop();
-    setIsRecording(false);
-  };
-
-  const submitTranscript = () => {
-    const text = transcript.trim();
-    if (!text || isRecording || isSubmitting) return;
-    onSubmit?.(text, preferredLanguage);
-    setTranscript("");
-    transcriptRef.current = "";
-  };
-
-  return (
-    <section
-      className={`vakeel-ui animate-in ${isSubmitting ? "is-processing" : ""} ${compact ? "vakeel-ui--compact" : ""}`}
-    >
-      <div className="vakeel-main">
-        {!compact ? (
-          <div className="vakeel-left">
-            <svg className="vakeel-avatar-svg" viewBox="0 0 280 400" xmlns="http://www.w3.org/2000/svg">
-              <circle cx="140" cy="100" r="45" fill="#F5DEB3" />
-              <path d="M95 100 Q95 60 140 55 Q185 60 185 100" fill="#2C2C2A" />
-              <path
-                d="M125 115 Q140 125 155 115"
-                stroke="#2C2C2A"
-                strokeWidth="2"
-                fill="none"
-                strokeLinecap="round"
-              />
-              <circle cx="125" cy="95" r="4" fill="#2C2C2A" />
-              <circle cx="155" cy="95" r="4" fill="#2C2C2A" />
-              <rect x="90" y="150" width="100" height="80" rx="8" fill="#1a3a52" />
-              <rect x="100" y="155" width="80" height="40" fill="#FFFFFF" />
-              <polygon points="135,165 145,165 140,185" fill="#DC143C" />
-              <line x1="90" y1="170" x2="60" y2="200" stroke="#F5DEB3" strokeWidth="12" strokeLinecap="round" />
-              <circle cx="55" cy="205" r="10" fill="#F5DEB3" />
-              <g className={isRecording || isSubmitting ? "legal-wave-arm" : ""}>
-                <line
-                  x1="190"
-                  y1="170"
-                  x2="220"
-                  y2="140"
-                  stroke="#F5DEB3"
-                  strokeWidth="12"
-                  strokeLinecap="round"
-                />
-                <circle cx="225" cy="135" r="10" fill="#F5DEB3" />
-              </g>
-              <circle cx="140" cy="240" r="20" fill="#0C447C" stroke="#E6F1FB" strokeWidth="2" />
-              <text x="140" y="247" fontSize="12" fontWeight="700" fill="white" textAnchor="middle">
-                ⚖
-              </text>
-            </svg>
-            <div className="legal-bubble-card">
-              <p>{assistantMessage}</p>
-            </div>
-          </div>
-        ) : null}
-
-        <div className="vakeel-right">
-          <div className={`messages-box ${isSubmitting ? "is-loading" : ""} ${compact ? "messages-box--tall" : ""}`}>
-            {showWelcome ? (
-              <>
-                <div className="message-item">
-                  <div className="message-avatar legal">⚖</div>
-                  <div className="message-bubble legal">
-                    Welcome to Legal-Setu AI! I'm here to help you understand your legal issue quickly.
-                  </div>
-                </div>
-                <div className="message-item">
-                  <div className="message-avatar legal">⚖</div>
-                  <div className="message-bubble legal">
-                    <strong>Example:</strong> Employer refusing medical bill payment after workplace
-                    injury.
-                  </div>
-                </div>
-              </>
-            ) : null}
-
-            {messages.map((msg) => (
-              <ChatBubble key={msg.id} message={msg} />
-            ))}
-
-            {transcript ? (
-              <div className="message-item user message-draft">
-                <div className="message-bubble user">{transcript}</div>
-                <div className="message-avatar user">👤</div>
-              </div>
-            ) : null}
-
-            {isSubmitting ? <ChatTypingIndicator label={loadingLabel} /> : null}
-            <div ref={messagesEndRef} className="messages-anchor" aria-hidden="true" />
-          </div>
-
-          <div className={`controls-box ${isSubmitting ? "is-disabled" : ""}`}>
-            <div className="language-label">Select language</div>
-            <div className="language-row">
-              <button
-                className={`lang-btn ${preferredLanguage === "auto" ? "active" : ""}`}
-                onClick={() => setPreferredLanguage("auto")}
-                disabled={isRecording || isSubmitting}
-                type="button"
-              >
-                Auto
-              </button>
-              <button
-                className={`lang-btn ${preferredLanguage === "hindi" ? "active" : ""}`}
-                onClick={() => setPreferredLanguage("hindi")}
-                disabled={isRecording || isSubmitting}
-                type="button"
-              >
-                Hindi
-              </button>
-              <button
-                className={`lang-btn ${preferredLanguage === "english" ? "active" : ""}`}
-                onClick={() => setPreferredLanguage("english")}
-                disabled={isRecording || isSubmitting}
-                type="button"
-              >
-                English
-              </button>
-            </div>
-
-            <div className="recording-controls">
-              <div className="mic-container">
-                <div className={`recording-ring ${isRecording ? "" : "inactive"}`} />
-                <button
-                  onClick={isRecording ? stopRecording : startRecording}
-                  className={`mic-btn ${isRecording ? "recording" : ""}`}
-                  type="button"
-                  disabled={isSubmitting}
-                  aria-busy={isRecording}
-                >
-                  🎤
-                </button>
-              </div>
-            </div>
-            <p className={`recording-status ${isRecording ? "recording" : ""}`}>
-              {isRecording ? "Listening… speak now" : "Tap mic to dictate"}
-            </p>
-            <p className="recording-info">Uses your browser • Chrome / Edge recommended</p>
-            <button
-              className={`submit-btn ${isSubmitting ? "is-loading" : ""}`}
-              type="button"
-              disabled={!canSubmit}
-              onClick={submitTranscript}
-              aria-busy={isSubmitting}
-            >
-              {isSubmitting ? "Analyzing…" : hasUserMessages ? "Send follow-up" : "Submit"}
-            </button>
-          </div>
-        </div>
+    const id = setInterval(() => setSpeaking(Boolean(window.speechSynthesis?.speaking && !window.speechSynthesis?.paused)), 150);
+    return () => clearInterval(id);
+  }, []);
+  useEffect(() => { if (thread.current) thread.current.scrollTop = thread.current.scrollHeight; }, [messages, isSubmitting]);
+  useLayoutEffect(() => {
+    if (input.current) { input.current.style.height = "auto"; input.current.style.height = `${Math.min(input.current.scrollHeight, 116)}px`; }
+  }, [text]);
+  function send(event) {
+    event?.preventDefault();
+    if (!canSend) return;
+    onSubmit?.(text.trim(), preferredLanguage); setText("");
+    input.current?.focus();
+  }
+  const status = isSubmitting ? loadingLabel : voice.phase === "stopping" ? "Finishing voice input…" : voice.isRecording ? "Listening to you…" : speaking ? "Speaking…" : "Your legal assistant";
+  return <section className="conversation-chat" aria-label="Chat with your legal assistant">
+    <header className="messenger-header">
+      <div className="messenger-contact">
+        <div className="messenger-avatar"><VakilAvatar talking={speaking}/></div>
+        <div><h2>Legal-Setu AI</h2><p role="status">{status}</p></div>
       </div>
-      {error ? <p className="error">{error}</p> : null}
-    </section>
-  );
+      <label className="messenger-language"><span>Language</span><select aria-label="Conversation language" value={preferredLanguage} onChange={event => setPreferredLanguage(event.target.value)} disabled={voice.isRecording || isSubmitting}><option value="auto">Browser language</option><option value="english">English</option><option value="hindi">हिन्दी / Hindi</option></select></label>
+    </header>
+    <div ref={thread} className={`messenger-thread ${messages.length ? "has-messages" : ""}`} role="log" aria-label="Conversation messages" aria-live="polite">
+      {!messages.length && <div className="messenger-welcome">
+        <div className="messenger-welcome-avatar"><VakilAvatar talking={speaking}/></div>
+        <h3>Let’s talk about it.</h3>
+        <p>Tell me what happened, in your own words.<br/>Type a message or use voice input below.</p>
+        <span className="messenger-example">For example: Employer refusing medical bill payment after a workplace injury.</span>
+      </div>}
+      {messages.map(message => <ChatBubble key={message.id} message={message}/>)}
+      {isSubmitting && <ChatTypingIndicator label={loadingLabel}/>}
+    </div>
+    <div className="messenger-composer-area">
+      {voice.isRecording && <div className="messenger-recording" role="status">
+        <span className="messenger-recording-dot"/>
+        <div className="messenger-waveform" aria-hidden="true">{Array.from({length:18},(_,i)=><i key={i} style={{'--wave-height':`${8+(i*13%20)}px`,'--wave-delay':`${i*.06}s`}}/>)}</div>
+        <span>{voice.phase === "stopping" ? "Finishing…" : "Listening…"}</span>
+        <button type="button" onClick={voice.cancel}>Cancel</button>
+      </div>}
+      {voice.error && <p className="messenger-error" role="alert">{voice.error}</p>}
+      <form className={`messenger-composer ${voice.isRecording ? "is-recording" : ""}`} onSubmit={send}>
+        <button className={`messenger-voice-button ${voice.isRecording ? "is-recording" : ""}`} type="button" aria-label={voice.isRecording ? "Stop voice input" : "Start voice input"} title={voice.isRecording ? "Stop and review your words" : "Use voice input"} onClick={voice.isRecording ? voice.stop : voice.start} disabled={isSubmitting || voice.phase === "stopping"}>{voice.isRecording ? <span className="messenger-stop-icon"/> : <WaveIcon/>}</button>
+        <label className="messenger-sr-only" htmlFor="case-message">Message</label>
+        <textarea ref={input} id="case-message" rows={1} maxLength={4000} value={text} onChange={event => setText(event.target.value)} placeholder={voice.isRecording ? "Your words appear here…" : "Type a message…"} disabled={voice.isRecording || isSubmitting} onKeyDown={event => { if(event.key === "Enter" && !event.shiftKey && !event.nativeEvent.isComposing) send(event); }}/>
+        <button className="messenger-send-button" type="submit" aria-label="Send message" title="Send message" disabled={!canSend}><SendIcon/></button>
+      </form>
+      <p className="messenger-composer-hint">{voice.isRecording ? "Stop voice input, review your words, then send." : "Enter to send · Shift + Enter for a new line · Voice uses your browser"}</p>
+    </div>
+  </section>;
 }
