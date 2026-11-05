@@ -23,10 +23,11 @@ export const verifyRazorpaySignature = ({
   razorpayPaymentId,
   razorpaySignature
 }) => {
+  if (!process.env.RAZORPAY_SECRET || typeof razorpaySignature !== "string" || !/^[a-f0-9]{64}$/i.test(razorpaySignature)) return false;
   const generated = crypto
     .createHmac("sha256", process.env.RAZORPAY_SECRET || "")
     .update(`${razorpayOrderId}|${razorpayPaymentId}`)
     .digest("hex");
 
-  return generated === razorpaySignature;
+  return crypto.timingSafeEqual(Buffer.from(generated, "hex"), Buffer.from(razorpaySignature, "hex"));
 };

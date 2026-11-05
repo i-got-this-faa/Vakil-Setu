@@ -1,0 +1,13 @@
+import { execFile } from "node:child_process";
+import { promisify } from "node:util";
+import path from "node:path";
+import { fileURLToPath } from "node:url";
+const execute = promisify(execFile);
+const backend = fileURLToPath(new URL("../", import.meta.url));
+const environment = path.join(backend, ".whatsapp-venv");
+console.log("Setting up local English Whisper transcription. This downloads Python packages and the tiny.en model once; no API key is required.");
+await execute("python3", ["-m", "venv", environment], { timeout: 60000 });
+const python = path.join(environment, "bin", "python");
+await execute(python, ["-m", "pip", "install", "faster-whisper>=1.1,<2"], { timeout: 300000, maxBuffer: 4 * 1024 * 1024 });
+await execute(python, [path.join(backend, "scripts/transcribeLocal.py"), "--cache", path.join(backend, "data/whatsapp-models"), "--download-only"], { timeout: 300000, maxBuffer: 4 * 1024 * 1024 });
+console.log("Local English speech is ready. Set SPEECH_PROVIDER=local for real Twilio voice-note testing.");

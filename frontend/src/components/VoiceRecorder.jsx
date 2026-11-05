@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import ChatTypingIndicator from "./ChatTypingIndicator";
+import VakilAvatar from "./VakilAvatar";
 import { useAppState } from "../state/AppContext";
 import { bcp47FromUiLanguage } from "../utils/webSpeech";
 
@@ -65,6 +66,8 @@ export default function VoiceRecorder({
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth", block: "end" });
   }, [messages, transcript, isSubmitting, loadingLabel]);
 
+  useEffect(() => () => recognitionRef.current?.abort(), []);
+
   const startRecording = async () => {
     try {
       const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
@@ -106,8 +109,9 @@ export default function VoiceRecorder({
       setError("");
       setIsRecording(true);
       recognition.start();
-    } catch (_err) {
-      setError("Could not start speech recognition.");
+    } catch (err) {
+      setIsRecording(false);
+      setError(err.message || "Could not start speech recognition. You can type your issue below.");
     }
   };
 
@@ -131,40 +135,7 @@ export default function VoiceRecorder({
       <div className="vakeel-main">
         {!compact ? (
           <div className="vakeel-left">
-            <svg className="vakeel-avatar-svg" viewBox="0 0 280 400" xmlns="http://www.w3.org/2000/svg">
-              <circle cx="140" cy="100" r="45" fill="#F5DEB3" />
-              <path d="M95 100 Q95 60 140 55 Q185 60 185 100" fill="#2C2C2A" />
-              <path
-                d="M125 115 Q140 125 155 115"
-                stroke="#2C2C2A"
-                strokeWidth="2"
-                fill="none"
-                strokeLinecap="round"
-              />
-              <circle cx="125" cy="95" r="4" fill="#2C2C2A" />
-              <circle cx="155" cy="95" r="4" fill="#2C2C2A" />
-              <rect x="90" y="150" width="100" height="80" rx="8" fill="#1a3a52" />
-              <rect x="100" y="155" width="80" height="40" fill="#FFFFFF" />
-              <polygon points="135,165 145,165 140,185" fill="#DC143C" />
-              <line x1="90" y1="170" x2="60" y2="200" stroke="#F5DEB3" strokeWidth="12" strokeLinecap="round" />
-              <circle cx="55" cy="205" r="10" fill="#F5DEB3" />
-              <g className={isRecording || isSubmitting ? "vakil-wave-arm" : ""}>
-                <line
-                  x1="190"
-                  y1="170"
-                  x2="220"
-                  y2="140"
-                  stroke="#F5DEB3"
-                  strokeWidth="12"
-                  strokeLinecap="round"
-                />
-                <circle cx="225" cy="135" r="10" fill="#F5DEB3" />
-              </g>
-              <circle cx="140" cy="240" r="20" fill="#0C447C" stroke="#E6F1FB" strokeWidth="2" />
-              <text x="140" y="247" fontSize="12" fontWeight="700" fill="white" textAnchor="middle">
-                ⚖
-              </text>
-            </svg>
+            <VakilAvatar talking={isRecording || isSubmitting} />
             <div className="vakil-bubble-card">
               <p>{vakilMessage}</p>
             </div>
@@ -243,6 +214,7 @@ export default function VoiceRecorder({
                   className={`mic-btn ${isRecording ? "recording" : ""}`}
                   type="button"
                   disabled={isSubmitting}
+                  aria-label={isRecording ? "Stop dictation" : "Start dictation"}
                   aria-busy={isRecording}
                 >
                   🎤
@@ -253,6 +225,15 @@ export default function VoiceRecorder({
               {isRecording ? "Listening… speak now" : "Tap mic to dictate"}
             </p>
             <p className="recording-info">Uses your browser • Chrome / Edge recommended</p>
+            <label className="label" htmlFor="case-draft">Your issue — type or edit your dictation</label>
+            <textarea
+              id="case-draft"
+              rows={4}
+              value={transcript}
+              onChange={(event) => setTranscript(event.target.value)}
+              disabled={isRecording || isSubmitting}
+              placeholder="Describe what happened…"
+            />
             <button
               className={`submit-btn ${isSubmitting ? "is-loading" : ""}`}
               type="button"

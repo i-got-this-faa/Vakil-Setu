@@ -1,0 +1,4 @@
+[
+  { "id": "demo-criminal", "name": "Demo Advocate A", "expertise": ["criminal"], "city": "Jammu", "languages": ["English", "Hindi"], "verified": false, "demo": true },
+  { "id": "demo-property", "name": "Demo Advocate B", "expertise": ["property", "civil", "family"], "city": "Jammu", "languages": ["English", "Hindi"], "verified": false, "demo": true }
+]

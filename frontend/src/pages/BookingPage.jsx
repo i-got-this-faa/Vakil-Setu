@@ -3,8 +3,7 @@ import BookingModal from "../components/BookingModal";
 import {
   createBooking,
   createPaymentOrder,
-  verifyPayment,
-  confirmBookingWithoutPayment
+  verifyPayment
 } from "../api/client";
 import { useAppState } from "../state/AppContext";
 
@@ -23,22 +22,33 @@ const loadRazorpayScript = () =>
   });
 
 export default function BookingPage() {
-  const { selectedAdvocate, booking, setBooking } = useAppState();
+  const { selectedAdvocate, booking, setBooking, sessionGeneration } = useAppState();
+  const [saving, setSaving] = useState(false);
+  const [paying, setPaying] = useState(false);
   const [status, setStatus] = useState("");
   const [error, setError] = useState("");
 
   const handleCreateBooking = async (payload) => {
+    if (saving || paying) return;
+    const requestGeneration = sessionGeneration.current;
+    setSaving(true);
     try {
       setError("");
       const created = await createBooking(payload);
+      if (requestGeneration !== sessionGeneration.current) return;
       setBooking(created);
-      setStatus("Booking created. Proceed to payment.");
+      setStatus("Consultation request saved. The advocate must confirm the time. Payment is optional until arranged.");
     } catch (err) {
       setError(err.message);
+    } finally {
+      setSaving(false);
     }
   };
 
   const handlePayNow = async () => {
+    if (paying || saving) return;
+    const requestGeneration = sessionGeneration.current;
+    setPaying(true);
     try {
       setError("");
       if (!booking?._id) {
@@ -70,30 +80,20 @@ export default function BookingPage() {
         rzp.open();
       });
 
-      await verifyPayment({
+      const verified = await verifyPayment({
         bookingId: booking._id,
         razorpayOrderId: paymentResponse.razorpay_order_id,
         razorpayPaymentId: paymentResponse.razorpay_payment_id,
         razorpaySignature: paymentResponse.razorpay_signature
       });
 
-      setStatus("Payment verified. Booking confirmed.");
+      if (requestGeneration !== sessionGeneration.current) return;
+      setBooking(verified.booking);
+      setStatus("Payment verified. Consultation time still awaits advocate confirmation.");
     } catch (err) {
       setError(err.message);
-    }
-  };
-
-  const handleSkipPayment = async () => {
-    try {
-      setError("");
-      if (!booking?._id) {
-        throw new Error("Create a booking first");
-      }
-
-      await confirmBookingWithoutPayment(booking._id);
-      setStatus("Booking confirmed without payment.");
-    } catch (err) {
-      setError(err.message);
+    } finally {
+      setPaying(false);
     }
   };
 
@@ -115,13 +115,10 @@ export default function BookingPage() {
         <p className="eyebrow">Consultation</p>
         <h1>Booking & Payment</h1>
       </section>
-      <BookingModal advocate={selectedAdvocate} onCreate={handleCreateBooking} />
-      {booking?._id ? (
+      <BookingModal key={selectedAdvocate._id} advocate={selectedAdvocate} onCreate={handleCreateBooking} isSubmitting={saving || paying} />
+      {booking?._id && booking.paymentStatus !== "paid" ? (
         <div className="action-row">
-          <button onClick={handlePayNow}>Pay & Confirm</button>
-          <button onClick={handleSkipPayment} className="secondary-btn">
-            Skip Payment & Confirm
-          </button>
+          <button onClick={handlePayNow} disabled={paying || saving}>Pay consultation fee</button>
         </div>
       ) : null}
       {status ? <p className="success">{status}</p> : null}

@@ -16,6 +16,10 @@ export const createOrder = async (req, res, next) => {
       return res.status(404).json({ message: "Booking not found" });
     }
 
+    if (booking.paymentStatus === "paid" || booking.status !== "pending") {
+      return res.status(409).json({ message: "This booking cannot accept a new payment order" });
+    }
+
     const order = await createRazorpayOrder({
       amount: Math.round((booking.amount || 500) * 100),
       receipt: `booking_${booking._id}`
@@ -48,13 +52,25 @@ export const verifyPayment = async (req, res, next) => {
       return res.status(404).json({ message: "Booking not found" });
     }
 
-    booking.status = "confirmed";
+    if (["cancelled", "completed"].includes(booking.status)) {
+      return res.status(409).json({ message: "This booking cannot accept payment" });
+    }
 
     if (skipPayment) {
-      booking.paymentStatus = "pending";
+      return res.status(400).json({ message: "Payment cannot be skipped. Your consultation request remains pending." });
     } else {
       if (!razorpayOrderId || !razorpayPaymentId || !razorpaySignature) {
         return res.status(400).json({ message: "Missing payment verification fields" });
+      }
+
+      if (!booking.razorpayOrderId || booking.razorpayOrderId !== razorpayOrderId) {
+        return res.status(400).json({ message: "Payment order does not belong to this booking" });
+      }
+      if (booking.paymentStatus === "paid") {
+        if (booking.razorpayPaymentId === razorpayPaymentId) {
+          return res.json({ success: true, booking });
+        }
+        return res.status(409).json({ message: "This booking has already been paid" });
       }
 
       const isValid = verifyRazorpaySignature({

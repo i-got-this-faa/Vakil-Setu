@@ -25,7 +25,7 @@ export default function AdvocateMatchPanel({
         sub: "आपके मामले के प्रकार के अनुसार मिलान",
         sort: "क्रम",
         filter: "फ़िल्टर",
-        online: "ऑनलाइन",
+        online: "उपलब्ध सूचीबद्ध",
         all: "सभी",
         empty: "अभी कोई वकील मेल नहीं मिला। बाद में पुनः देखें या सहायता से संपर्क करें।"
       }
@@ -34,7 +34,7 @@ export default function AdvocateMatchPanel({
         sub: "Ranked for your case type",
         sort: "Sort",
         filter: "Filter",
-        online: "Online only",
+        online: "Listed available",
         all: "All",
         empty: "No advocates matched yet. Check back shortly or contact support."
       };

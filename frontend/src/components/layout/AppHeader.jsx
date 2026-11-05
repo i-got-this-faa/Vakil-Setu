@@ -28,7 +28,7 @@ export default function AppHeader() {
             New Case
           </button>
           <NavLink to="/booking" className={classification ? "" : "nav-muted"}>
-            Profile
+            Booking
           </NavLink>
         </nav>
       </div>
