@@ -1,16 +1,20 @@
 # Voice-Based Legal Assistance Platform (Vakil Setu)
 
-Production-ready MVP using React (Vite), Node.js (Express), and MongoDB (Mongoose).
+The website supports voice or typed legal triage, advocate profiles and consultation requests. WhatsApp has been removed from the website; its independent backend demo remains available in the repository.
 
-## Features
+Local multilingual vector and hybrid retrieval are implemented for the legal corpus. See [vector setup and retrieval modes](docs/VECTOR_RETRIEVAL.md) and the [source integrity audit](docs/RAG_DATA_AUDIT.md). The website's classification flow is still separate from the RAG knowledge endpoints. BNS currency through 2025 is not certified.
+
+The earlier standalone messaging demonstration is documented in [WHATSAPP_DEMO.md](docs/WHATSAPP_DEMO.md), with setup in [TWILIO_SANDBOX.md](docs/TWILIO_SANDBOX.md). It is not required to run the website.
+
+## Existing browser prototype
 
 - Voice input recording from browser
-- Speech-to-text via Whisper API (`/api/voice/process`)
+- Speech-to-text through the browser Web Speech API (Hindi/English selection)
 - AI legal issue classification (`/api/ai/classify`)
 - Advocate matching by expertise + availability
 - Booking creation and storage in MongoDB
 - Razorpay order creation and payment verification
-- Emergency mode for highest-rated available advocate
+- Available-advocate lookup (does not contact the advocate)
 
 ## Project Structure
 
@@ -46,14 +50,12 @@ Provider switches:
 
 ```
 VITE_API_BASE_URL=http://localhost:5000
-VITE_STT_PROVIDER=backend_whisper
 VITE_ENABLE_TTS=true
 ```
 
 Frontend switches:
 
-- `VITE_STT_PROVIDER=backend_whisper` -> audio upload to backend Whisper
-- `VITE_STT_PROVIDER=webspeech` -> browser Web Speech recognition
+- Voice recognition uses the browser Web Speech API; typed input is also available.
 - `VITE_ENABLE_TTS=true` -> browser speech synthesis for AI summary
 
 ## Run Instructions
@@ -73,7 +75,6 @@ This starts:
 
 ## API Endpoints
 
-- `POST /api/voice/process`
 - `POST /api/ai/classify`
 - `POST /api/advocates/match`
 - `POST /api/bookings`
