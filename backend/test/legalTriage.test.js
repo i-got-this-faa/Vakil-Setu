@@ -77,7 +77,7 @@ test("empty evidence and failed retrieval are explicit rather than invented answ
 });
 
 test("HTTP triage preserves classification and matches while adding real service evidence", async t => {
-  const classification = { domain: "criminal", response_language: "en", summary: "Unverified triage summary" };
+  const classification = { status: "classified", domain: "criminal", response_language: "en", summary: "Unverified triage summary" };
   const app = express(); app.use(express.json());
   app.post("/api/ai/triage", createTriageHandler({
     classify: async () => classification, match: async domain => [{ name: "Test advocate", domain }],
@@ -100,4 +100,24 @@ test("HTTP triage preserves classification and matches while adding real service
   assert.equal(result.advocates[0].domain, "criminal");
   assert.equal(result.legalAnswer.status, "source_excerpts");
   assert.equal(result.legalAnswer.citations[0].quote, passage.text);
+});
+
+test("triage accepts UI and API language names and keeps clarification free of unrelated retrieval", async t => {
+  let retrieved = 0, matched = 0;
+  const seen = [];
+  const app = express(); app.use(express.json());
+  app.post("/triage", createTriageHandler({
+    classify: async (_text, _history, language) => { seen.push(language); return { status: "needs_clarification", response_language: "en", summary: "What happened?", domain: null }; },
+    match: async () => { matched++; return []; },
+    legalAnswer: async () => { retrieved++; return {}; }
+  }));
+  const server = app.listen(0, "127.0.0.1");
+  await new Promise(resolve => server.once("listening", resolve));
+  t.after(() => new Promise(resolve => server.close(resolve)));
+  for (const language of ["en", "hi", "english", "hindi", "auto"]) {
+    const response = await fetch(`http://127.0.0.1:${server.address().port}/triage`, {method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({text:"Hello",language})});
+    assert.equal(response.status,200); const result=await response.json();assert.equal(result.legalAnswer,null);assert.deepEqual(result.advocates,[]);
+  }
+  assert.deepEqual(seen,["english","hindi","english","hindi","auto"]);
+  assert.equal(retrieved,0);assert.equal(matched,0);
 });

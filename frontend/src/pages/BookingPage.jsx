@@ -67,7 +67,7 @@ export default function BookingPage() {
           key: order.key,
           amount: order.amount,
           currency: order.currency,
-          name: "Vakil Setu",
+          name: "Legal-Setu",
           description: "Legal Consultation Booking",
           order_id: order.orderId,
           handler: resolve,

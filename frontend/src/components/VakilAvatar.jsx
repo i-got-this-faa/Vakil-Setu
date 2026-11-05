@@ -49,7 +49,7 @@ export default function VakilAvatar({ talking = false }) {
 
   return (
     <div className={`vakil-3d-avatar ${talking ? "is-talking" : ""}`}>
-      <img src={frame} alt="Vakil AI advocate avatar" draggable="false" />
+      <img src={frame} alt="Legal-Setu AI advocate avatar" draggable="false" />
     </div>
   );
 }

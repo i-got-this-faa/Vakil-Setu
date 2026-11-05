@@ -7,6 +7,7 @@ Do not invent facts, quotations, statutory provisions, citations, or outcomes. A
 Keep observations in context. Do not infer current binding authority, subsequent treatment, judges' personal beliefs, success rates, or outcome predictions.
 If these passages do not establish an answer, set insufficientEvidence=true and answer="" with evidence=[].
 Otherwise, use 2-4 short sentences in the requested language. Explain legal terms. Every factual legal claim must be supported by evidence.
+Use only 1-3 evidence items. Copy each quote as ONE CONTIGUOUS verbatim substring from ONE passage, ideally 40-250 characters. Never combine sentences from different locations, paraphrase, insert ellipses, or change punctuation inside quotes. Prefer a short exact supporting excerpt over a long quotation.
 Return only JSON: {"answer":"...", "insufficientEvidence":false, "evidence":[{"passageId":"exact supplied id", "quote":"verbatim supporting excerpt, 24-700 characters"}]}.
 The evidence must directly support your explanation. No markdown or extra keys.`;
 
@@ -22,7 +23,7 @@ export async function generateGroundedText(userContent, language) {
     const base = process.env.GEMINI_API_URL || "https://generativelanguage.googleapis.com/v1beta";
     url = `${base.replace(/\/$/, "")}/models/${encodeURIComponent(process.env.GEMINI_MODEL || "gemini-2.0-flash")}:generateContent`;
     headers["x-goog-api-key"] = apiKey;
-    body = { systemInstruction: { parts: [{ text: system }] }, contents: [{ role: "user", parts: [{ text: userContent }] }], generationConfig: { temperature: 0, maxOutputTokens: 2000, responseMimeType: "application/json" } };
+    body = { systemInstruction: { parts: [{ text: system }] }, contents: [{ role: "user", parts: [{ text: userContent }] }], generationConfig: { temperature: 0, maxOutputTokens: 4096, responseMimeType: "application/json", ...((process.env.GEMINI_MODEL || "").startsWith("gemini-3") ? { thinkingConfig: { thinkingLevel: "low" } } : {}) } };
   } else if (provider === "gateway") {
     const endpoint = process.env.LLM_API_URL || "/gateway/llm/chat";
     url = endpoint.startsWith("/") ? `${(process.env.GATEWAY_BASE_URL || "").replace(/\/$/, "")}${endpoint}` : endpoint;
@@ -36,14 +37,14 @@ export async function generateGroundedText(userContent, language) {
   if (!response.ok) throw new Error(`Grounded answer provider returned HTTP ${response.status}`);
   const data = await response.json();
   return provider === "gemini"
-    ? data?.candidates?.[0]?.content?.parts?.map((part) => part.text || "").join("\n") || ""
+    ? data?.candidates?.[0]?.content?.parts?.filter(part => !part.thought).map((part) => part.text || "").join("\n") || ""
     : data?.choices?.[0]?.message?.content || data?.message?.content || data?.response || data?.output || "";
 }
 
 const normalize = (value) => String(value).replace(/\s+/g, " ").trim();
 const unavailable = (status, language) => ({
   status,
-  answer: language === "hi" ? "उपलब्ध निर्णयों में इस सवाल का जवाब देने के लिए पर्याप्त प्रमाण नहीं मिले। कृपया अधिक जानकारी दें या किसी वकील से सलाह लें।" : "The available judgments do not provide enough evidence to answer this question. Please provide more details or consult an advocate.",
+  answer: language === "hi" ? "उपलब्ध कानूनी स्रोतों में इस सवाल का जवाब देने के लिए पर्याप्त प्रमाण नहीं मिले। कृपया अधिक जानकारी दें या किसी वकील से सलाह लें।" : "The available legal sources do not provide enough evidence to answer this question. Please provide more details or consult an advocate.",
   citations: [],
   retrievalMethod: "bm25",
   authorityChecked: false

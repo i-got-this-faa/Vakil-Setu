@@ -23,8 +23,8 @@ export default function ResultsPage() {
   const L = hi
     ? {
         emptyTitle: "पहले अपना मामला बताएं",
-        emptySub: "होम पर जाकर अपनी समस्या लिखें — हम विश्लेषण और वकील मिलान दिखाएंगे।",
-        emptyCta: "होम पर जाएं",
+        emptySub: "चैट में अपनी समस्या लिखें — हम विश्लेषण और वकील मिलान दिखाएंगे।",
+        emptyCta: "चैट शुरू करें",
         speak: "सुनें",
         book: "वकील बुक करें",
         trust1: "प्रारंभिक मार्गदर्शन",
@@ -33,8 +33,8 @@ export default function ResultsPage() {
       }
     : {
         emptyTitle: "Describe your issue first",
-        emptySub: "Start on Home — we'll analyze your case and match advocates.",
-        emptyCta: "Go to Home",
+        emptySub: "Start a chat — we'll analyze your case and match advocates.",
+        emptyCta: "Start chat",
         speak: "Listen",
         book: "Book a lawyer",
         trust1: "Initial guidance",
@@ -73,7 +73,7 @@ export default function ResultsPage() {
           <section className="dashboard-empty dash-fade-in">
             <h1>{L.emptyTitle}</h1>
             <p>{L.emptySub}</p>
-            <Link to="/" className="dash-btn dash-btn--primary">
+            <Link to="/chat" className="dash-btn dash-btn--primary">
               {L.emptyCta}
             </Link>
           </section>

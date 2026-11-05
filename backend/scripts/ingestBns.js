@@ -3,7 +3,7 @@ import { readFile, writeFile, mkdir, rename, rm } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { corpusDir } from "../src/services/legalCorpus.js";
-import { buildBnsDocument, validateFirecrawlStatute } from "../src/services/legalStatutes.js";
+import { buildBnsDocument, validateFirecrawlStatute, officialStatuteMarkdown } from "../src/services/legalStatutes.js";
 import { scrapeOfficialStatute } from "../src/services/firecrawlService.js";
 
 dotenv.config({ path: fileURLToPath(new URL("../.env", import.meta.url)) });
@@ -14,22 +14,43 @@ await mkdir(rawDirectory, { recursive: true });
 const lock = path.join(directory, ".statute-ingest-lock");
 await mkdir(lock);
 try {
-  const cache = path.join(rawDirectory, "ncrb-bns-chapters.json");
-  let response;
-  if (!process.argv.includes("--refresh")) {
-    try { response = JSON.parse(await readFile(cache, "utf8")); }
-    catch (error) { if (error.code !== "ENOENT") throw error; }
+  const direct = process.argv.includes("--direct") || !process.env.FIRECRAWL_API_KEY;
+  let markdown, metadata;
+  if (direct) {
+    const cache = path.join(rawDirectory, "ncrb-bns-source.html");
+    let html;
+    if (!process.argv.includes("--refresh")) {
+      try { html = await readFile(cache, "utf8"); } catch (error) { if (error.code !== "ENOENT") throw error; }
+    }
+    if (!html) {
+      const response = await fetch(source.url, { signal: AbortSignal.timeout(45000), redirect: "error" });
+      if (!response.ok) throw new Error(`Official statute fetch failed: HTTP ${response.status}`);
+      html = await response.text();
+      if (html.length > 5 * 1024 * 1024) throw new Error("Statute response is too large");
+      markdown = officialStatuteMarkdown(html);
+      buildBnsDocument(source, markdown, {}); // Refuse incomplete content before replacing the cache.
+      await writeFile(`${cache}.tmp`, html);
+      await rename(`${cache}.tmp`, cache);
+    }
+    markdown = officialStatuteMarkdown(html);
+    metadata = { extractor: "direct-official-html", sourceURL: source.url, statusCode: 200 };
+  } else {
+    const cache = path.join(rawDirectory, "ncrb-bns-chapters.json");
+    let response;
+    if (!process.argv.includes("--refresh")) {
+      try { response = JSON.parse(await readFile(cache, "utf8")); } catch (error) { if (error.code !== "ENOENT") throw error; }
+    }
+    if (!response) {
+      response = await scrapeOfficialStatute(source.url);
+      markdown = validateFirecrawlStatute(response, source.url);
+      buildBnsDocument(source, markdown, response.data.metadata);
+      await writeFile(`${cache}.tmp`, JSON.stringify(response, null, 2));
+      await rename(`${cache}.tmp`, cache);
+    }
+    markdown = validateFirecrawlStatute(response, source.url);
+    metadata = response.data.metadata;
   }
-  if (!response) {
-    response = await scrapeOfficialStatute(source.url);
-    // Validate before replacing a previously good cache.
-    const markdown = validateFirecrawlStatute(response, source.url);
-    buildBnsDocument(source, markdown, response.data.metadata);
-    await writeFile(`${cache}.tmp`, JSON.stringify(response, null, 2));
-    await rename(`${cache}.tmp`, cache);
-  }
-  const markdown = validateFirecrawlStatute(response, source.url);
-  const document = buildBnsDocument(source, markdown, response.data.metadata);
+  const document = buildBnsDocument(source, markdown, metadata);
   let corpus = { version: 1, documents: [] };
   try { corpus = JSON.parse(await readFile(path.join(directory, "statutes.json"), "utf8")); }
   catch (error) { if (error.code !== "ENOENT") throw error; }

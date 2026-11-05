@@ -18,11 +18,11 @@ export async function classifyIssue(text) {
 }
 
 /** Single request: classify issue + match advocates (smoother home flow). */
-export async function triageIssue(text, history = []) {
+export async function triageIssue(text, history = [], language = "auto") {
   return request("/api/ai/triage", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ text, history })
+    body: JSON.stringify({ text, history, language })
   });
 }
 

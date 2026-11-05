@@ -3,7 +3,7 @@ import { readFile, writeFile, mkdir } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { chunkPages, corpusDir, digest, loadCorpus, validateSource } from "../src/services/legalCorpus.js";
-import { buildBnsDocument, validateFirecrawlStatute } from "../src/services/legalStatutes.js";
+import { buildBnsDocument, validateFirecrawlStatute, officialStatuteMarkdown } from "../src/services/legalStatutes.js";
 import { fetchOfficial } from "../src/services/legalSourceFetch.js";
 
 const corpus = await loadCorpus();
@@ -38,9 +38,15 @@ for (const document of corpus.documents) {
         else checks.push("Current official PDF SHA-256 matches saved PDF");
       }
     } else {
-      const response = JSON.parse(await readFile(path.join(corpusDir(), "firecrawl", "ncrb-bns-chapters.json"), "utf8"));
-      const markdown = validateFirecrawlStatute(response, source.url);
-      const rebuilt = buildBnsDocument(source, markdown, response.data.metadata);
+      let rebuilt;
+      if (document.scrapeMetadata?.extractor === "direct-official-html") {
+        const html = await readFile(path.join(corpusDir(), "firecrawl", "ncrb-bns-source.html"), "utf8");
+        rebuilt = buildBnsDocument(source, officialStatuteMarkdown(html), document.scrapeMetadata);
+      } else {
+        const response = JSON.parse(await readFile(path.join(corpusDir(), "firecrawl", "ncrb-bns-chapters.json"), "utf8"));
+        const markdown = validateFirecrawlStatute(response, source.url);
+        rebuilt = buildBnsDocument(source, markdown, response.data.metadata);
+      }
       if (rebuilt.contentHash !== document.contentHash) errors.push("Cached statute text hash differs from index");
       else checks.push("Cached NCRB scrape hash matches index");
       reconstructed = rebuilt.chunks;
@@ -59,7 +65,7 @@ const report = {
   limitations: [
     "Integrity checks compare the index with saved source material; they do not validate legal interpretation.",
     "BNS amendments and provision-specific commencement through 2025-12-31 remain unverified.",
-    "Only three judgments from one High Court are indexed; this is not representative coverage of Indian case law.",
+    `${documents.filter(d => d.documentType === "judgment").length} judgments are indexed locally; this is not representative coverage of Indian case law.`,
     "Judgment metadata and subsequent treatment require human legal review; no holding or outcome labels have been verified.",
     "The NCRB HTML is a reference reproduction; this audit does not compare every section with the Gazette or a current consolidated statute.",
     "PDF-to-text extraction may contain reading-order or formatting errors even when all pages are present."

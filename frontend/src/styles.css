@@ -1826,3 +1826,12 @@ input {
   .app-header-inner { flex-wrap: wrap; gap: 12px; }
   .app-header-nav { flex-wrap: wrap; }
 }
+
+.legal-evidence { margin-top: 10px; border-top: 1px solid var(--border); padding-top: 9px; font-size: 12px; }
+.legal-evidence-status { display: flex; gap: 12px; justify-content: space-between; align-items: center; color: var(--muted); }
+.legal-evidence-status button { border: 1px solid var(--border); background: white; color: var(--brand); border-radius: 6px; padding: 4px 9px; cursor: pointer; }
+.legal-evidence summary { cursor: pointer; color: var(--brand); padding-top: 8px; }
+.legal-evidence figure { margin: 12px 0; }
+.legal-evidence a { color: var(--brand); text-decoration: underline; overflow-wrap: anywhere; }
+.legal-evidence blockquote { margin: 8px 0; padding-left: 10px; border-left: 2px solid var(--border); white-space: pre-wrap; font-size: 12px; line-height: 1.6; }
+.legal-evidence-warning { font-size: 11px; color: var(--muted); line-height: 1.5; }

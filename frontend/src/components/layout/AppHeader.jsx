@@ -14,7 +14,7 @@ export default function AppHeader() {
             ⚖
           </span>
           <span>
-            <strong>Vakil Setu</strong>
+            <strong>Legal-Setu</strong>
             <small>Legal AI</small>
           </span>
         </NavLink>
@@ -23,6 +23,7 @@ export default function AppHeader() {
           <NavLink to="/" end>
             Home
           </NavLink>
+          <NavLink to="/chat">Chat</NavLink>
           <NavLink to="/results">Consultations</NavLink>
           <button type="button" className="app-header-link-btn" onClick={startNewCase}>
             New Case

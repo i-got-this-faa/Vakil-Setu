@@ -1,7 +1,8 @@
+import LegalEvidence from "../LegalEvidence";
 import { useEffect, useRef, useState } from "react";
 import ChatTypingIndicator from "../ChatTypingIndicator";
 import { useAppState } from "../../state/AppContext";
-import { bcp47FromUiLanguage } from "../../utils/webSpeech";
+import { useDictation } from "../../hooks/useDictation";
 
 function formatTime(ts) {
   if (!ts) return "";
@@ -19,10 +20,11 @@ function ChatMessage({ message, isLatest }) {
   return (
     <div className={`legal-msg legal-msg--${isUser ? "user" : "assistant"}`}>
       <div className="legal-msg-meta">
-        <span>{isUser ? "You" : domain ? `Vakil AI · ${domain}` : "Vakil AI"}</span>
+        <span>{isUser ? "You" : domain ? `Legal-Setu AI · ${domain}` : "Legal-Setu AI"}</span>
         <time dateTime={new Date(message.createdAt).toISOString()}>{formatTime(message.createdAt)}</time>
       </div>
       <p className={`legal-msg-bubble ${isLatest && !isUser ? "is-latest" : ""}`}>{message.content}</p>
+      <LegalEvidence message={message} />
     </div>
   );
 }
@@ -50,11 +52,9 @@ export default function LegalAssistantChat({
 }) {
   const { preferredLanguage, setPreferredLanguage } = useAppState();
   const [text, setText] = useState("");
-  const [isRecording, setIsRecording] = useState(false);
-  const [micError, setMicError] = useState("");
+  const { isRecording, phase, error: micError, start, stop } = useDictation({ text, setText, language: preferredLanguage });
   const listRef = useRef(null);
   const fileRef = useRef(null);
-  const recognitionRef = useRef(null);
 
   const hi = lang === "hi";
   const L = hi
@@ -65,7 +65,7 @@ export default function LegalAssistantChat({
         attach: "फ़ाइल संलग्न करें",
         mic: "बोलकर पूछें",
         send: "भेजें",
-        online: "ऑनलाइन"
+        online: "भेजने से पहले जाँचें"
       }
     : {
         title: "Legal assistant",
@@ -74,7 +74,7 @@ export default function LegalAssistantChat({
         attach: "Attach file",
         mic: "Voice input",
         send: "Send",
-        online: "Online"
+        online: "Review before sending"
       };
 
   const suggestions = hi ? SUGGESTIONS_HI : SUGGESTIONS_EN;
@@ -87,51 +87,18 @@ export default function LegalAssistantChat({
     }
   }, [messages, isSubmitting, text]);
 
-  const toggleMic = () => {
-    if (isRecording) {
-      recognitionRef.current?.stop();
-      setIsRecording(false);
-      return;
-    }
-
-    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-    if (!SpeechRecognition) {
-      setMicError(hi ? "वॉइस के लिए Chrome या Edge आज़माएं" : "Try Chrome or Edge for voice input");
-      return;
-    }
-
-    const recognition = new SpeechRecognition();
-    recognition.lang = bcp47FromUiLanguage(preferredLanguage);
-    recognition.interimResults = true;
-    recognition.continuous = false;
-
-    recognition.onresult = (event) => {
-      let chunk = "";
-      for (let i = event.resultIndex; i < event.results.length; i += 1) {
-        chunk += event.results[i][0].transcript;
-      }
-      setText((prev) => `${prev} ${chunk}`.trim());
-    };
-
-    recognition.onerror = () => setIsRecording(false);
-    recognition.onend = () => setIsRecording(false);
-
-    recognitionRef.current = recognition;
-    setMicError("");
-    setIsRecording(true);
-    recognition.start();
-  };
+  const toggleMic = () => isRecording ? stop() : start();
 
   const handleSubmit = (e) => {
     e?.preventDefault();
     const trimmed = text.trim();
-    if (!trimmed || isSubmitting) return;
+    if (!trimmed || isSubmitting || isRecording) return;
     onSubmit?.(trimmed, preferredLanguage);
     setText("");
   };
 
   const handleChip = (chip) => {
-    if (isSubmitting) return;
+    if (isSubmitting || isRecording) return;
     onSubmit?.(chip, preferredLanguage);
   };
 
@@ -174,7 +141,7 @@ export default function LegalAssistantChat({
                     type="button"
                     className="legal-chat-chip"
                     onClick={() => handleChip(chip)}
-                    disabled={isSubmitting}
+                    disabled={isSubmitting || isRecording}
                   >
                     {chip}
                   </button>
@@ -201,6 +168,12 @@ export default function LegalAssistantChat({
             hidden
             onChange={handleFileChange}
           />
+          <label>Speech and response language
+            <select value={preferredLanguage} disabled={isRecording || isSubmitting} onChange={e => setPreferredLanguage(e.target.value)}>
+              <option value="auto">Browser language</option><option value="hindi">Hindi</option><option value="english">English</option>
+            </select>
+          </label>
+          {isRecording ? <p role="status">{phase === "stopping" ? "Finishing transcript..." : "Listening - stop to review the transcript."}</p> : null}
           <div className="legal-chat-input-wrap">
             <textarea
               className="legal-chat-input"
@@ -208,7 +181,7 @@ export default function LegalAssistantChat({
               value={text}
               onChange={(e) => setText(e.target.value)}
               placeholder={L.placeholder}
-              disabled={isSubmitting}
+              disabled={isSubmitting || isRecording}
               onKeyDown={(e) => {
                 if (e.key === "Enter" && !e.shiftKey) {
                   e.preventDefault();
@@ -221,7 +194,7 @@ export default function LegalAssistantChat({
                 type="button"
                 className="legal-chat-icon-btn"
                 onClick={handleAttach}
-                disabled={isSubmitting}
+                disabled={isSubmitting || isRecording}
                 title={L.attach}
                 aria-label={L.attach}
               >
@@ -231,7 +204,7 @@ export default function LegalAssistantChat({
                 type="button"
                 className={`legal-chat-icon-btn ${isRecording ? "recording" : ""}`}
                 onClick={toggleMic}
-                disabled={isSubmitting}
+                disabled={isSubmitting || phase === "stopping"}
                 title={L.mic}
                 aria-label={L.mic}
               >
@@ -240,7 +213,7 @@ export default function LegalAssistantChat({
               <button
                 type="submit"
                 className="legal-chat-send"
-                disabled={!text.trim() || isSubmitting}
+                disabled={!text.trim() || isSubmitting || isRecording}
                 title={L.send}
                 aria-label={L.send}
               >

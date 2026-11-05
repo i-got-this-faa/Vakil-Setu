@@ -1,4 +1,16 @@
 import { chunkPages, digest } from "./legalCorpus.js";
+import { load } from "cheerio";
+
+export function officialStatuteMarkdown(html) {
+  const page = load(html);
+  page("script,style,nav,footer,.social-media-bar").remove();
+  page("strong,b").each((_, element) => {
+    page(element).replaceWith(`**${page(element).text().replace(/\s+/g, " ").trim()}**`);
+  });
+  page("br").replaceWith("\n");
+  page("p").each((_, element) => { page(element).prepend("\n"); page(element).append("\n"); });
+  return page("body").text().replace(/\u00a0/g, " ").split("\n").map(line => line.trim()).filter(Boolean).join("\n\n");
+}
 
 export function parseBnsSections(markdown, expectedCount = 358) {
   // NCRB has two formatting variants: **342.(** 1) and **343.** ...
