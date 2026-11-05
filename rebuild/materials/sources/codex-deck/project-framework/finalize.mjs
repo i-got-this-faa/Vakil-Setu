@@ -5,7 +5,7 @@ const SKILL='C:/Users/DELL/.codex/plugins/cache/openai-primary-runtime/presentat
 const {finalizePresentation}=await import(pathToFileURL(path.join(SKILL,'container_tools/artifact_tool_utils.mjs')).href);
 console.log(JSON.stringify(await finalizePresentation({
  workspaceDir:ROOT,candidatePath:path.join(ROOT,'.codex-deck/project-framework/candidate.pptx'),
- finalPath:path.join(ROOT,'output/project-presentation/Vakil_Setu_PROJECT_Deck.pptx'),
+ finalPath:path.join(ROOT,'output/project-presentation/Legal_Setu_PROJECT_Deck.pptx'),
  pythonExecutable:'C:/Users/DELL/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/python.exe',
  integrityValidatorPath:path.join(SKILL,'container_tools/inspect_presentation_package_integrity.py'),
  layoutValidatorPath:path.join(SKILL,'container_tools/inspect_presentation_layout_geometry.py'),

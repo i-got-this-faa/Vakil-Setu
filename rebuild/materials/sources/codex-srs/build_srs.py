@@ -7,7 +7,7 @@ from docx.oxml import OxmlElement
 from docx.oxml.ns import qn
 
 ROOT=Path(r'C:\Users\DELL\Vakil-Setu')
-OUT=ROOT/'output/reports/Vakil_Setu_SRS_From_Scratch.docx'
+OUT=ROOT/'output/reports/Legal_Setu_SRS_From_Scratch.docx'
 d=Document(); sec=d.sections[0]
 sec.page_width=Inches(8.27);sec.page_height=Inches(11.69)
 sec.top_margin=sec.bottom_margin=Inches(.65)
@@ -24,13 +24,13 @@ d.styles['Heading 2'].font.size=Pt(12.5)
 for name in ['Heading 1','Heading 2','Heading 3']:
     d.styles[name].paragraph_format.keep_with_next=True
     d.styles[name].paragraph_format.space_before=Pt(8)
-hp=sec.header.paragraphs[0];hp.text='VAKIL SETU    SOFTWARE REQUIREMENTS SPECIFICATION'
+hp=sec.header.paragraphs[0];hp.text='LEGAL-SETU    SOFTWARE REQUIREMENTS SPECIFICATION'
 hp.style='Normal';hp.runs[0].font.size=Pt(8)
 fp=sec.footer.paragraphs[0];fp.alignment=WD_ALIGN_PARAGRAPH.RIGHT
 fp.add_run('VS SRS 001   /   Draft 1.0   /   ')
 fld=OxmlElement('w:fldSimple');fld.set(qn('w:instr'),'PAGE');fp._p.append(fld)
 for r in fp.runs:r.font.size=Pt(8)
-d.core_properties.title='Vakil Setu Software Requirements Specification'
+d.core_properties.title='Legal-Setu Software Requirements Specification'
 d.core_properties.subject='From scratch working MVP specification'
 d.core_properties.author='Raghav Nargotra and Sidarth Gupta'
 
@@ -71,14 +71,14 @@ def table(head,rows,widths=None,size=9.5):
     p('');return t
 
 # 1
-p('Vakil Setu', 'Title')
+p('Legal-Setu', 'Title')
 p('Software Requirements Specification','Subtitle')
 p('From scratch development of an Indian multilingual legal intake and advocate consultation platform')
 table(['Document control','Value'],[
  ['Identifier','VS SRS 001'],['Version and status','1.0  •  Draft for development review'],['Date','14 October 2026'],
  ['Project team','Raghav Nargotra 2023A1R033\nSidarth Gupta 2023A1R038'],['Development approach','New implementation with no dependency on the previous repository']], [1.65,5.18],10)
 h('Purpose and delivery objective')
-p('This specification defines the first working release of Vakil Setu for developers, project evaluators, and pilot reviewers. It is a requirements baseline for a new build. It does not describe completed functionality, certify legal compliance, or depend on previous source code.')
+p('This specification defines the first working release of Legal-Setu for developers, project evaluators, and pilot reviewers. It is a requirements baseline for a new build. It does not describe completed functionality, certify legal compliance, or depend on previous source code.')
 p('The release succeeds when two independent accounts complete a persistent journey: user registration, multilingual issue intake, suitable advocate discovery, an available slot request, advocate acceptance, and visible booking status. An administrator must approve the advocate before public discovery.')
 h('Document navigation')
 p('1 Purpose and scope   •   2 Users and workflows   •   3 Architecture\n4 Accounts and advocate onboarding   •   5 Multilingual intake and triage\n6 Discovery and private summaries   •   7 Slots and bookings\n8 Interface contracts   •   9 Data requirements   •   10 Quality and security\n11 Acceptance and traceability   •   12 Delivery and open decisions')
@@ -87,7 +87,7 @@ p('Requirement language: SHALL identifies mandatory behavior. SHOULD identifies 
 # 2
 page('1 Purpose and scope')
 h('Product purpose')
-p('Vakil Setu helps a person explain a legal issue in a familiar language, understand preliminary information, and request a consultation with a suitable advocate. The user remains responsible for reviewing the transcript and choosing the professional. AI output is preliminary information and must be distinguishable from an advocate response.')
+p('Legal-Setu helps a person explain a legal issue in a familiar language, understand preliminary information, and request a consultation with a suitable advocate. The user remains responsible for reviewing the transcript and choosing the professional. AI output is preliminary information and must be distinguishable from an advocate response.')
 h('Release boundary')
 table(['Included in the working MVP','Deferred beyond this release'],[
  ['User and advocate accounts; protected administrator approval','Payment collection, commissions, refunds and reconciliation'],

@@ -1,12 +1,12 @@
 "use client";
 
-import { Button, Input, Textarea, Label } from "@vakil/ui";
+import { Button, Input, Textarea, Label } from "@legal-setu/ui";
 
 import { useEffect, useRef, useState, type FormEvent } from "react";
 import { useRouter } from "next/navigation";
 import { useAction, useMutation, useQuery } from "convex/react";
-import { api } from "@vakil/backend/api";
-import { isPilotLocale, LIMITS, type PilotLocale } from "@vakil/domain";
+import { api } from "@legal-setu/backend/api";
+import { isPilotLocale, LIMITS, type PilotLocale } from "@legal-setu/domain";
 import { useLocale } from "./locale";
 import { VertexFallbackConsentText } from "./vertex-fallback-consent";
 import { useServices } from "./providers";
@@ -14,7 +14,7 @@ import { useAccount } from "./workspace-gate";
 import { SpeechCapture, ReadAloud } from "./speech";
 import { errorMessage } from "@/lib/errors";
 import { intakeChatCopy } from "@/lib/intake-chat-copy";
-import type { Id } from "@vakil/backend/data-model";
+import type { Id } from "@legal-setu/backend/data-model";
 import { LanguageOptions } from "./language-options";
 
 export function Intake() {

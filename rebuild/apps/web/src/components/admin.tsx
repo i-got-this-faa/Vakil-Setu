@@ -1,12 +1,12 @@
 "use client";
 
-import { Button, Input, Textarea, Label } from "@vakil/ui";
+import { Button, Input, Textarea, Label } from "@legal-setu/ui";
 
 import { useEffect, useState, type FormEvent } from "react";
 import { useMutation, usePaginatedQuery } from "convex/react";
-import { api } from "@vakil/backend/api";
-import type { Doc, Id } from "@vakil/backend/data-model";
-import type { BookingState, ConsultationMode } from "@vakil/domain";
+import { api } from "@legal-setu/backend/api";
+import type { Doc, Id } from "@legal-setu/backend/data-model";
+import type { BookingState, ConsultationMode } from "@legal-setu/domain";
 import { RequireRole, useAccount } from "./workspace-gate";
 import {
   EmptyState,

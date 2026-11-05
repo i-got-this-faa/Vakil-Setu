@@ -2,7 +2,7 @@ import { convexTest } from "convex-test";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import schema from "../convex/schema";
 import { api, internal } from "../convex/_generated/api";
-import { LIMITS } from "@vakil/domain";
+import { LIMITS } from "@legal-setu/domain";
 
 const modules = import.meta.glob("../convex/**/*.ts");
 const paginationOpts = { numItems: 50, cursor: null };

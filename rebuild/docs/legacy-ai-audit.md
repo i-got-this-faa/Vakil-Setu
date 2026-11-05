@@ -1,4 +1,4 @@
-# Legacy AI audit — Vakil Setu (reference)
+# Legacy AI audit — Legal-Setu (reference)
 
 Status: source audit of the legacy Express plus Vite codebase. It records code and example-file behavior only; it does not certify DGX hardware, speech accuracy, or language comprehension. The user has no DGX docs or DGX URL. Legacy configuration findings use application source, `README.md`, and `backend/.env.example` only. No actual `.env` file was read, and no provider request was made. Pilot languages for the rebuild are English, Hindi, and Punjabi. Rebuild hosts on Convex with Clerk. Payments, reviews, and emergency guarantees are deferred.
 

@@ -1,12 +1,12 @@
 "use client";
 
-import { Button, Input, Label } from "@vakil/ui";
+import { Button, Input, Label } from "@legal-setu/ui";
 
 import Link from "next/link";
 import { useUser } from "@clerk/nextjs";
 import { useConvexAuth, useMutation, useQuery } from "convex/react";
-import { api } from "@vakil/backend/api";
-import type { Doc } from "@vakil/backend/data-model";
+import { api } from "@legal-setu/backend/api";
+import type { Doc } from "@legal-setu/backend/data-model";
 import {
   createContext,
   useContext,
@@ -92,7 +92,7 @@ function Onboarding() {
   }
   return (
     <div className="card" style={{ maxWidth: 620 }}>
-      <h2>How will you use Vakil Setu?</h2>
+      <h2>How will you use Legal-Setu?</h2>
       <p className="page-description">{copy.onboardingRoleFixed}</p>
       <form className="form-stack" style={{ marginTop: 24 }} onSubmit={submit}>
         <div className="field">

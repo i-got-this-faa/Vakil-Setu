@@ -1,4 +1,4 @@
-# Vakil Setu
+# Legal-Setu
 
 A new responsive multilingual legal intake and consultation application, separate from the legacy Vite/Express implementation. The pilot languages are English, Hindi and Punjabi. AI output is preliminary information and requires professional review.
 

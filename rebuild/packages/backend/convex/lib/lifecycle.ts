@@ -1,4 +1,4 @@
-import { isLiveBooking } from "@vakil/domain";
+import { isLiveBooking } from "@legal-setu/domain";
 import type { MutationCtx } from "../_generated/server";
 import type { Doc, Id } from "../_generated/dataModel";
 import { notifyBooking } from "./notifications";

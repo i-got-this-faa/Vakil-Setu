@@ -1,4 +1,4 @@
-import { LIMITS, type LegalDomain, type PilotLocale } from "@vakil/domain";
+import { LIMITS, type LegalDomain, type PilotLocale } from "@legal-setu/domain";
 import { fail } from "./access";
 
 type Filters = { domain?: LegalDomain; locale?: PilotLocale; city?: string };

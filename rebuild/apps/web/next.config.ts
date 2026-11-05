@@ -6,10 +6,10 @@ const config: NextConfig = {
     NEXT_PUBLIC_BUNDLED_SPEECH_ENABLED: process.env.VERCEL ? "false" : "true",
   },
   transpilePackages: [
-    "@vakil/backend",
-    "@vakil/domain",
-    "@vakil/i18n",
-    "@vakil/ui",
+    "@legal-setu/backend",
+    "@legal-setu/domain",
+    "@legal-setu/i18n",
+    "@legal-setu/ui",
   ],
 };
 

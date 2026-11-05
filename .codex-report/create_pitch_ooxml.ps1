@@ -1,6 +1,6 @@
 $ErrorActionPreference = 'Stop'
 $taskRoot = 'C:\Users\DELL\Vakil-Setu'
-$outputPath = Join-Path $taskRoot 'output\reports\Vakil_Setu_Director_Pitch.docx'
+$outputPath = Join-Path $taskRoot 'output\reports\Legal_Setu_Director_Pitch.docx'
 $qaDir = Join-Path $taskRoot '.codex-report\director-pitch-qa'
 New-Item -ItemType Directory -Path (Split-Path $outputPath), $qaDir -Force | Out-Null
 $script:body = [Text.StringBuilder]::new()
@@ -15,7 +15,7 @@ function Add-Paragraph([string]$text, [string]$style = 'Normal') {
     [void]$script:body.Append('</w:p>')
 }
 $source = [IO.File]::ReadAllText((Join-Path $taskRoot '.codex-report\build_director_pitch.ps1'))
-$start = $source.IndexOf("    Add-Paragraph 'Vakil Setu Project Pitch'")
+$start = $source.IndexOf("    Add-Paragraph 'Legal-Setu Project Pitch'")
 $stop = $source.IndexOf('    $document.BuiltInDocumentProperties')
 $content = $source.Substring($start, $stop - $start)
 $content = [regex]::Replace($content, '    \$endRange = .*\r?\n    \$endRange.InsertBreak\(7\)', '[void]$script:body.Append(''<w:p><w:r><w:br w:type="page"/></w:r></w:p>'')')

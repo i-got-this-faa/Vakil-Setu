@@ -1,4 +1,4 @@
-import { LIMITS } from "@vakil/domain";
+import { LIMITS } from "@legal-setu/domain";
 import type { QueryCtx } from "../_generated/server";
 import type { Doc } from "../_generated/dataModel";
 import { publicRating } from "./reviews";

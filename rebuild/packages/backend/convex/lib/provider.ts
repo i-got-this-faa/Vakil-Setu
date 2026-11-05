@@ -1,6 +1,6 @@
 import { vertexConfig } from "./vertexConfig";
-import { isLegalDomain, isPilotLocale, isUrgency, LEGAL_DOMAINS, URGENCIES, LIMITS, LOCALES } from "@vakil/domain";
-import type { PilotLocale } from "@vakil/domain";
+import { isLegalDomain, isPilotLocale, isUrgency, LEGAL_DOMAINS, URGENCIES, LIMITS, LOCALES } from "@legal-setu/domain";
+import type { PilotLocale } from "@legal-setu/domain";
 
 export type UnavailableReason = "not_configured" | "invalid_config" | "provider_failed" | "invalid_result" | "unsupported_language";
 type ProviderConfig = { kind: "configured"; url: string; model: string; apiKey: string } | { kind: "unavailable"; reason: UnavailableReason };

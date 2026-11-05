@@ -1,6 +1,6 @@
 "use client";
 
-import { Button } from "@vakil/ui";
+import { Button } from "@legal-setu/ui";
 import { Volume2 } from "lucide-react";
 import { useCallback, useEffect, useId, useRef, useState } from "react";
 import { useLocale } from "./locale";

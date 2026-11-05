@@ -1,5 +1,5 @@
 import { ConvexError } from "convex/values";
-import type { ErrorCode } from "@vakil/domain";
+import type { ErrorCode } from "@legal-setu/domain";
 import type { QueryCtx, MutationCtx } from "../_generated/server";
 import type { Doc, Id } from "../_generated/dataModel";
 

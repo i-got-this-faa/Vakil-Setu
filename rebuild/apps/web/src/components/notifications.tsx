@@ -1,12 +1,12 @@
 "use client";
 
-import { Button } from "@vakil/ui";
+import { Button } from "@legal-setu/ui";
 
 import Link from "next/link";
 import { useState } from "react";
 import { useMutation, usePaginatedQuery } from "convex/react";
-import { api } from "@vakil/backend/api";
-import type { Doc } from "@vakil/backend/data-model";
+import { api } from "@legal-setu/backend/api";
+import type { Doc } from "@legal-setu/backend/data-model";
 import { ServiceBoundary } from "./providers";
 import { EmptyState, formatTime, LoadMore } from "./shared";
 import { errorMessage } from "@/lib/errors";

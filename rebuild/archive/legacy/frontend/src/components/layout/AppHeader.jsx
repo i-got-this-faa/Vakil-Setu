@@ -14,7 +14,7 @@ export default function AppHeader() {
             ⚖
           </span>
           <span>
-            <strong>Vakil Setu</strong>
+            <strong>Legal-Setu</strong>
             <small>Legal AI</small>
           </span>
         </NavLink>

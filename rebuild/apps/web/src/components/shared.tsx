@@ -1,10 +1,10 @@
 "use client";
 
-import { Button } from "@vakil/ui";
+import { Button } from "@legal-setu/ui";
 
 import { FileSearch } from "lucide-react";
 import type { ReactNode } from "react";
-import type { Doc } from "@vakil/backend/data-model";
+import type { Doc } from "@legal-setu/backend/data-model";
 
 export function EmptyState({
   title,

@@ -1,7 +1,7 @@
-import type { PilotLocale } from "@vakil/domain";
+import type { PilotLocale } from "@legal-setu/domain";
 
 const en = {
-  title: "Chat with Vakil Setu", intro: "Ask your legal question to start a private conversation.",
+  title: "Chat with Legal-Setu", intro: "Ask your legal question to start a private conversation.",
   question: "What would you like help with?", language: "Conversation language", send: "Send question", waiting: "Waiting for an AI reply…",
   consent: "I allow my current question to be sent to Google Gemini for preliminary legal information, not professional legal advice.",
   documents: "You can upload documents after creating the conversation.", manual: "Use manual intake", open: "Open saved conversation", newChat: "New chat", summary: "Review case summary",
@@ -11,14 +11,14 @@ const en = {
 };
 type ChatbotCopy = typeof en;
 const hi: ChatbotCopy = {
-  title: "वकील सेतु से चैट करें", intro: "निजी बातचीत शुरू करने के लिए अपना कानूनी प्रश्न पूछें।", question: "आपको किस बारे में मदद चाहिए?", language: "बातचीत की भाषा", send: "प्रश्न भेजें", waiting: "AI के उत्तर की प्रतीक्षा है…",
+  title: "Legal-Setu से चैट करें", intro: "निजी बातचीत शुरू करने के लिए अपना कानूनी प्रश्न पूछें।", question: "आपको किस बारे में मदद चाहिए?", language: "बातचीत की भाषा", send: "प्रश्न भेजें", waiting: "AI के उत्तर की प्रतीक्षा है…",
   consent: "मैं अपने वर्तमान प्रश्न को प्रारंभिक कानूनी जानकारी के लिए Google Gemini को भेजने की अनुमति देता/देती हूँ। यह पेशेवर कानूनी सलाह नहीं है।",
   documents: "बातचीत बनाने के बाद आप दस्तावेज़ अपलोड कर सकते हैं।", manual: "स्वयं विवरण भरें", open: "सहेजी बातचीत खोलें", newChat: "नई चैट", summary: "मामले के सारांश की समीक्षा करें",
   unavailable: "इस भाषा में AI चैट अभी उपलब्ध नहीं है। आप स्वयं विवरण भर सकते हैं।", loading: "आपकी बातचीत लोड हो रही है…", missing: "बातचीत उपलब्ध नहीं है। केवल उसका स्वामी इसे खोल सकता है।",
   failed: "आपका प्रश्न सहेजा गया है। उत्तर की पुष्टि नहीं हो सकी। दोबारा प्रयास करें या सहेजी बातचीत खोलें।", error: "अनुरोध पूरा नहीं हुआ। आपका प्रश्न यहाँ मौजूद है; दोबारा प्रयास करें।", fallback: en.fallback,
 };
 const pa: ChatbotCopy = {
-  title: "ਵਕੀਲ ਸੇਤੂ ਨਾਲ ਚੈਟ ਕਰੋ", intro: "ਨਿੱਜੀ ਗੱਲਬਾਤ ਸ਼ੁਰੂ ਕਰਨ ਲਈ ਆਪਣਾ ਕਾਨੂੰਨੀ ਸਵਾਲ ਪੁੱਛੋ।", question: "ਤੁਹਾਨੂੰ ਕਿਸ ਬਾਰੇ ਮਦਦ ਚਾਹੀਦੀ ਹੈ?", language: "ਗੱਲਬਾਤ ਦੀ ਭਾਸ਼ਾ", send: "ਸਵਾਲ ਭੇਜੋ", waiting: "AI ਦੇ ਜਵਾਬ ਦੀ ਉਡੀਕ ਹੈ…",
+  title: "Legal-Setu ਨਾਲ ਚੈਟ ਕਰੋ", intro: "ਨਿੱਜੀ ਗੱਲਬਾਤ ਸ਼ੁਰੂ ਕਰਨ ਲਈ ਆਪਣਾ ਕਾਨੂੰਨੀ ਸਵਾਲ ਪੁੱਛੋ।", question: "ਤੁਹਾਨੂੰ ਕਿਸ ਬਾਰੇ ਮਦਦ ਚਾਹੀਦੀ ਹੈ?", language: "ਗੱਲਬਾਤ ਦੀ ਭਾਸ਼ਾ", send: "ਸਵਾਲ ਭੇਜੋ", waiting: "AI ਦੇ ਜਵਾਬ ਦੀ ਉਡੀਕ ਹੈ…",
   consent: "ਮੈਂ ਆਪਣੇ ਮੌਜੂਦਾ ਸਵਾਲ ਨੂੰ ਮੁੱਢਲੀ ਕਾਨੂੰਨੀ ਜਾਣਕਾਰੀ ਲਈ Google Gemini ਨੂੰ ਭੇਜਣ ਦੀ ਇਜਾਜ਼ਤ ਦਿੰਦਾ/ਦਿੰਦੀ ਹਾਂ। ਇਹ ਪੇਸ਼ੇਵਰ ਕਾਨੂੰਨੀ ਸਲਾਹ ਨਹੀਂ ਹੈ।",
   documents: "ਗੱਲਬਾਤ ਬਣਾਉਣ ਤੋਂ ਬਾਅਦ ਤੁਸੀਂ ਦਸਤਾਵੇਜ਼ ਅੱਪਲੋਡ ਕਰ ਸਕਦੇ ਹੋ।", manual: "ਵੇਰਵੇ ਆਪ ਭਰੋ", open: "ਸੰਭਾਲੀ ਗੱਲਬਾਤ ਖੋਲ੍ਹੋ", newChat: "ਨਵੀਂ ਚੈਟ", summary: "ਮਾਮਲੇ ਦੇ ਸਾਰ ਦੀ ਸਮੀਖਿਆ ਕਰੋ",
   unavailable: "ਇਸ ਭਾਸ਼ਾ ਵਿੱਚ AI ਚੈਟ ਇਸ ਵੇਲੇ ਉਪਲਬਧ ਨਹੀਂ ਹੈ। ਤੁਸੀਂ ਵੇਰਵੇ ਆਪ ਭਰ ਸਕਦੇ ਹੋ।", loading: "ਤੁਹਾਡੀ ਗੱਲਬਾਤ ਲੋਡ ਹੋ ਰਹੀ ਹੈ…", missing: "ਗੱਲਬਾਤ ਉਪਲਬਧ ਨਹੀਂ ਹੈ। ਸਿਰਫ਼ ਇਸ ਦਾ ਮਾਲਕ ਇਸ ਨੂੰ ਖੋਲ੍ਹ ਸਕਦਾ ਹੈ।",

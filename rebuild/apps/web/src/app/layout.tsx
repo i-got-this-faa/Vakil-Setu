@@ -7,8 +7,8 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   title: {
-    default: "Vakil Setu — A bridge to legal clarity",
-    template: "%s | Vakil Setu",
+    default: "Legal-Setu — A bridge to legal clarity",
+    template: "%s | Legal-Setu",
   },
   description:
     "Review your private legal intake, compare approved advocates, and request a consultation. Interface translations are drafts and require human review.",

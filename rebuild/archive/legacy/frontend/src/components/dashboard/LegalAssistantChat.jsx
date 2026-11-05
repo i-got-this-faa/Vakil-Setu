@@ -19,7 +19,7 @@ function ChatMessage({ message, isLatest }) {
   return (
     <div className={`legal-msg legal-msg--${isUser ? "user" : "assistant"}`}>
       <div className="legal-msg-meta">
-        <span>{isUser ? "You" : domain ? `Vakil AI · ${domain}` : "Vakil AI"}</span>
+        <span>{isUser ? "You" : domain ? `Legal-Setu AI · ${domain}` : "Legal-Setu AI"}</span>
         <time dateTime={new Date(message.createdAt).toISOString()}>{formatTime(message.createdAt)}</time>
       </div>
       <p className={`legal-msg-bubble ${isLatest && !isUser ? "is-latest" : ""}`}>{message.content}</p>

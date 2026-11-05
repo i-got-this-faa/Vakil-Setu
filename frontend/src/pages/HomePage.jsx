@@ -6,7 +6,7 @@ import { useAppState } from "../state/AppContext";
 export default function HomePage() {
   const { classification } = useAppState();
   const { chatMessages, loading, loadingLabel, error, submitMessage } = useLegalChat({
-    navigateAfterFirstResult: true
+    navigateAfterFirstResult: false
   });
 
   const hi = classification?.response_language === "hi";
@@ -23,7 +23,7 @@ export default function HomePage() {
         </p>
         {hasResults ? (
           <Link to="/results" className="home-results-link">
-            {hi ? "परिणाम और वकील देखें →" : "View results & advocates →"}
+            {hi ? "सारांश और वकील देखें →" : "View case summary & advocates →"}
           </Link>
         ) : null}
       </section>

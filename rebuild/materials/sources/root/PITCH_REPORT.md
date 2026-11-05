@@ -1,7 +1,7 @@
-# VAKIL SETU: PROJECT PITCH REPORT & DEFENSE BRIEFING
+# LEGAL-SETU: PROJECT PITCH REPORT & DEFENSE BRIEFING
 
 **Document Type:** Project Pitch, Comprehensive Architectural Report & Professor Viva Guide  
-**Project Title:** Vakil Setu (Transitioning to *NyayaMitra* / *VidhiAI*)  
+**Project Title:** Legal-Setu  
 **Core Domain:** Legal-AI, Natural Language Processing, Multimodal Computer Vision, Indian Jurisprudence  
 **Target Audience:** Project Guide, Department Evaluation Committee, College Director  
 
@@ -10,7 +10,7 @@
 ## 1. Executive Summary & Elevator Pitch
 
 ### The 30-Second Elevator Pitch
-> *"Vakil Setu is an AI-powered legal triage and document intelligence platform designed specifically for the Indian legal ecosystem. It allows common citizens to speak or upload legal notices in their native language, instantly translates complex disputes into active Bharatiya Nyaya Sanhita (BNS 2024) legal codes, evaluates bail eligibility and statutory deadlines, and bridges the citizen to verified legal aid or licensed advocates before critical court time limits expire."*
+> *"Legal-Setu is an AI-powered legal triage and document intelligence platform designed specifically for the Indian legal ecosystem. It allows common citizens to speak or upload legal notices in their native language, instantly translates complex disputes into active Bharatiya Nyaya Sanhita (BNS 2024) legal codes, evaluates bail eligibility and statutory deadlines, and bridges the citizen to verified legal aid or licensed advocates before critical court time limits expire."*
 
 ### The 2-Minute Comprehensive Pitch (For Your Professor)
 > *"Sir/Ma'am, access to justice in India suffers from two fundamental bottlenecks: incomprehensible legal jargon and extreme language barriers. When a citizen receives a 15-day Cheque Bounce notice or a police appearance summons, panic sets in, leading to inaction and avoidable arrest warrants.*  
@@ -143,7 +143,7 @@ One of the most important aspects for university evaluators is ensuring the proj
 
 ### 1. Section 29, Advocates Act, 1961 Compliance
 - *The Law:* Section 29 establishes that only advocates enrolled with the State Bar Council are entitled to practice law in India.
-- *Our Safeguard:* Vakil Setu is **strictly an informational triage and pre-litigation intake filter**. It does not represent clients in court or provide advocate-client privileged opinions. Every screen displays mandatory statutory disclaimers. It serves as an intake bridge to licensed advocates.
+- *Our Safeguard:* Legal-Setu is **strictly an informational triage and pre-litigation intake filter**. It does not represent clients in court or provide advocate-client privileged opinions. Every screen displays mandatory statutory disclaimers. It serves as an intake bridge to licensed advocates.
 
 ### 2. Constitutional Alignment with Article 39A
 - *The Law:* Article 39A of the Constitution of India guarantees Equal Justice and Free Legal Aid to economically weaker citizens.
@@ -164,7 +164,7 @@ One of the most important aspects for university evaluators is ensuring the proj
 - **Offline SOS Mode:** Cached Know-Your-Rights cards accessible during police encounters without internet connectivity.
 
 ### 2. Strategic Rebranding (Phase 2)
-- Rebranding to **NyayaMitra** (*न्याय मित्र* — "Friend of Justice") or **VidhiAI** (*विधि AI*).
+- Official project name: **Legal-Setu**.
 - Professional, citizen-first brand identity suitable for Google Play Store and institutional partnerships.
 
 ### 3. Production Cloud Topology (Phase 3)

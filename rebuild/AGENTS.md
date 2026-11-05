@@ -1,4 +1,4 @@
-# Vakil Setu rebuild
+# Legal-Setu rebuild
 
 This workspace is the new implementation. In the original parent checkout it is under `rebuild/`; in the standalone repository it is the root. Preserve any legacy application and unrelated files when working in the parent checkout. Commit only scoped workspace changes. Do not push without user authorization.
 

@@ -1,12 +1,12 @@
 "use client";
 
-import { Button, Input, Label } from "@vakil/ui";
+import { Button, Input, Label } from "@legal-setu/ui";
 
 import { useState, type FormEvent } from "react";
 import { useAction, useMutation, useQuery } from "convex/react";
-import { api } from "@vakil/backend/api";
-import type { Doc, Id } from "@vakil/backend/data-model";
-import { LIMITS } from "@vakil/domain";
+import { api } from "@legal-setu/backend/api";
+import type { Doc, Id } from "@legal-setu/backend/data-model";
+import { LIMITS } from "@legal-setu/domain";
 import { errorMessage } from "@/lib/errors";
 
 export type CredentialMetadata = Omit<Doc<"credentials">, "storageId">;

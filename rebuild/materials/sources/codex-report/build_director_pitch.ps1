@@ -1,6 +1,6 @@
 $ErrorActionPreference = 'Stop'
 $taskRoot = 'C:\Users\DELL\Vakil-Setu'
-$outputPath = Join-Path $taskRoot 'output\reports\Vakil_Setu_Director_Pitch.docx'
+$outputPath = Join-Path $taskRoot 'output\reports\Legal_Setu_Director_Pitch.docx'
 $qaDir = Join-Path $taskRoot '.codex-report\director-pitch-qa'
 New-Item -ItemType Directory -Path (Split-Path $outputPath), $qaDir -Force | Out-Null
 
@@ -51,19 +51,19 @@ try {
     $document.Styles.Item('Heading 2').ParagraphFormat.SpaceAfter = 3
     $document.Styles.Item('Heading 2').ParagraphFormat.KeepWithNext = -1
 
-    Add-Paragraph 'Vakil Setu Project Pitch' 'Title'
+    Add-Paragraph 'Legal-Setu Project Pitch' 'Title'
     Add-Paragraph 'Presentation to the College Director' 'Subtitle'
     Add-Paragraph 'Presentation script' 'Heading 1'
     Add-Paragraph 'Good morning, Sir or Ma''am.'
-    Add-Paragraph 'Our project is Vakil Setu, a multilingual web platform that helps people explain a legal problem, find an appropriate advocate, and request a consultation.'
+    Add-Paragraph 'Our project is Legal-Setu, a multilingual web platform that helps people explain a legal problem, find an appropriate advocate, and request a consultation.'
     Add-Paragraph 'The problem we address is the difficulty of taking the first step. Someone facing a property dispute, an employment issue, or a consumer complaint may not know which type of advocate to approach or how to explain the situation. Language can make this harder.'
-    Add-Paragraph 'Vakil Setu brings that journey into one platform. A user creates an account, selects a language, and describes the problem. Our initial language scope is English, Hindi, and Punjabi. Users review and edit their text before saving it as a private case. Read-aloud functionality is included, while optional browser voice input still needs real microphone and language testing.'
+    Add-Paragraph 'Legal-Setu brings that journey into one platform. A user creates an account, selects a language, and describes the problem. Our initial language scope is English, Hindi, and Punjabi. Users review and edit their text before saving it as a private case. Read-aloud functionality is included, while optional browser voice input still needs real microphone and language testing.'
     Add-Paragraph 'Users can discover advocates by expertise, language, location, and available consultation slots. They review the case summary they want to share before requesting a consultation. The advocate can accept or decline the request, and the user can track its status.'
     Add-Paragraph 'There are three roles: user, advocate, and administrator. Advocates submit professional details and credentials. Administrators review applications before profiles become publicly discoverable. The backend checks who is allowed to access private cases and perform each action.'
     Add-Paragraph 'We have also built an integration path for AI to produce a preliminary summary and legal category. The inference service is not connected and validated yet. Any future AI output will require review, and professional legal advice remains the advocate''s responsibility.'
     Add-Paragraph 'The current application uses Next.js and TypeScript, Clerk for authentication, and Convex for backend operations and storage. Development checks have demonstrated real sign-in and saving and retrieving a Punjabi intake. Consultation workflows are implemented and locally tested; complete hosted testing with separate accounts remains.'
     Add-Paragraph 'Our next step is a controlled pilot with advocates and users to evaluate usability, language quality, and the consultation process. We seek the college''s guidance and introductions to legal professionals to help organize that pilot.'
-    Add-Paragraph 'Vakil Setu aims to make the first step toward legal help clearer, more accessible, and easier to manage. Thank you.'
+    Add-Paragraph 'Legal-Setu aims to make the first step toward legal help clearer, more accessible, and easier to manage. Thank you.'
 
     $endRange = $document.Range($document.Content.End - 1, $document.Content.End - 1)
     $endRange.InsertBreak(7)
@@ -71,7 +71,7 @@ try {
     Add-Paragraph 'Use these notes for discussion after the pitch. The script takes approximately three minutes at a measured pace.'
 
     Add-Paragraph 'What makes this different from a lawyer directory' 'Heading 2'
-    Add-Paragraph 'Vakil Setu connects multilingual problem intake, reviewed case sharing, advocate discovery, and consultation requests. A pilot must establish whether this combined workflow actually helps users.'
+    Add-Paragraph 'Legal-Setu connects multilingual problem intake, reviewed case sharing, advocate discovery, and consultation requests. A pilot must establish whether this combined workflow actually helps users.'
     Add-Paragraph 'Is the AI working now' 'Heading 2'
     Add-Paragraph 'The integration code exists, but the inference service is not connected and validated. We cannot yet claim working AI classification, legal accuracy, or DGX backed inference.'
     Add-Paragraph 'What has actually been demonstrated' 'Heading 2'
@@ -87,14 +87,14 @@ try {
     Add-Paragraph ('1. Sign in and select English, Hindi, or Punjabi.' + [Environment]::NewLine + '2. Enter a clearly labelled sample issue without personal case details.' + [Environment]::NewLine + '3. Review and edit the text, then save the private intake.' + [Environment]::NewLine + '4. Reopen it to show that the language and text were preserved.' + [Environment]::NewLine + '5. Explain discovery and consultation screens as implemented workflows whose complete hosted acceptance testing remains.')
     Add-Paragraph 'Before presenting, rehearse the exact demo with the current server and account. Keep screenshots as a fallback. Describe AI and speech limits plainly; avoid claims of support for all 22 scheduled languages, guaranteed outcomes, or production readiness.'
 
-    $document.BuiltInDocumentProperties.Item('Title').Value = 'Vakil Setu Project Pitch'
+    $document.BuiltInDocumentProperties.Item('Title').Value = 'Legal-Setu Project Pitch'
     $document.BuiltInDocumentProperties.Item('Subject').Value = 'College director presentation script and preparation notes'
     $document.BuiltInDocumentProperties.Item('Author').Value = ''
-    $document.BuiltInDocumentProperties.Item('Keywords').Value = 'Vakil Setu, project pitch, college presentation'
+    $document.BuiltInDocumentProperties.Item('Keywords').Value = 'Legal-Setu, project pitch, college presentation'
     $document.Repaginate()
     $pageCount = $document.ComputeStatistics(2)
     $document.SaveAs2($outputPath, 16)
-    $pdfPath = Join-Path $qaDir 'Vakil_Setu_Director_Pitch.pdf'
+    $pdfPath = Join-Path $qaDir 'Legal_Setu_Director_Pitch.pdf'
     $document.ExportAsFixedFormat($pdfPath, 17)
     Write-Output ('DOCX=' + $outputPath)
     Write-Output ('PDF=' + $pdfPath)

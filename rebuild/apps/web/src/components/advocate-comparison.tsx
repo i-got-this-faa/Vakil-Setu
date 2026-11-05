@@ -2,10 +2,10 @@
 
 import Link from "next/link";
 import { useQuery } from "convex/react";
-import { api } from "@vakil/backend/api";
-import type { Id } from "@vakil/backend/data-model";
-import { getLanguage } from "@vakil/i18n";
-import { Button } from "@vakil/ui";
+import { api } from "@legal-setu/backend/api";
+import type { Id } from "@legal-setu/backend/data-model";
+import { getLanguage } from "@legal-setu/i18n";
+import { Button } from "@legal-setu/ui";
 import { useLocale } from "./locale";
 import { getFeatureCopy } from "@/lib/feature-copy";
 import { consultationModeLabel, formatTime } from "./shared";

@@ -11,10 +11,10 @@ import {
 } from "react";
 import { useQuery, useAction, useMutation } from "convex/react";
 import { ConvexError } from "convex/values";
-import { api } from "@vakil/backend/api";
-import type { Id } from "@vakil/backend/data-model";
-import { CHAT_LIMITS, type PilotLocale } from "@vakil/domain";
-import { Button, Input, Textarea, Label, Badge } from "@vakil/ui";
+import { api } from "@legal-setu/backend/api";
+import type { Id } from "@legal-setu/backend/data-model";
+import { CHAT_LIMITS, type PilotLocale } from "@legal-setu/domain";
+import { Button, Input, Textarea, Label, Badge } from "@legal-setu/ui";
 import {
   FileText,
   Image as ImageIcon,

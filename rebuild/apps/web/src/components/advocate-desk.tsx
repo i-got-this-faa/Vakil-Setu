@@ -1,12 +1,12 @@
 "use client";
 
-import { Button, Input, Textarea, Label } from "@vakil/ui";
+import { Button, Input, Textarea, Label } from "@legal-setu/ui";
 
 import Link from "next/link";
 import { useState, type FormEvent } from "react";
 import { useMutation, useQuery } from "convex/react";
-import { api } from "@vakil/backend/api";
-import type { Doc } from "@vakil/backend/data-model";
+import { api } from "@legal-setu/backend/api";
+import type { Doc } from "@legal-setu/backend/data-model";
 import {
   CONSULTATION_MODES,
   LEGAL_DOMAINS,
@@ -14,13 +14,13 @@ import {
   type ConsultationMode,
   type LegalDomain,
   type PilotLocale,
-} from "@vakil/domain";
+} from "@legal-setu/domain";
 import { RequireRole, useAccount } from "./workspace-gate";
 import { errorMessage } from "@/lib/errors";
 import { CredentialsPanel } from "./credentials";
 import { EmptyState, consultationModeLabel, formatTime } from "./shared";
 import { useLocale } from "./locale";
-import { getLanguage } from "@vakil/i18n";
+import { getLanguage } from "@legal-setu/i18n";
 
 function isConsultationMode(value: unknown): value is ConsultationMode {
   return value === "phone" || value === "video" || value === "in_person";

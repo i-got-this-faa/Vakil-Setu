@@ -44,7 +44,7 @@ def note(label, text):
     p.add_run(text)
     p.paragraph_format.space_after=Pt(9)
 
-doc.add_heading('Vakil Setu Presentation Script',0)
+doc.add_heading('Legal-Setu Presentation Script',0)
 para('Faculty presentation and viva preparation', 'Subtitle')
 para('About 10 minutes for 14 slides. Add about 90 seconds if demonstrating the application. The speaking text also appears in the PowerPoint speaker notes.')
 doc.add_heading('Presentation scope',1)
@@ -111,7 +111,7 @@ mapping=[
 for title,body in mapping: note(title,body)
 
 viva=[
-('What problem does Vakil Setu solve?', 'It addresses the first interaction: describing a legal concern, reviewing a private summary and requesting a consultation with a chosen advocate. Whether it improves user outcomes remains a pilot hypothesis.'),
+('What problem does Legal-Setu solve?', 'It addresses the first interaction: describing a legal concern, reviewing a private summary and requesting a consultation with a chosen advocate. Whether it improves user outcomes remains a pilot hypothesis.'),
 ('Why build this when Tele Law and LawRato exist?', 'Those services show that digital access to lawyers is established. Our project studies the intake and review process before a consultation, including specific-version sharing consent. We have not established comparative superiority.'),
 ('What is the current stack?', 'Next.js and React provide the web interface. TypeScript supports shared types. Clerk handles sessions and Convex handles authorised application operations and data. Bun and Turborepo organise the workspace. The legacy React, Express and MongoDB stack is separate.'),
 ('Is the AI running on DGX Spark?', 'That is unverified. The gateway adapter is implemented, but the endpoint contract and verified inference evidence are absent. A gateway name or model label does not prove hardware attribution.'),
@@ -141,11 +141,11 @@ for s in ['rebuild/README.md','rebuild/docs/requirements.md','rebuild/docs/decis
 doc.add_heading('External service context',1)
 para('Tele-Law service description\nhttps://www.tele-law.in/faq.html')
 para('LawRato service description\nhttps://lawrato.com/cmses/page/how-does-lawrato-work')
-para('Accessed 17 October 2026. These sources support the service descriptions on slide 3. The presentation does not claim either service lacks the capabilities explored by Vakil Setu.')
+para('Accessed 17 October 2026. These sources support the service descriptions on slide 3. The presentation does not claim either service lacks the capabilities explored by Legal-Setu.')
 doc.add_heading('Claims to avoid',1)
 para('Do not claim zero hallucinations, zero downtime, verified DGX hardware, legally certified outputs, an invented accuracy percentage, full support for 23 languages, a completed consultation from a pending request, or personal ownership that the team has not confirmed.')
 OUT.mkdir(parents=True,exist_ok=True)
-target=OUT/'Vakil_Setu_Presentation_Script.docx'
+target=OUT/'Legal_Setu_Presentation_Script.docx'
 for border in list(doc.styles.element.iter(qn('w:pBdr'))):
     border.getparent().remove(border)
 styles['Subtitle'].font.color.rgb = RGBColor.from_string('52616A')

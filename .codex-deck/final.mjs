@@ -8,7 +8,7 @@ const C={blue:'#203F91',cyan:'#0073B9',ink:'#172237',muted:'#53647A',pale:'#EEF5
 function shape(s,x,y,w,h,fill=C.white,stroke='none',geo='rect'){return s.shapes.add({geometry:geo,position:{left:x,top:y,width:w,height:h},fill,line:{fill:stroke,width:stroke==='none'?0:1.5}})}
 function text(s,t,x,y,w,h,size=24,color=C.ink,bold=false,font='Arial',align='left'){const a=shape(s,x,y,w,h,'none');a.text=t;a.text.style={typeface:font,fontSize:size,color,bold,alignment:align,verticalAlignment:'middle',autoFit:'none'};return a}
 function line(s,x,y,w,color=C.blue){shape(s,x,y,w,2,color)}
-function base(title,sub='',status=''){const s=p.slides.add();s.background.fill=C.white;text(s,'VAKIL SETU',42,21,180,25,17,C.blue,true);text(s,title,42,64,1196,58,35,C.blue,true,'Georgia');if(sub)text(s,sub,44,124,1192,39,20,C.muted);shape(s,0,681,1280,39,C.cyan);text(s,status||'Faculty project review',44,687,1110,23,14,C.white);text(s,String(p.slides.items.length).padStart(2,'0'),1187,687,50,23,14,C.white,true,'Arial','right');return s}
+function base(title,sub='',status=''){const s=p.slides.add();s.background.fill=C.white;text(s,'LEGAL-SETU',42,21,180,25,17,C.blue,true);text(s,title,42,64,1196,58,35,C.blue,true,'Georgia');if(sub)text(s,sub,44,124,1192,39,20,C.muted);shape(s,0,681,1280,39,C.cyan);text(s,status||'Faculty project review',44,687,1110,23,14,C.white);text(s,String(p.slides.items.length).padStart(2,'0'),1187,687,50,23,14,C.white,true,'Arial','right');return s}
 function note(s,t,src=[]){s.speakerNotes.textFrame.setText(t+'\n\nSources: '+src.join('\n'))}
 function node(s,title,body,x,y,w=250,h=125,color=C.blue){const box=shape(s,x,y,w,h,C.pale,color);text(s,title,x+14,y+12,w-28,34,23,color,true);text(s,body,x+14,y+51,w-28,h-59,20);return box}
 function arrow(s,a,b,from='right',to='left',color=C.blue){return s.shapes.connect(a,b,{kind:'straight',fromSide:from,toSide:to,line:{fill:color,width:2.4},tail:{type:'triangle',width:'med',length:'med'}})}
@@ -19,7 +19,7 @@ const src={voice:'frontend/src/components/VoiceRecorder.jsx',ai:'backend/src/ser
 
 {
 const s=base('','','College project presentation');
-text(s,'VAKIL SETU',65,156,1140,108,78,C.blue,true,'Georgia');
+text(s,'LEGAL-SETU',65,156,1140,108,78,C.blue,true,'Georgia');
 text(s,'Multilingual Voice-Based Legal Assistance\nand Advocate Access',70,286,1115,110,37,C.ink);
 line(s,72,443,1128,C.cyan);
 text(s,'PRESENTED BY',74,477,1100,35,21,C.blue,true);
@@ -40,7 +40,7 @@ text(s,'Project objective: a multilingual voice interface that connects initial 
 note(s,'Present these as the user problems the project addresses. No numerical prevalence or survey finding is claimed. The product aims to help with initial orientation and discovery, while professional consultation handles case-specific advice.');
 }
 {
-const s=base('SOLUTION','Vakil Setu: voice-based legal assistance and advocate access');
+const s=base('SOLUTION','Legal-Setu: voice-based legal assistance and advocate access');
 const a=node(s,'Describe','Speak or type the problem in a preferred language',48,213,252,159);
 const b=node(s,'Understand','Receive a short explanation, category and urgency',359,213,252,159);
 const c=node(s,'Find an advocate','Match relevant expertise and language preference',670,213,252,159);
@@ -131,7 +131,7 @@ const png=await p.export({slide:p.slides.items[i],format:'png',scale:1});
 await fs.writeFile(ROOT+`/.codex-deck/final-previews/slide-${i+1}.png`,new Uint8Array(await png.arrayBuffer()));
 }
 const {finalizePresentation}=await import(pathToFileURL(SKILL+'/container_tools/artifact_tool_utils.mjs').href);
-const r=await finalizePresentation({workspaceDir:ROOT,candidatePath:ROOT+'/.codex-deck/final-candidate.pptx',finalPath:ROOT+'/output/presentations/Vakil_Setu_Faculty_Final.pptx',pythonExecutable:'C:/Users/DELL/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/python.exe',integrityValidatorPath:SKILL+'/container_tools/inspect_presentation_package_integrity.py',layoutValidatorPath:SKILL+'/container_tools/inspect_presentation_layout_geometry.py',layoutArgs:['--expected-slide-size-emu','12192000,6858000','--validate-heading-fit'],fontPolicy:{basis:'design',families:['Arial','Georgia']},verifyArtifactToolImport:true,receiptPath:ROOT+'/.codex-deck/final-validation.json'});
+const r=await finalizePresentation({workspaceDir:ROOT,candidatePath:ROOT+'/.codex-deck/final-candidate.pptx',finalPath:ROOT+'/output/presentations/Legal_Setu_Faculty_Final.pptx',pythonExecutable:'C:/Users/DELL/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/python.exe',integrityValidatorPath:SKILL+'/container_tools/inspect_presentation_package_integrity.py',layoutValidatorPath:SKILL+'/container_tools/inspect_presentation_layout_geometry.py',layoutArgs:['--expected-slide-size-emu','12192000,6858000','--validate-heading-fit'],fontPolicy:{basis:'design',families:['Arial','Georgia']},verifyArtifactToolImport:true,receiptPath:ROOT+'/.codex-deck/final-validation.json'});
 console.log(JSON.stringify({final:r.finalPath,layout:r.presentationLayout,integrity:r.packageIntegrity.status}));
 
 

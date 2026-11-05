@@ -16,7 +16,7 @@ With missing configuration, public pages and the intake editor render without mo
 
 ## Language and speech boundaries
 
-Core navigation and form labels use `@vakil/i18n`. The web's `src/lib/copy.ts` supplies additional English/Hindi/Punjabi intake headings, placeholders, character-count units, setup notices, disabled-account and onboarding-role notes, follow-up/summary/AI consent, cancellation timing, self-disable, and landing copy. Hindi/Punjabi entries in `copy.ts` are worker-drafted interface strings, not human-verified legal translations.
+Core navigation and form labels use `@legal-setu/i18n`. The web's `src/lib/copy.ts` supplies additional English/Hindi/Punjabi intake headings, placeholders, character-count units, setup notices, disabled-account and onboarding-role notes, follow-up/summary/AI consent, cancellation timing, self-disable, and landing copy. Hindi/Punjabi entries in `copy.ts` are worker-drafted interface strings, not human-verified legal translations.
 
 Exact untranslated remainder (English-only, not promised): workspace overview cards and headings, advocate-desk profile/slot labels, admin review/affected-booking/account-row operational text and empty states, booking history/event labels, discovery result badges, notification rows, speech error/status strings (`speech.tsx`), how-it-works explainer cards, footer/how-it-works marketing copy, and most `EmptyState`/`LoadMore`/loading messages. Interface locale and intake language are separate: switching the interface never translates or rewrites entered text.
 
@@ -28,7 +28,7 @@ AI draft creation requires separate consent and passes the current summary versi
 
 ## Contract and state handling
 
-Generated `@vakil/backend/api` and `@vakil/backend/data-model` bindings drive query/mutation/action and document types. Follow-up revisions, consultation formats, urgency variants, lifecycle events, and administrator handling added during integration are consumed from the current executable contract. Backend validators and authorization remain authoritative; UI role checks are only navigation assistance.
+Generated `@legal-setu/backend/api` and `@legal-setu/backend/data-model` bindings drive query/mutation/action and document types. Follow-up revisions, consultation formats, urgency variants, lifecycle events, and administrator handling added during integration are consumed from the current executable contract. Backend validators and authorization remain authoritative; UI role checks are only navigation assistance.
 
 Second-round web changes: `admin.queue` is called with an explicit `status` filter (`pending` default, plus `approved`/`rejected`/`suspended`) so approved suspension and rejected/suspended reapproval stay reachable; `admin.accounts` paginated table calls `admin.setDisabled({accountId, disabled, reason})` with required reason/confirmation and self-disable blocked in UI (backend also forbids it); booking action availability uses `nextBookingState({state, action, actor, now, start, end})` with `start` passed so cancellation shows only before slot start. Mobile workspace uses `minmax(0, 1fr)` with `min-width: 0` children, wrapping header locale controls, and breaking long intake/summary text; keyboard `:focus-visible` styling is unchanged.
 

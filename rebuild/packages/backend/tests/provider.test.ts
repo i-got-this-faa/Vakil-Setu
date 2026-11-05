@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { aiAllowedLanguages, aiCapabilities, boundedResponseText, extractGeminiContent, geminiConfig, parseProviderResult } from "../convex/lib/provider";
-import { LOCALES } from "@vakil/domain";
+import { LOCALES } from "@legal-setu/domain";
 
 const draft = { locale: "pa", domain: "unknown", urgency: "unknown", summary: "ਪਹਿਲਾਂ ਦਸਤਾਵੇਜ਼ਾਂ ਦੀ ਸਮੀਖਿਆ ਕਰੋ।", actions: [] };
 describe("Gemini transport boundary", () => {

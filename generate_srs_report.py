@@ -68,7 +68,7 @@ def build_srs_report():
     # Main Title
     p_title = doc.add_paragraph()
     p_title.alignment = WD_ALIGN_PARAGRAPH.CENTER
-    r_t = p_title.add_run("VAKIL SETU (वकील सेतु)")
+    r_t = p_title.add_run("LEGAL-SETU")
     r_t.font.size = Pt(32)
     r_t.font.bold = True
     r_t.font.color.rgb = COLOR_NAVY
@@ -96,7 +96,7 @@ def build_srs_report():
     tbl_meta = doc.add_table(rows=6, cols=2)
     tbl_meta.alignment = WD_TABLE_ALIGNMENT.CENTER
     details = [
-        ("Document Identifier", "SRS-VAKIL-SETU-2026-V1.0"),
+        ("Document Identifier", "SRS-LEGAL-SETU-2026-V1.0"),
         ("Project Lead / Candidate", "[Your Full Name] | Roll No: [Your Roll Number]"),
         ("Project Teammates", "[Teammate 2 Name] (Roll No: ...)\n[Teammate 3 Name] (Roll No: ...)\n[Teammate 4 Name] (Roll No: ...)"),
         ("Project Supervisor / Guide", "[Faculty Guide / Professor Name], [Designation]"),
@@ -126,7 +126,7 @@ def build_srs_report():
     h_cert.runs[0].font.color.rgb = COLOR_NAVY
 
     p_cert = doc.add_paragraph(
-        "This is to certify that the project entitled \"VAKIL SETU: Voice-First Bilingual Legal Triage & Advocate Discovery Platform\" "
+        "This is to certify that the project entitled \"LEGAL-SETU: Voice-First Bilingual Legal Triage & Advocate Discovery Platform\" "
         "is a bonafide record of work carried out by [Your Full Name] (Roll No: [Your Roll Number]) and teammates under my supervision "
         "and guidance in partial fulfillment of the requirements for the award of the Degree in Computer Science & Engineering. "
         "The software requirements and implementation concepts presented in this document have been reviewed and approved."
@@ -152,7 +152,7 @@ def build_srs_report():
     h_decl.runs[0].font.color.rgb = COLOR_NAVY
 
     p_decl = doc.add_paragraph(
-        "We hereby declare that this Software Requirements Specification (SRS) report entitled \"Vakil Setu\" represents our original work "
+        "We hereby declare that this Software Requirements Specification (SRS) report entitled \"Legal-Setu\" represents our original work "
         "conducted under the guidance of our project mentor. The system features, architecture diagrams, and specification matrices described herein "
         "accurately reflect the current functional implementation and the planned roadmap of the platform, adhering to academic integrity standards."
     )
@@ -180,7 +180,7 @@ def build_srs_report():
     p_abs1.runs[0].font.size = Pt(10.5)
 
     p_abs2 = doc.add_paragraph(
-        "Vakil Setu is an artificial intelligence-driven, voice-first legal triage platform built specifically for the Indian socio-legal landscape. "
+        "Legal-Setu is an artificial intelligence-driven, voice-first legal triage platform built specifically for the Indian socio-legal landscape. "
         "The system allows citizens to speak their dispute naturally in Hindi, English, or mixed colloquial speech using in-browser speech recognition. "
         "An intelligent dual-engine triage pipeline analyzes the narrative under Indian statutory codes (BNS/IPC, CrPC, and CPC), classifies the domain, "
         "estimates urgency level, and generates actionable procedural guidance in plain language. For low-literacy citizens, the platform vocalizes the "
@@ -191,7 +191,7 @@ def build_srs_report():
 
     add_callout(
         doc,
-        "Vakil Setu functions strictly as an informational triage bridge and professional directory service under Indian law. "
+        "Legal-Setu functions strictly as an informational triage bridge and professional directory service under Indian law. "
         "It does not practice law or dispense direct legal representation under Section 29 of the Advocates Act, 1961. "
         "All advocate profiles adhere to Rule 36 of the Bar Council of India (BCI) rules regarding non-promotional publication.",
         "STATUTORY COMPLIANCE & LEGAL NOTICE"
@@ -228,7 +228,7 @@ def build_srs_report():
 
     doc.add_heading("1.3 Project Objectives", level=2)
     p = doc.add_paragraph(
-        "The core objectives of Vakil Setu are:\n"
+        "The core objectives of Legal-Setu are:\n"
         "• To provide an accessible, hands-free voice-first interface supporting Hindi and English dictation with zero server audio latency.\n"
         "• To engineer a dual-engine AI legal triage pipeline that categorizes legal domains and procedural urgency under Indian law.\n"
         "• To guarantee zero-downtime availability through a deterministic rule-based regex fallback engine.\n"
@@ -283,7 +283,7 @@ def build_srs_report():
 
     doc.add_heading("2.1 Product Perspective", level=2)
     p = doc.add_paragraph(
-        "Vakil Setu is architected as an event-driven, decoupled client-server web platform. The frontend operates as a responsive "
+        "Legal-Setu is architected as an event-driven, decoupled client-server web platform. The frontend operates as a responsive "
         "Single Page Application built with React 18 and Vite. It directly interfaces with the client browser's native W3C Web Speech API, "
         "ensuring real-time transcription with zero network audio streaming overhead. The backend application server, built with Node.js and Express, "
         "acts as a stateless API gateway orchestrating triage requests, advocate matching, scraper ingestion, and payment escrow."
@@ -649,7 +649,7 @@ def build_srs_report():
         p_r.space_after = Pt(3)
 
     # Save Document
-    report_path = os.path.join(os.getcwd(), "Vakil_Setu_SRS_Report.docx")
+    report_path = os.path.join(os.getcwd(), "Legal_Setu_SRS_Report.docx")
     doc.save(report_path)
     print(f"Full Project SRS Report successfully generated at: {report_path}")
 

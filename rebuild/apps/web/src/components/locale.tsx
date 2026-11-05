@@ -7,15 +7,15 @@ import {
   useState,
   type ReactNode,
 } from "react";
-import { isPilotLocale, type PilotLocale } from "@vakil/domain";
-import { getInterfaceLocale, getLanguage, getMessages, localeOptions } from "@vakil/i18n";
+import { isPilotLocale, type PilotLocale } from "@legal-setu/domain";
+import { getInterfaceLocale, getLanguage, getMessages, localeOptions } from "@legal-setu/i18n";
 import {
   Select,
   SelectTrigger,
   SelectValue,
   SelectContent,
   SelectItem,
-} from "@vakil/ui";
+} from "@legal-setu/ui";
 import { productCopy } from "@/lib/copy";
 import { getLocalizationNotice, LOCALE_STORAGE_KEY, readLocalePreference, saveLocalePreference } from "@/lib/localization-preference";
 

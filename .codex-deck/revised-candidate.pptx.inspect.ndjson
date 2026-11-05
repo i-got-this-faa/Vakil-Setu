@@ -1,8 +1,8 @@
 {"kind":"deck","id":"pr/ec2i2y","name":"Deck"}
 {"kind":"layout","layoutId":"9da313d0-5df8-4f18-ac30-d1da380eff43","name":"Master","type":"master"}
 {"kind":"layout","layoutId":"6f7e5085-6edd-4688-9c2c-58d9f673ff76","name":"Title Slide","type":"title"}
-{"kind":"slide","id":"sl/ibzpkg","slide":1,"title":"VAKIL SETU","textShapes":13}
-{"kind":"textbox","id":"sh/ni9cj65s","slide":1,"text":"VAKIL SETU","textPreview":"VAKIL SETU","textChars":10,"textLines":1,"bbox":[42,21,180,25]}
+{"kind":"slide","id":"sl/ibzpkg","slide":1,"title":"LEGAL-SETU","textShapes":13}
+{"kind":"textbox","id":"sh/ni9cj65s","slide":1,"text":"LEGAL-SETU","textPreview":"LEGAL-SETU","textChars":10,"textLines":1,"bbox":[42,21,180,25]}
 {"kind":"textbox","id":"sh/ojitsb6d","slide":1,"text":"PROBLEM STATEMENT","textPreview":"PROBLEM STATEMENT","textChars":17,"textLines":1,"bbox":[42,64,1196,58]}
 {"kind":"textbox","id":"sh/pkbulgny","slide":1,"text":"Accessible first-step legal assistance across Indian languages","textPreview":"Accessible first-step legal assistance across Indian languages","textChars":62,"textLines":1,"bbox":[44,124,1192,39]}
 {"kind":"shape","id":"sh/ed0bm1ob","slide":1,"bbox":[0,681,1280,39]}
@@ -20,10 +20,10 @@
 {"kind":"textbox","id":"sh/1gja5kzq","slide":1,"text":"Finding relevant expertise and a shared language adds another step before consultation.","textPreview":"Finding relevant expertise and a shared language adds another step before consultation.","textChars":87,"textLines":1,"bbox":[864,454,363,134]}
 {"kind":"textbox","id":"sh/gfa9wfy5","slide":1,"text":"Project objective: a multilingual voice interface that connects initial guidance with advocate access.","textPreview":"Project objective: a multilingual voice interface that connects initial guidance with advocate access.","textChars":102,"textLines":1,"bbox":[49,614,1182,43]}
 {"kind":"notes","id":"nt/ibzpkg","slide":1,"text":"Present these as the user problems the project addresses. No numerical prevalence or survey finding is claimed. The product aims to help with initial orientation and discovery, while professional consultation handles case-specific advice.\n\nSources: "}
-{"kind":"slide","id":"sl/73cvfe","slide":2,"title":"VAKIL SETU","textShapes":18}
-{"kind":"textbox","id":"sh/orulwvmh","slide":2,"text":"VAKIL SETU","textPreview":"VAKIL SETU","textChars":10,"textLines":1,"bbox":[42,21,180,25]}
+{"kind":"slide","id":"sl/73cvfe","slide":2,"title":"LEGAL-SETU","textShapes":18}
+{"kind":"textbox","id":"sh/orulwvmh","slide":2,"text":"LEGAL-SETU","textPreview":"LEGAL-SETU","textChars":10,"textLines":1,"bbox":[42,21,180,25]}
 {"kind":"textbox","id":"sh/3qlk3q5w","slide":2,"text":"SOLUTION","textPreview":"SOLUTION","textChars":8,"textLines":1,"bbox":[42,64,1196,58]}
-{"kind":"textbox","id":"sh/2ps3ul4b","slide":2,"text":"Vakil Setu: voice-based legal assistance and advocate access","textPreview":"Vakil Setu: voice-based legal assistance and advocate access","textChars":60,"textLines":1,"bbox":[44,124,1192,39]}
+{"kind":"textbox","id":"sh/2ps3ul4b","slide":2,"text":"Legal-Setu: voice-based legal assistance and advocate access","textPreview":"Legal-Setu: voice-based legal assistance and advocate access","textChars":60,"textLines":1,"bbox":[44,124,1192,39]}
 {"kind":"shape","id":"sh/1oj21gnq","slide":2,"bbox":[0,681,1280,39]}
 {"kind":"textbox","id":"sh/gna1sbml","slide":2,"text":"Faculty project review","textPreview":"Faculty project review","textChars":22,"textLines":1,"bbox":[44,687,1110,23]}
 {"kind":"textbox","id":"sh/fm1kz650","slide":2,"text":"02","textPreview":"02","textChars":2,"textLines":1,"bbox":[1187,687,50,23]}
@@ -50,8 +50,8 @@
 {"kind":"textbox","id":"sh/0rit4jex","slide":2,"text":"Confirm the transcript before analysis\nRead or listen to the explanation\nContinue with contextual follow-up questions","textPreview":"Confirm the transcript before analysis | Read or listen to the explanation | Continue with contextual follow-up questions","textChars":117,"textLines":3,"bbox":[670,491,555,114]}
 {"kind":"textbox","id":"sh/nu9szydo","slide":2,"text":"Target scope. Language coverage requires validation across recognition, response and playback.","textPreview":"Target scope. Language coverage requires validation across recognition, response and playback.","textChars":94,"textLines":1,"bbox":[50,625,1179,29]}
 {"kind":"notes","id":"nt/73cvfe","slide":2,"text":"Describe the solution as the planned complete experience. Hindi belongs to the set of 22 scheduled languages. Retaining English makes 23 language choices in total. Support includes speech recognition, understandable responses, spoken output and interface localization. The information provided is preliminary, with case-specific advice handled by an advocate.\n\nSources: https://www.mha.gov.in/sites/default/files/Eighth_Schedule.pdf"}
-{"kind":"slide","id":"sl/796grm","slide":3,"title":"VAKIL SETU","textShapes":21}
-{"kind":"textbox","id":"sh/kv25cbm1","slide":3,"text":"VAKIL SETU","textPreview":"VAKIL SETU","textChars":10,"textLines":1,"bbox":[42,21,180,25]}
+{"kind":"slide","id":"sl/796grm","slide":3,"title":"LEGAL-SETU","textShapes":21}
+{"kind":"textbox","id":"sh/kv25cbm1","slide":3,"text":"LEGAL-SETU","textPreview":"LEGAL-SETU","textChars":10,"textLines":1,"bbox":[42,21,180,25]}
 {"kind":"textbox","id":"sh/jut436lg","slide":3,"text":"TECHNICAL APPROACH","textPreview":"TECHNICAL APPROACH","textChars":18,"textLines":1,"bbox":[42,64,1196,58]}
 {"kind":"textbox","id":"sh/yt0na14v","slide":3,"text":"Target system architecture and service responsibilities","textPreview":"Target system architecture and service responsibilities","textChars":55,"textLines":1,"bbox":[44,124,1192,39]}
 {"kind":"shape","id":"sh/xsrm1gnq","slide":3,"bbox":[0,681,1280,39]}
@@ -88,8 +88,8 @@
 {"kind":"shape","id":"sh/l8vqd8fi","slide":3,"bbox":[0,0,0,0]}
 {"kind":"textbox","id":"sh/y54ritg7","slide":3,"text":"Server-side provider adapters keep credentials private and allow services to change.","textPreview":"Server-side provider adapters keep credentials private and allow services to change.","textChars":84,"textLines":1,"bbox":[49,629,1180,30]}
 {"kind":"notes","id":"nt/796grm","slide":3,"text":"Explain the system as a target architecture. The browser captures user input and displays returned responses. The Express server calls AI and language providers, performs matching, manages records and coordinates payments. MongoDB does not call providers directly. Authentication, consent records and reliable payment status handling are part of the proposed implementation. Provider choices remain subject to evaluation. The response node represents presentation of returned results, not a second independent application.\n\nSources: Proposed architecture informed by project technical materials\nhttps://bhashini.gov.in/"}
-{"kind":"slide","id":"sl/9sx777","slide":4,"title":"VAKIL SETU","textShapes":22}
-{"kind":"textbox","id":"sh/f65c3epw","slide":4,"text":"VAKIL SETU","textPreview":"VAKIL SETU","textChars":10,"textLines":1,"bbox":[42,21,180,25]}
+{"kind":"slide","id":"sl/9sx777","slide":4,"title":"LEGAL-SETU","textShapes":22}
+{"kind":"textbox","id":"sh/f65c3epw","slide":4,"text":"LEGAL-SETU","textPreview":"LEGAL-SETU","textChars":10,"textLines":1,"bbox":[42,21,180,25]}
 {"kind":"textbox","id":"sh/g7edwj6h","slide":4,"text":"TECHNICAL APPROACH","textPreview":"TECHNICAL APPROACH","textChars":18,"textLines":1,"bbox":[42,64,1196,58]}
 {"kind":"textbox","id":"sh/h8ne5o7m","slide":4,"text":"Multilingual processing and legal triage flow","textPreview":"Multilingual processing and legal triage flow","textChars":45,"textLines":1,"bbox":[44,124,1192,39]}
 {"kind":"shape","id":"sh/61wvq9oz","slide":4,"bbox":[0,681,1280,39]}
@@ -128,8 +128,8 @@
 {"kind":"shape","id":"sh/a9sf61ov","slide":4,"bbox":[0,0,0,0]}
 {"kind":"textbox","id":"sh/hsnyt0nq","slide":4,"text":"Critical facts: names, dates and amounts. Unsupported language modes need a clear fallback.","textPreview":"Critical facts: names, dates and amounts. Unsupported language modes need a clear fallback.","textChars":91,"textLines":1,"bbox":[49,627,1182,34]}
 {"kind":"notes","id":"nt/9sx777","slide":4,"text":"ASR converts speech to text. TTS generates spoken output. Compare direct multilingual analysis with translation-based processing for each language. Validation checks structure and preservation of facts, but it cannot guarantee legal correctness. Include qualified review and uncertainty handling. Use the same scenario across languages to compare results. No model accuracy or response-time result is claimed.\n\nSources: https://bhashini.gov.in/\nProposed processing design"}
-{"kind":"slide","id":"sl/qfvbfi","slide":5,"title":"VAKIL SETU","textShapes":13}
-{"kind":"textbox","id":"sh/4ba9gnip","slide":5,"text":"VAKIL SETU","textPreview":"VAKIL SETU","textChars":10,"textLines":1,"bbox":[42,21,180,25]}
+{"kind":"slide","id":"sl/qfvbfi","slide":5,"title":"LEGAL-SETU","textShapes":13}
+{"kind":"textbox","id":"sh/4ba9gnip","slide":5,"text":"LEGAL-SETU","textPreview":"LEGAL-SETU","textChars":10,"textLines":1,"bbox":[42,21,180,25]}
 {"kind":"textbox","id":"sh/3ah8ni14","slide":5,"text":"FEASIBILITY AND VIABILITY ANALYSIS","textPreview":"FEASIBILITY AND VIABILITY ANALYSIS","textChars":34,"textLines":1,"bbox":[42,64,1196,58]}
 {"kind":"textbox","id":"sh/i98red0j","slide":5,"text":"Implementation choices, operating costs and validation gates","textPreview":"Implementation choices, operating costs and validation gates","textChars":60,"textLines":1,"bbox":[44,124,1192,39]}
 {"kind":"shape","id":"sh/h8zql8je","slide":5,"bbox":[0,681,1280,39]}
@@ -147,8 +147,8 @@
 {"kind":"textbox","id":"sh/sfqx0bel","slide":5,"text":"Legal review and response latency","textPreview":"Legal review and response latency","textChars":33,"textLines":1,"bbox":[455,593,373,55]}
 {"kind":"textbox","id":"sh/tgzy9gv6","slide":5,"text":"Booking reliability and service cost","textPreview":"Booking reliability and service cost","textChars":36,"textLines":1,"bbox":[860,593,369,55]}
 {"kind":"notes","id":"nt/qfvbfi","slide":5,"text":"Technical feasibility relies on mature application technologies, but language quality and live service availability still require testing. BHASHINI is one candidate ecosystem to evaluate, not a guaranteed fit for all modalities. Measure cost per completed case from audio duration, API usage, model tokens, hosting allocation and retries. Payment and consultation costs are separate. No profit margin, budget, timeline or benchmark is supplied. Agree acceptance thresholds with faculty and reviewers before evaluation. Test provider outages, noisy audio, mixed-language input and payment failures.\n\nSources: https://bhashini.gov.in/"}
-{"kind":"slide","id":"sl/m4jrva","slide":6,"title":"VAKIL SETU","textShapes":17}
-{"kind":"textbox","id":"sh/qdorad43","slide":6,"text":"VAKIL SETU","textPreview":"VAKIL SETU","textChars":10,"textLines":1,"bbox":[42,21,180,25]}
+{"kind":"slide","id":"sl/m4jrva","slide":6,"title":"LEGAL-SETU","textShapes":17}
+{"kind":"textbox","id":"sh/qdorad43","slide":6,"text":"LEGAL-SETU","textPreview":"LEGAL-SETU","textChars":10,"textLines":1,"bbox":[42,21,180,25]}
 {"kind":"textbox","id":"sh/dgfa583u","slide":6,"text":"IMPACTS AND BENEFITS","textPreview":"IMPACTS AND BENEFITS","textChars":20,"textLines":1,"bbox":[42,64,1196,58]}
 {"kind":"textbox","id":"sh/sf69c329","slide":6,"text":"Expected outcomes to evaluate through user trials","textPreview":"Expected outcomes to evaluate through user trials","textChars":49,"textLines":1,"bbox":[44,124,1192,39]}
 {"kind":"shape","id":"sh/3ad8zyls","slide":6,"bbox":[0,681,1280,39]}
@@ -171,8 +171,8 @@
 {"kind":"textbox","id":"sh/4jqpcn2l","slide":6,"text":"Confirmed facts and a concise issue summary can support the first discussion.","textPreview":"Confirmed facts and a concise issue summary can support the first discussion.","textChars":77,"textLines":1,"bbox":[495,532,728,68]}
 {"kind":"shape","id":"sh/3ihojil0","slide":6,"bbox":[130,608,1092,2]}
 {"kind":"notes","id":"nt/m4jrva","slide":6,"text":"Expected beneficiaries include people seeking initial legal orientation, users more comfortable speaking than typing and advocates receiving consultation requests. Evaluate benefits through task completion, comprehension checks, matching relevance and successful bookings. Do not claim reduced court backlog, faster judgments or measured social impact without evidence.\n\nSources: "}
-{"kind":"slide","id":"sl/grtwpm","slide":7,"title":"VAKIL SETU","textShapes":16}
-{"kind":"textbox","id":"sh/b69gbi1o","slide":7,"text":"VAKIL SETU","textPreview":"VAKIL SETU","textChars":10,"textLines":1,"bbox":[42,21,180,25]}
+{"kind":"slide","id":"sl/grtwpm","slide":7,"title":"LEGAL-SETU","textShapes":16}
+{"kind":"textbox","id":"sh/b69gbi1o","slide":7,"text":"LEGAL-SETU","textPreview":"LEGAL-SETU","textChars":10,"textLines":1,"bbox":[42,21,180,25]}
 {"kind":"textbox","id":"sh/w7ixkni9","slide":7,"text":"REFERENCES","textPreview":"REFERENCES","textChars":10,"textLines":1,"bbox":[42,64,1196,58]}
 {"kind":"textbox","id":"sh/x8rydsju","slide":7,"text":"Official sources and technical documentation","textPreview":"Official sources and technical documentation","textChars":44,"textLines":1,"bbox":[44,124,1192,39]}
 {"kind":"shape","id":"sh/mhgfet07","slide":7,"bbox":[0,681,1280,39]}

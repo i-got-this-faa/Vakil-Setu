@@ -1,5 +1,5 @@
 {
-  "name": "@vakil/i18n",
+  "name": "@legal-setu/i18n",
   "version": "0.1.0",
   "type": "module",
   "main": "./src/index.ts",

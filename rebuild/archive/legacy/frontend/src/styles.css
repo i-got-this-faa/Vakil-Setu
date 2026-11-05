@@ -352,7 +352,7 @@ input {
   margin-top: 6px;
 }
 
-.vakil-avatar-face {
+.legal-avatar-face {
   position: relative;
   width: 96px;
   height: 108px;
@@ -363,7 +363,7 @@ input {
   margin-top: 4px;
 }
 
-.vakil-hair {
+.legal-hair {
   position: absolute;
   top: 14px;
   width: 58px;
@@ -372,7 +372,7 @@ input {
   background: #0b1222;
 }
 
-.vakil-head {
+.legal-head {
   position: absolute;
   top: 26px;
   width: 54px;
@@ -382,7 +382,7 @@ input {
   border: 1px solid rgba(10, 10, 10, 0.15);
 }
 
-.vakil-coat {
+.legal-coat {
   position: absolute;
   bottom: 0;
   width: 96px;
@@ -391,7 +391,7 @@ input {
   background: linear-gradient(180deg, #111c35, #0b1429);
 }
 
-.vakil-band {
+.legal-band {
   position: absolute;
   bottom: 8px;
   width: 14px;
@@ -553,7 +553,7 @@ input {
   max-width: 240px;
 }
 
-.vakil-wave-arm {
+.legal-wave-arm {
   transform-origin: 190px 170px;
   animation: wave 2s ease-in-out infinite;
 }
@@ -568,7 +568,7 @@ input {
   }
 }
 
-.vakil-bubble-card {
+.legal-bubble-card {
   background: #fff;
   border: 1px solid #d3d1c7;
   border-radius: 12px;
@@ -577,7 +577,7 @@ input {
   width: 95%;
 }
 
-.vakil-bubble-card p {
+.legal-bubble-card p {
   margin: 0;
   font-size: 13px;
   line-height: 1.4;
@@ -614,7 +614,7 @@ input {
   font-size: 12px;
 }
 
-.message-avatar.vakil {
+.message-avatar.legal {
   background: #0c447c;
   color: #fff;
 }
@@ -631,7 +631,7 @@ input {
   line-height: 1.4;
 }
 
-.message-bubble.vakil {
+.message-bubble.legal {
   background: #e6f1fb;
   border: 1px solid #85b7eb;
 }

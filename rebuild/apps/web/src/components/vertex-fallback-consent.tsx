@@ -1,5 +1,5 @@
 "use client";
-import type { PilotLocale } from "@vakil/domain";
+import type { PilotLocale } from "@legal-setu/domain";
 
 const notices = {
   en: "I also allow this case information, conversation and selected files to be sent to Google Cloud Vertex AI if the primary Google Gemini service has exhausted its quota. Either service may process the request; AI replies are preliminary legal information, not professional advice.",

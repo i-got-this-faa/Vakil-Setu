@@ -37,7 +37,7 @@ def create_synopsis_docx():
         # Configure Header & Footer
         header = section.header
         p_hdr = header.paragraphs[0]
-        p_hdr.text = "Vakil Setu: A Voice-First Bilingual Legal Triage Platform | Mini Project Synopsis"
+        p_hdr.text = "Legal-Setu: A Voice-First Bilingual Legal Triage Platform | Mini Project Synopsis"
         p_hdr.runs[0].font.name = "Times New Roman"
         p_hdr.runs[0].font.size = Pt(8.5)
         p_hdr.runs[0].font.color.rgb = RGBColor(100, 116, 139)
@@ -50,7 +50,7 @@ def create_synopsis_docx():
     # -------------------------------------------------------------
     p = doc.add_paragraph()
     p.alignment = WD_ALIGN_PARAGRAPH.CENTER
-    r = p.add_run("VAKIL SETU: A VOICE-FIRST BILINGUAL LEGAL TRIAGE\nAND ADVOCATE DISCOVERY PLATFORM")
+    r = p.add_run("LEGAL-SETU: A VOICE-FIRST BILINGUAL LEGAL TRIAGE\nAND ADVOCATE DISCOVERY PLATFORM")
     r.font.name = "Times New Roman"
     r.font.size = Pt(18)
     r.font.bold = True
@@ -223,7 +223,7 @@ def create_synopsis_docx():
     h.runs[0].font.color.rgb = COLOR_DARK
 
     p = doc.add_paragraph(
-        "Vakil Setu is an artificial intelligence-powered, voice-first legal triage and advocate discovery platform "
+        "Legal-Setu is an artificial intelligence-powered, voice-first legal triage and advocate discovery platform "
         "designed to bridge the severe \"first-mile\" justice divide in India. Situated at the intersection of Conversational "
         "Artificial Intelligence, Legal Informatics, and Web Systems, the project addresses the immense cognitive, linguistic, "
         "and financial barriers that confront everyday citizens when navigating legal crises."
@@ -243,7 +243,7 @@ def create_synopsis_docx():
     p.runs[0].font.size = Pt(11)
 
     p = doc.add_paragraph(
-        "Vakil Setu eliminates this asymmetry by introducing a hands-free, bilingual conversational interface operating directly within modern web browsers. "
+        "Legal-Setu eliminates this asymmetry by introducing a hands-free, bilingual conversational interface operating directly within modern web browsers. "
         "Citizens simply speak their dispute naturally in Hindi, English, or mixed colloquial speech. Utilizing a dual-engine triage architecture, the platform "
         "analyzes unstructured spoken narratives against Indian statutory codes (Bharatiya Nyaya Sanhita, Bharatiya Nagarik Suraksha Sanhita, and Code of Civil Procedure), "
         "determines the primary legal domain (Criminal, Civil, Family, or Property), estimates procedural urgency, and extracts immediate action items. For low-literacy "
@@ -334,7 +334,7 @@ def create_synopsis_docx():
     comp_data = [
         ("Traditional Legal Portals (LawRato, Vakilsearch)", "English-heavy; text typing only", "Static directory; no instant procedural triage", "Third-party redirection; opaque pricing"),
         ("Generic Conversational LLMs (ChatGPT, Claude)", "Multilingual text prompts", "General knowledge; high risk of non-Indian hallucination", "Zero booking or verified advocate connection"),
-        ("Vakil Setu Legal Triage Gateway", "Hands-free bilingual voice (hi-IN / en-IN)", "Tuned for Indian statutes (BNS, CrPC, CPC)", "Integrated Razorpay HMAC-SHA256 escrow")
+        ("Legal-Setu Legal Triage Gateway", "Hands-free bilingual voice (hi-IN / en-IN)", "Tuned for Indian statutes (BNS, CrPC, CPC)", "Integrated Razorpay HMAC-SHA256 escrow")
     ]
     tbl_comp = doc.add_table(rows=len(comp_data)+1, cols=4)
     tbl_comp.alignment = WD_TABLE_ALIGNMENT.CENTER
@@ -353,7 +353,7 @@ def create_synopsis_docx():
             cell.text = val
             cell.paragraphs[0].runs[0].font.name = "Times New Roman"
             cell.paragraphs[0].runs[0].font.size = Pt(9)
-            if i == 3: # Vakil Setu row bold
+            if i == 3: # Legal-Setu row bold
                 cell.paragraphs[0].runs[0].font.bold = True
             set_cell_margins(cell, 40, 40, 60, 60)
 
@@ -367,7 +367,7 @@ def create_synopsis_docx():
     h.runs[0].font.size = Pt(15)
     h.runs[0].font.color.rgb = COLOR_DARK
 
-    p = doc.add_paragraph("The core technical objectives of the Vakil Setu project are formulated across five architectural milestones:")
+    p = doc.add_paragraph("The core technical objectives of the Legal-Setu project are formulated across five architectural milestones:")
     p.runs[0].font.name = "Times New Roman"
     p.runs[0].font.size = Pt(11)
 
@@ -434,7 +434,7 @@ def create_synopsis_docx():
     h.runs[0].font.color.rgb = COLOR_DARK
 
     p = doc.add_paragraph(
-        "Vakil Setu is architected as an asynchronous, decoupled five-tier legal gateway. The client application runs as a responsive "
+        "Legal-Setu is architected as an asynchronous, decoupled five-tier legal gateway. The client application runs as a responsive "
         "React 18 Single Page Application interfacing with an Express.js API gateway. Rather than routing heavy raw audio to cloud servers, "
         "audio transcription occurs locally on the client's device, transmitting lightweight text payloads to the backend intelligence pipeline."
     )
@@ -442,13 +442,13 @@ def create_synopsis_docx():
     p.runs[0].font.size = Pt(11)
 
     # Architecture Image
-    if os.path.exists("vakil_setu_architecture.png"):
+    if os.path.exists("legal_setu_architecture.png"):
         p_img = doc.add_paragraph()
         p_img.alignment = WD_ALIGN_PARAGRAPH.CENTER
-        p_img.add_run().add_picture("vakil_setu_architecture.png", width=Inches(6.5))
+        p_img.add_run().add_picture("legal_setu_architecture.png", width=Inches(6.5))
         p_cap = doc.add_paragraph()
         p_cap.alignment = WD_ALIGN_PARAGRAPH.CENTER
-        r = p_cap.add_run("Figure 4.1: Decoupled Five-Tier Execution Topology of the Vakil Setu Legal Triage Gateway")
+        r = p_cap.add_run("Figure 4.1: Decoupled Five-Tier Execution Topology of the Legal-Setu Legal Triage Gateway")
         r.font.name = "Times New Roman"
         r.font.size = Pt(9.5)
         r.font.italic = True
@@ -485,7 +485,7 @@ def create_synopsis_docx():
     h.runs[0].font.size = Pt(15)
     h.runs[0].font.color.rgb = COLOR_DARK
 
-    p = doc.add_paragraph("The technical implementation of Vakil Setu is built upon an enterprise-grade, open-source stack designed to ensure sub-second response times, zero server audio processing overhead, and robust fault-tolerance:")
+    p = doc.add_paragraph("The technical implementation of Legal-Setu is built upon an enterprise-grade, open-source stack designed to ensure sub-second response times, zero server audio processing overhead, and robust fault-tolerance:")
     p.runs[0].font.name = "Times New Roman"
     p.runs[0].font.size = Pt(11)
 
@@ -556,15 +556,15 @@ def create_synopsis_docx():
     h.runs[0].font.size = Pt(15)
     h.runs[0].font.color.rgb = COLOR_DARK
 
-    p = doc.add_paragraph("The Vakil Setu project is systematically validated against the institutional V.E.T.S evaluation framework:")
+    p = doc.add_paragraph("The Legal-Setu project is systematically validated against the institutional V.E.T.S evaluation framework:")
     p.runs[0].font.name = "Times New Roman"
     p.runs[0].font.size = Pt(11)
 
     vets = [
         ("V — Viability", "The project is thoroughly feasible within the standard 12-week academic timeline. Development utilizes commodity workstation hardware without requiring expensive multi-GPU clusters. All core technologies—including React 18, Node.js, the W3C Web Speech API, MongoDB Atlas, and the Razorpay Checkout SDK—are production-stable, well-documented, and freely accessible. The system architecture directly leverages the candidate's core competencies in full-stack web engineering, API integration, and asynchronous distributed systems."),
-        ("E — Engineering Depth", "Vakil Setu represents substantial systems engineering that goes far beyond trivial CRUD applications or basic AI wrappers. Key engineering challenges successfully solved include:\n1. Client-side audio stream lifecycle management with real-time interim token rendering and BCP-47 locale tagging.\n2. Dual-engine AI orchestration featuring structured JSON schema prompt enforcement and deterministic regex failover.\n3. Autonomous web scraping and data normalization pipeline using Cheerio to crawl, deduplicate, and upsert public lawyer profiles.\n4. Cryptographic payment escrow verification using server-side HMAC SHA-256 hash recalculation.\n5. Client-side session state hydration and multi-turn sliding context preservation adhering to data minimization standards."),
+        ("E — Engineering Depth", "Legal-Setu represents substantial systems engineering that goes far beyond trivial CRUD applications or basic AI wrappers. Key engineering challenges successfully solved include:\n1. Client-side audio stream lifecycle management with real-time interim token rendering and BCP-47 locale tagging.\n2. Dual-engine AI orchestration featuring structured JSON schema prompt enforcement and deterministic regex failover.\n3. Autonomous web scraping and data normalization pipeline using Cheerio to crawl, deduplicate, and upsert public lawyer profiles.\n4. Cryptographic payment escrow verification using server-side HMAC SHA-256 hash recalculation.\n5. Client-side session state hydration and multi-turn sliding context preservation adhering to data minimization standards."),
         ("T — Trend / Statutory Alignment", "The project directly aligns with contemporary 2026 technological and national policy priorities:\n• Digital India and the Ministry of Law and Justice's Tele-Law mission to mainstream access to justice across Gram Panchayats.\n• Modern Indic language computing initiatives (such as Bhashini) delivering multilingual public services.\n• Full compliance with Section 29 of the Advocates Act, 1961, Rule 36 of Bar Council of India advertising norms, and the Digital Personal Data Protection (DPDP) Act, 2023."),
-        ("S — Social / Industry Impact", "In India, the lack of timely legal guidance exacerbates poverty, domestic distress, and unlawful exploitation. By providing free, hands-free bilingual legal triage in spoken Hindi and English, Vakil Setu empowers everyday citizens to understand their rights, preserves critical evidence before statutory limitation periods expire under the Limitation Act 1963, and connects underprivileged citizens to statutory free legal aid (NALSA/DLSA).")
+        ("S — Social / Industry Impact", "In India, the lack of timely legal guidance exacerbates poverty, domestic distress, and unlawful exploitation. By providing free, hands-free bilingual legal triage in spoken Hindi and English, Legal-Setu empowers everyday citizens to understand their rights, preserves critical evidence before statutory limitation periods expire under the Limitation Act 1963, and connects underprivileged citizens to statutory free legal aid (NALSA/DLSA).")
     ]
     for v_title, v_desc in vets:
         p_v = doc.add_paragraph()
@@ -592,7 +592,7 @@ def create_synopsis_docx():
     p.runs[0].font.size = Pt(11)
 
     outcomes = [
-        ("1. Vakil Setu Web Application Prototype", "A fully functional, responsive Single Page Application supporting voice dictation in Hindi and English, dynamic case analysis dashboards, advocate discovery, and appointment booking."),
+        ("1. Legal-Setu Web Application Prototype", "A fully functional, responsive Single Page Application supporting voice dictation in Hindi and English, dynamic case analysis dashboards, advocate discovery, and appointment booking."),
         ("2. Dual-Engine Legal Triage Service", "A fault-tolerant Node.js microservice (/api/ai/triage) providing structured legal domain categorization, urgency estimation, and plain-language action recommendations with sub-50ms regex failover."),
         ("3. Autonomous Directory Ingestion Engine", "A production-ready Cheerio web scraping pipeline that extracts, normalizes, and upserts public lawyer profiles into MongoDB with domain taxonomy mapping."),
         ("4. Cryptographic Escrow & Booking Gateway", "A secure transaction gateway supporting Razorpay order creation, HMAC SHA-256 signature verification, and automated regulatory refunds."),
@@ -622,7 +622,7 @@ def create_synopsis_docx():
         "The final prototype will be demonstrated in a live side-by-side browser and terminal environment evaluating 5 representative "
         "real-world legal dispute scenarios (landlord tenant dispute, cheque bounce notice, domestic violence complaint, unlawful police detention, and property title contest):\n"
         "• Baseline Scenario: An unassisted litigant navigating a traditional English legal portal or generic chatbot, displaying high cognitive burden and legal hallucinations.\n"
-        "• Vakil Setu Scenario: Identical dispute dictated via Hindi voice, demonstrating real-time transcription, sub-3s statutory triage, spoken audio summary, verified advocate matching, and simulated Razorpay escrow booking."
+        "• Legal-Setu Scenario: Identical dispute dictated via Hindi voice, demonstrating real-time transcription, sub-3s statutory triage, spoken audio summary, verified advocate matching, and simulated Razorpay escrow booking."
     )
     p.runs[0].font.name = "Times New Roman"
     p.runs[0].font.size = Pt(10.5)
@@ -681,7 +681,7 @@ def create_synopsis_docx():
         ("Milestone 1 (Week 4)", "Client-side voice engine successfully captures spoken Hindi and English with live token streaming and under 200ms rendering latency."),
         ("Milestone 2 (Week 7)", "Dual-engine triage pipeline achieves over 90% domain categorization precision with zero 500 errors during simulated cloud API dropouts."),
         ("Milestone 3 (Week 9)", "Razorpay payment gateway successfully validates genuine signatures and rejects 100% of tampered transaction tokens; emergency SOS hub functions reliably."),
-        ("Risk Mitigation Strategy", "If upstream LLM endpoints experience prolonged downtime or quota exhaustion, Vakil Setu automatically engages the local regex pattern-matching engine, guaranteeing uninterrupted citizen advisory without service degradation.")
+        ("Risk Mitigation Strategy", "If upstream LLM endpoints experience prolonged downtime or quota exhaustion, Legal-Setu automatically engages the local regex pattern-matching engine, guaranteeing uninterrupted citizen advisory without service degradation.")
     ]
     for m_title, m_desc in milestones:
         p_m = doc.add_paragraph()
@@ -728,9 +728,9 @@ def create_synopsis_docx():
         p_rf.space_after = Pt(4)
 
     # Save Word document
-    out_path = os.path.join(os.getcwd(), "Vakil_Setu_Synopsis.docx")
+    out_path = os.path.join(os.getcwd(), "Legal_Setu_Synopsis.docx")
     doc.save(out_path)
-    print(f"Vakil_Setu_Synopsis.docx generated successfully at: {out_path}")
+    print(f"Legal_Setu_Synopsis.docx generated successfully at: {out_path}")
 
 if __name__ == "__main__":
     create_synopsis_docx()

@@ -1,5 +1,8 @@
-const STORAGE_KEY = "vakil-setu-chat-v1";
-const SESSION_KEY = "vakil-setu-session-v1";
+const STORAGE_KEY = "legal-setu-chat-v1";
+const SESSION_KEY = "legal-setu-session-v1";
+// Read pre-rename sessions until they are saved under the new name.
+const LEGACY_STORAGE_KEY = "vakil-setu-chat-v1";
+const LEGACY_SESSION_KEY = "vakil-setu-session-v1";
 
 export function createMessage(role, content, extra = {}) {
   return {
@@ -18,7 +21,7 @@ export function assistantFromClassification(classification) {
 
 export function loadChatFromStorage() {
   try {
-    const raw = sessionStorage.getItem(STORAGE_KEY);
+    const raw = sessionStorage.getItem(STORAGE_KEY) ?? sessionStorage.getItem(LEGACY_STORAGE_KEY);
     if (!raw) return [];
     const parsed = JSON.parse(raw);
     return Array.isArray(parsed) ? parsed : [];
@@ -30,6 +33,7 @@ export function loadChatFromStorage() {
 export function saveChatToStorage(messages) {
   try {
     sessionStorage.setItem(STORAGE_KEY, JSON.stringify(messages));
+    sessionStorage.removeItem(LEGACY_STORAGE_KEY);
   } catch {
     /* quota or private mode */
   }
@@ -39,6 +43,8 @@ export function clearChatStorage() {
   try {
     sessionStorage.removeItem(STORAGE_KEY);
     sessionStorage.removeItem(SESSION_KEY);
+    sessionStorage.removeItem(LEGACY_STORAGE_KEY);
+    sessionStorage.removeItem(LEGACY_SESSION_KEY);
   } catch {
     /* ignore */
   }
@@ -46,7 +52,7 @@ export function clearChatStorage() {
 
 export function loadSessionFromStorage() {
   try {
-    const raw = sessionStorage.getItem(SESSION_KEY);
+    const raw = sessionStorage.getItem(SESSION_KEY) ?? sessionStorage.getItem(LEGACY_SESSION_KEY);
     if (!raw) return null;
     return JSON.parse(raw);
   } catch {
@@ -60,6 +66,7 @@ export function saveSessionToStorage({ classification, advocates, ttsLang, voice
       SESSION_KEY,
       JSON.stringify({ classification, advocates, ttsLang, voiceText })
     );
+    sessionStorage.removeItem(LEGACY_SESSION_KEY);
   } catch {
     /* ignore */
   }

@@ -1,4 +1,4 @@
-# Voice-Based Legal Assistance Platform (Vakil Setu)
+# Voice-Based Legal Assistance Platform (Legal-Setu)
 
 Production-ready MVP using React (Vite), Node.js (Express), and MongoDB (Mongoose).
 
@@ -15,7 +15,7 @@ Production-ready MVP using React (Vite), Node.js (Express), and MongoDB (Mongoos
 ## Project Structure
 
 ```
-Vakil-setu/
+Legal-Setu/
   backend/
     src/
       models/

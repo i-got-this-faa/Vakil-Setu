@@ -1,0 +1,11 @@
+# Keep document and image bytes intact and out of line-based diffs.
+*.pdf binary
+*.docx binary
+*.pptx binary
+*.xlsx binary
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.webp binary
+*.glb binary
+*.blend binary

@@ -1,6 +1,6 @@
 "use client";
 
-import { Button, Input, Label } from "@vakil/ui";
+import { Button, Input, Label } from "@legal-setu/ui";
 
 import Link from "next/link";
 import { useState } from "react";
@@ -10,8 +10,8 @@ import {
   usePaginatedQuery,
   useQuery,
 } from "convex/react";
-import { api } from "@vakil/backend/api";
-import type { Doc, Id } from "@vakil/backend/data-model";
+import { api } from "@legal-setu/backend/api";
+import type { Doc, Id } from "@legal-setu/backend/data-model";
 import {
   LEGAL_DOMAINS,
   isLegalDomain,
@@ -19,7 +19,7 @@ import {
   type ConsultationMode,
   type LegalDomain,
   type PilotLocale,
-} from "@vakil/domain";
+} from "@legal-setu/domain";
 import { ServiceBoundary, SetupNotice } from "./providers";
 import {
   EmptyState,

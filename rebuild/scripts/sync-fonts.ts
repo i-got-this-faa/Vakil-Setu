@@ -7,7 +7,7 @@ const destination = path.resolve("apps/web/public/fonts");
 await mkdir(destination, { recursive: true });
 for (const family of families) {
   const directory = `notosans${family.toLowerCase()}`;
-  const listing = await fetch(`https://api.github.com/repos/google/fonts/contents/ofl/${directory}`, { headers: { "User-Agent": "Vakil-Setu-font-sync" } });
+  const listing = await fetch(`https://api.github.com/repos/google/fonts/contents/ofl/${directory}`, { headers: { "User-Agent": "Legal-Setu-font-sync" } });
   if (!listing.ok) throw new Error(`Font listing failed: ${family} (${listing.status})`);
   const entries: unknown = await listing.json();
   if (!Array.isArray(entries)) throw new Error("Invalid font listing");

@@ -1,5 +1,5 @@
 /**
- * @vakil/i18n - Type definitions
+ * @legal-setu/i18n - Type definitions
  * Platform-independent, strictly-typed internationalization models
  * for English and the 22 Eighth Schedule languages of India.
  */

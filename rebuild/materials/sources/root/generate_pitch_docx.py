@@ -145,7 +145,7 @@ def create_pitch_docx():
     p_title = doc.add_paragraph()
     p_title.paragraph_format.space_before = Pt(4)
     p_title.paragraph_format.space_after = Pt(4)
-    r_title = p_title.add_run("Vakil Setu (वकील सेतु)")
+    r_title = p_title.add_run("Legal-Setu")
     r_title.font.name = 'Arial'
     r_title.font.size = Pt(26)
     r_title.font.bold = True
@@ -193,7 +193,7 @@ def create_pitch_docx():
 
     add_h2("The 30-Second Elevator Pitch")
     add_callout(
-        "Vakil Setu is an AI-powered legal triage and document intelligence platform designed specifically for the Indian legal ecosystem. "
+        "Legal-Setu is an AI-powered legal triage and document intelligence platform designed specifically for the Indian legal ecosystem. "
         "It allows common citizens to speak or upload legal notices in their native language, instantly translates complex disputes into active "
         "Bharatiya Nyaya Sanhita (BNS 2024) legal codes, evaluates bail eligibility and statutory deadlines, and bridges the citizen to verified "
         "legal aid or licensed advocates before critical court time limits expire.",
@@ -301,7 +301,7 @@ def create_pitch_docx():
         "• Code of Criminal Procedure, 1973 (CrPC) was replaced by the Bharatiya Nagarik Suraksha Sanhita, 2023 (BNSS).\n"
         "• Indian Evidence Act, 1872 (IEA) was replaced by the Bharatiya Sakshya Adhiniyam, 2023 (BSA).\n"
         "Because thousands of statutory sections were renumbered and updated, virtually all existing academic projects and software "
-        "tools are legally obsolete. Vakil Setu is among the first academic implementations reflecting active 2024 statutes.",
+        "tools are legally obsolete. Legal-Setu is among the first academic implementations reflecting active 2024 statutes.",
         bold_prefix="Statutory Migration: "
     )
 
@@ -386,7 +386,7 @@ def create_pitch_docx():
     # =========================================================================
     add_h1("5. Enterprise System Architecture & Engineering Specifications")
     add_p(
-        "Vakil Setu is engineered on a decoupled 4-tier full-stack architecture designed for enterprise scalability, "
+        "Legal-Setu is engineered on a decoupled 4-tier full-stack architecture designed for enterprise scalability, "
         "sub-second responsiveness, and zero downtime:"
     )
 
@@ -414,7 +414,7 @@ def create_pitch_docx():
     add_h2("1. Compliance with Section 29, Advocates Act, 1961")
     add_p(
         "Section 29 of the Advocates Act, 1961, establishes that only advocates enrolled with a State Bar Council are entitled "
-        "to practice law in India. Vakil Setu strictly complies with this statute by operating solely as an **informational triage filter "
+        "to practice law in India. Legal-Setu strictly complies with this statute by operating solely as an **informational triage filter "
         "and pre-intake awareness bridge**. It does not represent clients, draft contested court pleadings, or provide advocate-client "
         "privileged opinions. Every screen features explicit disclaimers, funnelling the citizen to licensed advocates for legal representation.",
         bold_prefix="Statutory Limitation: "
@@ -423,7 +423,7 @@ def create_pitch_docx():
     add_h2("2. Constitutional Alignment with Article 39A")
     add_p(
         "Article 39A of the Constitution of India mandates Equal Justice and Free Legal Aid. In practice, indigent citizens cannot afford "
-        "preliminary consultations. Vakil Setu provides 100% free preliminary triage, educates users on pre-arrest safeguards under Section 35(3) "
+        "preliminary consultations. Legal-Setu provides 100% free preliminary triage, educates users on pre-arrest safeguards under Section 35(3) "
         "BNSS, and directly integrates eligibility criteria for free representation through the **District Legal Services Authorities (DLSA)** "
         "and **NALSA**.",
         bold_prefix="Constitutional Mandate: "
@@ -453,9 +453,8 @@ def create_pitch_docx():
 
     add_h2("Phase 2: Strategic Consumer Rebranding")
     add_p(
-        "To establish consumer trust and institutional partnership potential, the project will transition to:\n"
-        "• **NyayaMitra** (Friend of Justice) — Emphasizing citizen-first constitutional empathy.\n"
-        "• **VidhiAI** — Highlighting modern enterprise legal engineering.",
+        "The official project name is **Legal-Setu**. Apply this name consistently across the application, "
+        "project materials, and institutional presentations.",
         bold_prefix="Brand Strategy: "
     )
 
@@ -525,7 +524,7 @@ def create_pitch_docx():
     add_p("Click 'Match Verified Advocates for this Notice' to show seamless transition to advocate booking.", bold_prefix="Handoff: ")
 
     # Save document
-    output_filename = "Vakil_Setu_Pitch_Report.docx"
+    output_filename = "Legal_Setu_Pitch_Report.docx"
     doc.save(output_filename)
     print(f"Word document pitch report saved successfully to: {os.path.abspath(output_filename)}")
 

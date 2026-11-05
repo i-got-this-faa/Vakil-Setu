@@ -1,6 +1,6 @@
 # Project materials
 
-This collection preserves the project documents, presentation variants and authoring sources found in the local Vakil Setu workspace on 18 October 2026. Original files were copied without modification; names such as `Final` are original names, not a declaration that the contents match today's implementation.
+This collection contains the project documents, presentation variants and authoring sources collected on 18 October 2026. Their branding and filenames were updated to Legal-Setu on 28 October 2026. Names such as `Final` are inherited names, not a declaration that the contents match today's implementation.
 
 For current behavior and setup, use the repository [README](../README.md), [requirements](../docs/requirements.md), [decisions](../docs/decisions.md), [setup](../docs/setup.md) and [verification evidence](../docs/verification.md). These take precedence over archived reports and slides.
 
@@ -8,15 +8,15 @@ For current behavior and setup, use the repository [README](../README.md), [requ
 
 | Purpose | Material |
 |---|---|
-| Original from-scratch requirements supplied for the rebuild | [SRS Word](documents/Vakil_Setu_SRS_From_Scratch.docx), [PDF export](documents/Vakil_Setu_SRS_From_Scratch.pdf) |
-| Project presentation | [Project deck](presentations/Vakil_Setu_PROJECT_Deck.pptx), [speaker script](documents/Vakil_Setu_Presentation_Script.docx), [two-person script](presentations/Vakil_Setu_Two_Person_Script.md) |
-| Faculty presentation variant | [Faculty final](presentations/Vakil_Setu_Faculty_Final.pptx) |
-| Short presentation variant | [Compact final](presentations/Vakil_Setu_Compact_Final.pptx) |
-| Project synopsis | [Word](documents/Vakil_Setu_Synopsis.docx), [PDF](documents/Vakil_Setu_Synopsis.pdf) |
-| Pitch reports | [Pitch report](documents/Vakil_Setu_Pitch_Report.docx), [director pitch](documents/Vakil_Setu_Director_Pitch.docx), [original pitch](documents/Vakil-setu%20pitch.docx) |
-| Historical handoff and study guide | [Word](documents/Vakil_Setu_Project_Handoff_and_Study_Guide.docx) |
-| Historical SRS variants | [SRS Word](documents/Vakil_Setu_SRS.docx), [SRS PDF](documents/Vakil_Setu_SRS.pdf), [SRS report](documents/Vakil_Setu_SRS_Report.docx) |
-| Historical architecture illustration | [PNG](diagrams/vakil_setu_architecture.png) |
+| Original from-scratch requirements supplied for the rebuild | [SRS Word](documents/Legal_Setu_SRS_From_Scratch.docx), [PDF export](documents/Legal_Setu_SRS_From_Scratch.pdf) |
+| Project presentation | [Project deck](presentations/Legal_Setu_PROJECT_Deck.pptx), [speaker script](documents/Legal_Setu_Presentation_Script.docx), [two-person script](presentations/Legal_Setu_Two_Person_Script.md) |
+| Faculty presentation variant | [Faculty final](presentations/Legal_Setu_Faculty_Final.pptx) |
+| Short presentation variant | [Compact final](presentations/Legal_Setu_Compact_Final.pptx) |
+| Project synopsis | [Word](documents/Legal_Setu_Synopsis.docx), [PDF](documents/Legal_Setu_Synopsis.pdf) |
+| Pitch reports | [Pitch report](documents/Legal_Setu_Pitch_Report.docx), [director pitch](documents/Legal_Setu_Director_Pitch.docx), [original pitch](documents/Legal-Setu%20pitch.docx) |
+| Historical handoff and study guide | [Word](documents/Legal_Setu_Project_Handoff_and_Study_Guide.docx) |
+| Historical SRS variants | [SRS Word](documents/Legal_Setu_SRS.docx), [SRS PDF](documents/Legal_Setu_SRS.pdf), [SRS report](documents/Legal_Setu_SRS_Report.docx) |
+| Historical architecture illustration | [PNG](diagrams/legal_setu_architecture.png) |
 
 ## Structure
 
@@ -35,7 +35,7 @@ archive/legacy/    Earlier frontend/backend source; outside Bun workspaces
 docs/              Current requirements, setup, audits and validation evidence
 ```
 
-All presentation variants are retained because filenames alone cannot establish which was approved. [The inventory](inventory.json) maps each file back to its original local path and records hashes for byte-for-byte preservation. Source paths are relative to the original parent checkout; destination paths are relative to this repository root. Office packages were checked for ZIP integrity and text/slide content, and PDF headers/trailers were checked. Their page layouts and factual claims were not revalidated for this archival task.
+All presentation variants are retained because filenames alone cannot establish which was approved. [The inventory](inventory.json) records current paths, sizes and hashes, together with the original baseline information for files changed during the rename. Source paths are relative to the parent checkout; destination paths are relative to this repository root. See [the rename verification](../docs/branding-rename.md) for checks and limits. The historical factual claims have not been revalidated.
 
 ## Historical claims and reuse
 

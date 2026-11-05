@@ -1,7 +1,7 @@
 {
   "sharedMessages": {
     "navigation": {
-      "brandName": "Vakil Setu",
+      "brandName": "Legal-Setu",
       "home": "Home",
       "findAdvocate": "Find Advocate",
       "intake": "Legal Intake",
@@ -99,7 +99,7 @@
       "statusBadgeLabel": "Booking Status"
     },
     "dashboard": {
-      "welcome": "Welcome to Vakil Setu",
+      "welcome": "Welcome to Legal-Setu",
       "roleCitizen": "Citizen Client",
       "roleAdvocate": "Advocate",
       "roleAdmin": "System Administrator",
@@ -163,15 +163,15 @@
       "stopRecording": "Stop Listening",
       "playback": "Read Text Aloud",
       "permissionDenied": "Microphone access permission was denied by browser settings.",
-      "speechNotVerifiedNotice": "Browser speech recognition is unverified and may send audio to the browser or its speech service. Review and edit the returned text before adding it to intake. Vakil Setu does not store an audio recording.",
+      "speechNotVerifiedNotice": "Browser speech recognition is unverified and may send audio to the browser or its speech service. Review and edit the returned text before adding it to intake. Legal-Setu does not store an audio recording.",
       "microphoneRequired": "Microphone permission is required for speech input.",
       "unsupportedBrowser": "Speech input is not available in this browser."
     },
     "consent": {
       "termsTitle": "Terms of Legal Service & Consent",
-      "termsBody": "By using Vakil Setu, you acknowledge that this platform connects citizens with licensed advocates and does not itself provide legal advice. Information entered is confidential subject to applicable law.",
+      "termsBody": "By using Legal-Setu, you acknowledge that this platform connects citizens with licensed advocates and does not itself provide legal advice. Information entered is confidential subject to applicable law.",
       "clientAdvocatePrivilege": "Advocate-client confidentiality attaches upon formal bilateral consultation confirmation by both parties.",
-      "emergencyDisclaimer": "Vakil Setu is not an emergency legal dispatch service. For immediate crises or bodily harm threats, contact local law enforcement (112).",
+      "emergencyDisclaimer": "Legal-Setu is not an emergency legal dispatch service. For immediate crises or bodily harm threats, contact local law enforcement (112).",
       "aiPreliminaryNotice": "AI summaries, when generated, are preliminary and unverified. Review and correct them before saving or sharing. They are not legal advice.",
       "agreeCheckbox": "I have read, understood, and accept the platform terms and consent disclaimers.",
       "requiredConsentWarning": "You must review and accept the consent disclaimers before submitting."
@@ -198,7 +198,7 @@
     "saveIntake": "Save reviewed intake",
     "notSaved": "This text has not been saved. Configure the services and sign in before saving.",
     "noTranslation": "Language selection describes your text. It does not automatically translate it.",
-    "voiceDisclosure": "Your browser may send audio to its vendor’s servers for recognition. Vakil Setu does not store an audio recording. Recognition in your language depends on the browser and is not guaranteed. Typed input is always available.",
+    "voiceDisclosure": "Your browser may send audio to its vendor’s servers for recognition. Legal-Setu does not store an audio recording. Recognition in your language depends on the browser and is not guaranteed. Typed input is always available.",
     "voiceConsent": "I understand this browser processing and choose to use my microphone.",
     "transcriptReview": "Review final transcript",
     "addTranscript": "Add reviewed text to intake",
@@ -276,7 +276,7 @@
     "loadingDocuments": "Loading documents…",
     "noTurns": "No messages yet. Ask a question or share details about your case below.",
     "youLabel": "You",
-    "assistantLabel": "Vakil Setu Assistant (Google Gemini)",
+    "assistantLabel": "Legal-Setu Assistant (Google Gemini)",
     "pendingStatus": "Waiting for response from Gemini…",
     "readAloudLabel": "Read response aloud",
     "removedAttachment": "Removed attachment",

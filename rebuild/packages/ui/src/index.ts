@@ -1,6 +1,6 @@
 /**
- * @vakil/ui
- * Accessible shadcn-style component library for Vakil Setu web applications.
+ * @legal-setu/ui
+ * Accessible shadcn-style component library for Legal-Setu web applications.
  * Built with Radix Primitives and Tailwind CSS v4.
  */
 

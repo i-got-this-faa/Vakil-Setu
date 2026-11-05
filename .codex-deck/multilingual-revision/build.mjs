@@ -23,12 +23,12 @@ function pipeline(s,stages){let last;stages.forEach((g,i)=>{let y=116+i*112;regi
 
 // 1. Cover, matching the supplied reference composition.
 {
-let s=p.slides.add();s.background.fill='#FFFFFF';text(s,'VAKIL SETU',50,31,860,80,62,C.blue,true,'center');
+let s=p.slides.add();s.background.fill='#FFFFFF';text(s,'LEGAL-SETU',50,31,860,80,62,C.blue,true,'center');
 text(s,'Multilingual voice-based legal assistance\nand advocate access',60,129,840,80,31,'#0751AA',true,'center');
 text(s,'Presented by: Raghav Nargotra (2023A1R033)\nSidarth Gupta (2023A1R038)',90,224,780,67,24,C.ink,false,'center');
 let bytes=await fs.readFile(ROOT+'/.codex-deck/new-reference/logo-alpha.png');s.images.add({blob:bytes.buffer.slice(bytes.byteOffset,bytes.byteOffset+bytes.byteLength),contentType:'image/png',alt:'MIET institutional logo from supplied reference',fit:'contain',position:{left:394,top:391,width:172,height:61}});
 text(s,'Model Institute of Engineering and Technology (Autonomous), Jammu · 2026',50,472,860,30,18,C.muted,false,'center');
-note(s,'Presenter names and roll numbers retained from the previous Vakil Setu faculty presentation. Institutional logo supplied in the reference PDF.',['.codex-deck/final.mjs']);}
+note(s,'Presenter names and roll numbers retained from the previous Legal-Setu faculty presentation. Institutional logo supplied in the reference PDF.',['.codex-deck/final.mjs']);}
 
 // 2. Problem and intended audience.
 {
@@ -105,5 +105,5 @@ note(s,'Roadmap describes targets rather than completed milestones. General guid
 for(const h of headers){h.position={...h.position,left:48,width:190};h.text.style={typeface:'Arial',fontSize:13,color:C.ink,alignment:'left',autoFit:'none'};h.bringToFront();}
 await (await PresentationFile.exportPptx(p)).save(BUILD+'/candidate.pptx');
 for(let i=0;i<p.slides.items.length;i++)await fs.writeFile(BUILD+'/previews/slide-'+(i+1)+'.png',new Uint8Array(await(await p.export({slide:p.slides.items[i],format:'png',scale:1.5})).arrayBuffer()));
-const result=await finalizePresentation({workspaceDir:ROOT,candidatePath:BUILD+'/candidate.pptx',finalPath:ROOT+'/output/presentations/Vakil_Setu_Short_Detailed_Multilingual.pptx',pythonExecutable:'C:/Users/DELL/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/python.exe',integrityValidatorPath:SKILL+'/container_tools/inspect_presentation_package_integrity.py',layoutValidatorPath:SKILL+'/container_tools/inspect_presentation_layout_geometry.py',layoutArgs:['--expected-slide-size-emu','9144000,5143500','--validate-bullet-geometry','--validate-heading-fit','--require-native-table-slide','7'],explicitTotalSlideCount:9,requiredNativeTableOwnerSlides:[7],fontPolicy:{basis:'design',families:['Arial']},verifyArtifactToolImport:true,receiptPath:BUILD+'/validation.json'});
+const result=await finalizePresentation({workspaceDir:ROOT,candidatePath:BUILD+'/candidate.pptx',finalPath:ROOT+'/output/presentations/Legal_Setu_Short_Detailed_Multilingual.pptx',pythonExecutable:'C:/Users/DELL/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/python.exe',integrityValidatorPath:SKILL+'/container_tools/inspect_presentation_package_integrity.py',layoutValidatorPath:SKILL+'/container_tools/inspect_presentation_layout_geometry.py',layoutArgs:['--expected-slide-size-emu','9144000,5143500','--validate-bullet-geometry','--validate-heading-fit','--require-native-table-slide','7'],explicitTotalSlideCount:9,requiredNativeTableOwnerSlides:[7],fontPolicy:{basis:'design',families:['Arial']},verifyArtifactToolImport:true,receiptPath:BUILD+'/validation.json'});
 console.log(JSON.stringify({final:result.finalPath,integrity:result.packageIntegrity.status,layout:result.presentationLayout}));

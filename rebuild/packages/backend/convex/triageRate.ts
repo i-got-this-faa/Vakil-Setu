@@ -1,4 +1,4 @@
-import { LIMITS } from "@vakil/domain";
+import { LIMITS } from "@legal-setu/domain";
 import { v } from "convex/values";
 import { internalMutation } from "./_generated/server";
 import { fail, ownCase } from "./lib/access";

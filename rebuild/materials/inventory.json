@@ -1,37 +1,67 @@
 {
   "auditedOn": "2026-10-18",
   "remoteBefore": "3c777d7c6b0f190b9a4d605b1e1da2b0708691c0",
-  "scope": "Local project root, output exports, authoring sources and tracked legacy code. Original files preserved. No application code changed.",
+  "scope": "Project materials and legacy code collected on 2026-10-18; branding and filenames updated to Legal-Setu on 2026-10-28. Baseline fields preserve the original audit metadata.",
   "files": [
     {
       "source": "build_handoff_guide.py",
       "path": "materials/sources/root/build_handoff_guide.py",
-      "bytes": 68773,
-      "sha256": "797a07d2ba1ccfa3566158651bd3e4e6a5595da20d4a51b3d7ef8f7c3e6bf138"
+      "bytes": 68741,
+      "sha256": "34ac6fbc528374dd4a4a44f9676cf921327b05fc34a69fa11ecae883ae77c9ae",
+      "baseline": {
+        "source": "build_handoff_guide.py",
+        "path": "materials/sources/root/build_handoff_guide.py",
+        "bytes": 68773,
+        "sha256": "797a07d2ba1ccfa3566158651bd3e4e6a5595da20d4a51b3d7ef8f7c3e6bf138"
+      }
     },
     {
       "source": "build_synopsis_docx.py",
       "path": "materials/sources/root/build_synopsis_docx.py",
       "bytes": 44731,
-      "sha256": "90b80cbed3bc3a32622f7d830697b8d7654c88614ba4674e3cea652afe3eb0d4"
+      "sha256": "094396067c3c647e252d2d4f568d6055385cbab0129032a18baafa3e79deed4a",
+      "baseline": {
+        "source": "build_synopsis_docx.py",
+        "path": "materials/sources/root/build_synopsis_docx.py",
+        "bytes": 44731,
+        "sha256": "90b80cbed3bc3a32622f7d830697b8d7654c88614ba4674e3cea652afe3eb0d4"
+      }
     },
     {
       "source": "build_typst_synopsis.py",
       "path": "materials/sources/root/build_typst_synopsis.py",
       "bytes": 30402,
-      "sha256": "965a09fb2fdb910831388244298498249bb9f30b00bacec9127ecce0f0080afa"
+      "sha256": "70d4143a84f77a062ab0ee6e7c1a83929b73e5eb5e6b2de070a78e8bd05ece32",
+      "baseline": {
+        "source": "build_typst_synopsis.py",
+        "path": "materials/sources/root/build_typst_synopsis.py",
+        "bytes": 30402,
+        "sha256": "965a09fb2fdb910831388244298498249bb9f30b00bacec9127ecce0f0080afa"
+      }
     },
     {
       "source": "generate_architecture_image.py",
       "path": "materials/sources/root/generate_architecture_image.py",
       "bytes": 7448,
-      "sha256": "e7ff49665c5ede2e342d3ef7914415fee246fc065c74e863b8c90130fbd4c579"
+      "sha256": "2beca11920141d8e4c37bddbcea49e4055905a9ffdb559ab073e26eb793cd86e",
+      "baseline": {
+        "source": "generate_architecture_image.py",
+        "path": "materials/sources/root/generate_architecture_image.py",
+        "bytes": 7448,
+        "sha256": "e7ff49665c5ede2e342d3ef7914415fee246fc065c74e863b8c90130fbd4c579"
+      }
     },
     {
       "source": "generate_docs.py",
       "path": "materials/sources/root/generate_docs.py",
-      "bytes": 29134,
-      "sha256": "65f1a0ac70e0cfc183e1f0a0e5f62e4647bcecde59bf961cd50b8d2d2d608a54"
+      "bytes": 29078,
+      "sha256": "63e10093637b68064cb6c77106d605317da4024a1057c9ea335a4223c573d6e6",
+      "baseline": {
+        "source": "generate_docs.py",
+        "path": "materials/sources/root/generate_docs.py",
+        "bytes": 29134,
+        "sha256": "65f1a0ac70e0cfc183e1f0a0e5f62e4647bcecde59bf961cd50b8d2d2d608a54"
+      }
     },
     {
       "source": "generate_handoff_docx.py",
@@ -42,352 +72,682 @@
     {
       "source": "generate_pitch_docx.py",
       "path": "materials/sources/root/generate_pitch_docx.py",
-      "bytes": 33468,
-      "sha256": "743fbf429be6844701e6f8f89fe0f6b6e9914cc6ac0c98a2ae4723fe0d287fab"
+      "bytes": 33313,
+      "sha256": "fdb90172a8d31c992f09a8e3e84566a70d556f2e77756ec2b9917aac95e6e527",
+      "baseline": {
+        "source": "generate_pitch_docx.py",
+        "path": "materials/sources/root/generate_pitch_docx.py",
+        "bytes": 33468,
+        "sha256": "743fbf429be6844701e6f8f89fe0f6b6e9914cc6ac0c98a2ae4723fe0d287fab"
+      }
     },
     {
       "source": "generate_presentation.py",
       "path": "materials/sources/root/generate_presentation.py",
-      "bytes": 38904,
-      "sha256": "2a2ad1e5916fb10b6d9443f10ab5f89de3146d5d17646bd8382096bf7d3ce682"
+      "bytes": 38876,
+      "sha256": "1529cae91ef519edc2e9f66a3c27057afa8f73860ae56bb22c7a3610abf96b41",
+      "baseline": {
+        "source": "generate_presentation.py",
+        "path": "materials/sources/root/generate_presentation.py",
+        "bytes": 38904,
+        "sha256": "2a2ad1e5916fb10b6d9443f10ab5f89de3146d5d17646bd8382096bf7d3ce682"
+      }
     },
     {
       "source": "generate_srs_report.py",
       "path": "materials/sources/root/generate_srs_report.py",
-      "bytes": 38879,
-      "sha256": "6150f8ba9d5a18817f576e06a92e6eea22a8575e3678f3c6ada4c27b650ba4af"
+      "bytes": 38851,
+      "sha256": "d6a2f118576d59abb11c5032517653d0f186aa5c4c69eb9ccec8f52a63ecd123",
+      "baseline": {
+        "source": "generate_srs_report.py",
+        "path": "materials/sources/root/generate_srs_report.py",
+        "bytes": 38879,
+        "sha256": "6150f8ba9d5a18817f576e06a92e6eea22a8575e3678f3c6ada4c27b650ba4af"
+      }
     },
     {
       "source": "PITCH_REPORT.md",
       "path": "materials/sources/root/PITCH_REPORT.md",
-      "bytes": 19192,
-      "sha256": "21c501999273f17c67f35d0fc5a9fd88e56b3dd149007ee9cd6fd9def676bc5c"
+      "bytes": 19062,
+      "sha256": "31087215a8ccf582c7628fa5682c1f9c606ca06895f92b408b65f25f27c28b5f",
+      "baseline": {
+        "source": "PITCH_REPORT.md",
+        "path": "materials/sources/root/PITCH_REPORT.md",
+        "bytes": 19192,
+        "sha256": "21c501999273f17c67f35d0fc5a9fd88e56b3dd149007ee9cd6fd9def676bc5c"
+      }
     },
     {
       "source": "presentation.html",
       "path": "materials/sources/root/presentation.html",
-      "bytes": 44070,
-      "sha256": "9dceeed3759d3fb05d6b0990a898ea0e747e0bed8aa1b6c3b4e4fee1e1a91277"
+      "bytes": 44042,
+      "sha256": "dd6ae7dc1f0e9257ef4d104b0e4b5d199ba2538ee7d87904f02678d1d9bca5d7",
+      "baseline": {
+        "source": "presentation.html",
+        "path": "materials/sources/root/presentation.html",
+        "bytes": 44070,
+        "sha256": "9dceeed3759d3fb05d6b0990a898ea0e747e0bed8aa1b6c3b4e4fee1e1a91277"
+      }
     },
     {
       "source": "SRS.md",
       "path": "materials/sources/root/SRS.md",
-      "bytes": 22690,
-      "sha256": "a42ccb47c580271bb21aa4e615097b4a65f0bc45ced817badcab7b6158948f27"
+      "bytes": 22662,
+      "sha256": "3d9ccbe142fbec2fa98b58f56e7c708813ac053115b9c677b031e610ac00f3e4",
+      "baseline": {
+        "source": "SRS.md",
+        "path": "materials/sources/root/SRS.md",
+        "bytes": 22690,
+        "sha256": "a42ccb47c580271bb21aa4e615097b4a65f0bc45ced817badcab7b6158948f27"
+      }
     },
     {
       "source": "SRS_print.html",
       "path": "materials/sources/root/SRS_print.html",
-      "bytes": 11477,
-      "sha256": "4e6af7f98955ebdd3ce7cb577822d90c8cefc09e61807b79e361192b834904a6"
+      "bytes": 11449,
+      "sha256": "de99086d11cb7eed3f2515747e1ca847b74adea68433c5b99556e6b917da262f",
+      "baseline": {
+        "source": "SRS_print.html",
+        "path": "materials/sources/root/SRS_print.html",
+        "bytes": 11477,
+        "sha256": "4e6af7f98955ebdd3ce7cb577822d90c8cefc09e61807b79e361192b834904a6"
+      }
     },
     {
-      "source": "Vakil-setu pitch.docx",
-      "path": "materials/documents/Vakil-setu pitch.docx",
-      "bytes": 219274,
-      "sha256": "da46404e6c322c80d7e851df0c7db7960fe54fe87f1513d79210d09748e8c7f9",
-      "textCharacters": 3639
+      "source": "Legal-Setu pitch.docx",
+      "path": "materials/documents/Legal-Setu pitch.docx",
+      "bytes": 219050,
+      "sha256": "0bcc800d0a168cc8b054c97f60d34cc2a25f11ccd327b7d55ab9eeff87df767b",
+      "textCharacters": 3639,
+      "baseline": {
+        "source": "Vakil-setu pitch.docx",
+        "path": "materials/documents/Vakil-setu pitch.docx",
+        "bytes": 219274,
+        "sha256": "da46404e6c322c80d7e851df0c7db7960fe54fe87f1513d79210d09748e8c7f9"
+      }
     },
     {
-      "source": "vakil_setu_architecture.png",
-      "path": "materials/diagrams/vakil_setu_architecture.png",
-      "bytes": 736342,
-      "sha256": "491f330f1545177ff601e37271f272c9c8763fe634615b2039e84816eefde926"
+      "source": "legal_setu_architecture.png",
+      "path": "materials/diagrams/legal_setu_architecture.png",
+      "bytes": 735780,
+      "sha256": "9d9357041a3302bba26a4c75b63f4d2a5af47bbbad47bc4d9f5e47512d451d36",
+      "baseline": {
+        "source": "vakil_setu_architecture.png",
+        "path": "materials/diagrams/vakil_setu_architecture.png",
+        "bytes": 736342,
+        "sha256": "491f330f1545177ff601e37271f272c9c8763fe634615b2039e84816eefde926"
+      }
     },
     {
-      "source": "Vakil_Setu_Pitch_Report.docx",
-      "path": "materials/documents/Vakil_Setu_Pitch_Report.docx",
-      "bytes": 46867,
-      "sha256": "b0c075acf3cb75924e0e63ce397349a7d511349b95def719bdc41418bf916d4b",
-      "textCharacters": 18589
+      "source": "Legal_Setu_Pitch_Report.docx",
+      "path": "materials/documents/Legal_Setu_Pitch_Report.docx",
+      "bytes": 46727,
+      "sha256": "2314442e821f37805ec6393e4f591750c1af3aef39f0953b7ab3eff3cef70a80",
+      "textCharacters": 18589,
+      "baseline": {
+        "source": "Vakil_Setu_Pitch_Report.docx",
+        "path": "materials/documents/Vakil_Setu_Pitch_Report.docx",
+        "bytes": 46867,
+        "sha256": "b0c075acf3cb75924e0e63ce397349a7d511349b95def719bdc41418bf916d4b"
+      }
     },
     {
-      "source": "Vakil_Setu_Presentation.pptx",
-      "path": "materials/presentations/Vakil_Setu_Presentation.pptx",
-      "bytes": 55666,
-      "sha256": "94304aa7c173f241912c6c27328187f227c6c28efcf03a1c5a89ad5e32a715fb",
-      "slides": 8
+      "source": "Legal_Setu_Presentation.pptx",
+      "path": "materials/presentations/Legal_Setu_Presentation.pptx",
+      "bytes": 52977,
+      "sha256": "2a47e0090d5eb5cd5d677fc6010b86a0cef2db6a9a35432755c874a2ea78e4cc",
+      "slides": 8,
+      "baseline": {
+        "source": "Vakil_Setu_Presentation.pptx",
+        "path": "materials/presentations/Vakil_Setu_Presentation.pptx",
+        "bytes": 55666,
+        "sha256": "94304aa7c173f241912c6c27328187f227c6c28efcf03a1c5a89ad5e32a715fb"
+      }
     },
     {
-      "source": "Vakil_Setu_Project_Handoff_and_Study_Guide.docx",
-      "path": "materials/documents/Vakil_Setu_Project_Handoff_and_Study_Guide.docx",
-      "bytes": 64138,
-      "sha256": "9dde47d1fca3d09f9e41462bc9b20c5178a99409c0947f41ac7ce591f9b7fbbe",
-      "textCharacters": 47486
+      "source": "Legal_Setu_Project_Handoff_and_Study_Guide.docx",
+      "path": "materials/documents/Legal_Setu_Project_Handoff_and_Study_Guide.docx",
+      "bytes": 64058,
+      "sha256": "c2d2d94d76ced435bfe3df4bb18f5ac6a9d33a738e577da24e95b289b25f1697",
+      "textCharacters": 47486,
+      "baseline": {
+        "source": "Vakil_Setu_Project_Handoff_and_Study_Guide.docx",
+        "path": "materials/documents/Vakil_Setu_Project_Handoff_and_Study_Guide.docx",
+        "bytes": 64138,
+        "sha256": "9dde47d1fca3d09f9e41462bc9b20c5178a99409c0947f41ac7ce591f9b7fbbe"
+      }
     },
     {
-      "source": "Vakil_Setu_SRS.docx",
-      "path": "materials/documents/Vakil_Setu_SRS.docx",
-      "bytes": 42185,
-      "sha256": "90d0f111dc0494445266725f0e208d581acd6a7dcf4a498c4888a555d9c21462",
-      "textCharacters": 9088
+      "source": "Legal_Setu_SRS.docx",
+      "path": "materials/documents/Legal_Setu_SRS.docx",
+      "bytes": 42124,
+      "sha256": "3afa880a7043b92d75bf392f08af9c8b3bdf27c3b5dc2ce49f5379a4ac28250c",
+      "textCharacters": 9088,
+      "baseline": {
+        "source": "Vakil_Setu_SRS.docx",
+        "path": "materials/documents/Vakil_Setu_SRS.docx",
+        "bytes": 42185,
+        "sha256": "90d0f111dc0494445266725f0e208d581acd6a7dcf4a498c4888a555d9c21462"
+      }
     },
     {
-      "source": "Vakil_Setu_SRS.pdf",
-      "path": "materials/documents/Vakil_Setu_SRS.pdf",
-      "bytes": 205126,
-      "sha256": "3a440957a8ae133a959bf6db3f4b063adfbcb6d98e534ea81df32bf30e1d573d"
+      "source": "Legal_Setu_SRS.pdf",
+      "path": "materials/documents/Legal_Setu_SRS.pdf",
+      "bytes": 2107552,
+      "sha256": "6d577b08fb29d638b9ef362235ad683a29a433b62647b8648bdf143c17a6b537",
+      "baseline": {
+        "source": "Vakil_Setu_SRS.pdf",
+        "path": "materials/documents/Vakil_Setu_SRS.pdf",
+        "bytes": 205126,
+        "sha256": "3a440957a8ae133a959bf6db3f4b063adfbcb6d98e534ea81df32bf30e1d573d"
+      }
     },
     {
-      "source": "Vakil_Setu_SRS_Report.docx",
-      "path": "materials/documents/Vakil_Setu_SRS_Report.docx",
-      "bytes": 47771,
-      "sha256": "2af483b7452ef24898b647d1ac6d348b7b6e618b0edd790682f49fe74421a7ba",
-      "textCharacters": 20033
+      "source": "Legal_Setu_SRS_Report.docx",
+      "path": "materials/documents/Legal_Setu_SRS_Report.docx",
+      "bytes": 47724,
+      "sha256": "06cdeedfedb78acaccf8fa5113f264e5f22bd1e3e19338c5f200d4cb14345a32",
+      "textCharacters": 20033,
+      "baseline": {
+        "source": "Vakil_Setu_SRS_Report.docx",
+        "path": "materials/documents/Vakil_Setu_SRS_Report.docx",
+        "bytes": 47771,
+        "sha256": "2af483b7452ef24898b647d1ac6d348b7b6e618b0edd790682f49fe74421a7ba"
+      }
     },
     {
-      "source": "Vakil_Setu_Synopsis.docx",
-      "path": "materials/documents/Vakil_Setu_Synopsis.docx",
-      "bytes": 806053,
-      "sha256": "ac4cb320fa13e3c670bbff86da6dbe68cadfb6d5c8800505c2ec6d7c8290a495",
-      "textCharacters": 22649
+      "source": "Legal_Setu_Synopsis.docx",
+      "path": "materials/documents/Legal_Setu_Synopsis.docx",
+      "bytes": 805100,
+      "sha256": "a7ec3f49b86b313df0e390267f0a298f865fb46187d82c9ed896c82e316268fb",
+      "textCharacters": 22649,
+      "baseline": {
+        "source": "Vakil_Setu_Synopsis.docx",
+        "path": "materials/documents/Vakil_Setu_Synopsis.docx",
+        "bytes": 806053,
+        "sha256": "ac4cb320fa13e3c670bbff86da6dbe68cadfb6d5c8800505c2ec6d7c8290a495"
+      }
     },
     {
-      "source": "Vakil_Setu_Synopsis.pdf",
-      "path": "materials/documents/Vakil_Setu_Synopsis.pdf",
-      "bytes": 891505,
-      "sha256": "d34180834247166f46af471da5f2e8459710fc416a956440d2c445d5c9478d42"
+      "source": "Legal_Setu_Synopsis.pdf",
+      "path": "materials/documents/Legal_Setu_Synopsis.pdf",
+      "bytes": 3337618,
+      "sha256": "969bcd36ae1443556348ad6c3f3e5c31a2b62af505f687524332785503388ec4",
+      "baseline": {
+        "source": "Vakil_Setu_Synopsis.pdf",
+        "path": "materials/documents/Vakil_Setu_Synopsis.pdf",
+        "bytes": 891505,
+        "sha256": "d34180834247166f46af471da5f2e8459710fc416a956440d2c445d5c9478d42"
+      }
     },
     {
-      "source": "vakil_setu_synopsis.typ",
-      "path": "materials/sources/root/vakil_setu_synopsis.typ",
+      "source": "legal_setu_synopsis.typ",
+      "path": "materials/sources/root/legal_setu_synopsis.typ",
       "bytes": 30214,
-      "sha256": "91a2ea5f56646f0d0e4c28ffd1b068f83c6d38f37a1db6caada0e8f4bc6ae457"
+      "sha256": "5a0b3af7b2a979d40fdb8ff5b70f6f183152826f09b06782f047651075692522",
+      "baseline": {
+        "source": "vakil_setu_synopsis.typ",
+        "path": "materials/sources/root/vakil_setu_synopsis.typ",
+        "bytes": 30214,
+        "sha256": "91a2ea5f56646f0d0e4c28ffd1b068f83c6d38f37a1db6caada0e8f4bc6ae457"
+      }
     },
     {
-      "source": "output/presentations/Vakil_Setu_Compact_9_Slides.pptx",
-      "path": "materials/presentations/Vakil_Setu_Compact_9_Slides.pptx",
-      "bytes": 118696,
-      "sha256": "3dd7f8e8b4ec6ab8f076d2f9122a04fcb733a6e62269fb6bf361d891ba1c2fc0",
-      "slides": 9
+      "source": "output/presentations/Legal_Setu_Compact_9_Slides.pptx",
+      "path": "materials/presentations/Legal_Setu_Compact_9_Slides.pptx",
+      "bytes": 118595,
+      "sha256": "64a7029fcc9432efa17783d9bc48bfa8a7bad8b15506d9b0eae847c3809b0940",
+      "slides": 9,
+      "baseline": {
+        "source": "output/presentations/Vakil_Setu_Compact_9_Slides.pptx",
+        "path": "materials/presentations/Vakil_Setu_Compact_9_Slides.pptx",
+        "bytes": 118696,
+        "sha256": "3dd7f8e8b4ec6ab8f076d2f9122a04fcb733a6e62269fb6bf361d891ba1c2fc0"
+      }
     },
     {
-      "source": "output/presentations/Vakil_Setu_Compact_Final.pptx",
-      "path": "materials/presentations/Vakil_Setu_Compact_Final.pptx",
-      "bytes": 118662,
-      "sha256": "4710cd619ced6e39d5a217b9b3f8f8abc579ed7293ba0dba49f4f2641f3cf4ab",
-      "slides": 9
+      "source": "output/presentations/Legal_Setu_Compact_Final.pptx",
+      "path": "materials/presentations/Legal_Setu_Compact_Final.pptx",
+      "bytes": 118572,
+      "sha256": "5eaf07f94ff3e2c0020a5548411c05bfa1b88d9b005a2b3a6ee5a3676517cc00",
+      "slides": 9,
+      "baseline": {
+        "source": "output/presentations/Vakil_Setu_Compact_Final.pptx",
+        "path": "materials/presentations/Vakil_Setu_Compact_Final.pptx",
+        "bytes": 118662,
+        "sha256": "4710cd619ced6e39d5a217b9b3f8f8abc579ed7293ba0dba49f4f2641f3cf4ab"
+      }
     },
     {
-      "source": "output/presentations/Vakil_Setu_Faculty_Final.pptx",
-      "path": "materials/presentations/Vakil_Setu_Faculty_Final.pptx",
-      "bytes": 47690,
-      "sha256": "5bd4c5034c9ee9f537914ff11670c6ec0218f5ac3964bcd04117e1e998f94fda",
-      "slides": 9
+      "source": "output/presentations/Legal_Setu_Faculty_Final.pptx",
+      "path": "materials/presentations/Legal_Setu_Faculty_Final.pptx",
+      "bytes": 47676,
+      "sha256": "3287a542f0a444f6aaeabcd14138eab6f7fc51aec6a1c5d3c0a5ffb02013c8ff",
+      "slides": 9,
+      "baseline": {
+        "source": "output/presentations/Vakil_Setu_Faculty_Final.pptx",
+        "path": "materials/presentations/Vakil_Setu_Faculty_Final.pptx",
+        "bytes": 47690,
+        "sha256": "5bd4c5034c9ee9f537914ff11670c6ec0218f5ac3964bcd04117e1e998f94fda"
+      }
     },
     {
-      "source": "output/presentations/Vakil_Setu_Faculty_Presentation.pptx",
-      "path": "materials/presentations/Vakil_Setu_Faculty_Presentation.pptx",
-      "bytes": 69368,
-      "sha256": "1276b9941bae34b954ebcecc6f2ff64c8dc4cc3d38f7b195cb5dce53b5f235a6",
-      "slides": 14
+      "source": "output/presentations/Legal_Setu_Faculty_Presentation.pptx",
+      "path": "materials/presentations/Legal_Setu_Faculty_Presentation.pptx",
+      "bytes": 69408,
+      "sha256": "bada06050830a46722d4ac658d722837be4fde804d840f46900734f3d098b664",
+      "slides": 14,
+      "baseline": {
+        "source": "output/presentations/Vakil_Setu_Faculty_Presentation.pptx",
+        "path": "materials/presentations/Vakil_Setu_Faculty_Presentation.pptx",
+        "bytes": 69368,
+        "sha256": "1276b9941bae34b954ebcecc6f2ff64c8dc4cc3d38f7b195cb5dce53b5f235a6"
+      }
     },
     {
-      "source": "output/presentations/Vakil_Setu_Faculty_Revised.pptx",
-      "path": "materials/presentations/Vakil_Setu_Faculty_Revised.pptx",
-      "bytes": 40385,
-      "sha256": "f261aafa4741f7f0180b43c4b5841f84e85da3338d9fe65353f2331c55ae0cde",
-      "slides": 7
+      "source": "output/presentations/Legal_Setu_Faculty_Revised.pptx",
+      "path": "materials/presentations/Legal_Setu_Faculty_Revised.pptx",
+      "bytes": 40370,
+      "sha256": "2d612eb261f77ba0b241b7c6c76cb54e871a82fe2b56fb5901402e4df18b8cad",
+      "slides": 7,
+      "baseline": {
+        "source": "output/presentations/Vakil_Setu_Faculty_Revised.pptx",
+        "path": "materials/presentations/Vakil_Setu_Faculty_Revised.pptx",
+        "bytes": 40385,
+        "sha256": "f261aafa4741f7f0180b43c4b5841f84e85da3338d9fe65353f2331c55ae0cde"
+      }
     },
     {
-      "source": "output/presentations/Vakil_Setu_Reference_Style.pptx",
-      "path": "materials/presentations/Vakil_Setu_Reference_Style.pptx",
-      "bytes": 156772,
-      "sha256": "c3116b8ce574dd6ad1af623cfa1d088cae4fabd453856c633479a34962fa43f1",
-      "slides": 19
+      "source": "output/presentations/Legal_Setu_Reference_Style.pptx",
+      "path": "materials/presentations/Legal_Setu_Reference_Style.pptx",
+      "bytes": 156717,
+      "sha256": "2405e9a80eacf81db1d00a83db9dbcbc7c00107619d3825311b575465c634613",
+      "slides": 19,
+      "baseline": {
+        "source": "output/presentations/Vakil_Setu_Reference_Style.pptx",
+        "path": "materials/presentations/Vakil_Setu_Reference_Style.pptx",
+        "bytes": 156772,
+        "sha256": "c3116b8ce574dd6ad1af623cfa1d088cae4fabd453856c633479a34962fa43f1"
+      }
     },
     {
-      "source": "output/presentations/Vakil_Setu_Reference_Style_Final.pptx",
-      "path": "materials/presentations/Vakil_Setu_Reference_Style_Final.pptx",
-      "bytes": 156900,
-      "sha256": "91b6b5ec3b888ad7fb4b2011319bef7ceb655f6d3465e3a330eefd035e396111",
-      "slides": 19
+      "source": "output/presentations/Legal_Setu_Reference_Style_Final.pptx",
+      "path": "materials/presentations/Legal_Setu_Reference_Style_Final.pptx",
+      "bytes": 156916,
+      "sha256": "cdf84e09440501afdd55714c027581e400fc38c70118f1b3cf05d75c1b199714",
+      "slides": 19,
+      "baseline": {
+        "source": "output/presentations/Vakil_Setu_Reference_Style_Final.pptx",
+        "path": "materials/presentations/Vakil_Setu_Reference_Style_Final.pptx",
+        "bytes": 156900,
+        "sha256": "91b6b5ec3b888ad7fb4b2011319bef7ceb655f6d3465e3a330eefd035e396111"
+      }
     },
     {
-      "source": "output/presentations/Vakil_Setu_Short_Detailed.pptx",
-      "path": "materials/presentations/Vakil_Setu_Short_Detailed.pptx",
-      "bytes": 118627,
-      "sha256": "2906aecc098a6be5e36e38c759f254237da22b54c73fe19ae2bcc5a925a6ad1d",
-      "slides": 9
+      "source": "output/presentations/Legal_Setu_Short_Detailed.pptx",
+      "path": "materials/presentations/Legal_Setu_Short_Detailed.pptx",
+      "bytes": 118533,
+      "sha256": "09b73928551085a93f7be238cd670536bc5fb32b47676686c3264b171877432c",
+      "slides": 9,
+      "baseline": {
+        "source": "output/presentations/Vakil_Setu_Short_Detailed.pptx",
+        "path": "materials/presentations/Vakil_Setu_Short_Detailed.pptx",
+        "bytes": 118627,
+        "sha256": "2906aecc098a6be5e36e38c759f254237da22b54c73fe19ae2bcc5a925a6ad1d"
+      }
     },
     {
-      "source": "output/presentations/Vakil_Setu_Short_Detailed_Multilingual.pptx",
-      "path": "materials/presentations/Vakil_Setu_Short_Detailed_Multilingual.pptx",
-      "bytes": 118789,
-      "sha256": "9c35e7c8ac9cbb1869718863bef91b1879028ace147423ffd7f47c9f4ba192bd",
-      "slides": 9
+      "source": "output/presentations/Legal_Setu_Short_Detailed_Multilingual.pptx",
+      "path": "materials/presentations/Legal_Setu_Short_Detailed_Multilingual.pptx",
+      "bytes": 118694,
+      "sha256": "54ccb64565d9cf76722309e87d94bf38383989de3490b29a31cf41dd02f3dfbe",
+      "slides": 9,
+      "baseline": {
+        "source": "output/presentations/Vakil_Setu_Short_Detailed_Multilingual.pptx",
+        "path": "materials/presentations/Vakil_Setu_Short_Detailed_Multilingual.pptx",
+        "bytes": 118789,
+        "sha256": "9c35e7c8ac9cbb1869718863bef91b1879028ace147423ffd7f47c9f4ba192bd"
+      }
     },
     {
-      "source": "output/project-presentation/Vakil_Setu_Presentation_Script.docx",
-      "path": "materials/documents/Vakil_Setu_Presentation_Script.docx",
-      "bytes": 45623,
-      "sha256": "aacd5541784067379cf088ea7456f9a3d7fc5086b5334f4a0042f2a0fe120a08",
-      "textCharacters": 20767
+      "source": "output/project-presentation/Legal_Setu_Presentation_Script.docx",
+      "path": "materials/documents/Legal_Setu_Presentation_Script.docx",
+      "bytes": 45620,
+      "sha256": "86af228725308239942545c76a669f60f2d2f0141453b833fa6b8fdb26fcd220",
+      "textCharacters": 20767,
+      "baseline": {
+        "source": "output/project-presentation/Vakil_Setu_Presentation_Script.docx",
+        "path": "materials/documents/Vakil_Setu_Presentation_Script.docx",
+        "bytes": 45623,
+        "sha256": "aacd5541784067379cf088ea7456f9a3d7fc5086b5334f4a0042f2a0fe120a08"
+      }
     },
     {
-      "source": "output/project-presentation/Vakil_Setu_PROJECT_Deck.pptx",
-      "path": "materials/presentations/Vakil_Setu_PROJECT_Deck.pptx",
-      "bytes": 134621,
-      "sha256": "c3d395cdb835b96a27d69c0b87a6db6a06dc0ec40356b6521d0b37e1ccd8e1dd",
-      "slides": 14
+      "source": "output/project-presentation/Legal_Setu_PROJECT_Deck.pptx",
+      "path": "materials/presentations/Legal_Setu_PROJECT_Deck.pptx",
+      "bytes": 855930,
+      "sha256": "ff952c045b230eb1223e6e4fb1758fde7839f6ecc7de546a0752c8fc17eb17a0",
+      "slides": 14,
+      "baseline": {
+        "source": "output/project-presentation/Vakil_Setu_PROJECT_Deck.pptx",
+        "path": "materials/presentations/Vakil_Setu_PROJECT_Deck.pptx",
+        "bytes": 134621,
+        "sha256": "c3d395cdb835b96a27d69c0b87a6db6a06dc0ec40356b6521d0b37e1ccd8e1dd"
+      }
     },
     {
-      "source": "output/reports/Vakil_Setu_Director_Pitch.docx",
-      "path": "materials/documents/Vakil_Setu_Director_Pitch.docx",
-      "bytes": 4157,
-      "sha256": "59dfd4f4b911c3e8a0dbd21e683a7b31c37c6845e27a0b900fec92a90a562593",
-      "textCharacters": 4818
+      "source": "output/reports/Legal_Setu_Director_Pitch.docx",
+      "path": "materials/documents/Legal_Setu_Director_Pitch.docx",
+      "bytes": 4156,
+      "sha256": "dd1fc659b912aa2b18ba31365b21a9940a4b18ff9e5b15c3d1b3f2709352e47d",
+      "textCharacters": 4818,
+      "baseline": {
+        "source": "output/reports/Vakil_Setu_Director_Pitch.docx",
+        "path": "materials/documents/Vakil_Setu_Director_Pitch.docx",
+        "bytes": 4157,
+        "sha256": "59dfd4f4b911c3e8a0dbd21e683a7b31c37c6845e27a0b900fec92a90a562593"
+      }
     },
     {
-      "source": "output/reports/Vakil_Setu_SRS_From_Scratch.docx",
-      "path": "materials/documents/Vakil_Setu_SRS_From_Scratch.docx",
-      "bytes": 54746,
-      "sha256": "7af1916f92423da15f84090e99d6101ae788d745e0448159b54bbb9aa2838563",
-      "textCharacters": 31118
+      "source": "output/reports/Legal_Setu_SRS_From_Scratch.docx",
+      "path": "materials/documents/Legal_Setu_SRS_From_Scratch.docx",
+      "bytes": 54747,
+      "sha256": "1a434e416672f2cdfedf53bcbe6a122fbd93ed3d2b7952f10713c933181b075b",
+      "textCharacters": 31118,
+      "baseline": {
+        "source": "output/reports/Vakil_Setu_SRS_From_Scratch.docx",
+        "path": "materials/documents/Vakil_Setu_SRS_From_Scratch.docx",
+        "bytes": 54746,
+        "sha256": "7af1916f92423da15f84090e99d6101ae788d745e0448159b54bbb9aa2838563"
+      }
     },
     {
-      "source": "output/presentations/PROJECT/Vakil_Setu_Two_Person_Script.md",
-      "path": "materials/presentations/Vakil_Setu_Two_Person_Script.md",
+      "source": "output/presentations/PROJECT/Legal_Setu_Two_Person_Script.md",
+      "path": "materials/presentations/Legal_Setu_Two_Person_Script.md",
       "bytes": 8827,
-      "sha256": "2d3cef795891ec2b42fc849ed0cf4ba1a1b3764ecff54641cff4928a08f42dde"
+      "sha256": "82e663894c331d509982aaa741d21a13401168c07c6f03f439757f257e938f89",
+      "baseline": {
+        "source": "output/presentations/PROJECT/Vakil_Setu_Two_Person_Script.md",
+        "path": "materials/presentations/Vakil_Setu_Two_Person_Script.md",
+        "bytes": 8827,
+        "sha256": "2d3cef795891ec2b42fc849ed0cf4ba1a1b3764ecff54641cff4928a08f42dde"
+      }
     },
     {
-      "source": "output/presentations/PROJECT/Vakil_Setu_Two_Person_Script.txt",
-      "path": "materials/presentations/Vakil_Setu_Two_Person_Script.txt",
+      "source": "output/presentations/PROJECT/Legal_Setu_Two_Person_Script.txt",
+      "path": "materials/presentations/Legal_Setu_Two_Person_Script.txt",
       "bytes": 8721,
-      "sha256": "58528eef6348745ecc29f6a5a0e3f7860778867617b92f0087a1d8fda0bfc75d"
+      "sha256": "3ae2930a51c3c14b3acd83bf896a51da78a56a7d241c51a84075504e8d6c97d4",
+      "baseline": {
+        "source": "output/presentations/PROJECT/Vakil_Setu_Two_Person_Script.txt",
+        "path": "materials/presentations/Vakil_Setu_Two_Person_Script.txt",
+        "bytes": 8721,
+        "sha256": "58528eef6348745ecc29f6a5a0e3f7860778867617b92f0087a1d8fda0bfc75d"
+      }
     },
     {
       "source": ".codex-deck/build.mjs",
       "path": "materials/sources/codex-deck/build.mjs",
       "bytes": 22919,
-      "sha256": "e18e45dc9a4c4bb399d1f4964c05aa1c15c7f28f1a9004cdc13da281cac82753"
+      "sha256": "1ad35cf0addee9a8b28f5585f80c964496a283e47bfad3a4148f952ff5d8f5ac",
+      "baseline": {
+        "source": ".codex-deck/build.mjs",
+        "path": "materials/sources/codex-deck/build.mjs",
+        "bytes": 22919,
+        "sha256": "e18e45dc9a4c4bb399d1f4964c05aa1c15c7f28f1a9004cdc13da281cac82753"
+      }
     },
     {
       "source": ".codex-deck/final.mjs",
       "path": "materials/sources/codex-deck/final.mjs",
       "bytes": 16406,
-      "sha256": "8dcc22f913f257caba3ee89f3413dc61e46b7a7836f34c61bbf3f234937b657e"
+      "sha256": "2778b927b92aa2c9a147afe9e38f26eaff5648533ebc540f75c5bc2d03dcbcd4",
+      "baseline": {
+        "source": ".codex-deck/final.mjs",
+        "path": "materials/sources/codex-deck/final.mjs",
+        "bytes": 16406,
+        "sha256": "8dcc22f913f257caba3ee89f3413dc61e46b7a7836f34c61bbf3f234937b657e"
+      }
     },
     {
       "source": ".codex-deck/revised.mjs",
       "path": "materials/sources/codex-deck/revised.mjs",
       "bytes": 14375,
-      "sha256": "867f651686399684aa541cf8a8fd6c8aa9a4179fd4a27902b0eda6e2eedeb9a6"
+      "sha256": "7ade2936339fa79d6c74701ee69a73c1c5c599252b5b3ff9291ed5ca7ca12afc",
+      "baseline": {
+        "source": ".codex-deck/revised.mjs",
+        "path": "materials/sources/codex-deck/revised.mjs",
+        "bytes": 14375,
+        "sha256": "867f651686399684aa541cf8a8fd6c8aa9a4179fd4a27902b0eda6e2eedeb9a6"
+      }
     },
     {
       "source": ".codex-deck/compact-build/build.mjs",
       "path": "materials/sources/codex-deck/compact-build/build.mjs",
       "bytes": 15070,
-      "sha256": "54b9fa75e4d5e1b7d7c04e2f2b9ae1819bf7c28fb4a540868780c076b40ba215"
+      "sha256": "18722a91ca9f80f5ae585a48c1b1d8f5bafba5597d90c0f589a8221e46d01856",
+      "baseline": {
+        "source": ".codex-deck/compact-build/build.mjs",
+        "path": "materials/sources/codex-deck/compact-build/build.mjs",
+        "bytes": 15070,
+        "sha256": "54b9fa75e4d5e1b7d7c04e2f2b9ae1819bf7c28fb4a540868780c076b40ba215"
+      }
     },
     {
       "source": ".codex-deck/compact-build/finish.mjs",
       "path": "materials/sources/codex-deck/compact-build/finish.mjs",
       "bytes": 528,
-      "sha256": "e7527ba8fc20ec51ba4394b3e7e32a8a0d85152e4016c31ec7521d4326bafec7"
+      "sha256": "92a125e23f3848f371addc2e9feb5de1a06671d9ea72357b6e91daacf6e62597",
+      "baseline": {
+        "source": ".codex-deck/compact-build/finish.mjs",
+        "path": "materials/sources/codex-deck/compact-build/finish.mjs",
+        "bytes": 528,
+        "sha256": "e7527ba8fc20ec51ba4394b3e7e32a8a0d85152e4016c31ec7521d4326bafec7"
+      }
     },
     {
       "source": ".codex-deck/compact-build/polish.mjs",
       "path": "materials/sources/codex-deck/compact-build/polish.mjs",
       "bytes": 1297,
-      "sha256": "c2d5ed974e03ae188b2f54a85b845af0ea34736e29f4b0a4b1558c61a3014e16"
+      "sha256": "dc4ee6e26a0c154801a0e9d2cbc964ae115cb073b89639562a786a5585e393df",
+      "baseline": {
+        "source": ".codex-deck/compact-build/polish.mjs",
+        "path": "materials/sources/codex-deck/compact-build/polish.mjs",
+        "bytes": 1297,
+        "sha256": "c2d5ed974e03ae188b2f54a85b845af0ea34736e29f4b0a4b1558c61a3014e16"
+      }
     },
     {
       "source": ".codex-deck/compact-build/prepare.mjs",
       "path": "materials/sources/codex-deck/compact-build/prepare.mjs",
       "bytes": 11045,
-      "sha256": "9b66ec4f7a150b9ca4000d23abb0a9bfd000a0ed1947b535104c777645da5513"
+      "sha256": "ef97375308ba7e4fd21103cc13ea62d0afb043c4243f2ebe86e33b88fbb6946e",
+      "baseline": {
+        "source": ".codex-deck/compact-build/prepare.mjs",
+        "path": "materials/sources/codex-deck/compact-build/prepare.mjs",
+        "bytes": 11045,
+        "sha256": "9b66ec4f7a150b9ca4000d23abb0a9bfd000a0ed1947b535104c777645da5513"
+      }
     },
     {
       "source": ".codex-deck/multilingual-revision/build.mjs",
       "path": "materials/sources/codex-deck/multilingual-revision/build.mjs",
       "bytes": 15391,
-      "sha256": "f14d136c4fab9aef23c117c4eb818682c2cdd878acbe2a4a5d76618b48a716a3"
+      "sha256": "8196fa41d8c3850e54062d4b78736f1e110acd9367c8662238a5081a6ff06e7b",
+      "baseline": {
+        "source": ".codex-deck/multilingual-revision/build.mjs",
+        "path": "materials/sources/codex-deck/multilingual-revision/build.mjs",
+        "bytes": 15391,
+        "sha256": "f14d136c4fab9aef23c117c4eb818682c2cdd878acbe2a4a5d76618b48a716a3"
+      }
     },
     {
       "source": ".codex-deck/multilingual-revision/revise.mjs",
       "path": "materials/sources/codex-deck/multilingual-revision/revise.mjs",
       "bytes": 2892,
-      "sha256": "4a0871889674b82cea8cbe3f152b2ee2c96d99096b4933fa8959230e28eda3ae"
+      "sha256": "081807975e028a777a7d3c72f4c465d34886929adf440fed9e279086e0000f68",
+      "baseline": {
+        "source": ".codex-deck/multilingual-revision/revise.mjs",
+        "path": "materials/sources/codex-deck/multilingual-revision/revise.mjs",
+        "bytes": 2892,
+        "sha256": "4a0871889674b82cea8cbe3f152b2ee2c96d99096b4933fa8959230e28eda3ae"
+      }
     },
     {
       "source": ".codex-deck/project-framework/build.mjs",
       "path": "materials/sources/codex-deck/project-framework/build.mjs",
       "bytes": 4826,
-      "sha256": "978e45267c2c8d79adb7546b4a51bd76866bf1c9e4615a3b49fe43d861dfa7c4"
+      "sha256": "ef6ec0cca226a5746000777ecfc510cf4b90d16b4ba92286ecccc41b52b12a33",
+      "baseline": {
+        "source": ".codex-deck/project-framework/build.mjs",
+        "path": "materials/sources/codex-deck/project-framework/build.mjs",
+        "bytes": 4826,
+        "sha256": "978e45267c2c8d79adb7546b4a51bd76866bf1c9e4615a3b49fe43d861dfa7c4"
+      }
     },
     {
       "source": ".codex-deck/project-framework/build_script.py",
       "path": "materials/sources/codex-deck/project-framework/build_script.py",
       "bytes": 13082,
-      "sha256": "4f0f8fa69b1071ea358d976184b33f90ffa545607cef766acefae09720e5a7ac"
+      "sha256": "2e2ad9f635d38026050e5ac99db46517b8aac30dbc60840122ab21eeba47d72e",
+      "baseline": {
+        "source": ".codex-deck/project-framework/build_script.py",
+        "path": "materials/sources/codex-deck/project-framework/build_script.py",
+        "bytes": 13082,
+        "sha256": "4f0f8fa69b1071ea358d976184b33f90ffa545607cef766acefae09720e5a7ac"
+      }
     },
     {
       "source": ".codex-deck/project-framework/content.json",
       "path": "materials/sources/codex-deck/project-framework/content.json",
       "bytes": 21814,
-      "sha256": "26cc13e7af320341c08800df472f54e8e05f8cbfb39ad1589f2fe089064386d9"
+      "sha256": "656deb3df2e11c009b12c0c13ccfb800a179d31480a6032941804730f2e24018",
+      "baseline": {
+        "source": ".codex-deck/project-framework/content.json",
+        "path": "materials/sources/codex-deck/project-framework/content.json",
+        "bytes": 21814,
+        "sha256": "26cc13e7af320341c08800df472f54e8e05f8cbfb39ad1589f2fe089064386d9"
+      }
     },
     {
       "source": ".codex-deck/project-framework/finalize.mjs",
       "path": "materials/sources/codex-deck/project-framework/finalize.mjs",
       "bytes": 1284,
-      "sha256": "9ad19cf54f1adecedec3d22a8aee738d5b60ce74f0437e480f3482e408a0c8a9"
+      "sha256": "d96b0d58139960f6b650cf2fd17bb8bd71657042018b39e100cf88681513797d",
+      "baseline": {
+        "source": ".codex-deck/project-framework/finalize.mjs",
+        "path": "materials/sources/codex-deck/project-framework/finalize.mjs",
+        "bytes": 1284,
+        "sha256": "9ad19cf54f1adecedec3d22a8aee738d5b60ce74f0437e480f3482e408a0c8a9"
+      }
     },
     {
       "source": ".codex-deck/project-order/build.mjs",
       "path": "materials/sources/codex-deck/project-order/build.mjs",
       "bytes": 26596,
-      "sha256": "decff23f3d329039cc12f6e801ff167bb2b245a9853b1cd9118c92dff738165d"
+      "sha256": "387df1769335eee6f95f1f8f18e96def1924f300da7292f99425134206d5b016",
+      "baseline": {
+        "source": ".codex-deck/project-order/build.mjs",
+        "path": "materials/sources/codex-deck/project-order/build.mjs",
+        "bytes": 26596,
+        "sha256": "decff23f3d329039cc12f6e801ff167bb2b245a9853b1cd9118c92dff738165d"
+      }
     },
     {
       "source": ".codex-deck/reference-build/build.mjs",
       "path": "materials/sources/codex-deck/reference-build/build.mjs",
       "bytes": 23879,
-      "sha256": "84386835b618e532b4444a9bf9847f86a612f4dcfd033433d02a8ba9c300ba14"
+      "sha256": "5919d2f74b084ccb14a4df4d7668350d72cefb5ebb59a5c4bf21dd4e97454af5",
+      "baseline": {
+        "source": ".codex-deck/reference-build/build.mjs",
+        "path": "materials/sources/codex-deck/reference-build/build.mjs",
+        "bytes": 23879,
+        "sha256": "84386835b618e532b4444a9bf9847f86a612f4dcfd033433d02a8ba9c300ba14"
+      }
     },
     {
       "source": ".codex-deck/reference-build/polish.mjs",
       "path": "materials/sources/codex-deck/reference-build/polish.mjs",
       "bytes": 2263,
-      "sha256": "a6fdedb467c6a6a53f00d82eb1b86e7328839e319f2ff9dacf3e5c6ad9ba101a"
+      "sha256": "c63081ca2ccb19568d505360551e41dd14a9ee8275ac5ef03c2134aadf42a1fe",
+      "baseline": {
+        "source": ".codex-deck/reference-build/polish.mjs",
+        "path": "materials/sources/codex-deck/reference-build/polish.mjs",
+        "bytes": 2263,
+        "sha256": "a6fdedb467c6a6a53f00d82eb1b86e7328839e319f2ff9dacf3e5c6ad9ba101a"
+      }
     },
     {
       "source": ".codex-deck/reference-build/repair.mjs",
       "path": "materials/sources/codex-deck/reference-build/repair.mjs",
       "bytes": 3679,
-      "sha256": "ca8a0a039a28b189edc3dc3bab2647d13a9288e494e03108a1996b879d711b15"
+      "sha256": "90155e3d6c86ea088df67613d6b432114759ecc7141dbe127bb5bac8751cef60",
+      "baseline": {
+        "source": ".codex-deck/reference-build/repair.mjs",
+        "path": "materials/sources/codex-deck/reference-build/repair.mjs",
+        "bytes": 3679,
+        "sha256": "ca8a0a039a28b189edc3dc3bab2647d13a9288e494e03108a1996b879d711b15"
+      }
     },
     {
       "source": ".codex-report/build_director_pitch.ps1",
       "path": "materials/sources/codex-report/build_director_pitch.ps1",
       "bytes": 9257,
-      "sha256": "2147001fe05ee6352be8f5805b5fc1a2c3a9eff82dc9335bd0e6939550ff30a9"
+      "sha256": "84c4b68f94b149f6af329f32d58e8f7eb38c9176e6b88f3eb0ecf41454ef6d51",
+      "baseline": {
+        "source": ".codex-report/build_director_pitch.ps1",
+        "path": "materials/sources/codex-report/build_director_pitch.ps1",
+        "bytes": 9257,
+        "sha256": "2147001fe05ee6352be8f5805b5fc1a2c3a9eff82dc9335bd0e6939550ff30a9"
+      }
     },
     {
       "source": ".codex-report/create_pitch_ooxml.ps1",
       "path": "materials/sources/codex-report/create_pitch_ooxml.ps1",
       "bytes": 5961,
-      "sha256": "e815ad553f6f65fb36ab9f52705d626c64f317f1fd8820116a89cf61612e0688"
+      "sha256": "c5ac052762b2a9ce250ded52b69261e54ffc29736dbc6eee0d189ef7972142a3",
+      "baseline": {
+        "source": ".codex-report/create_pitch_ooxml.ps1",
+        "path": "materials/sources/codex-report/create_pitch_ooxml.ps1",
+        "bytes": 5961,
+        "sha256": "e815ad553f6f65fb36ab9f52705d626c64f317f1fd8820116a89cf61612e0688"
+      }
     },
     {
       "source": ".codex-srs/build_srs.py",
       "path": "materials/sources/codex-srs/build_srs.py",
       "bytes": 37612,
-      "sha256": "f3ae01d8a7c5b8411b938fc2b9cc15c2f431257df8eeb0df4628c076413db06e"
+      "sha256": "d0bb4e477adc4fa39895974f621e657855c14b753ed2176ff31a0fa2eeb2ac81",
+      "baseline": {
+        "source": ".codex-srs/build_srs.py",
+        "path": "materials/sources/codex-srs/build_srs.py",
+        "bytes": 37612,
+        "sha256": "f3ae01d8a7c5b8411b938fc2b9cc15c2f431257df8eeb0df4628c076413db06e"
+      }
     },
     {
       "source": ".codex-srs/render_word.ps1",
       "path": "materials/sources/codex-srs/render_word.ps1",
       "bytes": 696,
-      "sha256": "3328a067363845633175ce36b01786d9c29619c856dafd11ba5b52985a714b81"
+      "sha256": "a765965d46cdcd5c4cfe192d3b5352069f49c7e455f2f74423c401ef9ddf34fb",
+      "baseline": {
+        "source": ".codex-srs/render_word.ps1",
+        "path": "materials/sources/codex-srs/render_word.ps1",
+        "bytes": 696,
+        "sha256": "3328a067363845633175ce36b01786d9c29619c856dafd11ba5b52985a714b81"
+      }
     },
     {
       "source": ".codex-srs/render/srs.pdf",
-      "path": "materials/documents/Vakil_Setu_SRS_From_Scratch.pdf",
-      "bytes": 394995,
-      "sha256": "4af7a26a22511380f81ed3cdb4772e7ae46c1eb1c2f816479154a48d5349acc3"
+      "path": "materials/documents/Legal_Setu_SRS_From_Scratch.pdf",
+      "bytes": 1855616,
+      "sha256": "917a6a920a0ab3ae3f466ff1e03ebf5941ca0843fa62f2d308eee7a64810c3e2",
+      "baseline": {
+        "source": ".codex-srs/render/srs.pdf",
+        "path": "materials/documents/Vakil_Setu_SRS_From_Scratch.pdf",
+        "bytes": 394995,
+        "sha256": "4af7a26a22511380f81ed3cdb4772e7ae46c1eb1c2f816479154a48d5349acc3"
+      }
     },
     {
       "source": "backend/.env.example",
@@ -399,13 +759,25 @@
       "source": "backend/package-lock.json",
       "path": "archive/legacy/backend/package-lock.json",
       "bytes": 69940,
-      "sha256": "60c239e14b286018d074a813ac0dcfb69fba8d587a2e3a1b01c64aeaad7307f3"
+      "sha256": "aeb3b4fee9acaa7ddad110072efc4e07a5074905b4f5bf51700dbd8244845273",
+      "baseline": {
+        "source": "backend/package-lock.json",
+        "path": "archive/legacy/backend/package-lock.json",
+        "bytes": 69940,
+        "sha256": "60c239e14b286018d074a813ac0dcfb69fba8d587a2e3a1b01c64aeaad7307f3"
+      }
     },
     {
       "source": "backend/package.json",
       "path": "archive/legacy/backend/package.json",
       "bytes": 559,
-      "sha256": "a6f653ea6b4b91de429e9787585a68db2b13ff4554ffacdd1a123f475b90c0ed"
+      "sha256": "aa47bb5828472498480927fe0d34bea288317fcaeba0500292b6f7ef8c11b741",
+      "baseline": {
+        "source": "backend/package.json",
+        "path": "archive/legacy/backend/package.json",
+        "bytes": 559,
+        "sha256": "a6f653ea6b4b91de429e9787585a68db2b13ff4554ffacdd1a123f475b90c0ed"
+      }
     },
     {
       "source": "backend/scripts/clearAdvocates.js",
@@ -567,19 +939,37 @@
       "source": "frontend/index.html",
       "path": "archive/legacy/frontend/index.html",
       "bytes": 309,
-      "sha256": "06cd111603fdb5fcddcece4ff8caf6cfec0273896b884de7a8c14ceced0268f6"
+      "sha256": "bbe4f106279501a85fb0142d2a9d22fe8e7a430551b82dde361e857d947f3dc7",
+      "baseline": {
+        "source": "frontend/index.html",
+        "path": "archive/legacy/frontend/index.html",
+        "bytes": 309,
+        "sha256": "06cd111603fdb5fcddcece4ff8caf6cfec0273896b884de7a8c14ceced0268f6"
+      }
     },
     {
       "source": "frontend/package-lock.json",
       "path": "archive/legacy/frontend/package-lock.json",
       "bytes": 59218,
-      "sha256": "3d22b0cd6feb264218a2849ea2aa5e1092919aaf3a4c05a7b659d1ccbba469d5"
+      "sha256": "044205de58b8425277a42efc1b81bc1d821d39555a8d4c9962d92557bb3f08ad",
+      "baseline": {
+        "source": "frontend/package-lock.json",
+        "path": "archive/legacy/frontend/package-lock.json",
+        "bytes": 59218,
+        "sha256": "3d22b0cd6feb264218a2849ea2aa5e1092919aaf3a4c05a7b659d1ccbba469d5"
+      }
     },
     {
       "source": "frontend/package.json",
       "path": "archive/legacy/frontend/package.json",
       "bytes": 411,
-      "sha256": "1fc8a56887629ff29e495379da93b0b9c5612b003654127cb62f9373091d20ec"
+      "sha256": "2700d26084f0d22b198afcc1fac0eb16c0cffd4a6e8c6498cb11a7786d0c08a5",
+      "baseline": {
+        "source": "frontend/package.json",
+        "path": "archive/legacy/frontend/package.json",
+        "bytes": 411,
+        "sha256": "1fc8a56887629ff29e495379da93b0b9c5612b003654127cb62f9373091d20ec"
+      }
     },
     {
       "source": "frontend/src/App.jsx",
@@ -615,7 +1005,13 @@
       "source": "frontend/src/components/ChatTypingIndicator.jsx",
       "path": "archive/legacy/frontend/src/components/ChatTypingIndicator.jsx",
       "bytes": 564,
-      "sha256": "3eda63b6b53f00eeff1982a05255c39ff9cd99188b7fa90d88a723b8267dc7f2"
+      "sha256": "6c0f0859f73bc617b01324dd299118d5ad3b04379b49ec49471d3abd8ae0c955",
+      "baseline": {
+        "source": "frontend/src/components/ChatTypingIndicator.jsx",
+        "path": "archive/legacy/frontend/src/components/ChatTypingIndicator.jsx",
+        "bytes": 564,
+        "sha256": "3eda63b6b53f00eeff1982a05255c39ff9cd99188b7fa90d88a723b8267dc7f2"
+      }
     },
     {
       "source": "frontend/src/components/EmergencyButton.jsx",
@@ -626,8 +1022,14 @@
     {
       "source": "frontend/src/components/FollowUpChat.jsx",
       "path": "archive/legacy/frontend/src/components/FollowUpChat.jsx",
-      "bytes": 7111,
-      "sha256": "7249bb7d614c005f85695930895de22e213d513f93a12f05a128825ba25075d5"
+      "bytes": 7121,
+      "sha256": "8d0f29775840162854c580704e12edaceb08bdbb777d4d5a800adc7881f4720d",
+      "baseline": {
+        "source": "frontend/src/components/FollowUpChat.jsx",
+        "path": "archive/legacy/frontend/src/components/FollowUpChat.jsx",
+        "bytes": 7111,
+        "sha256": "7249bb7d614c005f85695930895de22e213d513f93a12f05a128825ba25075d5"
+      }
     },
     {
       "source": "frontend/src/components/ResultCard.jsx",
@@ -638,8 +1040,14 @@
     {
       "source": "frontend/src/components/VoiceRecorder.jsx",
       "path": "archive/legacy/frontend/src/components/VoiceRecorder.jsx",
-      "bytes": 10307,
-      "sha256": "c7085ddfd612c436d738a7d85de788ab719dc5f4da61d2bb44ecb454e17d0466"
+      "bytes": 10320,
+      "sha256": "390e83217c41e4eb8c89feefac564993d8c060e43d7174c43d7e06aa24828165",
+      "baseline": {
+        "source": "frontend/src/components/VoiceRecorder.jsx",
+        "path": "archive/legacy/frontend/src/components/VoiceRecorder.jsx",
+        "bytes": 10307,
+        "sha256": "c7085ddfd612c436d738a7d85de788ab719dc5f4da61d2bb44ecb454e17d0466"
+      }
     },
     {
       "source": "frontend/src/components/dashboard/AdvocateMatchCard.jsx",
@@ -656,8 +1064,14 @@
     {
       "source": "frontend/src/components/dashboard/AnalysisDashboard.jsx",
       "path": "archive/legacy/frontend/src/components/dashboard/AnalysisDashboard.jsx",
-      "bytes": 4435,
-      "sha256": "742bb6f8b18d4849656a2003016caef159a4103185c1a4acb3e46527c6b60e20"
+      "bytes": 4440,
+      "sha256": "17c323dbcd32f5a529c476cce71ffeab90ba435784207c694a1dafe0d52fb35e",
+      "baseline": {
+        "source": "frontend/src/components/dashboard/AnalysisDashboard.jsx",
+        "path": "archive/legacy/frontend/src/components/dashboard/AnalysisDashboard.jsx",
+        "bytes": 4435,
+        "sha256": "742bb6f8b18d4849656a2003016caef159a4103185c1a4acb3e46527c6b60e20"
+      }
     },
     {
       "source": "frontend/src/components/dashboard/CaseHero.jsx",
@@ -668,14 +1082,26 @@
     {
       "source": "frontend/src/components/dashboard/LegalAssistantChat.jsx",
       "path": "archive/legacy/frontend/src/components/dashboard/LegalAssistantChat.jsx",
-      "bytes": 8875,
-      "sha256": "0df41019bed3d005a9177f50db73721dcf135884655680ec3eef205e808f5128"
+      "bytes": 8885,
+      "sha256": "1f90c71cdcfc30bce08b529ef554cab53a4d03f89d4cc0f82ff87dcd71fccdcd",
+      "baseline": {
+        "source": "frontend/src/components/dashboard/LegalAssistantChat.jsx",
+        "path": "archive/legacy/frontend/src/components/dashboard/LegalAssistantChat.jsx",
+        "bytes": 8875,
+        "sha256": "0df41019bed3d005a9177f50db73721dcf135884655680ec3eef205e808f5128"
+      }
     },
     {
       "source": "frontend/src/components/layout/AppHeader.jsx",
       "path": "archive/legacy/frontend/src/components/layout/AppHeader.jsx",
       "bytes": 1213,
-      "sha256": "3a48c2f1562330919708ff757fd5aa069d3794f16b83fb94bb6339669ec4df37"
+      "sha256": "1e617b9d0268b6f56a028682f63c1262ead48d60349dce281ee54c8029560104",
+      "baseline": {
+        "source": "frontend/src/components/layout/AppHeader.jsx",
+        "path": "archive/legacy/frontend/src/components/layout/AppHeader.jsx",
+        "bytes": 1213,
+        "sha256": "3a48c2f1562330919708ff757fd5aa069d3794f16b83fb94bb6339669ec4df37"
+      }
     },
     {
       "source": "frontend/src/hooks/useLegalChat.js",
@@ -693,7 +1119,13 @@
       "source": "frontend/src/pages/BookingPage.jsx",
       "path": "archive/legacy/frontend/src/pages/BookingPage.jsx",
       "bytes": 3855,
-      "sha256": "fad02cf14bb45dac2519f6277f1add14ae2072a90fac8174af8d418d49d50a82"
+      "sha256": "d063f6ea250241fdfe4b323a8edf5dced2b1cb69375aec960bb7e667b94b7335",
+      "baseline": {
+        "source": "frontend/src/pages/BookingPage.jsx",
+        "path": "archive/legacy/frontend/src/pages/BookingPage.jsx",
+        "bytes": 3855,
+        "sha256": "fad02cf14bb45dac2519f6277f1add14ae2072a90fac8174af8d418d49d50a82"
+      }
     },
     {
       "source": "frontend/src/pages/HomePage.jsx",
@@ -717,13 +1149,25 @@
       "source": "frontend/src/styles.css",
       "path": "archive/legacy/frontend/src/styles.css",
       "bytes": 30728,
-      "sha256": "aaad5967515400f7d753b82b010c4ecc02ae783981e9d8c811ebb0eb5f2a649b"
+      "sha256": "cc4ddbd1480b8c4fb3bfc770ef2da0b286b0b367270b2e3c6cd9ad7cd521841c",
+      "baseline": {
+        "source": "frontend/src/styles.css",
+        "path": "archive/legacy/frontend/src/styles.css",
+        "bytes": 30728,
+        "sha256": "aaad5967515400f7d753b82b010c4ecc02ae783981e9d8c811ebb0eb5f2a649b"
+      }
     },
     {
       "source": "frontend/src/styles/dashboard.css",
       "path": "archive/legacy/frontend/src/styles/dashboard.css",
       "bytes": 19838,
-      "sha256": "dc2ef72f773fd4fb72b9761f7769cbdbeca0fcf1b522ad118c8ad476df4a5664"
+      "sha256": "60b8fb015d8de4541b5404b5af000a765abb6045e55322abbac7db526ccf1462",
+      "baseline": {
+        "source": "frontend/src/styles/dashboard.css",
+        "path": "archive/legacy/frontend/src/styles/dashboard.css",
+        "bytes": 19838,
+        "sha256": "dc2ef72f773fd4fb72b9761f7769cbdbeca0fcf1b522ad118c8ad476df4a5664"
+      }
     },
     {
       "source": "frontend/src/utils/advocateDisplay.js",
@@ -740,8 +1184,14 @@
     {
       "source": "frontend/src/utils/chatMessages.js",
       "path": "archive/legacy/frontend/src/utils/chatMessages.js",
-      "bytes": 1819,
-      "sha256": "9446d02cca7d5882b3f1344f2f63f8c159efc89ff703e17c41af71f992d98547"
+      "bytes": 2292,
+      "sha256": "38c60fd19f5f6282fbd6fbd22817849c62212b849b689f3e4c81f61e5397e760",
+      "baseline": {
+        "source": "frontend/src/utils/chatMessages.js",
+        "path": "archive/legacy/frontend/src/utils/chatMessages.js",
+        "bytes": 1819,
+        "sha256": "9446d02cca7d5882b3f1344f2f63f8c159efc89ff703e17c41af71f992d98547"
+      }
     },
     {
       "source": "frontend/src/utils/classificationSpeak.js",
@@ -765,19 +1215,38 @@
       "source": "README.md",
       "path": "archive/legacy/README.md",
       "bytes": 2338,
-      "sha256": "0caf0d7b3f9a480ef9f8c36b870fad39f984e543ed5117fbe7e551dd7d27fb5d"
+      "sha256": "caf1999b2b12bef45eca017fee45600f341115b46324810834211714a6909a4b",
+      "baseline": {
+        "source": "README.md",
+        "path": "archive/legacy/README.md",
+        "bytes": 2338,
+        "sha256": "0caf0d7b3f9a480ef9f8c36b870fad39f984e543ed5117fbe7e551dd7d27fb5d"
+      }
     },
     {
       "source": "package.json",
       "path": "archive/legacy/package.json",
       "bytes": 349,
-      "sha256": "7b9265e6bacb68eb3382d540dd2a226bf7c6db55a835c871c4e1b0a9c4e57e27"
+      "sha256": "5f54d602c9badfb503c9c8ddbd4f42c9e0e0926679d98bcc43ecfa1c36b5dc3b",
+      "baseline": {
+        "source": "package.json",
+        "path": "archive/legacy/package.json",
+        "bytes": 349,
+        "sha256": "7b9265e6bacb68eb3382d540dd2a226bf7c6db55a835c871c4e1b0a9c4e57e27"
+      }
     },
     {
       "source": "package-lock.json",
       "path": "archive/legacy/package-lock.json",
       "bytes": 11437,
-      "sha256": "05a839dd594f6e66b806c2ffb21d1baaeaa8fe65422d28f3717386ee6d30f966"
+      "sha256": "9c4e7bcf219d2744fbfd7d8294b0060520d1e7e20ca18a08a97573e9465ad93b",
+      "baseline": {
+        "source": "package-lock.json",
+        "path": "archive/legacy/package-lock.json",
+        "bytes": 11437,
+        "sha256": "05a839dd594f6e66b806c2ffb21d1baaeaa8fe65422d28f3717386ee6d30f966"
+      }
     }
-  ]
+  ],
+  "brandingUpdatedOn": "2026-10-28"
 }

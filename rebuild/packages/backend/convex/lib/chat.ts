@@ -1,5 +1,5 @@
 import { v } from "convex/values";
-import { CHAT_LIMITS } from "@vakil/domain";
+import { CHAT_LIMITS } from "@legal-setu/domain";
 import { fail } from "./access";
 import type { Doc } from "../_generated/dataModel";
 

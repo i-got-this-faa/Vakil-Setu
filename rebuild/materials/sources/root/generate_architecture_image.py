@@ -53,7 +53,7 @@ def draw_box(x, y, w, h, title, banner_color, subtext="", items=None, border_col
             curr_y -= 24
 
 # Title Banner
-ax.text(800, 865, "VAKIL SETU: SYSTEM ARCHITECTURE & DATA PIPELINE", color=C_TEXT_WHITE, fontsize=20,
+ax.text(800, 865, "LEGAL-SETU: SYSTEM ARCHITECTURE & DATA PIPELINE", color=C_TEXT_WHITE, fontsize=20,
         fontweight='bold', ha='center', va='center')
 ax.text(800, 835, "Decoupled Five-Tier Execution Topology: In-Browser STT ──► Dual-Engine AI Triage ──► MongoDB Directory ──► Razorpay Escrow",
         color=C_AMBER, fontsize=11, fontweight='semibold', ha='center', va='center')
@@ -170,5 +170,5 @@ ax.text(800, 150, "Data Security & Compliance: Transport Layer Security (TLS 1.3
         color=C_TEXT_MUTED, fontsize=10, ha='center', va='center')
 
 plt.tight_layout()
-plt.savefig("vakil_setu_architecture.png", facecolor='#0B0F19', edgecolor='none')
-print("vakil_setu_architecture.png successfully generated (16:9 ratio, 3840x2160)")
+plt.savefig("legal_setu_architecture.png", facecolor='#0B0F19', edgecolor='none')
+print("legal_setu_architecture.png successfully generated (16:9 ratio, 3840x2160)")

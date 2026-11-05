@@ -1,6 +1,6 @@
 import { convexTest } from "convex-test";
 import { afterEach, describe, expect, it, vi } from "vitest";
-import { CHAT_LIMITS } from "@vakil/domain";
+import { CHAT_LIMITS } from "@legal-setu/domain";
 import { api, internal } from "../convex/_generated/api";
 import type { Id } from "../convex/_generated/dataModel";
 import schema from "../convex/schema";

@@ -18,7 +18,7 @@ const edits=[
 ['Language evaluation: check transcript quality and response comprehension per supported language.','Language evaluation: check transcript quality and response comprehension.'],
 ['Triage evaluation: compare domain and urgency labels with an advocate-reviewed case set.','Triage evaluation: compare labels with advocate-reviewed cases.'],
 ['Matching evaluation: check expertise relevance, usable availability and language suitability.','Matching evaluation: check expertise, availability and language fit.'],
-['Vakil Setu connects voice input with preliminary legal guidance and advocate discovery.','Vakil Setu connects spoken intake with guidance and advocate discovery.'],
+['Legal-Setu connects voice input with preliminary legal guidance and advocate discovery.','Legal-Setu connects spoken intake with guidance and advocate discovery.'],
 ['React, Express and MongoDB connect the interface to analysis, profiles and booking records.','React, Express and MongoDB support analysis, matching and booking.'],
 ['Architecture, request sequence and module workflows show the system responsibilities.','The diagrams show architecture and each module’s workflow.'],
 ['Broader language support and reliable consultation operations require validation.','Broader language support and consultation reliability need validation.'],

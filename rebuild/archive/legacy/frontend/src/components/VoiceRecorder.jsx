@@ -20,10 +20,10 @@ function ChatBubble({ message }) {
 
   return (
     <div className="message-item analysis-ready">
-      <div className="message-avatar vakil" aria-hidden="true">
+      <div className="message-avatar legal" aria-hidden="true">
         ⚖
       </div>
-      <div className="message-bubble vakil analysis-preview">
+      <div className="message-bubble legal analysis-preview">
         {domainLabel ? <span className="analysis-preview-badge">{domainLabel}</span> : null}
         <p>{message.content}</p>
       </div>
@@ -49,7 +49,7 @@ export default function VoiceRecorder({
   const hasUserMessages = messages.some((m) => m.role === "user");
   const showWelcome = !hasUserMessages;
 
-  const vakilMessage = isSubmitting
+  const assistantMessage = isSubmitting
     ? "Working on your case — almost there."
     : isRecording
       ? "I'm listening... tell me everything."
@@ -148,7 +148,7 @@ export default function VoiceRecorder({
               <polygon points="135,165 145,165 140,185" fill="#DC143C" />
               <line x1="90" y1="170" x2="60" y2="200" stroke="#F5DEB3" strokeWidth="12" strokeLinecap="round" />
               <circle cx="55" cy="205" r="10" fill="#F5DEB3" />
-              <g className={isRecording || isSubmitting ? "vakil-wave-arm" : ""}>
+              <g className={isRecording || isSubmitting ? "legal-wave-arm" : ""}>
                 <line
                   x1="190"
                   y1="170"
@@ -165,8 +165,8 @@ export default function VoiceRecorder({
                 ⚖
               </text>
             </svg>
-            <div className="vakil-bubble-card">
-              <p>{vakilMessage}</p>
+            <div className="legal-bubble-card">
+              <p>{assistantMessage}</p>
             </div>
           </div>
         ) : null}
@@ -176,14 +176,14 @@ export default function VoiceRecorder({
             {showWelcome ? (
               <>
                 <div className="message-item">
-                  <div className="message-avatar vakil">⚖</div>
-                  <div className="message-bubble vakil">
-                    Welcome to Vakil AI! I'm here to help you understand your legal issue quickly.
+                  <div className="message-avatar legal">⚖</div>
+                  <div className="message-bubble legal">
+                    Welcome to Legal-Setu AI! I'm here to help you understand your legal issue quickly.
                   </div>
                 </div>
                 <div className="message-item">
-                  <div className="message-avatar vakil">⚖</div>
-                  <div className="message-bubble vakil">
+                  <div className="message-avatar legal">⚖</div>
+                  <div className="message-bubble legal">
                     <strong>Example:</strong> Employer refusing medical bill payment after workplace
                     injury.
                   </div>

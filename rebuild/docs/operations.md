@@ -26,7 +26,7 @@ Existing future bookings affected by suspension need explicit participant notifi
 
 Legacy source remains unchanged. No automatic database import, mass scraping or public advocate migration is performed. Any future migration needs a reviewed mapping, consent and repeatable validation. Development fixture data must be labelled and kept out of production discovery.
 
-`@vakil/domain` and `@vakil/i18n` contain platform-neutral logic for future React Native work. Web DOM/Radix components are web-only. Native authentication, microphone permissions, locale speech, deep links and timezone behavior require device acceptance tests when mobile work begins.
+`@legal-setu/domain` and `@legal-setu/i18n` contain platform-neutral logic for future React Native work. Web DOM/Radix components are web-only. Native authentication, microphone permissions, locale speech, deep links and timezone behavior require device acceptance tests when mobile work begins.
 
 ## Remaining live evidence
 

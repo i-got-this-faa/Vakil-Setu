@@ -3,7 +3,7 @@ import Link from "next/link";
 export default function HowItWorks() {
   return (
     <main id="main" className="container section reading-page" lang="en-IN" dir="ltr">
-      <h1>How Vakil Setu works</h1>
+      <h1>How Legal-Setu works</h1>
       <div>
         <article className="reading-section">
           <h2>Review, then save</h2>

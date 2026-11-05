@@ -1,4 +1,4 @@
-import { LIMITS } from "@vakil/domain";
+import { LIMITS } from "@legal-setu/domain";
 import type { Infer } from "convex/values";
 import type { PaginationOptions } from "convex/server";
 import type { summary, contextMessage } from "./validators";

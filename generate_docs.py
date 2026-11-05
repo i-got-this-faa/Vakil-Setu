@@ -52,7 +52,7 @@ def create_docx():
 
     # Title
     p_title = doc.add_paragraph()
-    r_title = p_title.add_run("Software Requirements Specification (SRS)\nfor Vakil Setu (वकील सेतु)")
+    r_title = p_title.add_run("Software Requirements Specification (SRS)\nfor Legal-Setu")
     r_title.font.size = Pt(24)
     r_title.font.bold = True
     r_title.font.color.rgb = COLOR_NAVY
@@ -69,7 +69,7 @@ def create_docx():
     meta_table = doc.add_table(rows=5, cols=2)
     meta_table.alignment = WD_TABLE_ALIGNMENT.CENTER
     meta_data = [
-        ("Document Identifier", "SRS-VAKIL-SETU-2026-V1.0"),
+        ("Document Identifier", "SRS-LEGAL-SETU-2026-V1.0"),
         ("Project Phase / Scope", "MVP Phase 0 (Baseline) & Target Architecture (Phases 1–4)"),
         ("Author / Student Lead", "[Your Full Name] | Roll No: [Your Roll Number]"),
         ("Project Supervisor", "[Faculty Guide / Professor Name]"),
@@ -97,7 +97,7 @@ def create_docx():
 
     doc.add_heading("1.1 Purpose", level=2)
     p = doc.add_paragraph(
-        "This document provides the formal software requirements specification for Vakil Setu, an AI-powered, "
+        "This document provides the formal software requirements specification for Legal-Setu, an AI-powered, "
         "voice-first legal triage and advocate consultation booking platform. It defines both the currently implemented "
         "functionality in the working prototype (Phase 0) and the engineering requirements for planned future milestones (Phases 1 through 4)."
     )
@@ -105,7 +105,7 @@ def create_docx():
 
     doc.add_heading("1.2 Project Scope & Regulatory Disclaimer", level=2)
     p = doc.add_paragraph(
-        "Vakil Setu is an informational triage bridge and digital directory service operating under Indian legal frameworks. "
+        "Legal-Setu is an informational triage bridge and digital directory service operating under Indian legal frameworks. "
         "The software accepts spoken Hindi or English descriptions of disputes, classifies the grievance into canonical legal domains "
         "(Criminal, Civil, Family, Property), assesses statutory urgency, vocalizes plain-language procedural advice, matches users "
         "with verified enrolled advocates, and coordinates appointment scheduling with cryptographic payment verification."
@@ -120,7 +120,7 @@ def create_docx():
     set_cell_margins(c, 80, 80, 150, 150)
     p_c = c.paragraphs[0]
     r_c = p_c.add_run(
-        "STATUTORY COMPLIANCE DISCLAIMER: Vakil Setu is explicitly an informational triage tool and not an authorized legal "
+        "STATUTORY COMPLIANCE DISCLAIMER: Legal-Setu is explicitly an informational triage tool and not an authorized legal "
         "practitioner under Section 29 of the Advocates Act, 1961. The platform does not dispense legal representation or draft court "
         "pleadings. All lawyer directory listings are strictly factual and non-promotional, adhering to Rule 36 of the Bar Council of India (BCI) rules."
     )
@@ -206,7 +206,7 @@ def create_docx():
     h3.runs[0].font.color.rgb = COLOR_NAVY
 
     p_arch = doc.add_paragraph(
-        "Vakil Setu is engineered on a high-availability decoupled client-server architecture balancing low-latency "
+        "Legal-Setu is engineered on a high-availability decoupled client-server architecture balancing low-latency "
         "client-side speech recognition with an asynchronous backend and a dual-engine AI failover pipeline."
     )
     p_arch.runs[0].font.size = Pt(10.5)
@@ -289,7 +289,7 @@ def create_docx():
         p_n.space_after = Pt(4)
 
     # Save Word Document
-    docx_path = os.path.join(os.getcwd(), "Vakil_Setu_SRS.docx")
+    docx_path = os.path.join(os.getcwd(), "Legal_Setu_SRS.docx")
     doc.save(docx_path)
     print(f"DOCX created at: {docx_path}")
 
@@ -298,7 +298,7 @@ def create_pdf_from_html():
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Vakil Setu — Software Requirements Specification</title>
+  <title>Legal-Setu — Software Requirements Specification</title>
   <style>
     @page {
       size: A4;
@@ -381,13 +381,13 @@ def create_pdf_from_html():
 <body>
 
   <div class="meta-tag">IEEE Std 830-1998 / ISO/IEC/IEEE 29148:2018 Specification</div>
-  <h1>Software Requirements Specification (SRS)<br>Vakil Setu (वकील सेतु)</h1>
+  <h1>Software Requirements Specification (SRS)<br>Legal-Setu</h1>
   <div class="subtitle">Voice-First Bilingual Legal Triage & Advocate Discovery Platform under Indian Jurisprudence</div>
 
   <table class="doc-table">
     <tr>
       <th style="width: 28%;">Document Identifier</th>
-      <td>SRS-VAKIL-SETU-2026-V1.0</td>
+      <td>SRS-LEGAL-SETU-2026-V1.0</td>
     </tr>
     <tr>
       <th>Project Scope</th>
@@ -408,11 +408,11 @@ def create_pdf_from_html():
   </table>
 
   <div class="callout">
-    STATUTORY COMPLIANCE DISCLAIMER: Vakil Setu is explicitly an informational triage bridge and not an authorized legal practitioner under Section 29 of the Advocates Act, 1961. All advocate directory listings are strictly factual and non-promotional, adhering to Rule 36 of the Bar Council of India (BCI) rules.
+    STATUTORY COMPLIANCE DISCLAIMER: Legal-Setu is explicitly an informational triage bridge and not an authorized legal practitioner under Section 29 of the Advocates Act, 1961. All advocate directory listings are strictly factual and non-promotional, adhering to Rule 36 of the Bar Council of India (BCI) rules.
   </div>
 
   <h2>1. Introduction & Executive Scope</h2>
-  <p>Vakil Setu is an AI-powered, voice-first legal triage platform designed to bridge the first-mile justice divide in India. The software accepts spoken Hindi or English descriptions of legal disputes, classifies grievances into canonical legal domains (Criminal, Civil, Family, Property), assesses statutory urgency, vocalizes plain-language procedural guidance for low-literacy citizens, matches users with verified enrolled advocates, and coordinates appointment scheduling backed by cryptographic Razorpay payment verification.</p>
+  <p>Legal-Setu is an AI-powered, voice-first legal triage platform designed to bridge the first-mile justice divide in India. The software accepts spoken Hindi or English descriptions of legal disputes, classifies grievances into canonical legal domains (Criminal, Civil, Family, Property), assesses statutory urgency, vocalizes plain-language procedural guidance for low-literacy citizens, matches users with verified enrolled advocates, and coordinates appointment scheduling backed by cryptographic Razorpay payment verification.</p>
 
   <h2>2. Feature Status Matrix (Implemented vs. Planned)</h2>
   <table class="doc-table">
@@ -489,7 +489,7 @@ def create_pdf_from_html():
     with open(html_path, "w", encoding="utf-8") as f:
         f.write(html_content)
 
-    pdf_path = os.path.join(os.getcwd(), "Vakil_Setu_SRS.pdf")
+    pdf_path = os.path.join(os.getcwd(), "Legal_Setu_SRS.pdf")
     chrome_path = r"C:\Program Files\Google\Chrome\Application\chrome.exe"
     
     cmd = [

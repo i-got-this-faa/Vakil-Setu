@@ -21,7 +21,7 @@ On this workstation, the ignored local Bun executable is `.tooling/node_modules/
 1. Create a Clerk development application. Configure its registration/session policy in Clerk; the application does not store passwords.
 2. Activate Clerk's Convex integration and copy the Clerk Frontend API URL. The backend `auth.config.ts` uses this as `CLERK_JWT_ISSUER_DOMAIN` with `applicationID: "convex"`.
 3. Create or select the rebuild's Convex development deployment in the Convex dashboard. Before syncing functions, set `CLERK_JWT_ISSUER_DOMAIN` in that deployment's environment settings. The current `auth.config.ts` throws when this value is absent.
-4. From `packages/backend`, run `bun run dev --once` to sync the auth config and functions. For ongoing development, run `bun run dev`. These commands use the installed `convex` dependency declared by `@vakil/backend`; `convex dev` generates the ignored local deployment configuration. Confirm that it targets the rebuild project before any deployment.
+4. From `packages/backend`, run `bun run dev --once` to sync the auth config and functions. For ongoing development, run `bun run dev`. These commands use the installed `convex` dependency declared by `@legal-setu/backend`; `convex dev` generates the ignored local deployment configuration. Confirm that it targets the rebuild project before any deployment.
 5. Copy `apps/web/.env.local.example` to `apps/web/.env.local`. Replace the placeholders using the Clerk and Convex development dashboards:
 
    ```text

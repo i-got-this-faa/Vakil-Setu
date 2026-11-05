@@ -1,4 +1,4 @@
-import { LIMITS } from "@vakil/domain";
+import { LIMITS } from "@legal-setu/domain";
 import { v } from "convex/values";
 import type { Infer } from "convex/values";
 import { internal } from "./_generated/api";

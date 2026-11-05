@@ -1,13 +1,13 @@
 "use client";
 
-import { Button, Input, Label } from "@vakil/ui";
+import { Button, Input, Label } from "@legal-setu/ui";
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useMutation, usePaginatedQuery } from "convex/react";
-import { api } from "@vakil/backend/api";
-import type { Doc, Id } from "@vakil/backend/data-model";
-import { nextBookingState, type BookingAction } from "@vakil/domain";
+import { api } from "@legal-setu/backend/api";
+import type { Doc, Id } from "@legal-setu/backend/data-model";
+import { nextBookingState, type BookingAction } from "@legal-setu/domain";
 import {
   EmptyState,
   bookingActorLabel,

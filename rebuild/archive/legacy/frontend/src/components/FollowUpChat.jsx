@@ -16,7 +16,7 @@ function CompactMessage({ message, isLatestAnalysis }) {
   const domain = message.classification?.domain_label;
   return (
     <div className={`followup-msg followup-msg--ai ${isLatestAnalysis ? "is-latest" : ""}`}>
-      <span className="followup-msg-label">{domain ? `Vakil AI · ${domain}` : "Vakil AI"}</span>
+      <span className="followup-msg-label">{domain ? `Legal-Setu AI · ${domain}` : "Legal-Setu AI"}</span>
       <p>{message.content}</p>
     </div>
   );

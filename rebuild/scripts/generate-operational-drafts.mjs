@@ -17,7 +17,7 @@ export const languages = {
   sd: ['Sindhi', 'sd-Arab-IN', 'rtl', 'Arabic'], ta: ['Tamil', 'ta-IN', 'ltr', 'Tamil'],
   te: ['Telugu', 'te-IN', 'ltr', 'Telugu'], ur: ['Urdu', 'ur-IN', 'rtl', 'Arabic'],
 };
-export const retainedEnglish = ['Vakil Setu', 'IST', 'IST ·', 'IST.', 'KiB ·', 'eSpeak NG · GPL-3.0'];
+export const retainedEnglish = ['Legal-Setu', 'IST', 'IST ·', 'IST.', 'KiB ·', 'eSpeak NG · GPL-3.0'];
 const placeholders = value => (value.match(/\{[\w]+\}|%\d*\$?[sd]/g) ?? []).sort().join('|');
 const numbers = value => (value.match(/\d+(?:[.,]\d+)*/g) ?? []).sort().join('|');
 
@@ -37,7 +37,7 @@ export function validateChunk(input, translated, locale) {
       if (text === input[key]) throw new Error('shape:unchanged-English');
       if (!script.test(text)) throw new Error('shape:script');
       if (['ks', 'sd', 'ur', 'mni', 'sat'].includes(locale)) {
-        const letters = [...text.replace(/Vakil Setu|Clerk|Convex|Google Gemini|Gemini|eSpeak NG|GPL|IST|PDF|PNG|JPEG|TXT|KiB|MiB|MB|AI|Asia\/Kolkata/g, '').replace(/\{[\w]+\}/g, '')].filter(char => /\p{L}/u.test(char));
+        const letters = [...text.replace(/Legal-Setu|Clerk|Convex|Google Gemini|Gemini|eSpeak NG|GPL|IST|PDF|PNG|JPEG|TXT|KiB|MiB|MB|AI|Asia\/Kolkata/g, '').replace(/\{[\w]+\}/g, '')].filter(char => /\p{L}/u.test(char));
         if (letters.some(char => !script.test(char))) throw new Error('shape:foreign-script');
       }
     }
@@ -113,7 +113,7 @@ async function main() {
       for (let attempt = 1; attempt <= 4; attempt++) {
         try {
           const [name, , , script] = languages[state.locale];
-          const prompt = `Draft interface labels for the Indian legal consultation app Vakil Setu. Translate every value into ${name}, script ${script}. Return JSON with EXACTLY the same keys and string values, no commentary. All translations are drafts; human language and legal terminology review are UNVERIFIED. Preserve meanings, negatives, consent, privacy limitations and all ASCII numbers and {placeholders} exactly. Some labels are fragments adjoining dynamic values: translate only the supplied fragment. Do not add data, claims, or missing context. Do not leave English labels unchanged. Proper names Vakil Setu, Clerk, Convex, Google Gemini, eSpeak NG, technical units, file types and IST may remain Latin. For Kashmiri/Urdu/Sindhi use Arabic script; Manipuri MUST use Meitei Mayek, Santali MUST use Ol Chiki. Do not substitute Hindi or Bengali for another language.\n${JSON.stringify(input)}`;
+          const prompt = `Draft interface labels for the Indian legal consultation app Legal-Setu. Translate every value into ${name}, script ${script}. Return JSON with EXACTLY the same keys and string values, no commentary. All translations are drafts; human language and legal terminology review are UNVERIFIED. Preserve meanings, negatives, consent, privacy limitations and all ASCII numbers and {placeholders} exactly. Some labels are fragments adjoining dynamic values: translate only the supplied fragment. Do not add data, claims, or missing context. Do not leave English labels unchanged. Proper names Legal-Setu, Clerk, Convex, Google Gemini, eSpeak NG, technical units, file types and IST may remain Latin. For Kashmiri/Urdu/Sindhi use Arabic script; Manipuri MUST use Meitei Mayek, Santali MUST use Ol Chiki. Do not substitute Hindi or Bengali for another language.\n${JSON.stringify(input)}`;
           const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(model)}:generateContent`, {
             method: 'POST', headers: { 'content-type': 'application/json', 'x-goog-api-key': apiKey },
             body: JSON.stringify({ contents: [{ role: 'user', parts: [{ text: prompt }] }], generationConfig: {

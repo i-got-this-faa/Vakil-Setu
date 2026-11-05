@@ -13,7 +13,7 @@ Shared typography uses self-hosted Public Sans with the original SIL OFL notice.
 
 The header separates the language-quality notice from navigation. The notice expands using a native details control and remains the selector's accessible description. English-only content is explicitly annotated. No translation coverage or language quality claim was added. Urdu continues to show the existing explicit English fallback.
 
-The guide's obsolete claim that reviews are absent was removed after checking the implemented public feedback components. Payment and emergency limitations remain. The overview places advocate/admin tasks first for the corresponding account. Clerk's generic application heading now names Vakil Setu; authentication behavior is unchanged.
+The guide's obsolete claim that reviews are absent was removed after checking the implemented public feedback components. Payment and emergency limitations remain. The overview places advocate/admin tasks first for the corresponding account. Clerk's generic application heading now names Legal-Setu; authentication behavior is unchanged.
 
 ## Surface ledger
 
@@ -35,7 +35,7 @@ The guide's obsolete claim that reviews are absent was removed after checking th
 - Translation notice — expanded/collapsed correctly; the selector's `aria-describedby` resolves to the notice paragraph. English content blocks retain their own language/direction attributes.
 - Keyboard — Tab focused the primary intake link with a visible solid 3px teal outline.
 - Contrast — primary button text/background 5.96:1; hero and preparation body text/background 6.05:1, measured from browser-computed colors. Shared header controls measured at least 44px high; the primary intake link measured 47px.
-- Routing — clicking the homepage intake link reached Clerk sign-in with `/workspace/intake` preserved in the return destination. Sign-in and sign-up rendered the Vakil Setu headings. No login or account creation was performed.
+- Routing — clicking the homepage intake link reached Clerk sign-in with `/workspace/intake` preserved in the return destination. Sign-in and sign-up rendered the Legal-Setu headings. No login or account creation was performed.
 - Assets — Public Sans loaded successfully from the local font route. No external runtime font service was added.
 
 Local command evidence is in the ignored `.runtime/deslop-typecheck.log`, `.runtime/deslop-tests-final.log`, and `.runtime/deslop-build-final.log`. A desktop screenshot was captured through the collaborative browser. Browser inspection was of the development process; the production build was checked separately.

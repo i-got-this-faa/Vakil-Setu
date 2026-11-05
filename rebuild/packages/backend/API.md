@@ -1,6 +1,6 @@
 # Frontend API contract
 
-Import `api` from `@vakil/backend/api` and `Doc`/`Id` from `@vakil/backend/data-model`. Convex validators and generated bindings are the executable signatures. IDs below are branded `Id<table>`. All authenticated operations reject disabled accounts. Discovery is anonymous and returns approved profiles whose accounts remain active. Pilot locales: `en | hi | pa`; legal domains: `criminal | civil | family | property | employment | consumer | other | unknown`. Provider results are never fabricated.
+Import `api` from `@legal-setu/backend/api` and `Doc`/`Id` from `@legal-setu/backend/data-model`. Convex validators and generated bindings are the executable signatures. IDs below are branded `Id<table>`. All authenticated operations reject disabled accounts. Discovery is anonymous and returns approved profiles whose accounts remain active. Pilot locales: `en | hi | pa`; legal domains: `criminal | civil | family | property | employment | consumer | other | unknown`. Provider results are never fabricated.
 
 ## Accounts and approval
 

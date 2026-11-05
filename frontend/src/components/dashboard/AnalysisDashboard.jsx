@@ -68,7 +68,7 @@ export default function AnalysisDashboard({ classification, lang = "en" }) {
           <h2 className="analysis-dashboard-title">{L.title}</h2>
           <p className="analysis-dashboard-disclaimer">{L.disclaimer}</p>
         </div>
-        <span className="dash-ai-pill">Vakil AI</span>
+        <span className="dash-ai-pill">Legal-Setu AI</span>
       </header>
 
       <div className="insight-grid">

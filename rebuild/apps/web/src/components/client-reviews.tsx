@@ -2,9 +2,9 @@
 
 import { useRef, useState, type FormEvent } from "react";
 import { useConvexAuth, useMutation, usePaginatedQuery, useQuery } from "convex/react";
-import { api } from "@vakil/backend/api";
-import type { Id } from "@vakil/backend/data-model";
-import { Button, Input, Label, Textarea } from "@vakil/ui";
+import { api } from "@legal-setu/backend/api";
+import type { Id } from "@legal-setu/backend/data-model";
+import { Button, Input, Label, Textarea } from "@legal-setu/ui";
 import { getFeatureCopy } from "@/lib/feature-copy";
 import { errorMessage } from "@/lib/errors";
 import { useLocale } from "./locale";

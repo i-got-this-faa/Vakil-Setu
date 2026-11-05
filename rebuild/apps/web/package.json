@@ -1,5 +1,5 @@
 {
-  "name": "@vakil/web",
+  "name": "@legal-setu/web",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -11,10 +11,10 @@
   },
   "dependencies": {
     "@clerk/nextjs": "7.9.15",
-    "@vakil/backend": "workspace:*",
-    "@vakil/domain": "workspace:*",
-    "@vakil/i18n": "workspace:*",
-    "@vakil/ui": "workspace:*",
+    "@legal-setu/backend": "workspace:*",
+    "@legal-setu/domain": "workspace:*",
+    "@legal-setu/i18n": "workspace:*",
+    "@legal-setu/ui": "workspace:*",
     "convex": "1.46.0",
     "lucide-react": "1.57.0",
     "next": "16.4.0",

@@ -1,13 +1,13 @@
 "use client";
 
-import { Button, Input, Textarea, Label } from "@vakil/ui";
+import { Button, Input, Textarea, Label } from "@legal-setu/ui";
 
 import { useCallback, useEffect, useId, useRef, useState } from "react";
 import { Mic, Square, Volume2 } from "lucide-react";
 import { useLocale } from "./locale";
-import type { PilotLocale } from "@vakil/domain";
+import type { PilotLocale } from "@legal-setu/domain";
 import { LocalReadAloud } from "./local-read-aloud";
-import { getLanguage } from "@vakil/i18n";
+import { getLanguage } from "@legal-setu/i18n";
 
 interface RecognitionAlternative {
   transcript: string;

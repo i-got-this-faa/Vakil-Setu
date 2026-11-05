@@ -1,4 +1,4 @@
-import { CHAT_LIMITS, LIMITS } from "@vakil/domain";
+import { CHAT_LIMITS, LIMITS } from "@legal-setu/domain";
 import { v } from "convex/values";
 import { internalMutation, internalQuery } from "./_generated/server";
 import { ownCase, fail } from "./lib/access";

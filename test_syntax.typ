@@ -4,7 +4,7 @@
   margin: (x: 54pt, top: 54pt, bottom: 54pt),
   header: context {
     if counter(page).get().first() > 2 [
-      #text(size: 8.5pt, fill: rgb("#64748b"))[Vakil Setu: A Voice-First Bilingual Legal Triage Platform | Mini Project Synopsis]
+      #text(size: 8.5pt, fill: rgb("#64748b"))[Legal-Setu: A Voice-First Bilingual Legal Triage Platform | Mini Project Synopsis]
     ]
   },
   footer: context {

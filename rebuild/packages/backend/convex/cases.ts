@@ -1,4 +1,4 @@
-import { CHAT_LIMITS, LIMITS } from "@vakil/domain";
+import { CHAT_LIMITS, LIMITS } from "@legal-setu/domain";
 import { paginationOptsValidator } from "convex/server";
 import { v } from "convex/values";
 import { internalMutation, internalQuery, mutation, query } from "./_generated/server";

@@ -1,6 +1,6 @@
 import { convexTest } from "convex-test";
 import { afterEach, describe, expect, it, vi } from "vitest";
-import { LOCALES } from "@vakil/domain";
+import { LOCALES } from "@legal-setu/domain";
 import { api } from "../convex/_generated/api";
 import schema from "../convex/schema";
 

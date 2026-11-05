@@ -1,18 +1,18 @@
 {
-  "name": "vakil-setu-workspace",
+  "name": "legal-setu-workspace",
   "private": true,
   "version": "0.1.0",
   "packageManager": "bun@1.4.3",
   "workspaces": ["apps/*", "packages/*"],
   "engines": { "node": ">=22.0.0", "bun": ">=1.4.3" },
   "scripts": {
-    "dev": "turbo run dev --filter=@vakil/web",
+    "dev": "turbo run dev --filter=@legal-setu/web",
     "build": "bun run backend:codegen:local && turbo run build",
     "typecheck": "bun run backend:codegen:local && tsc --noEmit -p scripts/tsconfig.json && turbo run typecheck",
     "test": "turbo run test",
     "check": "bun run typecheck && bun run test && bun run build",
-    "backend:dev": "bun run --filter @vakil/backend dev",
-    "backend:codegen": "bun run --filter @vakil/backend codegen",
+    "backend:dev": "bun run --filter @legal-setu/backend dev",
+    "backend:codegen": "bun run --filter @legal-setu/backend codegen",
     "backend:codegen:local": "bun scripts/codegen-local.mjs",
     "doctor": "bun scripts/doctor.ts"
   },

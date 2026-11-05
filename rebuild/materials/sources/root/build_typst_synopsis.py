@@ -7,7 +7,7 @@ typ_source = """
   margin: (x: 54pt, top: 54pt, bottom: 54pt),
   header: context {
     if counter(page).get().first() > 2 [
-      #text(size: 8.5pt, fill: rgb("#64748b"), font: "Liberation Serif")[Vakil Setu: A Voice-First Bilingual Legal Triage Platform | Mini Project Synopsis]
+      #text(size: 8.5pt, fill: rgb("#64748b"), font: "Liberation Serif")[Legal-Setu: A Voice-First Bilingual Legal Triage Platform | Mini Project Synopsis]
     ]
   },
   footer: context {
@@ -31,7 +31,7 @@ typ_source = """
 
 #v(10pt)
 #align(center)[
-  #text(size: 18.0pt, weight: "bold")[VAKIL SETU: A VOICE-FIRST BILINGUAL LEGAL TRIAGE\\AND ADVOCATE DISCOVERY PLATFORM]
+  #text(size: 18.0pt, weight: "bold")[LEGAL-SETU: A VOICE-FIRST BILINGUAL LEGAL TRIAGE\\AND ADVOCATE DISCOVERY PLATFORM]
 ]
 
 #v(18pt)
@@ -149,11 +149,11 @@ typ_source = """
 #text(size: 15.0pt, weight: "bold")[1. Project Overview]
 
 #v(4pt)
-Vakil Setu is an artificial intelligence-powered, voice-first legal triage and advocate discovery platform designed to bridge the severe "first-mile" justice divide in India. Situated at the intersection of Conversational Artificial Intelligence, Legal Informatics, and Web Systems, the project addresses the immense cognitive, linguistic, and financial barriers that confront everyday citizens when navigating legal crises.
+Legal-Setu is an artificial intelligence-powered, voice-first legal triage and advocate discovery platform designed to bridge the severe "first-mile" justice divide in India. Situated at the intersection of Conversational Artificial Intelligence, Legal Informatics, and Web Systems, the project addresses the immense cognitive, linguistic, and financial barriers that confront everyday citizens when navigating legal crises.
 
 In the Indian judicial landscape, over 50 million cases remain pending across courts. However, for an ordinary citizen facing a legal conflict—such as illegal tenancy eviction, employer wage denial, workplace harassment, property boundary encroachment, or cheque dishonor—the primary obstacle is not courtroom litigation itself, but knowing where, when, and how to start. Traditional digital legal platforms in India operate exclusively as static, English-heavy directories saturated with Latin maxims and complex statutory citations. They assume high typing proficiency and structured legal comprehension, entirely alienating the over 70% of Indian litigants residing in semi-urban and rural areas who are comfortable speaking in Hindi or regional dialects.
 
-Vakil Setu eliminates this asymmetry by introducing a hands-free, bilingual conversational interface operating directly within modern web browsers. Citizens simply speak their dispute naturally in Hindi, English, or mixed colloquial speech. Utilizing a dual-engine triage architecture, the platform analyzes unstructured spoken narratives against Indian statutory codes (Bharatiya Nyaya Sanhita, Bharatiya Nagarik Suraksha Sanhita, and Code of Civil Procedure), determines the primary legal domain (Criminal, Civil, Family, or Property), estimates procedural urgency, and extracts immediate action items. For low-literacy citizens, the platform vocalizes the legal guidance back in clear regional speech. Finally, it algorithmically matches litigants with verified, specialized advocates and enables direct consultation scheduling backed by cryptographic Razorpay payment escrow.
+Legal-Setu eliminates this asymmetry by introducing a hands-free, bilingual conversational interface operating directly within modern web browsers. Citizens simply speak their dispute naturally in Hindi, English, or mixed colloquial speech. Utilizing a dual-engine triage architecture, the platform analyzes unstructured spoken narratives against Indian statutory codes (Bharatiya Nyaya Sanhita, Bharatiya Nagarik Suraksha Sanhita, and Code of Civil Procedure), determines the primary legal domain (Criminal, Civil, Family, or Property), estimates procedural urgency, and extracts immediate action items. For low-literacy citizens, the platform vocalizes the legal guidance back in clear regional speech. Finally, it algorithmically matches litigants with verified, specialized advocates and enables direct consultation scheduling backed by cryptographic Razorpay payment escrow.
 
 #v(4pt)
 #text(size: 13.0pt, weight: "bold")[Architectural Scope & Boundary Constraints]
@@ -199,7 +199,7 @@ This systemic crisis is characterized by four structural failure modes:
   ),
   [Traditional Legal Portals (LawRato, Vakilsearch)], [English-heavy; text typing only], [Static directory; no instant procedural triage], [Third-party redirection; opaque pricing],
   [Generic Conversational LLMs (ChatGPT, Claude)], [Multilingual text prompts], [General knowledge; high risk of non-Indian hallucination], [Zero booking or verified advocate connection],
-  [*Vakil Setu Legal Triage Gateway*], [*Hands-free bilingual voice (hi-IN / en-IN)*], [*Tuned for Indian statutes (BNS, CrPC, CPC)*], [*Integrated Razorpay HMAC-SHA256 escrow*]
+  [*Legal-Setu Legal Triage Gateway*], [*Hands-free bilingual voice (hi-IN / en-IN)*], [*Tuned for Indian statutes (BNS, CrPC, CPC)*], [*Integrated Razorpay HMAC-SHA256 escrow*]
 )
 
 #pagebreak()
@@ -211,7 +211,7 @@ This systemic crisis is characterized by four structural failure modes:
 #text(size: 15.0pt, weight: "bold")[3. Objectives of the Project]
 
 #v(4pt)
-The core technical objectives of the Vakil Setu project are formulated across five architectural milestones:
+The core technical objectives of the Legal-Setu project are formulated across five architectural milestones:
 
 - *Objective 1 — Hands-Free In-Browser Voice Intake & Locale Tagging:* Engineer a client-side speech recognition pipeline utilizing the W3C Web Speech API that captures spoken Hindi and English with sub-200ms interim token streaming, dynamic BCP-47 locale tagging (`hi-IN` and `en-IN`), and zero cloud audio streaming costs.
 - *Objective 2 — Dual-Engine Statutory Legal Triage & Urgency Scoring:* Construct an intelligent triage service powered by Google Gemini 2.0 / Gateway LLM with strict JSON schema constraints that categorizes spoken narratives into 4 canonical legal domains (Criminal, Civil, Family, Property), evaluates statutory urgency (Low, Medium, High, Emergency), and outputs actionable next steps.
@@ -246,13 +246,13 @@ The core technical objectives of the Vakil Setu project are formulated across fi
 #text(size: 15.0pt, weight: "bold")[4. Proposed Solution / Methodology]
 
 #v(4pt)
-Vakil Setu is architected as an asynchronous, decoupled five-tier legal gateway. The client application runs as a responsive React 18 Single Page Application interfacing with an Express.js API gateway. Rather than routing heavy raw audio to cloud servers, audio transcription occurs locally on the client's device, transmitting lightweight text payloads to the backend intelligence pipeline.
+Legal-Setu is architected as an asynchronous, decoupled five-tier legal gateway. The client application runs as a responsive React 18 Single Page Application interfacing with an Express.js API gateway. Rather than routing heavy raw audio to cloud servers, audio transcription occurs locally on the client's device, transmitting lightweight text payloads to the backend intelligence pipeline.
 
 #v(6pt)
 #align(center)[
-  #image("vakil_setu_architecture.png", width: 88%)
+  #image("legal_setu_architecture.png", width: 88%)
   #v(2pt)
-  #text(size: 9.0pt, style: "italic")[Figure 4.1: Decoupled Five-Tier Execution Topology of the Vakil Setu Legal Triage Gateway]
+  #text(size: 9.0pt, style: "italic")[Figure 4.1: Decoupled Five-Tier Execution Topology of the Legal-Setu Legal Triage Gateway]
 ]
 #v(6pt)
 
@@ -272,7 +272,7 @@ The internal processing pipeline operates across four decoupled systems modules:
 #text(size: 15.0pt, weight: "bold")[5. Key Technologies and Tools]
 
 #v(4pt)
-The technical implementation of Vakil Setu is built upon an enterprise-grade, open-source stack designed to ensure sub-second response times, zero server audio processing overhead, and robust fault-tolerance:
+The technical implementation of Legal-Setu is built upon an enterprise-grade, open-source stack designed to ensure sub-second response times, zero server audio processing overhead, and robust fault-tolerance:
 
 #v(2pt)
 #table(
@@ -312,11 +312,11 @@ The technical implementation of Vakil Setu is built upon an enterprise-grade, op
 #text(size: 15.0pt, weight: "bold")[6. V.E.T.S Justification]
 
 #v(4pt)
-The Vakil Setu project is systematically validated against the institutional V.E.T.S evaluation framework:
+The Legal-Setu project is systematically validated against the institutional V.E.T.S evaluation framework:
 
 *V — Viability:* The project is thoroughly feasible within the standard 12-week academic timeline. Development utilizes commodity workstation hardware without requiring expensive multi-GPU clusters. All core technologies—including React 18, Node.js, the W3C Web Speech API, MongoDB Atlas, and the Razorpay Checkout SDK—are production-stable, well-documented, and freely accessible. The system architecture directly leverages the candidate's core competencies in full-stack web engineering, API integration, and asynchronous distributed systems.
 
-*E — Engineering Depth:* Vakil Setu represents substantial systems engineering that goes far beyond trivial CRUD applications or basic AI wrappers. Key engineering challenges successfully solved include:
+*E — Engineering Depth:* Legal-Setu represents substantial systems engineering that goes far beyond trivial CRUD applications or basic AI wrappers. Key engineering challenges successfully solved include:
 1. Client-side audio stream lifecycle management with real-time interim token rendering and BCP-47 locale tagging.
 2. Dual-engine AI orchestration featuring structured JSON schema prompt enforcement and deterministic regex failover.
 3. Autonomous web scraping and data normalization pipeline using Cheerio to crawl, deduplicate, and upsert public lawyer profiles.
@@ -328,7 +328,7 @@ The Vakil Setu project is systematically validated against the institutional V.E
 - Modern Indic language computing initiatives (such as Bhashini) delivering multilingual public services.
 - Full compliance with Section 29 of the Advocates Act, 1961, Rule 36 of Bar Council of India advertising norms, and the Digital Personal Data Protection (DPDP) Act, 2023.
 
-*S — Social / Industry Impact:* In India, the lack of timely legal guidance exacerbates poverty, domestic distress, and unlawful exploitation. By providing free, hands-free bilingual legal triage in spoken Hindi and English, Vakil Setu empowers everyday citizens to understand their rights, preserves critical evidence before statutory limitation periods expire under the Limitation Act 1963, and connects underprivileged citizens to statutory free legal aid (NALSA/DLSA).
+*S — Social / Industry Impact:* In India, the lack of timely legal guidance exacerbates poverty, domestic distress, and unlawful exploitation. By providing free, hands-free bilingual legal triage in spoken Hindi and English, Legal-Setu empowers everyday citizens to understand their rights, preserves critical evidence before statutory limitation periods expire under the Limitation Act 1963, and connects underprivileged citizens to statutory free legal aid (NALSA/DLSA).
 
 #pagebreak()
 
@@ -341,7 +341,7 @@ The Vakil Setu project is systematically validated against the institutional V.E
 #v(4pt)
 Upon successful completion of the project, the following concrete deliverables will be produced:
 
-1. *Vakil Setu Web Application Prototype:* A fully functional, responsive Single Page Application supporting voice dictation in Hindi and English, dynamic case analysis dashboards, advocate discovery, and appointment booking.
+1. *Legal-Setu Web Application Prototype:* A fully functional, responsive Single Page Application supporting voice dictation in Hindi and English, dynamic case analysis dashboards, advocate discovery, and appointment booking.
 2. *Dual-Engine Legal Triage Service:* A fault-tolerant Node.js microservice (`/api/ai/triage`) providing structured legal domain categorization, urgency estimation, and plain-language action recommendations with sub-50ms regex failover.
 3. *Autonomous Directory Ingestion Engine:* A production-ready Cheerio web scraping pipeline that extracts, normalizes, and upserts public lawyer profiles into MongoDB with domain taxonomy mapping.
 4. *Cryptographic Escrow & Booking Gateway:* A secure transaction gateway supporting Razorpay order creation, HMAC SHA-256 signature verification, and automated regulatory refunds.
@@ -354,7 +354,7 @@ Upon successful completion of the project, the following concrete deliverables w
 #v(4pt)
 The final prototype will be demonstrated in a live side-by-side browser and terminal environment evaluating 5 representative real-world legal dispute scenarios (landlord tenant dispute, cheque bounce notice, domestic violence complaint, unlawful police detention, and property title contest):
 - *Baseline Scenario:* An unassisted litigant navigating a traditional English legal portal or generic chatbot, displaying high cognitive burden and legal hallucinations.
-- *Vakil Setu Scenario:* Identical dispute dictated via Hindi voice, demonstrating real-time transcription, sub-3s statutory triage, spoken audio summary, verified advocate matching, and simulated Razorpay escrow booking.
+- *Legal-Setu Scenario:* Identical dispute dictated via Hindi voice, demonstrating real-time transcription, sub-3s statutory triage, spoken audio summary, verified advocate matching, and simulated Razorpay escrow booking.
 
 #pagebreak()
 
@@ -390,7 +390,7 @@ The project development lifecycle is structured across five sequential phases sp
 - *Milestone 1 (Week 4):* Client-side voice engine successfully captures spoken Hindi and English with live token streaming and under 200ms rendering latency.
 - *Milestone 2 (Week 7):* Dual-engine triage pipeline achieves over 90% domain categorization precision with zero 500 errors during simulated cloud API dropouts.
 - *Milestone 3 (Week 9):* Razorpay payment gateway successfully validates genuine signatures and rejects 100% of tampered transaction tokens; emergency SOS hub functions reliably.
-- *Risk Mitigation Strategy:* If upstream LLM endpoints experience prolonged downtime or quota exhaustion, Vakil Setu automatically engages the local regex pattern-matching engine, guaranteeing uninterrupted citizen advisory without service degradation.
+- *Risk Mitigation Strategy:* If upstream LLM endpoints experience prolonged downtime or quota exhaustion, Legal-Setu automatically engages the local regex pattern-matching engine, guaranteeing uninterrupted citizen advisory without service degradation.
 
 #pagebreak()
 
@@ -433,18 +433,18 @@ The project development lifecycle is structured across five sequential phases sp
 [14] V. N. Shukla, "Constitution of India: Directive Principles of State Policy and Free Legal Aid," 14th ed., Eastern Book Company, Lucknow, 2022.
 """
 
-with open("vakil_setu_synopsis.typ", "w", encoding="utf-8") as f:
+with open("legal_setu_synopsis.typ", "w", encoding="utf-8") as f:
     f.write(typ_source)
 
-print("vakil_setu_synopsis.typ successfully written.")
+print("legal_setu_synopsis.typ successfully written.")
 
 # Compile with typst
-typst.compile("vakil_setu_synopsis.typ", output="Vakil_Setu_Synopsis.pdf")
-print("Vakil_Setu_Synopsis.pdf compiled successfully via Typst!")
+typst.compile("legal_setu_synopsis.typ", output="Legal_Setu_Synopsis.pdf")
+print("Legal_Setu_Synopsis.pdf compiled successfully via Typst!")
 
 # Verify page count
-doc = pymupdf.open("Vakil_Setu_Synopsis.pdf")
-print("Total pages in generated Vakil_Setu_Synopsis.pdf:", len(doc))
+doc = pymupdf.open("Legal_Setu_Synopsis.pdf")
+print("Total pages in generated Legal_Setu_Synopsis.pdf:", len(doc))
 for i in range(len(doc)):
     page = doc[i]
     imgs = page.get_images()

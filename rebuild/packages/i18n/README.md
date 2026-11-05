@@ -18,6 +18,6 @@ Malayalam (`ml`), Manipuri (`mni`), Nepali (`ne`), Odia (`or`), Sanskrit (`sa`),
 
 Registry metadata marks complete interfaces `unverified`, unfinished interfaces `unavailable`, typed input `available`, and AI/speech `unavailable` until runtime configuration is supplied. `getLanguageCapabilities(locale, runtime)` accepts public server readiness and independent browser/device speech facts. Configured AI input/output and available speech remain `unverified`, with independent unavailable states. Registry membership and interface copy never prove AI comprehension or speech accuracy. Do not send secrets to the client.
 
-The locale provider restores/persists `vakil-setu.locale`, accepts historical registry tags, synchronizes storage events, and applies the actual interface's `document.lang` and `dir`. Storage denial does not prevent selecting a language. User-entered text is not automatically translated.
+The locale provider restores/persists `legal-setu.locale`, accepts historical registry tags, synchronizes storage events, and applies the actual interface's `document.lang` and `dir`. Storage denial does not prevent selecting a language. User-entered text is not automatically translated.
 
 Tests cover all registered keys, complete native-script drafts, explicitly disclosed fallback, named placeholders, typed copy wiring, preference persistence, blocked storage, and independent capabilities. Browser, deployment, speech, human language review, and legal acceptance remain untested. Parent-owned UI may still contain operational English labels.

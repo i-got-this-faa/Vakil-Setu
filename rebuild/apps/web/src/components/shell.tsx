@@ -22,12 +22,12 @@ import { chatNavigationLabel } from "@/lib/chat-navigation";
 export function Brand() {
   const { copy } = useLocale();
   return (
-    <Link href="/" className="brand" aria-label="Vakil Setu home">
+    <Link href="/" className="brand" aria-label="Legal-Setu home">
       <span className="brand-mark" aria-hidden="true">
         <Scale size={27} strokeWidth={1.5} />
       </span>
       <span>
-        <span className="brand-name" lang="en-IN" dir="ltr">Vakil Setu</span>
+        <span className="brand-name" lang="en-IN" dir="ltr">Legal-Setu</span>
         <span className="brand-note">{copy.tagline}</span>
       </span>
     </Link>

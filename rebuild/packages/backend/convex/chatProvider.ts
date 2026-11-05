@@ -1,6 +1,6 @@
 "use node";
 
-import { CHAT_LIMITS } from "@vakil/domain";
+import { CHAT_LIMITS } from "@legal-setu/domain";
 import { internal } from "./_generated/api";
 import { internalAction } from "./_generated/server";
 import { sendArgs } from "./lib/chat";

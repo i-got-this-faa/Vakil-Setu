@@ -1,6 +1,6 @@
 "use client";
 
-import { Button, Input, Textarea, Label } from "@vakil/ui";
+import { Button, Input, Textarea, Label } from "@legal-setu/ui";
 
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -10,8 +10,8 @@ import {
   usePaginatedQuery,
   useQuery,
 } from "convex/react";
-import { api } from "@vakil/backend/api";
-import type { Doc, Id } from "@vakil/backend/data-model";
+import { api } from "@legal-setu/backend/api";
+import type { Doc, Id } from "@legal-setu/backend/data-model";
 import {
   LEGAL_DOMAINS,
   URGENCIES,
@@ -20,7 +20,7 @@ import {
   LIMITS,
   type LegalDomain,
   type Urgency,
-} from "@vakil/domain";
+} from "@legal-setu/domain";
 import { useCallback, useEffect, useRef, useState, type FormEvent } from "react";
 import { RequireRole } from "./workspace-gate";
 import { EmptyState, formatTime, LoadMore, urgencyLabel } from "./shared";

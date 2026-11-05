@@ -10,3 +10,6 @@ pnpm-debug.log*
 # Local build cache and Office lock files
 .turbo/
 ~$*
+
+# Local task verification artifacts
+/tmp/

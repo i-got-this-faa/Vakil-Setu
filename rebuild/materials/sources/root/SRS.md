@@ -1,10 +1,10 @@
 # Software Requirements Specification (SRS)
-## Project: Vakil Setu (वकील सेतु)
+## Project: Legal-Setu
 ### Voice-First Bilingual Legal Triage & Advocate Discovery Platform
 
 ---
 
-**Document Identifier**: SRS-VAKIL-SETU-2026-V1.0  
+**Document Identifier**: SRS-LEGAL-SETU-2026-V1.0  
 **Standard**: Conforming to IEEE Std 830-1998 / ISO/IEC/IEEE 29148:2018  
 **Status**: Baseline / Draft  
 **Version**: 1.0 (Current MVP) & 2.0 (Target Architecture)  
@@ -55,7 +55,7 @@
 ## 1. Introduction
 
 ### 1.1 Purpose
-This document specifies the software requirements for **Vakil Setu**, an artificial intelligence-driven, voice-first legal triage and advocate consultation booking platform. It defines both the currently implemented functionality (MVP Phase 0) and the engineering requirements for planned development milestones (Phases 1 through 4).
+This document specifies the software requirements for **Legal-Setu**, an artificial intelligence-driven, voice-first legal triage and advocate consultation booking platform. It defines both the currently implemented functionality (MVP Phase 0) and the engineering requirements for planned development milestones (Phases 1 through 4).
 
 ### 1.2 Document Conventions
 - **Requirement Tags**: Every requirement is uniquely indexed with prefixes:
@@ -73,7 +73,7 @@ This document specifies the software requirements for **Vakil Setu**, an artific
 - **System Administrators & Reviewers**: For verification of regulatory compliance and data security.
 
 ### 1.4 Project Scope
-Vakil Setu is an informational triage bridge and professional directory service under Indian law. The software accepts spoken Hindi or English descriptions of disputes, classifies the grievance into canonical legal domains (Criminal, Civil, Family, Property), assesses statutory urgency, vocalizes plain-language procedural advice, matches users with verified enrolled advocates, and coordinates appointment scheduling with cryptographic payment verification.
+Legal-Setu is an informational triage bridge and professional directory service under Indian law. The software accepts spoken Hindi or English descriptions of disputes, classifies the grievance into canonical legal domains (Criminal, Civil, Family, Property), assesses statutory urgency, vocalizes plain-language procedural advice, matches users with verified enrolled advocates, and coordinates appointment scheduling with cryptographic payment verification.
 
 > **Statutory Disclaimer**: The platform explicitly does not dispense direct legal advice, draft court pleadings, or act as an authorized attorney under Section 29 of the Advocates Act, 1961.
 
@@ -104,7 +104,7 @@ Vakil Setu is an informational triage bridge and professional directory service 
 ## 2. Overall Description
 
 ### 2.1 Product Perspective
-Vakil Setu operates as a decoupled, multi-tier web application combining client-side speech processing with an asynchronous Node.js backend, a dual-engine LLM/regex intelligence pipeline, and a persistent document database (MongoDB Atlas).
+Legal-Setu operates as a decoupled, multi-tier web application combining client-side speech processing with an asynchronous Node.js backend, a dual-engine LLM/regex intelligence pipeline, and a persistent document database (MongoDB Atlas).
 
 ```
 [ User (Voice/Text) ] 

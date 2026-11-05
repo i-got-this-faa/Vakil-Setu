@@ -1,5 +1,5 @@
-import type { PilotLocale } from '@vakil/domain';
-import { draftBundles, getLanguage, type DraftBundle } from '@vakil/i18n';
+import type { PilotLocale } from '@legal-setu/domain';
+import { draftBundles, getLanguage, type DraftBundle } from '@legal-setu/i18n';
 import type { ProductCopy } from './copy';
 import type { CaseNoSummaryCopy } from './case-copy';
 import type { ChatCopy } from './chat-copy';

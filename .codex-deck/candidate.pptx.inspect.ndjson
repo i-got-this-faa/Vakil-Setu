@@ -1,13 +1,13 @@
 {"kind":"deck","id":"pr/c8esuq","name":"Deck"}
 {"kind":"layout","layoutId":"f9df9fb7-68e9-4297-bc64-a9d914bb0b3b","name":"Master","type":"master"}
 {"kind":"layout","layoutId":"5b0ed7a9-ae1e-4b1b-9524-86ec5e5dc7b9","name":"Title Slide","type":"title"}
-{"kind":"slide","id":"sl/ysv45p","slide":1,"title":"VAKIL SETU","textShapes":9}
-{"kind":"textbox","id":"sh/rqpcreps","slide":1,"text":"VAKIL SETU","textPreview":"VAKIL SETU","textChars":10,"textLines":1,"bbox":[42,21,180,25]}
+{"kind":"slide","id":"sl/ysv45p","slide":1,"title":"LEGAL-SETU","textShapes":9}
+{"kind":"textbox","id":"sh/rqpcreps","slide":1,"text":"LEGAL-SETU","textPreview":"LEGAL-SETU","textChars":10,"textLines":1,"bbox":[42,21,180,25]}
 {"kind":"shape","id":"sh/cryd0j6d","slide":1,"bbox":[42,64,1196,58]}
 {"kind":"shape","id":"sh/ds7uto7y","slide":1,"bbox":[0,681,1280,39]}
 {"kind":"textbox","id":"sh/etgv29oj","slide":1,"text":"Inherited prototype and proposed development","textPreview":"Inherited prototype and proposed development","textChars":44,"textLines":1,"bbox":[44,687,1110,23]}
 {"kind":"textbox","id":"sh/zu9wve5o","slide":1,"text":"01","textPreview":"01","textChars":2,"textLines":1,"bbox":[1187,687,50,23]}
-{"kind":"textbox","id":"sh/0vid4j69","slide":1,"text":"VAKIL SETU","textPreview":"VAKIL SETU","textChars":10,"textLines":1,"bbox":[65,150,1140,105]}
+{"kind":"textbox","id":"sh/0vid4j69","slide":1,"text":"LEGAL-SETU","textPreview":"LEGAL-SETU","textChars":10,"textLines":1,"bbox":[65,150,1140,105]}
 {"kind":"textbox","id":"sh/1wrexonu","slide":1,"text":"Voice-based legal assistance\nand advocate access","textPreview":"Voice-based legal assistance | and advocate access","textChars":48,"textLines":2,"bbox":[70,266,1100,116]}
 {"kind":"shape","id":"sh/mx0v6tof","slide":1,"bbox":[72,424,1128,2]}
 {"kind":"textbox","id":"sh/ny9wzy50","slide":1,"text":"Existing foundation","textPreview":"Existing foundation","textChars":19,"textLines":1,"bbox":[74,461,460,35]}
@@ -15,8 +15,8 @@
 {"kind":"textbox","id":"sh/ad4zapgf","slide":1,"text":"Proposed extension","textPreview":"Proposed extension","textChars":18,"textLines":1,"bbox":[726,461,440,35]}
 {"kind":"textbox","id":"sh/xgvi5kz6","slide":1,"text":"22 scheduled languages\nwith English retained","textPreview":"22 scheduled languages | with English retained","textChars":44,"textLines":2,"bbox":[726,507,470,85]}
 {"kind":"notes","id":"nt/ysv45p","slide":1,"text":"I have inherited an existing prototype. This presentation explains its architecture and a proposed development programme. The confirmed extension goal is support for all 22 scheduled languages. English remains an additional supported language. No completed contributions or evaluation results are claimed.\n\nSources: frontend/src/components/VoiceRecorder.jsx\nhttps://www.mha.gov.in/sites/default/files/Eighth_Schedule.pdf\nUser-provided project context; NaN.pdf is a visual reference only."}
-{"kind":"slide","id":"sl/h3ezmx","slide":2,"title":"VAKIL SETU","textShapes":16}
-{"kind":"textbox","id":"sh/nul4jm94","slide":2,"text":"VAKIL SETU","textPreview":"VAKIL SETU","textChars":10,"textLines":1,"bbox":[42,21,180,25]}
+{"kind":"slide","id":"sl/h3ezmx","slide":2,"title":"LEGAL-SETU","textShapes":16}
+{"kind":"textbox","id":"sh/nul4jm94","slide":2,"text":"LEGAL-SETU","textPreview":"LEGAL-SETU","textChars":10,"textLines":1,"bbox":[42,21,180,25]}
 {"kind":"textbox","id":"sh/ovu5srqp","slide":2,"text":"PROBLEM AND PROPOSED SOLUTION","textPreview":"PROBLEM AND PROPOSED SOLUTION","textChars":29,"textLines":1,"bbox":[42,64,1196,58]}
 {"kind":"textbox","id":"sh/pw3mlwra","slide":2,"text":"A first point of contact for people who do not know where to begin","textPreview":"A first point of contact for people who do not know where to begin","textChars":66,"textLines":1,"bbox":[44,124,1192,39]}
 {"kind":"shape","id":"sh/axcnuh8v","slide":2,"bbox":[0,681,1280,39]}
@@ -25,7 +25,7 @@
 {"kind":"textbox","id":"sh/x0nmpwr6","slide":2,"text":"USER BARRIERS","textPreview":"USER BARRIERS","textChars":13,"textLines":1,"bbox":[48,190,365,31]}
 {"kind":"shape","id":"sh/y1wny18r","slide":2,"bbox":[48,226,365,2]}
 {"kind":"textbox","id":"sh/z25or69c","slide":2,"text":"Legal terminology\n\nLanguage mismatch\n\nChoosing an advocate","textPreview":"Legal terminology |  | Language mismatch |  | Choosing an advocate","textChars":58,"textLines":5,"bbox":[50,249,360,283]}
-{"kind":"textbox","id":"sh/3ilsnypg","slide":2,"text":"VAKIL SETU WORKFLOW","textPreview":"VAKIL SETU WORKFLOW","textChars":19,"textLines":1,"bbox":[465,190,766,31]}
+{"kind":"textbox","id":"sh/3ilsnypg","slide":2,"text":"LEGAL-SETU WORKFLOW","textPreview":"LEGAL-SETU WORKFLOW","textChars":19,"textLines":1,"bbox":[465,190,766,31]}
 {"kind":"shape","id":"sh/2hcbutov","slide":2,"bbox":[465,226,766,2]}
 {"kind":"shape","id":"sh/pk3apo7m","slide":2,"bbox":[466,251,224,155]}
 {"kind":"textbox","id":"sh/4jutw361","slide":2,"text":"Describe","textPreview":"Describe","textChars":8,"textLines":1,"bbox":[480,263,196,34]}
@@ -41,8 +41,8 @@
 {"kind":"textbox","id":"sh/x8repcr2","slide":2,"text":"A legal professional remains responsible for case-specific advice.","textPreview":"A legal professional remains responsible for case-specific advice.","textChars":66,"textLines":1,"bbox":[466,452,747,80]}
 {"kind":"textbox","id":"sh/y90vyh8n","slide":2,"text":"Development focus: language access throughout the full interaction.","textPreview":"Development focus: language access throughout the full interaction.","textChars":67,"textLines":1,"bbox":[50,588,1170,48]}
 {"kind":"notes","id":"nt/h3ezmx","slide":2,"text":"These are the project’s problem assumptions, not measured survey findings. Explain triage as identifying the general type and urgency of a problem. The prototype offers information and a booking workflow. It does not establish a completed consultation.\n\nSources: backend/src/services/aiService.js\nbackend/src/controllers/aiController.js\nbackend/src/controllers/bookingController.js"}
-{"kind":"slide","id":"sl/igyhjs","slide":3,"title":"VAKIL SETU","textShapes":6}
-{"kind":"textbox","id":"sh/4f6h8nyl","slide":3,"text":"VAKIL SETU","textPreview":"VAKIL SETU","textChars":10,"textLines":1,"bbox":[42,21,180,25]}
+{"kind":"slide","id":"sl/igyhjs","slide":3,"title":"LEGAL-SETU","textShapes":6}
+{"kind":"textbox","id":"sh/4f6h8nyl","slide":3,"text":"LEGAL-SETU","textPreview":"LEGAL-SETU","textChars":10,"textLines":1,"bbox":[42,21,180,25]}
 {"kind":"textbox","id":"sh/3ex0zix0","slide":3,"text":"EXISTING BASELINE AND DEVELOPMENT SCOPE","textPreview":"EXISTING BASELINE AND DEVELOPMENT SCOPE","textChars":39,"textLines":1,"bbox":[42,64,1196,58]}
 {"kind":"textbox","id":"sh/idoz6dgf","slide":3,"text":"Clear ownership of the inherited system and the proposed extension","textPreview":"Clear ownership of the inherited system and the proposed extension","textChars":66,"textLines":1,"bbox":[44,124,1192,39]}
 {"kind":"shape","id":"sh/hcvix8fu","slide":3,"bbox":[0,681,1280,39]}
@@ -51,8 +51,8 @@
 {"kind":"textbox","id":"sh/18zi9cfy","slide":3,"text":"Document scanning and statutory analysis remain later roadmap candidates.","textPreview":"Document scanning and statutory analysis remain later roadmap candidates.","textChars":73,"textLines":1,"bbox":[49,611,1180,35]}
 {"kind":"table","id":"tb/z2d07mls","slide":3,"name":"","rows":6,"cols":3,"preview":"Capability | Inherited prototype | Proposed development","bbox":[48,195,1184,385]}
 {"kind":"notes","id":"nt/igyhjs","slide":3,"text":"Only the multilingual extension is an explicit user goal. Provider abstraction, validation, language-aware matching and booking hardening are proposed supporting work, not previously completed contributions. Treat the repository documents as the intended future direction. Review and approve the precise scope with faculty.\n\nSources: frontend/src/components/VoiceRecorder.jsx\nbackend/src/services/aiService.js\nbackend/src/controllers/advocateController.js\nbackend/src/controllers/bookingController.js\nbackend/src/controllers/paymentController.js\nPITCH_REPORT.md; user clarification"}
-{"kind":"slide","id":"sl/24aytg","slide":4,"title":"VAKIL SETU","textShapes":17}
-{"kind":"textbox","id":"sh/t4zqt0fy","slide":4,"text":"VAKIL SETU","textPreview":"VAKIL SETU","textChars":10,"textLines":1,"bbox":[42,21,180,25]}
+{"kind":"slide","id":"sl/24aytg","slide":4,"title":"LEGAL-SETU","textShapes":17}
+{"kind":"textbox","id":"sh/t4zqt0fy","slide":4,"text":"LEGAL-SETU","textPreview":"LEGAL-SETU","textChars":10,"textLines":1,"bbox":[42,21,180,25]}
 {"kind":"textbox","id":"sh/6187ylw7","slide":4,"text":"USER JOURNEY","textPreview":"USER JOURNEY","textChars":12,"textLines":1,"bbox":[42,64,1196,58]}
 {"kind":"textbox","id":"sh/72h8rqxs","slide":4,"text":"Illustrative case: “My landlord has not returned my security deposit”","textPreview":"Illustrative case: “My landlord has not returned my security deposit”","textChars":69,"textLines":1,"bbox":[44,124,1192,39]}
 {"kind":"shape","id":"sh/gra9ove9","slide":4,"bbox":[0,681,1280,39]}
@@ -82,8 +82,8 @@
 {"kind":"shape","id":"sh/kjqpgj61","slide":4,"bbox":[0,0,0,0]}
 {"kind":"shape","id":"sh/5kz6po7m","slide":4,"bbox":[0,0,0,0]}
 {"kind":"notes","id":"nt/24aytg","slide":4,"text":"Use this hypothetical example to explain the interface, without promising a specific model answer. Follow-up messages reuse conversation context. The booking currently records a requested time without checking actual calendar slots or advocate acceptance. Payment skipping is present in the inherited implementation.\n\nSources: frontend/src/components/VoiceRecorder.jsx\nfrontend/src/hooks/useLegalChat.js\nfrontend/src/pages/BookingPage.jsx"}
-{"kind":"slide","id":"sl/znq7lh","slide":5,"title":"VAKIL SETU","textShapes":21}
-{"kind":"textbox","id":"sh/mhkb6xcb","slide":5,"text":"VAKIL SETU","textPreview":"VAKIL SETU","textChars":10,"textLines":1,"bbox":[42,21,180,25]}
+{"kind":"slide","id":"sl/znq7lh","slide":5,"title":"LEGAL-SETU","textShapes":21}
+{"kind":"textbox","id":"sh/mhkb6xcb","slide":5,"text":"LEGAL-SETU","textPreview":"LEGAL-SETU","textChars":10,"textLines":1,"bbox":[42,21,180,25]}
 {"kind":"textbox","id":"sh/94bu1cvm","slide":5,"text":"CURRENT SYSTEM ARCHITECTURE","textPreview":"CURRENT SYSTEM ARCHITECTURE","textChars":27,"textLines":1,"bbox":[42,64,1196,58]}
 {"kind":"textbox","id":"sh/o32t87uh","slide":5,"text":"Existing application code and service boundaries","textPreview":"Existing application code and service boundaries","textChars":48,"textLines":1,"bbox":[44,124,1192,39]}
 {"kind":"shape","id":"sh/b6tc3mds","slide":5,"bbox":[0,681,1280,39]}
@@ -120,8 +120,8 @@
 {"kind":"shape","id":"sh/ba5gna9c","slide":5,"bbox":[0,0,0,0]}
 {"kind":"textbox","id":"sh/cbehwfqx","slide":5,"text":"The Express API calls external services and stores booking and payment records.","textPreview":"The Express API calls external services and stores booking and payment records.","textChars":79,"textLines":1,"bbox":[48,624,1180,30]}
 {"kind":"notes","id":"nt/znq7lh","slide":5,"text":"The application is a React client with an Express server and MongoDB. The diagram groups runtime dependencies. Speech recognition runs through the browser API. The Express payment controller reads a booking, calls Razorpay and stores the order identifier; MongoDB does not directly call Razorpay. The API also coordinates the payment flow shown in the booking slide. No Whisper route is registered in the current server.\n\nSources: backend/src/server.js\nfrontend/src/components/VoiceRecorder.jsx\nbackend/src/services/aiService.js\nbackend/src/controllers/paymentController.js\nbackend/src/models/"}
-{"kind":"slide","id":"sl/7juv8w","slide":6,"title":"VAKIL SETU","textShapes":17}
-{"kind":"textbox","id":"sh/v2dwz6lk","slide":6,"text":"VAKIL SETU","textPreview":"VAKIL SETU","textChars":10,"textLines":1,"bbox":[42,21,180,25]}
+{"kind":"slide","id":"sl/7juv8w","slide":6,"title":"LEGAL-SETU","textShapes":17}
+{"kind":"textbox","id":"sh/v2dwz6lk","slide":6,"text":"LEGAL-SETU","textPreview":"LEGAL-SETU","textChars":10,"textLines":1,"bbox":[42,21,180,25]}
 {"kind":"textbox","id":"sh/w3mdsb25","slide":6,"text":"AI ANALYSIS AND ADVOCATE MATCHING","textPreview":"AI ANALYSIS AND ADVOCATE MATCHING","textChars":33,"textLines":1,"bbox":[42,64,1196,58]}
 {"kind":"textbox","id":"sh/h4fe1g3a","slide":6,"text":"One triage request combines interpretation with database retrieval","textPreview":"One triage request combines interpretation with database retrieval","textChars":66,"textLines":1,"bbox":[44,124,1192,39]}
 {"kind":"shape","id":"sh/mx4vm1kn","slide":6,"bbox":[0,681,1280,39]}
@@ -149,8 +149,8 @@
 {"kind":"shape","id":"sh/orut8v2x","slide":6,"bbox":[669,483,562,2]}
 {"kind":"textbox","id":"sh/ps3a1032","slide":6,"text":"Available advocates only\nUp to 5 matches, highest rating first\nKeyword fallback for selected API failures","textPreview":"Available advocates only | Up to 5 matches, highest rating first | Keyword fallback for selected API failures","textChars":105,"textLines":3,"bbox":[670,501,561,120]}
 {"kind":"notes","id":"nt/7juv8w","slide":6,"text":"POST /api/ai/triage calls classifyLegalIssue, then queries advocates. Up to ten prior messages enter the AI prompt. Matching is a database query, not an AI ranking model. The keyword fallback is partial: missing credentials and some error types still fail. The model is accessed through an external API, not trained in this repository.\n\nSources: backend/src/services/aiService.js\nbackend/src/controllers/aiController.js"}
-{"kind":"slide","id":"sl/xetr2r","slide":7,"title":"VAKIL SETU","textShapes":22}
-{"kind":"textbox","id":"sh/1kbahwbu","slide":7,"text":"VAKIL SETU","textPreview":"VAKIL SETU","textChars":10,"textLines":1,"bbox":[42,21,180,25]}
+{"kind":"slide","id":"sl/xetr2r","slide":7,"title":"LEGAL-SETU","textShapes":22}
+{"kind":"textbox","id":"sh/1kbahwbu","slide":7,"text":"LEGAL-SETU","textPreview":"LEGAL-SETU","textChars":10,"textLines":1,"bbox":[42,21,180,25]}
 {"kind":"textbox","id":"sh/ehkr6hs3","slide":7,"text":"PROPOSED MULTILINGUAL ARCHITECTURE","textPreview":"PROPOSED MULTILINGUAL ARCHITECTURE","textChars":34,"textLines":1,"bbox":[42,64,1196,58]}
 {"kind":"textbox","id":"sh/fitsfmto","slide":7,"text":"A language layer around the existing legal workflow","textPreview":"A language layer around the existing legal workflow","textChars":51,"textLines":1,"bbox":[44,124,1192,39]}
 {"kind":"shape","id":"sh/sf294rad","slide":7,"bbox":[0,681,1280,39]}
@@ -189,8 +189,8 @@
 {"kind":"shape","id":"sh/szq9g3u5","slide":7,"bbox":[0,0,0,0]}
 {"kind":"textbox","id":"sh/f2h8rytg","slide":7,"text":"Provider routing and translation, where needed, sit behind the language adapters.","textPreview":"Provider routing and translation, where needed, sit behind the language adapters.","textChars":81,"textLines":1,"bbox":[48,621,1184,32]}
 {"kind":"notes","id":"nt/xetr2r","slide":7,"text":"Orange blocks are proposed additions or changes. Blue marks the reusable legal-triage core. ASR means automatic speech recognition and TTS means text to speech. Evaluate providers per language and script, including direct multilingual processing versus translation. BHASHINI is a candidate ecosystem to evaluate, not an integrated or guaranteed provider. Do not promise speech availability for every language before testing.\n\nSources: frontend/src/components/VoiceRecorder.jsx\nbackend/src/services/aiService.js\nhttps://bhashini.gov.in/\nProposed design based on user development goal"}
-{"kind":"slide","id":"sl/8mcw7y","slide":8,"title":"VAKIL SETU","textShapes":13}
-{"kind":"textbox","id":"sh/dc7qlcz6","slide":8,"text":"VAKIL SETU","textPreview":"VAKIL SETU","textChars":10,"textLines":1,"bbox":[42,21,180,25]}
+{"kind":"slide","id":"sl/8mcw7y","slide":8,"title":"LEGAL-SETU","textShapes":13}
+{"kind":"textbox","id":"sh/dc7qlcz6","slide":8,"text":"LEGAL-SETU","textPreview":"LEGAL-SETU","textChars":10,"textLines":1,"bbox":[42,21,180,25]}
 {"kind":"textbox","id":"sh/qpw7ax0v","slide":8,"text":"LANGUAGE COVERAGE TARGET","textPreview":"LANGUAGE COVERAGE TARGET","textChars":24,"textLines":1,"bbox":[42,64,1196,58]}
 {"kind":"textbox","id":"sh/rqp8j21g","slide":8,"text":"22 scheduled languages, with English retained as an additional language","textPreview":"22 scheduled languages, with English retained as an additional language","textChars":71,"textLines":1,"bbox":[44,124,1192,39]}
 {"kind":"shape","id":"sh/4nep87ip","slide":8,"bbox":[0,681,1280,39]}
@@ -209,8 +209,8 @@
 {"kind":"textbox","id":"sh/m9gb6lcb","slide":8,"text":"Santali\n\nSindhi\n\nTamil\n\nTelugu\n\nUrdu","textPreview":"Santali |  | Sindhi |  | Tamil |  | Telugu |  | Urdu","textChars":36,"textLines":9,"bbox":[1029,239,191,347]}
 {"kind":"textbox","id":"sh/tsbud4b6","slide":8,"text":"Coverage checklist: recognition, text quality, playback, interface and user testing","textPreview":"Coverage checklist: recognition, text quality, playback, interface and user testing","textChars":83,"textLines":1,"bbox":[51,613,1180,36]}
 {"kind":"notes","id":"nt/8mcw7y","slide":8,"text":"The Eighth Schedule lists 22 languages. English is not in that list, so retaining English while covering every scheduled language implies 23 language options in total. Names use common contemporary spellings. A scheduled language can use more than one script, and regional accents require separate testing. Do not equate a translated menu with validated end-to-end voice support.\n\nSources: https://www.mha.gov.in/sites/default/files/Eighth_Schedule.pdf\nfrontend/src/components/VoiceRecorder.jsx"}
-{"kind":"slide","id":"sl/qx6ttp","slide":9,"title":"VAKIL SETU","textShapes":23}
-{"kind":"textbox","id":"sh/r2pkf6tc","slide":9,"text":"VAKIL SETU","textPreview":"VAKIL SETU","textChars":10,"textLines":1,"bbox":[42,21,180,25]}
+{"kind":"slide","id":"sl/qx6ttp","slide":9,"title":"LEGAL-SETU","textShapes":23}
+{"kind":"textbox","id":"sh/r2pkf6tc","slide":9,"text":"LEGAL-SETU","textPreview":"LEGAL-SETU","textChars":10,"textLines":1,"bbox":[42,21,180,25]}
 {"kind":"textbox","id":"sh/s3ylobux","slide":9,"text":"DATA MODEL AND BOOKING FLOW","textPreview":"DATA MODEL AND BOOKING FLOW","textChars":27,"textLines":1,"bbox":[42,64,1196,58]}
 {"kind":"textbox","id":"sh/t4r2hgbi","slide":9,"text":"Persistent records connect users, advocates and payment status","textPreview":"Persistent records connect users, advocates and payment status","textChars":62,"textLines":1,"bbox":[44,124,1192,39]}
 {"kind":"shape","id":"sh/e503qlc3","slide":9,"bbox":[0,681,1280,39]}
@@ -248,8 +248,8 @@
 {"kind":"shape","id":"sh/fa5k3mhw","slide":9,"bbox":[0,0,0,0]}
 {"kind":"textbox","id":"sh/u9w3ah0r","slide":9,"text":"A Review schema also exists. A complete review workflow is outside the current routes.","textPreview":"A Review schema also exists. A complete review workflow is outside the current routes.","textChars":86,"textLines":1,"bbox":[48,624,1180,30]}
 {"kind":"notes","id":"nt/qx6ttp","slide":9,"text":"Arrows in the top diagram represent record relationships, not network calls. The booking holds references to one user and one advocate. Proposed hardening must verify ownership, derive the fee on the server, bind a payment to the stored order, and handle confirmation reliably. The inherited code also allows confirmation with payment pending.\n\nSources: backend/src/models/User.js\nbackend/src/models/Advocate.js\nbackend/src/models/Booking.js\nbackend/src/models/Review.js\nbackend/src/controllers/paymentController.js"}
-{"kind":"slide","id":"sl/gcpgnf","slide":10,"title":"VAKIL SETU","textShapes":18}
-{"kind":"textbox","id":"sh/36xobmxw","slide":10,"text":"VAKIL SETU","textPreview":"VAKIL SETU","textChars":10,"textLines":1,"bbox":[42,21,180,25]}
+{"kind":"slide","id":"sl/gcpgnf","slide":10,"title":"LEGAL-SETU","textShapes":18}
+{"kind":"textbox","id":"sh/36xobmxw","slide":10,"text":"LEGAL-SETU","textPreview":"LEGAL-SETU","textChars":10,"textLines":1,"bbox":[42,21,180,25]}
 {"kind":"textbox","id":"sh/o76p47yh","slide":10,"text":"FEASIBILITY AND RISKS","textPreview":"FEASIBILITY AND RISKS","textChars":21,"textLines":1,"bbox":[42,64,1196,58]}
 {"kind":"textbox","id":"sh/p8fqdcfm","slide":10,"text":"Reuse the working structure and validate the uncertain parts","textPreview":"Reuse the working structure and validate the uncertain parts","textChars":60,"textLines":1,"bbox":[44,124,1192,39]}
 {"kind":"shape","id":"sh/eh47yxgz","slide":10,"bbox":[0,681,1280,39]}
@@ -271,8 +271,8 @@
 {"kind":"textbox","id":"sh/6hc329cj","slide":10,"text":"Unreliable bookings","textPreview":"Unreliable bookings","textChars":19,"textLines":1,"bbox":[578,546,650,29]}
 {"kind":"textbox","id":"sh/7il4ved4","slide":10,"text":"Check slots, fees and payment ownership","textPreview":"Check slots, fees and payment ownership","textChars":39,"textLines":1,"bbox":[578,576,650,32]}
 {"kind":"notes","id":"nt/gcpgnf","slide":10,"text":"Feasibility comes from reusable software structure, not proven language performance. Existing integrations are code present in the repository and still need live validation. The proposed language provider must be evaluated for actual availability, cost, latency and quality. Risk controls shown here are development tasks. No measured reliability or cost claim is made.\n\nSources: frontend/src/components/VoiceRecorder.jsx\nbackend/src/services/aiService.js\nbackend/src/controllers/bookingController.js\nbackend/src/controllers/paymentController.js\nhttps://bhashini.gov.in/"}
-{"kind":"slide","id":"sl/x1mub6","slide":11,"title":"VAKIL SETU","textShapes":21}
-{"kind":"textbox","id":"sh/tcjup8v2","slide":11,"text":"VAKIL SETU","textPreview":"VAKIL SETU","textChars":10,"textLines":1,"bbox":[42,21,180,25]}
+{"kind":"slide","id":"sl/x1mub6","slide":11,"title":"LEGAL-SETU","textShapes":21}
+{"kind":"textbox","id":"sh/tcjup8v2","slide":11,"text":"LEGAL-SETU","textPreview":"LEGAL-SETU","textChars":10,"textLines":1,"bbox":[42,21,180,25]}
 {"kind":"textbox","id":"sh/698betcb","slide":11,"text":"DEVELOPMENT ROADMAP","textPreview":"DEVELOPMENT ROADMAP","textChars":19,"textLines":1,"bbox":[42,64,1196,58]}
 {"kind":"textbox","id":"sh/7ahcnydw","slide":11,"text":"A staged implementation plan with evidence at each milestone","textPreview":"A staged implementation plan with evidence at each milestone","textChars":60,"textLines":1,"bbox":[44,124,1192,39]}
 {"kind":"shape","id":"sh/k7qtcjul","slide":11,"bbox":[0,681,1280,39]}
@@ -299,8 +299,8 @@
 {"kind":"textbox","id":"sh/143a1sbq","slide":11,"text":"Harden booking and payment\nRun complete user scenarios","textPreview":"Harden booking and payment | Run complete user scenarios","textChars":54,"textLines":2,"bbox":[963,408,270,127]}
 {"kind":"textbox","id":"sh/e1sb6dsf","slide":11,"text":"Evidence: faculty-ready demo","textPreview":"Evidence: faculty-ready demo","textChars":28,"textLines":1,"bbox":[963,566,270,70]}
 {"kind":"notes","id":"nt/x1mub6","slide":11,"text":"This is a proposed work sequence, not a claim that milestones are complete. Establish a baseline before adding languages. Select pilot languages only after checking provider support and access to reviewers. Expand based on measured quality. No duration or team capacity has been supplied, so dates are deliberately omitted.\n\nSources: User goal and proposed implementation plan"}
-{"kind":"slide","id":"sl/s86u5u","slide":12,"title":"VAKIL SETU","textShapes":6}
-{"kind":"textbox","id":"sh/y1wv6p4v","slide":12,"text":"VAKIL SETU","textPreview":"VAKIL SETU","textChars":10,"textLines":1,"bbox":[42,21,180,25]}
+{"kind":"slide","id":"sl/s86u5u","slide":12,"title":"LEGAL-SETU","textShapes":6}
+{"kind":"textbox","id":"sh/y1wv6p4v","slide":12,"text":"LEGAL-SETU","textPreview":"LEGAL-SETU","textChars":10,"textLines":1,"bbox":[42,21,180,25]}
 {"kind":"textbox","id":"sh/l4ne1436","slide":12,"text":"VALIDATION PLAN","textPreview":"VALIDATION PLAN","textChars":15,"textLines":1,"bbox":[42,64,1196,58]}
 {"kind":"textbox","id":"sh/k3ed8zml","slide":12,"text":"Language coverage must come with measurable evidence","textPreview":"Language coverage must come with measurable evidence","textChars":52,"textLines":1,"bbox":[44,124,1192,39]}
 {"kind":"shape","id":"sh/bylwvul4","slide":12,"bbox":[0,681,1280,39]}
@@ -309,8 +309,8 @@
 {"kind":"textbox","id":"sh/nalcral8","slide":12,"text":"Choose acceptance thresholds with faculty and reviewers before testing.","textPreview":"Choose acceptance thresholds with faculty and reviewers before testing.","textChars":71,"textLines":1,"bbox":[49,612,1179,38]}
 {"kind":"table","id":"tb/5wvqdcbq","slide":12,"name":"","rows":6,"cols":3,"preview":"Layer | What to measure | Evidence to present","bbox":[48,194,1184,391]}
 {"kind":"notes","id":"nt/s86u5u","slide":12,"text":"WER means word error rate. Critical entities include names, dates and amounts, which can matter even when overall WER appears low. Report results by language, accent and test condition rather than hiding weak languages in an average. Include noisy audio, mixed-language speech and provider outages. Use legal reviewers for expected classifications. Measure both latency and cost per completed case before commercial claims.\n\nSources: Proposed evaluation methodology"}
-{"kind":"slide","id":"sl/71m1ph","slide":13,"title":"VAKIL SETU","textShapes":17}
-{"kind":"textbox","id":"sh/grqxcbax","slide":13,"text":"VAKIL SETU","textPreview":"VAKIL SETU","textChars":10,"textLines":1,"bbox":[42,21,180,25]}
+{"kind":"slide","id":"sl/71m1ph","slide":13,"title":"LEGAL-SETU","textShapes":17}
+{"kind":"textbox","id":"sh/grqxcbax","slide":13,"text":"LEGAL-SETU","textPreview":"LEGAL-SETU","textChars":10,"textLines":1,"bbox":[42,21,180,25]}
 {"kind":"textbox","id":"sh/vqhgjqtc","slide":13,"text":"EXPECTED IMPACT AND PROJECT CONTRIBUTION","textPreview":"EXPECTED IMPACT AND PROJECT CONTRIBUTION","textChars":40,"textLines":1,"bbox":[42,64,1196,58]}
 {"kind":"textbox","id":"sh/up8falsr","slide":13,"text":"Benefits to evaluate as the inherited prototype develops","textPreview":"Benefits to evaluate as the inherited prototype develops","textChars":56,"textLines":1,"bbox":[44,124,1192,39]}
 {"kind":"shape","id":"sh/5wjyp0be","slide":13,"bbox":[0,681,1280,39]}
@@ -333,8 +333,8 @@
 {"kind":"textbox","id":"sh/qpgbeton","slide":13,"text":"A documented baseline and test results make new contributions visible.","textPreview":"A documented baseline and test results make new contributions visible.","textChars":70,"textLines":1,"bbox":[495,530,728,68]}
 {"kind":"shape","id":"sh/dsrap87y","slide":13,"bbox":[130,606,1092,2]}
 {"kind":"notes","id":"nt/71m1ph","slide":13,"text":"All benefits on this slide are expected outcomes to evaluate, not measured impact. The academic contribution is extending and validating an inherited system. Explain exactly which modules you changed after implementation. The current presentation claims no completed new development. The application provides preliminary information, and a qualified advocate handles case-specific advice.\n\nSources: User project context and proposed evaluation plan"}
-{"kind":"slide","id":"sl/t9grrn","slide":14,"title":"VAKIL SETU","textShapes":10}
-{"kind":"textbox","id":"sh/sf6h4ne1","slide":14,"text":"VAKIL SETU","textPreview":"VAKIL SETU","textChars":10,"textLines":1,"bbox":[42,21,180,25]}
+{"kind":"slide","id":"sl/t9grrn","slide":14,"title":"LEGAL-SETU","textShapes":10}
+{"kind":"textbox","id":"sh/sf6h4ne1","slide":14,"text":"LEGAL-SETU","textPreview":"LEGAL-SETU","textChars":10,"textLines":1,"bbox":[42,21,180,25]}
 {"kind":"textbox","id":"sh/7ex0bidg","slide":14,"text":"REFERENCES AND DISCUSSION","textPreview":"REFERENCES AND DISCUSSION","textChars":25,"textLines":1,"bbox":[42,64,1196,58]}
 {"kind":"textbox","id":"sh/6doz2dwv","slide":14,"text":"Source basis for the architecture and proposed language extension","textPreview":"Source basis for the architecture and proposed language extension","textChars":65,"textLines":1,"bbox":[44,124,1192,39]}
 {"kind":"shape","id":"sh/h4zihsvi","slide":14,"bbox":[0,681,1280,39]}

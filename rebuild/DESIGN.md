@@ -1,4 +1,4 @@
-# Vakil Setu web design
+# Legal-Setu web design
 
 The interface helps people describe a legal concern, review a private summary, find an approved advocate, and request a consultation. Prioritize readable information and explicit actions. Do not imply legal validation, guaranteed connections, or language accuracy.
 

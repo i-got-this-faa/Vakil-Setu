@@ -1,6 +1,6 @@
 /**
- * @vakil/i18n
- * Platform-independent internationalization package for Vakil Setu.
+ * @legal-setu/i18n
+ * Platform-independent internationalization package for Legal-Setu.
  * Supports English and all 22 Eighth Schedule Indian languages.
  */
 

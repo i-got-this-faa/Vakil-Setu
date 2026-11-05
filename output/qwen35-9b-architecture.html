@@ -1,0 +1,10 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><style>
+body{margin:0;color:var(--foreground);font-family:var(--font-sans)}main{display:grid;gap:12px} .inputs{display:grid;grid-template-columns:1fr 1fr;gap:16px} .stage{text-align:center;padding:8px 0} .sub{color:var(--muted-foreground)} .arrow{text-align:center;color:var(--muted-foreground)} .stack{display:grid;gap:8px;border-left:2px solid var(--chart-1);padding-left:16px} .layer{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;padding:8px 0} .repeat{color:var(--muted-foreground)} @media(max-width:440px){.inputs{grid-template-columns:1fr}.layer{display:block}}
+</style></head><body><main aria-label="Qwen3.5-9B architecture: text embeddings and optional vision features enter 32 hybrid decoder layers, then an output head predicts the next token.">
+<div class="inputs"><div class="stage">Text → tokenizer → embeddings<br><span class="sub">4,096 values per token</span></div><div class="stage">Optional image / video → vision encoder<br><span class="sub">Visual features projected to 4,096 values</span></div></div>
+<div class="arrow" aria-hidden="true">↓</div>
+<div class="repeat">One group of four decoder layers · repeated 8 times</div>
+<div class="stack"><div class="layer"><span>Layer 1 · Gated DeltaNet → FFN</span><span class="sub">State-based memory update</span></div><div class="layer"><span>Layer 2 · Gated DeltaNet → FFN</span><span class="sub">State-based memory update</span></div><div class="layer"><span>Layer 3 · Gated DeltaNet → FFN</span><span class="sub">State-based memory update</span></div><div class="layer"><span>Layer 4 · Gated full attention → FFN</span><span class="sub">Direct attention to earlier tokens</span></div></div>
+<div class="sub">Each layer also uses normalization and residual connections.</div><div class="arrow" aria-hidden="true">↓</div><div class="stage">Final normalization → output head → next-token probabilities</div><div class="arrow" aria-hidden="true">↓</div><div class="stage">Select a token → append it → repeat until the response ends</div>
+</main></body></html>

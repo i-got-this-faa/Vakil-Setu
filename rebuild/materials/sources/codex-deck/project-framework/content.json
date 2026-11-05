@@ -2,11 +2,11 @@
   "slides": [
     {
       "section": "PROJECT PRESENTATION",
-      "title": "Vakil Setu",
+      "title": "Legal-Setu",
       "subtitle": "Multilingual legal intake and consultation",
       "layout": "cover",
       "seconds": 30,
-      "script": "Good morning. We are presenting Vakil Setu, a multilingual legal intake and consultation project. Our focus is the first step a person takes when facing a legal concern: explaining the situation, reviewing a clear summary, and finding an appropriate advocate. The current project is a web application with English, Hindi and Punjabi pilot interfaces. We will explain the problem, our development approach, how the application works, and the evidence behind our results.",
+      "script": "Good morning. We are presenting Legal-Setu, a multilingual legal intake and consultation project. Our focus is the first step a person takes when facing a legal concern: explaining the situation, reviewing a clear summary, and finding an appropriate advocate. The current project is a web application with English, Hindi and Punjabi pilot interfaces. We will explain the problem, our development approach, how the application works, and the evidence behind our results.",
       "cue": "Introduce the team verbally. Keep the opening under 30 seconds.",
       "sources": ["rebuild/README.md", "rebuild/docs/decisions.md"]
     },
@@ -35,7 +35,7 @@
       "rows": [
         ["Tele-Law", "Connects people with lawyers through phone and video services"],
         ["LawRato", "Offers advocate discovery and consultation options"],
-        ["Vakil Setu", "Focuses on multilingual intake, user review and controlled summary sharing"],
+        ["Legal-Setu", "Focuses on multilingual intake, user review and controlled summary sharing"],
         ["Why this scope", "Citizens prepare their account. Advocates receive the version the user approved."]
       ],
       "footnote": "Differentiation is a project focus. Comparative superiority remains untested.",
@@ -211,7 +211,7 @@
     },
     {
       "section": "T  /  TAKEAWAY",
-      "title": "Vakil Setu",
+      "title": "Legal-Setu",
       "subtitle": "A working foundation for reviewed legal intake",
       "layout": "closing",
       "rows": [
@@ -219,7 +219,7 @@
         ["Remaining work", "Hosted workflow acceptance, language review and verified AI inference"]
       ],
       "seconds": 20,
-      "script": "To conclude, Vakil Setu provides a working foundation for multilingual legal intake, user-reviewed summaries and controlled consultation requests. The original objective is partly achieved: the core workflows exist and specific behaviours have evidence, while complete hosted acceptance and validated AI remain unfinished. The next milestone is a measured pilot that tests whether users can complete the process and understand what they share. Thank you. We are ready for questions.",
+      "script": "To conclude, Legal-Setu provides a working foundation for multilingual legal intake, user-reviewed summaries and controlled consultation requests. The original objective is partly achieved: the core workflows exist and specific behaviours have evidence, while complete hosted acceptance and validated AI remain unfinished. The next milestone is a measured pilot that tests whether users can complete the process and understand what they share. Thank you. We are ready for questions.",
       "cue": "Pause for questions. Use the viva answers in the script as preparation.",
       "sources": ["rebuild/README.md", "rebuild/docs/verification.md", "rebuild/docs/hosted-activation.md"]
     }

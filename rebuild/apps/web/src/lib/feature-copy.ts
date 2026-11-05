@@ -1,4 +1,4 @@
-import type { PilotLocale } from "@vakil/domain";
+import type { PilotLocale } from "@legal-setu/domain";
 import { localizedFeatureCopy } from "./localization";
 
 export const featureEnglish = {

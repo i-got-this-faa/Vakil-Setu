@@ -15,7 +15,7 @@ const edits=[
 ['Expand languages','Validate languages'],
 ['Target 22 scheduled languages plus English. Validate each language before rollout.','Scope includes 22 scheduled languages plus English. Validate each language before rollout.'],
 ['The product provides general orientation. A qualified advocate handles case-specific advice. Voice depends on browser and provider support.','The project has Indian multilingual scope as clarified by the user. Voice and response quality depend on browser and provider support, and need testing for each language. General orientation supports preparation for a qualified advocate.'],
-['Vakil_Setu_Short_Detailed.pptx','Vakil_Setu_Short_Detailed_Multilingual.pptx'],
+['Legal_Setu_Short_Detailed.pptx','Legal_Setu_Short_Detailed_Multilingual.pptx'],
 ["receiptPath:BUILD+'/delivery-validation.json'","receiptPath:BUILD+'/validation.json'"]
 ];
 for(const [a,b] of edits){s=s.replaceAll(a,b);}

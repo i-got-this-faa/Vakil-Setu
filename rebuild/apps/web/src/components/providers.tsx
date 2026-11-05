@@ -1,6 +1,6 @@
 "use client";
 
-import { Button } from "@vakil/ui";
+import { Button } from "@legal-setu/ui";
 
 import { ClerkProvider, useAuth } from "@clerk/nextjs";
 import { ConvexProviderWithClerk } from "convex/react-clerk";
@@ -56,8 +56,8 @@ function ConfiguredProviders({
     <ClerkProvider
       publishableKey={config.clerkKey}
       localization={{
-        signIn: { start: { title: "Sign in to Vakil Setu", titleCombined: "Sign in to Vakil Setu" } },
-        signUp: { start: { title: "Create your Vakil Setu account", titleCombined: "Create your Vakil Setu account" } },
+        signIn: { start: { title: "Sign in to Legal-Setu", titleCombined: "Sign in to Legal-Setu" } },
+        signUp: { start: { title: "Create your Legal-Setu account", titleCombined: "Create your Legal-Setu account" } },
       }}
       appearance={{ variables: { colorPrimary: "#346d65", fontFamily: "var(--font-sans)" } }}
       signInUrl="/sign-in"

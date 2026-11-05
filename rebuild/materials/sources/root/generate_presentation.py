@@ -90,7 +90,7 @@ def create_deck():
     p0.font.color.rgb = RGBColor(245, 158, 11)
     
     p1 = tf.add_paragraph()
-    p1.text = "VAKIL SETU (वकील सेतु)"
+    p1.text = "LEGAL-SETU"
     p1.font.size = Pt(36)
     p1.font.bold = True
     p1.font.color.rgb = COLOR_WHITE
@@ -253,10 +253,10 @@ def create_deck():
         p_imp.space_before = Pt(10)
 
     # =========================================================================
-    # SLIDE 3: SOLUTION - VAKIL SETU
+    # SLIDE 3: SOLUTION - LEGAL-SETU
     # =========================================================================
     s3 = prs.slides.add_slide(blank_layout)
-    add_header(s3, "Vakil Setu: An End-to-End Voice-First Legal Bridge", "Proposed Solution & Value Proposition")
+    add_header(s3, "Legal-Setu: An End-to-End Voice-First Legal Bridge", "Proposed Solution & Value Proposition")
 
     # Overview Subtitle
     sub_box3 = s3.shapes.add_textbox(Inches(0.8), Inches(1.55), Inches(11.7), Inches(0.5))
@@ -708,7 +708,7 @@ def create_deck():
         pd.space_before = Pt(1)
 
     # Save presentation
-    output_path = os.path.join(os.getcwd(), "Vakil_Setu_Presentation.pptx")
+    output_path = os.path.join(os.getcwd(), "Legal_Setu_Presentation.pptx")
     prs.save(output_path)
     print(f"Presentation successfully created at: {output_path}")
 

@@ -23,12 +23,12 @@ function pipeline(s,stages){let last;stages.forEach((g,i)=>{let y=116+i*112;regi
 
 // 1. Cover, matching the supplied reference composition.
 {
-let s=p.slides.add();s.background.fill='#FFFFFF';text(s,'VAKIL SETU',50,31,860,80,62,C.blue,true,'center');
+let s=p.slides.add();s.background.fill='#FFFFFF';text(s,'LEGAL-SETU',50,31,860,80,62,C.blue,true,'center');
 text(s,'Multilingual voice-based legal assistance\nand advocate access',60,129,840,80,31,'#0751AA',true,'center');
 text(s,'Presented by: Raghav Nargotra (2023A1R033)\nSidarth Gupta (2023A1R038)',90,224,780,67,24,C.ink,false,'center');
 let bytes=await fs.readFile(ROOT+'/.codex-deck/new-reference/logo-alpha.png');s.images.add({blob:bytes.buffer.slice(bytes.byteOffset,bytes.byteOffset+bytes.byteLength),contentType:'image/png',alt:'MIET institutional logo from supplied reference',fit:'contain',position:{left:394,top:391,width:172,height:61}});
 text(s,'Model Institute of Engineering and Technology (Autonomous), Jammu · 2026',50,472,860,30,18,C.muted,false,'center');
-note(s,'Presenter names and roll numbers retained from the previous Vakil Setu faculty presentation. Institutional logo supplied in the reference PDF.',['.codex-deck/final.mjs']);}
+note(s,'Presenter names and roll numbers retained from the previous Legal-Setu faculty presentation. Institutional logo supplied in the reference PDF.',['.codex-deck/final.mjs']);}
 // 2.
 {
 let s=base('The problem in accessing legal help');text(s,'A person can describe a dispute without knowing its legal category or the right advocate.',36,108,888,62,24);
@@ -36,12 +36,12 @@ bullets(s,['Language and literacy: formal terminology and long text forms can ma
 note(s,'Problem framing and project motivation. These statements are design hypotheses rather than quantified survey findings.',['SRS.md','PITCH_REPORT.md']);}
 // 3.
 {
-let s=base('What is Vakil Setu');text(s,'Vakil Setu connects a spoken or typed problem with preliminary guidance and advocate discovery.',36,108,888,62);
+let s=base('What is Legal-Setu');text(s,'Legal-Setu connects a spoken or typed problem with preliminary guidance and advocate discovery.',36,108,888,62);
 bullets(s,['Voice input: the browser converts speech into text that the user can review.','Legal triage: the service returns a category, urgency, short summary and suggested actions.','Advocate access: the API filters by expertise and availability, then ranks profiles by rating.','Consultation booking: the system stores a request and supports Razorpay checkout.'],36,184,888,274);
 caption(s,'The assistant provides general information. An advocate handles case-specific legal advice.');note(s,'Description of code-level capabilities, not a claim of live deployment or successful user validation.',['frontend/src/components/VoiceRecorder.jsx','backend/src/services/aiService.js','backend/src/controllers/advocateController.js','backend/src/controllers/paymentController.js']);}
 // 4.
 {
-let s=base('Existing services and the project focus');table(s,[['Approach','Existing role','Vakil Setu project focus'],['LawRato','Lawyer discovery, consultation and legal Q&A','Connect spoken intake with structured triage and matching'],['eCourts Services','Case status, cause lists and court orders','Support the first step before a consultation'],['Generic AI assistant','Conversational explanations','Use defined categories and return local advocate matches'],['Direct consultation','Professional case-specific advice','Help users prepare a concise issue summary']], [194,282,412],108,316,20);
+let s=base('Existing services and the project focus');table(s,[['Approach','Existing role','Legal-Setu project focus'],['LawRato','Lawyer discovery, consultation and legal Q&A','Connect spoken intake with structured triage and matching'],['eCourts Services','Case status, cause lists and court orders','Support the first step before a consultation'],['Generic AI assistant','Conversational explanations','Use defined categories and return local advocate matches'],['Direct consultation','Professional case-specific advice','Help users prepare a concise issue summary']], [194,282,412],108,316,20);
 text(s,'The differentiation to test is the combined voice-to-consultation journey. Lawyer discovery already exists.',36,447,888,51,22);
 note(s,'Official service descriptions support LawRato and eCourts roles. The final column is a project positioning hypothesis, not evidence that competitors lack voice features.',['https://lawrato.com/cmses/page/how-does-lawrato-work','https://ecommitteesci.gov.in/service/ecourts-services-mobile-application/','README.md']);}
 // 5.
@@ -121,10 +121,10 @@ text(s,'Planning assumption: a 16-week semester. This schedule describes remaini
 note(s,'Illustrative 16-week plan adapted from the reference, not a confirmed calendar or completed milestone record. Existing code allows effort to focus on stabilization and validation.',['SRS.md']);}
 // 19.
 {
-let s=p.slides.add();s.background.fill='#FFFFFF';text(s,'Summary',60,142,840,80,58,C.blue,true,'center');bullets(s,['Vakil Setu connects spoken intake with guidance and advocate discovery.','The current implementation focuses on Hindi and English.','React, Express and MongoDB support analysis, matching and booking.','The diagrams show architecture and each module’s workflow.','Broader language support and consultation reliability need validation.'],113,252,760,214,23);text(s,'19',895,502,30,24,18,'#777777',false,'right');note(s,'Closing summary. General guidance does not replace consultation. Targets are kept separate from implemented code paths.',['README.md','backend/src/server.js','.codex-deck/final.mjs']);}
+let s=p.slides.add();s.background.fill='#FFFFFF';text(s,'Summary',60,142,840,80,58,C.blue,true,'center');bullets(s,['Legal-Setu connects spoken intake with guidance and advocate discovery.','The current implementation focuses on Hindi and English.','React, Express and MongoDB support analysis, matching and booking.','The diagrams show architecture and each module’s workflow.','Broader language support and consultation reliability need validation.'],113,252,760,214,23);text(s,'19',895,502,30,24,18,'#777777',false,'right');note(s,'Closing summary. General guidance does not replace consultation. Targets are kept separate from implemented code paths.',['README.md','backend/src/server.js','.codex-deck/final.mjs']);}
 
 for(const h of headers)h.bringToFront();
 await (await PresentationFile.exportPptx(p)).save(BUILD+'/candidate.pptx');
 for(let i=0;i<p.slides.items.length;i++){await fs.writeFile(BUILD+`/previews/slide-${i+1}.png`,new Uint8Array(await (await p.export({slide:p.slides.items[i],format:'png',scale:1.5})).arrayBuffer()));}
-const result=await finalizePresentation({workspaceDir:ROOT,candidatePath:BUILD+'/candidate.pptx',finalPath:ROOT+'/output/presentations/Vakil_Setu_Reference_Style_Final.pptx',pythonExecutable:'C:/Users/DELL/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/python.exe',integrityValidatorPath:SKILL+'/container_tools/inspect_presentation_package_integrity.py',layoutValidatorPath:SKILL+'/container_tools/inspect_presentation_layout_geometry.py',layoutArgs:['--expected-slide-size-emu','9144000,5143500','--validate-bullet-geometry','--validate-heading-fit',...[4,15,16,18].flatMap(n=>['--require-native-table-slide',String(n)])],explicitTotalSlideCount:19,requiredNativeTableOwnerSlides:[4,15,16,18],fontPolicy:{basis:'design',families:['Arial']},verifyArtifactToolImport:true,receiptPath:BUILD+'/final-validation.json'});
+const result=await finalizePresentation({workspaceDir:ROOT,candidatePath:BUILD+'/candidate.pptx',finalPath:ROOT+'/output/presentations/Legal_Setu_Reference_Style_Final.pptx',pythonExecutable:'C:/Users/DELL/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/python.exe',integrityValidatorPath:SKILL+'/container_tools/inspect_presentation_package_integrity.py',layoutValidatorPath:SKILL+'/container_tools/inspect_presentation_layout_geometry.py',layoutArgs:['--expected-slide-size-emu','9144000,5143500','--validate-bullet-geometry','--validate-heading-fit',...[4,15,16,18].flatMap(n=>['--require-native-table-slide',String(n)])],explicitTotalSlideCount:19,requiredNativeTableOwnerSlides:[4,15,16,18],fontPolicy:{basis:'design',families:['Arial']},verifyArtifactToolImport:true,receiptPath:BUILD+'/final-validation.json'});
 console.log(JSON.stringify({final:result.finalPath,integrity:result.packageIntegrity.status,layout:result.presentationLayout}));

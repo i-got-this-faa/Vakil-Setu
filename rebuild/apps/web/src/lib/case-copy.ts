@@ -1,5 +1,5 @@
 import { localizedCaseCopy } from "./localization";
-import type { PilotLocale } from "@vakil/domain";
+import type { PilotLocale } from "@legal-setu/domain";
 
 export type CaseNoSummaryCopy = {
   savedTitle: string;

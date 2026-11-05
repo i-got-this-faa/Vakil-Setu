@@ -23,7 +23,7 @@ const screenshot=await sharp(path.join(ROOT,'rebuild/.runtime/browser-qa/landing
 for(let i=0;i<slides.length;i++){
  const d=slides[i],s=p.slides.add();s.background.fill=C.white;
  if(d.layout==='cover'){
-   text(s,'VAKIL SETU',65,155,1130,115,85,C.red,true);
+   text(s,'LEGAL-SETU',65,155,1130,115,85,C.red,true);
    text(s,d.subtitle,70,286,1120,85,38,C.ink);
    text(s,'Problem   Reason   Objective   Journey',72,482,1120,48,27,C.muted);
    text(s,'Execution   Contribution   Takeaway',72,533,1120,48,27,C.muted);
@@ -52,7 +52,7 @@ for(let i=0;i<slides.length;i++){
        col.items.forEach((t,k)=>text(s,t,x,300+k*76,535,64,28));
      });
    }else if(d.layout==='screenshot'){
-     s.images.add({blob:screenshot.buffer.slice(screenshot.byteOffset,screenshot.byteOffset+screenshot.byteLength),contentType:'image/png',alt:'Implemented Vakil Setu public landing page',fit:'contain',position:{left:62,top:217,width:741,height:420}});
+     s.images.add({blob:screenshot.buffer.slice(screenshot.byteOffset,screenshot.byteOffset+screenshot.byteLength),contentType:'image/png',alt:'Implemented Legal-Setu public landing page',fit:'contain',position:{left:62,top:217,width:741,height:420}});
      d.rows.forEach((r,j)=>{text(s,r[0],840,234+j*135,350,40,29,C.red,true);text(s,r[1],840,279+j*135,350,82,26);});
    }
    if(d.footnote)text(s,d.footnote,65,650,1125,39,18,C.muted);
@@ -66,7 +66,7 @@ const candidate=path.join(BUILD,'candidate.pptx');
 await(await PresentationFile.exportPptx(p)).save(candidate);
 const {finalizePresentation}=await import(pathToFileURL(path.join(SKILL,'container_tools/artifact_tool_utils.mjs')).href);
 const result=await finalizePresentation({
- workspaceDir:ROOT,candidatePath:candidate,finalPath:path.join(OUT,'Vakil_Setu_PROJECT_Final.pptx'),
+ workspaceDir:ROOT,candidatePath:candidate,finalPath:path.join(OUT,'Legal_Setu_PROJECT_Final.pptx'),
  pythonExecutable:PYTHON,
  integrityValidatorPath:path.join(SKILL,'container_tools/inspect_presentation_package_integrity.py'),
  layoutValidatorPath:path.join(SKILL,'container_tools/inspect_presentation_layout_geometry.py'),

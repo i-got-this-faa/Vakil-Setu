@@ -1,5 +1,5 @@
 import { localizedProductCopy } from "./localization";
-import type { LegalDomain, PilotLocale } from "@vakil/domain";
+import type { LegalDomain, PilotLocale } from "@legal-setu/domain";
 
 // Draft interface copy. Human language quality and legal terminology are unverified.
 export type ProductCopy = {

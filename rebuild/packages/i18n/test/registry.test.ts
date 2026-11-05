@@ -110,8 +110,8 @@ describe('complete draft copy and explicitly unavailable translations', () => {
       }
     }
     expect(getMessages('unknown')).toBe(translationDictionary['en-IN']);
-    expect(getMessages('hi').navigation.brandName).toBe('वक़ील सेतु');
-    expect(getMessages('pa').navigation.brandName).toBe('ਵਕੀਲ ਸੇਤੂ');
+    expect(getMessages('hi').navigation.brandName).toBe('Legal-Setu');
+    expect(getMessages('pa').navigation.brandName).toBe('Legal-Setu');
   });
   it('retains exactly thirteen draft bundles and defers ten translations honestly', () => {
     expect(draftedLocales).toHaveLength(13);

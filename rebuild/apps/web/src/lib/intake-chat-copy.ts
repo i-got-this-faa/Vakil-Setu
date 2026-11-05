@@ -1,4 +1,4 @@
-import type { PilotLocale } from "@vakil/domain";
+import type { PilotLocale } from "@legal-setu/domain";
 import { localizedIntakeChatCopy } from "./localization";
 
 export type IntakeChatCopy = { consent: string; send: string; pending: string; saveOnly: string; documents: string; failed: string; initialMessage: string };

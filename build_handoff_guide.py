@@ -21,7 +21,7 @@ def build_handoff_doc():
         # Header
         header = section.header
         p_hdr = header.paragraphs[0]
-        p_hdr.text = "Vakil Setu (वकील सेतु) — Master Project Study, Architecture & Handoff Guide"
+        p_hdr.text = "Legal-Setu — Master Project Study, Architecture & Handoff Guide"
         p_hdr.runs[0].font.name = "Arial"
         p_hdr.runs[0].font.size = Pt(8.5)
         p_hdr.runs[0].font.color.rgb = RGBColor(100, 116, 139)
@@ -288,7 +288,7 @@ def build_handoff_doc():
     p_title = doc.add_paragraph()
     p_title.paragraph_format.space_before = Pt(16)
     p_title.paragraph_format.space_after = Pt(4)
-    r_t = p_title.add_run("VAKIL SETU (वकील सेतु)")
+    r_t = p_title.add_run("LEGAL-SETU")
     r_t.font.name = "Arial"
     r_t.font.size = Pt(26)
     r_t.font.bold = True
@@ -307,8 +307,8 @@ def build_handoff_doc():
     create_styled_table(
         ["Document Attribute", "Project Specification Details"],
         [
-            ["Document Identifier", "HANDOFF-VAKIL-SETU-STUDY-V1.0"],
-            ["Project Title", "Vakil Setu: Voice-First Bilingual Legal Triage & Advocate Discovery"],
+            ["Document Identifier", "HANDOFF-LEGAL-SETU-STUDY-V1.0"],
+            ["Project Title", "Legal-Setu: Voice-First Bilingual Legal Triage & Advocate Discovery"],
             ["Target Purpose", "Comprehensive Project Study, Knowledge Transfer & Viva Defense"],
             ["Lead Developer / Presenter", "Summar Kumar (Dept. of Computer Science & Engineering)"],
             ["Current Development State", "Working MVP (Phase 0 Implemented) + Target Architecture (Phases 1-4)"],
@@ -321,7 +321,7 @@ def build_handoff_doc():
 
     add_callout(
         "MANDATORY STATUTORY NOTICE & LEGAL COMPLIANCE DISCLAIMER",
-        "Vakil Setu is engineered strictly as an automated informational triage, grievance structuring, and professional discovery tool. Under Section 29 of the Advocates Act, 1961, only enrolled advocates are entitled to practice law. Vakil Setu does NOT provide legal advice, does NOT draft legally binding court pleadings, and does NOT establish an attorney-client relationship. All advocate directory listings comply strictly with Bar Council of India (BCI) Rule 36 by prohibiting commercial solicitation and displaying strictly objective professional credentials.",
+        "Legal-Setu is engineered strictly as an automated informational triage, grievance structuring, and professional discovery tool. Under Section 29 of the Advocates Act, 1961, only enrolled advocates are entitled to practice law. Legal-Setu does NOT provide legal advice, does NOT draft legally binding court pleadings, and does NOT establish an attorney-client relationship. All advocate directory listings comply strictly with Bar Council of India (BCI) Rule 36 by prohibiting commercial solicitation and displaying strictly objective professional credentials.",
         "statute"
     )
 
@@ -334,7 +334,7 @@ def build_handoff_doc():
     
     add_h2("1.1 The 30-Second Elevator Pitch (Word-for-Word Memorization Script)")
     add_p(
-        "\"Vakil Setu is an AI-powered, voice-first legal triage and advocate discovery platform designed for India's 1.4 billion citizens. More than 5.1 crore cases are currently pending in Indian courts, largely because ordinary citizens do not know where to begin, cannot understand archaic English legalese, and fear high initial consultation fees. With Vakil Setu, a citizen simply taps a button on their phone or browser and speaks their grievance naturally in Hindi or English. Our dual-engine AI immediately structures their issue into canonical legal domains—criminal, civil, family, or property—evaluates urgency, provides a plain-language action checklist, and matches them with verified, available advocates sorted purely by merit. Crucially, the system is 100% compliant with Bar Council of India Rule 36 prohibiting lawyer advertising, features an offline rule-based fallback that guarantees zero downtime, and verifies consultation payments using cryptographic HMAC SHA-256 signatures.\"",
+        "\"Legal-Setu is an AI-powered, voice-first legal triage and advocate discovery platform designed for India's 1.4 billion citizens. More than 5.1 crore cases are currently pending in Indian courts, largely because ordinary citizens do not know where to begin, cannot understand archaic English legalese, and fear high initial consultation fees. With Legal-Setu, a citizen simply taps a button on their phone or browser and speaks their grievance naturally in Hindi or English. Our dual-engine AI immediately structures their issue into canonical legal domains—criminal, civil, family, or property—evaluates urgency, provides a plain-language action checklist, and matches them with verified, available advocates sorted purely by merit. Crucially, the system is 100% compliant with Bar Council of India Rule 36 prohibiting lawyer advertising, features an offline rule-based fallback that guarantees zero downtime, and verifies consultation payments using cryptographic HMAC SHA-256 signatures.\"",
         bold_prefix="Verbatim Pitch: ",
         italic=True
     )
@@ -342,16 +342,16 @@ def build_handoff_doc():
     add_h2("1.2 The 2-Minute Executive Summary")
     add_p("When explaining the project in greater depth to an examiner or investor, structure your explanation across four pillars:")
     add_bullet("The judicial system is paralyzed by over 5.1 crore pending cases. Over 80% of these cases originate in District and Subordinate Courts, where citizens face extreme language barriers (judiciary operates largely in English, while citizens speak regional languages), opaque legal fee structures, and procedural intimidation.", "1. The Socio-Legal Crisis: ")
-    add_bullet("Vakil Setu acts as an intelligent digital bridge ('Setu') between vernacular citizens and licensed advocates ('Vakils'). It lowers the entry barrier by enabling voice-based, conversational intake in Hindi and English directly inside any web browser, requiring no app downloads or paid streaming audio servers.", "2. The Proposed Solution: ")
+    add_bullet("Legal-Setu acts as an intelligent digital bridge ('Setu') between vernacular citizens and licensed advocates ('Vakils'). It lowers the entry barrier by enabling voice-based, conversational intake in Hindi and English directly inside any web browser, requiring no app downloads or paid streaming audio servers.", "2. The Proposed Solution: ")
     add_bullet("Our backend features a Dual-Engine Intelligence Pipeline. The primary engine routes unstructured narratives through Google Gemini 2.0 Flash (or college API gateway) with strict JSON output constraints. If external AI quotas fail, the system instantaneously and deterministically shifts to an internal Rule-Based Regex Engine, eliminating HTTP 500 errors. Furthermore, advocate matching queries MongoDB Atlas based on verified expertise tags, while financial escrows are secured via Razorpay HMAC SHA-256 signatures.", "3. The Engineering Innovation: ")
-    add_bullet("Empirical testing shows that Vakil Setu reduces client intake turnaround time by over 70%, relieves advocates of unpaid, unstructured preliminary consultations, and operates in full compliance with the Advocates Act 1961, Bar Council Rule 36, and the Digital Personal Data Protection (DPDP) Act 2023.", "4. Quantifiable Impact: ")
+    add_bullet("Empirical testing shows that Legal-Setu reduces client intake turnaround time by over 70%, relieves advocates of unpaid, unstructured preliminary consultations, and operates in full compliance with the Advocates Act 1961, Bar Council Rule 36, and the Digital Personal Data Protection (DPDP) Act 2023.", "4. Quantifiable Impact: ")
 
     add_h2("1.3 Etymology & Philosophical Foundation")
-    add_p("The name 'Vakil Setu' translates from Hindi to 'The Lawyer's Bridge' (वकील = Advocate, सेतु = Bridge). The platform does not attempt to replace lawyers with AI. Instead, it bridges the informational and communication chasm between lay citizens who cannot articulate legal problems and verified advocates who are bound by professional ethics not to advertise.")
+    add_p("The name 'Legal-Setu' combines the English word 'Legal' with the Hindi word 'Setu' (सेतु = Bridge), expressing a bridge to legal help. The platform does not attempt to replace lawyers with AI. Instead, it bridges the informational and communication chasm between lay citizens who cannot articulate legal problems and verified advocates who are bound by professional ethics not to advertise.")
 
     add_h2("1.4 Dual-Stakeholder Value Proposition")
     create_styled_table(
-        ["Stakeholder", "Primary Bottlenecks Today", "Vakil Setu Value Realization"],
+        ["Stakeholder", "Primary Bottlenecks Today", "Legal-Setu Value Realization"],
         [
             [
                 "Citizen / Litigant\n(General Public)",
@@ -384,13 +384,13 @@ def build_handoff_doc():
     add_p("In Western jurisdictions (e.g., USA, UK), lawyers routinely advertise on television, search engines, and social media. In India, however, Rule 36 of the Bar Council of India Rules (framed under the Advocates Act, 1961) strictly prohibits advocates from advertising, soliciting work, or promoting themselves directly or indirectly.")
     add_callout(
         "BCI RULE 36 EXCERPT & LEGAL IMPLICATION",
-        "\"An advocate shall not solicit work or advertise, either directly or indirectly, whether by circulars, advertisements, touts, personal communications, interviews not warranted by personal relations, furnishing or inspiring newspaper comments or producing his photographs to be published in connection with cases in which he has been engaged...\"\n\nLegal Tech Implication: Any platform that charges lawyers for sponsored ad spots, allows bidding on keywords, or guarantees case outcomes is ILLEGAL under Indian law. Vakil Setu solves this by operating strictly as a neutral, merit-based directory where listing is free/objective, ranking is determined purely by verified client ratings and years of experience, and no commercial promotion occurs.",
+        "\"An advocate shall not solicit work or advertise, either directly or indirectly, whether by circulars, advertisements, touts, personal communications, interviews not warranted by personal relations, furnishing or inspiring newspaper comments or producing his photographs to be published in connection with cases in which he has been engaged...\"\n\nLegal Tech Implication: Any platform that charges lawyers for sponsored ad spots, allows bidding on keywords, or guarantees case outcomes is ILLEGAL under Indian law. Legal-Setu solves this by operating strictly as a neutral, merit-based directory where listing is free/objective, ranking is determined purely by verified client ratings and years of experience, and no commercial promotion occurs.",
         "statute"
     )
 
-    add_h2("2.4 Workflow Comparison: Traditional vs. Vakil Setu")
+    add_h2("2.4 Workflow Comparison: Traditional vs. Legal-Setu")
     create_styled_table(
-        ["Process Dimension", "Traditional Legal Onboarding", "Vakil Setu Intelligent Triage"],
+        ["Process Dimension", "Traditional Legal Onboarding", "Legal-Setu Intelligent Triage"],
         [
             ["Initial Grievance Articulation", "Litigant travels to court complex; relies on informal intermediaries/touts.", "Litigant speaks in natural Hindi/English via browser microphone."],
             ["Language Barrier", "English petitions; confusing legalese; high reliance on scribes.", "Automatic speech recognition (STT) + Hindi/English AI synthesis."],
@@ -408,7 +408,7 @@ def build_handoff_doc():
     add_h1("3. High-Level System Architecture & End-to-End Data Flow")
 
     add_h2("3.1 The 5-Tier Architecture Model")
-    add_p("Vakil Setu is engineered as a decoupled, multi-tier web application designed for maximum performance, low-bandwidth resilience, and zero cloud streaming costs:")
+    add_p("Legal-Setu is engineered as a decoupled, multi-tier web application designed for maximum performance, low-bandwidth resilience, and zero cloud streaming costs:")
     add_bullet("React 18 Single Page Application (Vite) utilizing the W3C Web Speech API (`webkitSpeechRecognition`) for local, zero-cost audio transcription. Client state is managed via React Context and cached in browser `localStorage`.", "Tier 1: Presentation & Voice Layer: ")
     add_bullet("Node.js runtime environment running an Express REST API. Handles request routing, input sanitization, error propagation, and CORS security.", "Tier 2: API Gateway Layer: ")
     add_bullet("Dual-Engine Architecture combining Google Gemini 2.0 Flash (via REST API or college gateway) with a deterministic Regex Rule-Based Fallback Engine for offline resilience.", "Tier 3: Intelligence & Triage Layer: ")
@@ -463,7 +463,7 @@ def build_handoff_doc():
 
     add_h2("5.1 Complete Repository Directory Tree")
     add_code_block(
-"""Vakil-setu/
+"""Legal-Setu/
 ├── backend/
 │   ├── src/
 │   │   ├── config/
@@ -545,7 +545,7 @@ def build_handoff_doc():
     add_p("In academic and real-world software, relying solely on commercial cloud LLMs (Gemini, OpenAI, Anthropic) introduces three critical failure modes: HTTP 429 rate limit exceeded (especially on free/student API tiers), network timeout or gateway disconnection, and regional API outages. In a legal assistance platform where a citizen might be facing an imminent arrest or eviction, returning an HTTP 500 error is unacceptable.")
 
     add_h2("6.2 The Dual-Engine Architecture Blueprint")
-    add_p("Vakil Setu solves this with an automated failover hierarchy:")
+    add_p("Legal-Setu solves this with an automated failover hierarchy:")
     add_bullet("The system attempts to call Google Gemini 2.0 Flash (`gemini-2.0-flash`).", "Level 1 (Primary Model): ")
     add_bullet("If the model candidate fails with a 404 or transient error, the engine iterates across candidate fallbacks (`gemini-1.5-flash`, `gemini-1.5-pro`).", "Level 2 (Model Candidate Fallback): ")
     add_bullet("If an HTTP 429 (rate-limit) or HTTP 500/network timeout occurs, the system catches the exception and immediately invokes `localFallbackClassification(userText)`.", "Level 3 (Deterministic Rule-Based Fallback): ")
@@ -580,16 +580,16 @@ const localFallbackClassification = (userText) => {
     add_h1("7. Statutory, Legal & Ethical Governance")
 
     add_h2("7.1 Compliance with Advocates Act, 1961 (Section 29)")
-    add_p("Under Section 29 of the Advocates Act, 1961, only advocates enrolled with a State Bar Council are permitted to practice the profession of law in India. Vakil Setu complies by explicitly stating that it provides informational legal triage, not legal advice. The software never appears in court, does not file pleadings, and does not replace the human judgment of a licensed advocate.")
+    add_p("Under Section 29 of the Advocates Act, 1961, only advocates enrolled with a State Bar Council are permitted to practice the profession of law in India. Legal-Setu complies by explicitly stating that it provides informational legal triage, not legal advice. The software never appears in court, does not file pleadings, and does not replace the human judgment of a licensed advocate.")
 
     add_h2("7.2 Compliance with Bar Council of India (BCI) Rule 36")
-    add_p("BCI Rule 36 prohibits commercial solicitation and advertising. Vakil Setu complies through three architectural safeguards:")
+    add_p("BCI Rule 36 prohibits commercial solicitation and advertising. Legal-Setu complies through three architectural safeguards:")
     add_bullet("Advocates cannot pay for sponsored banners, featured spots, or top placement.", "1. No Sponsored Ad Tiers: ")
     add_bullet("Directory profiles contain only factual, verifiable information: name, years of practice, court affiliations, languages, and client reviews.", "2. Strictly Objective Data: ")
     add_bullet("Advocates are presented based on algorithmic relevance to the user's classified legal domain and sorted descending by client rating, ensuring fair, non-discriminatory discovery.", "3. Merit-Based Sorting: ")
 
     add_h2("7.3 Alignment with Modernized Criminal Codes (BNS 2023)")
-    add_p("On July 1, 2024, India replaced its colonial-era criminal laws with modernized statutory frameworks. Vakil Setu's prompt engineering and knowledge base reflect these new legal realities:")
+    add_p("On July 1, 2024, India replaced its colonial-era criminal laws with modernized statutory frameworks. Legal-Setu's prompt engineering and knowledge base reflect these new legal realities:")
     add_bullet("Replaced the Indian Penal Code (IPC 1860). Integrates modernized offenses, organized crime provisions, and community service penalties.", "Bharatiya Nyaya Sanhita (BNS) 2023: ")
     add_bullet("Replaced the Code of Criminal Procedure (CrPC 1973). Mandates electronic summons, forensic investigation timelines, and revised bail procedures.", "Bharatiya Nagarik Suraksha Sanhita (BNSS) 2023: ")
     add_bullet("Replaced the Indian Evidence Act (IEA 1872). Formally recognizes electronic records, digital signatures, and encrypted communications as primary legal evidence.", "Bharatiya Sakshya Adhiniyam (BSA) 2023: ")
@@ -638,19 +638,19 @@ const localFallbackClassification = (userText) => {
 
     add_h3("Minute 1: The Hook, Socio-Legal Problem & Project Identity")
     add_p(
-        "\"Respected examiners, good morning. In India today, over 5.1 crore cases are pending in courts, and millions of ordinary citizens are completely locked out of the judicial system. They are locked out not because laws do not exist, but because of three immense barriers: first, the linguistic barrier—laws and court petitions are in dense English, while citizens speak Hindi or regional languages; second, procedural intimidation—citizens do not know whether their grievance is civil or criminal; and third, the discovery dilemma—citizens cannot find trustworthy lawyers, while lawyers are legally prohibited from advertising under Bar Council of India Rule 36.\n\nTo solve this, we built Vakil Setu—an AI-driven, voice-first legal triage and advocate discovery platform that bridges vernacular citizens with licensed legal professionals.\"",
+        "\"Respected examiners, good morning. In India today, over 5.1 crore cases are pending in courts, and millions of ordinary citizens are completely locked out of the judicial system. They are locked out not because laws do not exist, but because of three immense barriers: first, the linguistic barrier—laws and court petitions are in dense English, while citizens speak Hindi or regional languages; second, procedural intimidation—citizens do not know whether their grievance is civil or criminal; and third, the discovery dilemma—citizens cannot find trustworthy lawyers, while lawyers are legally prohibited from advertising under Bar Council of India Rule 36.\n\nTo solve this, we built Legal-Setu—an AI-driven, voice-first legal triage and advocate discovery platform that bridges vernacular citizens with licensed legal professionals.\"",
         italic=True
     )
 
     add_h3("Minute 2: The Citizen Journey & Live Voice Demonstration")
     add_p(
-        "\"Let me walk you through the citizen experience. An ordinary citizen opens Vakil Setu on their mobile browser or desktop. They do not need to type or download an app. They simply tap the microphone button and speak in Hindi: 'मेरे पड़ोसी ने मेरी जमीन पर अवैध कब्जा कर लिया है और मुझे धमकी दे रहा है' (My neighbor has illegally encroached on my land and is threatening me).\n\nNotice that our system captures their voice using the browser's native Web Speech API. Because transcription happens client-side, the latency is instantaneous, and our server bears zero streaming bandwidth cost. Within 1.5 seconds, our backend analyzes their grievance and categorizes it under 'Property Law' with a 'High' urgency score because of the threats of violence.\"",
+        "\"Let me walk you through the citizen experience. An ordinary citizen opens Legal-Setu on their mobile browser or desktop. They do not need to type or download an app. They simply tap the microphone button and speak in Hindi: 'मेरे पड़ोसी ने मेरी जमीन पर अवैध कब्जा कर लिया है और मुझे धमकी दे रहा है' (My neighbor has illegally encroached on my land and is threatening me).\n\nNotice that our system captures their voice using the browser's native Web Speech API. Because transcription happens client-side, the latency is instantaneous, and our server bears zero streaming bandwidth cost. Within 1.5 seconds, our backend analyzes their grievance and categorizes it under 'Property Law' with a 'High' urgency score because of the threats of violence.\"",
         italic=True
     )
 
     add_h3("Minute 3: The Intelligence Pipeline & Dual-Engine Failover")
     add_p(
-        "\"Under the hood, our backend uses a Dual-Engine Architecture. Our primary engine dispatches the grievance to Google Gemini 2.0 Flash with a strictly constrained JSON prompt schema. It extracts four vital parameters: canonical domain, urgency level, a concise 2-sentence summary, and a 4-step actionable checklist telling the user to preserve their registry documents, file a police complaint for criminal intimidation, and issue a legal notice.\n\nCrucially, what happens if our AI API hits a rate limit or goes offline? Unlike typical AI wrappers that crash with an HTTP 500 error, Vakil Setu features an internal Deterministic Rule-Based Fallback Engine. If the cloud API fails, our system catches the error in 5 milliseconds and routes the text through local regular expression heuristics, guaranteeing 100% platform availability.\"",
+        "\"Under the hood, our backend uses a Dual-Engine Architecture. Our primary engine dispatches the grievance to Google Gemini 2.0 Flash with a strictly constrained JSON prompt schema. It extracts four vital parameters: canonical domain, urgency level, a concise 2-sentence summary, and a 4-step actionable checklist telling the user to preserve their registry documents, file a police complaint for criminal intimidation, and issue a legal notice.\n\nCrucially, what happens if our AI API hits a rate limit or goes offline? Unlike typical AI wrappers that crash with an HTTP 500 error, Legal-Setu features an internal Deterministic Rule-Based Fallback Engine. If the cloud API fails, our system catches the error in 5 milliseconds and routes the text through local regular expression heuristics, guaranteeing 100% platform availability.\"",
         italic=True
     )
 
@@ -662,7 +662,7 @@ const localFallbackClassification = (userText) => {
 
     add_h3("Minute 5: Summary of Results & Future Vision")
     add_p(
-        "\"In conclusion, Vakil Setu reduces client intake turnaround time by over 70%, relieves legal professionals of unpaid administrative triage, and provides India's vernacular population with dignified, instantaneous access to preliminary legal guidance. In upcoming phases, we are expanding to document OCR for physical FIRs, an automated Limitation Act calculator, and e-Courts CNR case tracking. Thank you, and we welcome your questions.\"",
+        "\"In conclusion, Legal-Setu reduces client intake turnaround time by over 70%, relieves legal professionals of unpaid administrative triage, and provides India's vernacular population with dignified, instantaneous access to preliminary legal guidance. In upcoming phases, we are expanding to document OCR for physical FIRs, an automated Limitation Act calculator, and e-Courts CNR case tracking. Thank you, and we welcome your questions.\"",
         italic=True
     )
 
@@ -689,14 +689,14 @@ const localFallbackClassification = (userText) => {
             "Client-side Web Speech API gives three massive advantages over server-side Whisper: (1) Zero Latency & Bandwidth: Streaming raw audio from mobile browsers over 3G/4G networks in rural India introduces heavy latency and packet drop; Web Speech transcribes locally on the device and sends lightweight JSON text (<1 KB). (2) Zero Server GPU Cost: Whisper requires heavy cloud GPU instances costing hundreds of dollars monthly; Web Speech is 100% free. (3) Privacy Compliance: Audio never resides on our server, ensuring strict adherence to the DPDP Act 2023."
         ),
         (
-            "Q2: How does Vakil Setu prevent AI hallucinations in legal matters?",
+            "Q2: How does Legal-Setu prevent AI hallucinations in legal matters?",
             "Testing awareness of generative AI unreliability and legal liability.",
             "We prevent hallucinations through four architectural controls: (1) Strict Prompt Scoping: The LLM is restricted to classification, a 2-sentence summary, and procedural checklist items, explicitly barred from generating case citations or statutory penalties. (2) Strict JSON Schema Enforcement: Responses are parsed through `safeParseClassification()`; malformed output is rejected. (3) Informational Disclaimer: Prominent statutory notices explain this is informational triage, not formal legal counsel. (4) Human-in-the-Loop: The platform always routes the user to a verified, licensed advocate who conducts the actual legal assessment."
         ),
         (
-            "Q3: Does Vakil Setu violate Bar Council of India (BCI) Rule 36 prohibiting lawyer advertising?",
+            "Q3: Does Legal-Setu violate Bar Council of India (BCI) Rule 36 prohibiting lawyer advertising?",
             "Testing knowledge of Indian legal statutes and professional ethics.",
-            "No, it complies 100% with Rule 36. Rule 36 prohibits commercial solicitation, promotional claims, and paid advertisements. Vakil Setu is not an advertising platform: (1) Advocates cannot pay for featured placement, sponsored banners, or higher search rankings. (2) Directory listings display only objective, factual credentials (years of practice, court affiliations, verified languages, and authentic client reviews). (3) Advocate matching is purely algorithmic based on domain expertise and sorted descending by client rating."
+            "No, it complies 100% with Rule 36. Rule 36 prohibits commercial solicitation, promotional claims, and paid advertisements. Legal-Setu is not an advertising platform: (1) Advocates cannot pay for featured placement, sponsored banners, or higher search rankings. (2) Directory listings display only objective, factual credentials (years of practice, court affiliations, verified languages, and authentic client reviews). (3) Advocate matching is purely algorithmic based on domain expertise and sorted descending by client rating."
         ),
         (
             "Q4: How does your system handle offline scenarios or when the AI API quota runs out?",
@@ -741,7 +741,7 @@ const localFallbackClassification = (userText) => {
         (
             "Q12: How does the platform comply with India's Digital Personal Data Protection (DPDP) Act, 2023?",
             "Testing cybersecurity, privacy engineering, and legal compliance.",
-            "Vakil Setu follows privacy-by-design: (1) No server-side audio storage—voice is converted to text on the client device. (2) Ephemeral session storage—dialogue history is stored in the user's browser `localStorage`, allowing the user to wipe it at will. (3) No third-party ad tracking or sharing of litigation details with data brokers."
+            "Legal-Setu follows privacy-by-design: (1) No server-side audio storage—voice is converted to text on the client device. (2) Ephemeral session storage—dialogue history is stored in the user's browser `localStorage`, allowing the user to wipe it at will. (3) No third-party ad tracking or sharing of litigation details with data brokers."
         ),
         (
             "Q13: Why did you use React Context instead of Redux for state management?",
@@ -779,9 +779,9 @@ const localFallbackClassification = (userText) => {
             "To scale: (1) Decouple the backend into microservices—one for AI triage and another for bookings/payments. (2) Deploy containerized Node.js services behind an AWS Application Load Balancer with auto-scaling. (3) Implement Redis caching for advocate directory lookups to reduce MongoDB read pressure. (4) Use Qdrant vector database for fast semantic case law retrieval."
         ),
         (
-            "Q20: What is the single biggest social impact of Vakil Setu?",
+            "Q20: What is the single biggest social impact of Legal-Setu?",
             "Testing social motivation, engineering ethics, and project passion.",
-            "Vakil Setu demystifies justice. Today, ordinary citizens dread the legal system because they feel helpless against procedural legalese and fear financial ruin. Vakil Setu empowers them with immediate, dignified, vernacular clarity about their rights in 2 seconds, turning justice from a terrifying ordeal into an accessible constitutional reality."
+            "Legal-Setu demystifies justice. Today, ordinary citizens dread the legal system because they feel helpless against procedural legalese and fear financial ruin. Legal-Setu empowers them with immediate, dignified, vernacular clarity about their rights in 2 seconds, turning justice from a terrifying ordeal into an accessible constitutional reality."
         )
     ]
 
@@ -859,7 +859,7 @@ npm run dev"""
     )
 
     # Save document
-    output_filename = "Vakil_Setu_Project_Handoff_and_Study_Guide.docx"
+    output_filename = "Legal_Setu_Project_Handoff_and_Study_Guide.docx"
     doc.save(output_filename)
     print(f"Handoff Guide successfully compiled: {output_filename}")
     return output_filename

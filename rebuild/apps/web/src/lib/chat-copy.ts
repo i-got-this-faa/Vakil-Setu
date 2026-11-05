@@ -1,5 +1,5 @@
 import { localizedChatCopy } from "./localization";
-import type { PilotLocale } from "@vakil/domain";
+import type { PilotLocale } from "@legal-setu/domain";
 
 export interface ChatCopy {
   title: string;

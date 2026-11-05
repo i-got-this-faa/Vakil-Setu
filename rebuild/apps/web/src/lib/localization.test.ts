@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'bun:test';
-import { LOCALES, isPilotLocale } from '@vakil/domain';
-import { draftBundles, getLanguage } from '@vakil/i18n';
+import { LOCALES, isPilotLocale } from '@legal-setu/domain';
+import { draftBundles, getLanguage } from '@legal-setu/i18n';
 import { productCopy } from './copy';
 import { caseNoSummaryCopy } from './case-copy';
 import { chatCopy } from './chat-copy';
@@ -59,5 +59,13 @@ describe('locale preference boundary', () => {
     const blocked = { getItem: () => { throw new Error('blocked'); }, setItem: () => { throw new Error('blocked'); } };
     expect(readLocalePreference(blocked)).toBe('en');
     expect(() => saveLocalePreference('ur', blocked)).not.toThrow();
+  });
+  it('restores pre-rename preferences and gives the new preference priority', () => {
+    const storage = memory();
+    storage.setItem('vakil-setu.locale', 'pa-IN');
+    expect(readLocalePreference(storage)).toBe('pa');
+    saveLocalePreference('hi', storage);
+    expect(storage.getItem('legal-setu.locale')).toBe('hi');
+    expect(readLocalePreference(storage)).toBe('hi');
   });
 });
