@@ -58,14 +58,6 @@ export async function verifyPayment(payload) {
   });
 }
 
-export async function confirmBookingWithoutPayment(bookingId) {
-  return request("/api/payments/verify", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ bookingId, skipPayment: true })
-  });
-}
-
 export async function triggerEmergency() {
   return request("/api/emergency", { method: "POST" });
 }

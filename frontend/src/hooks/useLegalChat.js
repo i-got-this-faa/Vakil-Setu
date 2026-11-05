@@ -23,6 +23,7 @@ export function useLegalChat({ navigateAfterFirstResult = false } = {}) {
   const navigate = useNavigate();
   const {
     chatMessages,
+    sessionGeneration,
     appendChatMessages,
     setClassification,
     setAdvocates,
@@ -67,6 +68,7 @@ export function useLegalChat({ navigateAfterFirstResult = false } = {}) {
       const trimmed = String(text || "").trim();
       if (!trimmed || loading) return;
 
+      const requestGeneration = sessionGeneration.current;
       const isFirstTurn = chatMessages.filter((m) => m.role === "user").length === 0;
       const userMsg = createMessage("user", trimmed);
       const nextMessages = [...chatMessages, userMsg];
@@ -78,6 +80,10 @@ export function useLegalChat({ navigateAfterFirstResult = false } = {}) {
 
         const history = historyForApi(nextMessages);
         const { classification, advocates } = await triageIssue(trimmed, history);
+        if (requestGeneration !== sessionGeneration.current) {
+          setLoading(false);
+          return;
+        }
 
         const speakLocale = ttsLocaleFromClassification(
           classification,
@@ -97,6 +103,7 @@ export function useLegalChat({ navigateAfterFirstResult = false } = {}) {
         const goResults = navigateAfterFirstResult && isFirstTurn;
         if (goResults) {
           navTimerRef.current = setTimeout(() => {
+            if (requestGeneration !== sessionGeneration.current) { setLoading(false); return; }
             if (ttsEnabled) {
               const toSpeak =
                 speakableAnalysisText(classification) ||

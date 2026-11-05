@@ -9,7 +9,7 @@ export default function EmergencyButton() {
     try {
       setLoading(true);
       const data = await triggerEmergency();
-      setMessage(`Connected to ${data.advocate.name} (Rating ${data.advocate.rating})`);
+      setMessage(`Listed advocate: ${data.advocate.name}. No call or message has been sent. For immediate danger in India, call 112.`);
     } catch (error) {
       setMessage(error.message);
     } finally {
@@ -20,9 +20,9 @@ export default function EmergencyButton() {
   return (
     <div className="emergency-container">
       <button className="emergency-btn" onClick={handleEmergency} disabled={loading}>
-        {loading ? "Connecting..." : "Emergency Help"}
+        {loading ? "Searching..." : "Find an advocate"}
       </button>
-      {message ? <div className="emergency-msg">{message}</div> : null}
+      {message ? <div className="emergency-msg" role="status">{message}</div> : null}
     </div>
   );
 }

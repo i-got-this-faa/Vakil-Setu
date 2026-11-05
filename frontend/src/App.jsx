@@ -3,6 +3,7 @@ import AppHeader from "./components/layout/AppHeader";
 import HomePage from "./pages/HomePage";
 import ResultsPage from "./pages/ResultsPage";
 import BookingPage from "./pages/BookingPage";
+import ProfilePage from "./pages/ProfilePage";
 import EmergencyButton from "./components/EmergencyButton";
 
 export default function App() {
@@ -13,6 +14,7 @@ export default function App() {
         <Route path="/" element={<HomePage />} />
         <Route path="/results" element={<ResultsPage />} />
         <Route path="/booking" element={<BookingPage />} />
+        <Route path="/profile" element={<ProfilePage />} />
       </Routes>
       <EmergencyButton />
     </div>
