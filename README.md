@@ -2,7 +2,7 @@
 
 The website supports voice or typed legal triage, advocate profiles and consultation requests. WhatsApp has been removed from the website; its independent backend demo remains available in the repository.
 
-Local multilingual vector and hybrid retrieval are implemented for the legal corpus. See [vector setup and retrieval modes](docs/VECTOR_RETRIEVAL.md) and the [source integrity audit](docs/RAG_DATA_AUDIT.md). The website's classification flow is still separate from the RAG knowledge endpoints. BNS currency through 2025 is not certified.
+Local multilingual vector and hybrid retrieval are implemented for the legal corpus. See [vector setup and retrieval modes](docs/VECTOR_RETRIEVAL.md) and the [source integrity audit](docs/RAG_DATA_AUDIT.md). The triage backend now returns RAG evidence alongside classification; the website still needs to render the new `legalAnswer` field. See [backend integration](docs/BACKEND_RAG.md). BNS currency through 2025 is not certified.
 
 The earlier standalone messaging demonstration is documented in [WHATSAPP_DEMO.md](docs/WHATSAPP_DEMO.md), with setup in [TWILIO_SANDBOX.md](docs/TWILIO_SANDBOX.md). It is not required to run the website.
 

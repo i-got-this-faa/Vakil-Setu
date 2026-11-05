@@ -1,6 +1,6 @@
 # Local multilingual vector retrieval
 
-The legal backend supports BM25, vector search and hybrid retrieval. This does not connect the website's separate `/api/ai/triage` flow to RAG; the knowledge endpoints and grounded-answer service are the integration points.
+The legal backend supports BM25, vector search and hybrid retrieval. The `/api/ai/triage` endpoint now includes RAG evidence alongside classification and advocate matches; see [backend integration](BACKEND_RAG.md). The website still needs to render that new field.
 
 ## Setup
 
