@@ -9,7 +9,7 @@ in GitHub, integrate them with current main, and leave the source checkout clean
 | Check rebuild | rebuild/ | Proved | npm exec --package=bun@1.4.3 -- bun run check; five package type checks, tests and Next.js production compilation passed |
 | Check upload contents | Source and document text | Proved | Credential-pattern scan of 440 present files, including XML in 49 Office packages; no matches; no file above 100 MB |
 | Preserve current website | frontend/ and backend/ | Proved | Merged current main, preserving chat/voice/RAG behavior; 63 tests and Vite production build passed |
-| Publish and verify | GitHub main | In progress | User explicitly authorized pushing all remaining changes |
+| Publish and verify | GitHub main and design branch | Proved | Both remote heads verified at ab0eb7b; original working tree clean after push |
 
 This is publication of existing documents, not a new legal/medical review or a
 regeneration of their content. Builds and tests do not prove hosted identity,
@@ -30,3 +30,19 @@ Integration notes:
   and prevent misleading line counts for PDFs.
 - Hosted auth, real speech accuracy and external production services were not
   revalidated during this publication task. No credentials were staged.
+
+
+Final publication evidence:
+
+- Original changes preserved in e677ea0; combined integration in ab0eb7b.
+- GitHub main and design/deslop-impeccable were pushed atomically and both remote
+  heads were verified at ab0eb7b before this documentation-only completion record.
+- The source working tree was clean after the application/materials push.
+- A merged production preview passed avatar/chat, Enter/Shift+Enter, voice
+  stop/cancel, final-result gating, language forwarding, citations, explicit
+  summary navigation, session reset and responsive checks. Speech and API were
+  simulated for this regression check; no real microphone accuracy claim is made.
+- Rebuild type checks, tests and production compilation passed; the combined
+  website backend/frontend suite passed 63 tests, including storage migration.
+- All original pending documents, generators and output artifacts were preserved;
+  no private environment or runtime database files were published.
