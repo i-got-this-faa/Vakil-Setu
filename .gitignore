@@ -6,3 +6,9 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
+backend/data/legal/
+backend/data/whatsapp-*/
+backend/.whatsapp-venv/
+backend/data/mongo/
+backend/data/legal-models/
+*.blend1

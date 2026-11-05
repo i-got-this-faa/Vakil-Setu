@@ -1,0 +1,12 @@
+{
+  "hello": { "transcript": "Hello", "language": "en" },
+  "consent": { "transcript": "Yes, English", "language": "en" },
+  "theft": { "transcript": "What does the law say about theft of movable property without consent?", "language": "en" },
+  "lawyer": { "transcript": "I would like to speak to an advocate.", "language": "en" },
+  "city": { "transcript": "I am in Jammu.", "language": "en" },
+  "choose": { "transcript": "The first one", "language": "en" },
+  "time": { "transcript": "Tomorrow afternoon, for a phone consultation", "language": "en" },
+  "confirm": { "transcript": "Yes, share my case summary and request a consultation", "language": "en" },
+  "status": { "transcript": "What is my request status?", "language": "en" },
+  "decline": { "transcript": "No", "language": "en" }
+}
