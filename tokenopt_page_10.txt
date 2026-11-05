@@ -1,0 +1,62 @@
+=== PAGE 10 ===
+TokenOpt: A Cache-Preserving Context Harness | Mini Project Synopsis
+8. Implementation Timeline
+The project development lifecycle is structured across five sequential phases spanning a 12-week 
+schedule:
+Phase
+Stage
+Key Activities & Deliverables
+Dura­
+tion
+Phase 1
+Requirement 
+Study & Log Pro­
+filing
+Cataloging log syntax across test frameworks 
+(pytest, vitest, cargo); formalizing KV-cache 
+boundary specifications.
+Weeks 
+1–2
+Phase 2
+Proxy Core & 
+Prefix Guard
+Scaffolding Bun/Hono reverse proxy; implement­
+ing Zone 1 byte normalization and alphabetical 
+tool schema sorting.
+Weeks 
+3–4
+Phase 3
+Distiller & Con­
+text MMU
+Developing deterministic test log parsers, TOON 
+data transducer, and SQLite virtual swap storage 
+mechanism.
+Weeks 
+5–7
+Phase 4
+System One Inte­
+gration
+Connecting TypeSafe Jev client for dynamic tool 
+schema pruning; establishing fallback bypass poli­
+cies.
+Weeks 
+8–9
+Phase 5
+Benchmarking & 
+Documentation
+Running SWE-bench Lite comparative evalua­
+tions; generating Pareto cost-accuracy curves; 
+final synopsis defense.
+Weeks 
+10–12
+Milestone Review Criteria & Risk Mitigation Plan
+• Milestone 1 (Week 4): Proxy intercepts and relays live OpenAI/Anthropic traffic with under 2ms 
+added latency and 100% byte stability on frozen prefixes.
+• Milestone 2 (Week 7): Distiller successfully strips passing test assertions across pytest and jest 
+suites with over 90% token reduction and zero loss of error traces.
+• Milestone 3 (Week 9): MMU successfully evicts and restores context pages from SQLite swap 
+storage upon agent reference without breaking conversational flow.
+• Risk Mitigation Strategy: If upstream provider caching algorithms alter prefix matching heuris­
+tics, TokenOpt automatically engages a bypass mode, guaranteeing unhindered passthrough 
+communication without agent interruption.
+10

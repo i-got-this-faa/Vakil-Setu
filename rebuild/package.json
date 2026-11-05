@@ -1,0 +1,29 @@
+{
+  "name": "vakil-setu-workspace",
+  "private": true,
+  "version": "0.1.0",
+  "packageManager": "bun@1.4.3",
+  "workspaces": ["apps/*", "packages/*"],
+  "engines": { "node": ">=22.0.0", "bun": ">=1.4.3" },
+  "scripts": {
+    "dev": "turbo run dev --filter=@vakil/web",
+    "build": "bun run backend:codegen:local && turbo run build",
+    "typecheck": "bun run backend:codegen:local && tsc --noEmit -p scripts/tsconfig.json && turbo run typecheck",
+    "test": "turbo run test",
+    "check": "bun run typecheck && bun run test && bun run build",
+    "backend:dev": "bun run --filter @vakil/backend dev",
+    "backend:codegen": "bun run --filter @vakil/backend codegen",
+    "backend:codegen:local": "bun scripts/codegen-local.mjs",
+    "doctor": "bun scripts/doctor.ts"
+  },
+  "devDependencies": {
+    "@types/bun": "1.4.3",
+    "@types/node": "26.6.5",
+    "@types/react": "19.3.0",
+    "@types/react-dom": "19.3.0",
+    "typescript": "7.0.2",
+    "turbo": "2.11.8",
+    "vitest": "5.0.4",
+    "convex-test": "0.0.61"
+  }
+}

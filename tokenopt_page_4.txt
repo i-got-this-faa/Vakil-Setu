@@ -1,0 +1,56 @@
+=== PAGE 4 ===
+TokenOpt: A Cache-Preserving Context Harness | Mini Project Synopsis
+2. Problem Statement
+Modern autonomous AI agents execute iterative multi-turn loops where the entire conversational 
+transcript is repeatedly re-sent to cloud LLM APIs, producing a quadratic token accumulation pattern. 
+Mathematically, the cumulative token burden across an 𝑁-turn execution trajectory scales according 
+to:
+𝑇cumulative = ∑𝑁
+𝑖=1(𝑆prefix + 𝑖⋅Δturn)
+Where 𝑆prefix represents static instructions and tool definitions, and Δturn represents accumulated 
+execution state. In a typical 20-step software debugging task, cumulative consumption routinely 
+surpasses 1,500,000 tokens, resulting in direct operational charges of $15 to $30 per resolved issue.
+This compounding volume is characterized by three critical systemic vulnerabilities:
+1. Disproportionate Tool Output Noise: More than 80% of active context consists of non-actionable 
+stdout streams, including hundreds of passing test lines, compiler progress indicators, and redundant 
+JSON formatting. Actionable error frames and failure diagnostics represent less than 5% of total 
+payload bytes.
+2. Attention Degradation (“Context Rot”): Contemporary long-context research (such as the 
+NeedleChain benchmark, 2025, and RULER, 2024) demonstrates that when dense, distractor-heavy 
+text is injected into the context window, effective multi-hop reasoning accuracy degrades by up to 
+75%, inducing hallucination and expensive retry loops.
+3. The Cache-Killer Paradox: To mitigate token volume, conventional prompt compression algo­
+rithms (such as LLMLingua) dynamically delete words based on perplexity calculations. However, 
+cloud prompt caching (Anthropic, OpenAI) requires 100% byte-exact prefix matching to grant 90% 
+cost discounts. Because dynamic pruning mutates the prompt prefix on every single turn, it forces a 
+complete cache miss. Consequently, an uncompressed prompt with a 90% cache discount ($0.30/M) 
+is 5x cheaper than a 50% compressed prompt charged at the full uncached rate ($3.00/M).
+Currently, no systems middleware exists that coordinates client-side noise distillation with server-
+side KV-cache preservation.
+Table 2.1: Economic Contrast of Context Paradigms (20-Turn Agent Task)
+Execution Strategy
+KV-Cache Hit
+Effective Rate
+Trajectory Cost Impact
+Vanilla Multi-Turn
+Unstable / Mixed
+High ($3.00/M)
+Billed full rate on mutated 
+tail; $15–$30/task
+Dynamic 
+Pruning 
+(LLMLingua)
+0% (Invalidated)
+$3.00/M 
+(Un­
+cached)
+Forces full cache miss; 
+ironically 5x cost penalty
+TokenOpt 
+Cache 
+Harness
+98%+ Sustained
+$0.30/M (Cached)
+Locked prefix + local dis­
+tillation; $2–$4/task
+4

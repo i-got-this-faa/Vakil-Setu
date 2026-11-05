@@ -1,0 +1,9 @@
+{
+  "name": "@vakil/backend",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "exports": { "./api": "./convex/_generated/api.js", "./data-model": "./convex/_generated/dataModel.d.ts" },
+  "scripts": { "dev": "convex dev", "codegen": "convex codegen --typecheck disable", "typecheck": "tsc --noEmit", "test": "vitest run" },
+  "dependencies": { "@vakil/domain": "workspace:*", "convex": "1.46.0" }
+}

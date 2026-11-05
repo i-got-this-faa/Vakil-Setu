@@ -12,3 +12,7 @@ backend/.whatsapp-venv/
 backend/data/mongo/
 backend/data/legal-models/
 *.blend1
+
+# Local build cache and Office lock files
+.turbo/
+~$*

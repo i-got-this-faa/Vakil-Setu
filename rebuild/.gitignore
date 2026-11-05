@@ -1,0 +1,13 @@
+node_modules/
+.next/
+.turbo/
+dist/
+coverage/
+.env*
+!.env.example
+!.env.local.example
+vendor/fleet/
+*.log
+.tooling/
+.runtime/
+.vercel/

@@ -1,0 +1,783 @@
+{
+  "auditedOn": "2026-10-18",
+  "remoteBefore": "3c777d7c6b0f190b9a4d605b1e1da2b0708691c0",
+  "scope": "Local project root, output exports, authoring sources and tracked legacy code. Original files preserved. No application code changed.",
+  "files": [
+    {
+      "source": "build_handoff_guide.py",
+      "path": "materials/sources/root/build_handoff_guide.py",
+      "bytes": 68773,
+      "sha256": "797a07d2ba1ccfa3566158651bd3e4e6a5595da20d4a51b3d7ef8f7c3e6bf138"
+    },
+    {
+      "source": "build_synopsis_docx.py",
+      "path": "materials/sources/root/build_synopsis_docx.py",
+      "bytes": 44731,
+      "sha256": "90b80cbed3bc3a32622f7d830697b8d7654c88614ba4674e3cea652afe3eb0d4"
+    },
+    {
+      "source": "build_typst_synopsis.py",
+      "path": "materials/sources/root/build_typst_synopsis.py",
+      "bytes": 30402,
+      "sha256": "965a09fb2fdb910831388244298498249bb9f30b00bacec9127ecce0f0080afa"
+    },
+    {
+      "source": "generate_architecture_image.py",
+      "path": "materials/sources/root/generate_architecture_image.py",
+      "bytes": 7448,
+      "sha256": "e7ff49665c5ede2e342d3ef7914415fee246fc065c74e863b8c90130fbd4c579"
+    },
+    {
+      "source": "generate_docs.py",
+      "path": "materials/sources/root/generate_docs.py",
+      "bytes": 29134,
+      "sha256": "65f1a0ac70e0cfc183e1f0a0e5f62e4647bcecde59bf961cd50b8d2d2d608a54"
+    },
+    {
+      "source": "generate_handoff_docx.py",
+      "path": "materials/sources/root/generate_handoff_docx.py",
+      "bytes": 9172,
+      "sha256": "2b89d744ba426b17ab09b7b425b5716647d85760b1e52c93aefc729a027be7d3"
+    },
+    {
+      "source": "generate_pitch_docx.py",
+      "path": "materials/sources/root/generate_pitch_docx.py",
+      "bytes": 33468,
+      "sha256": "743fbf429be6844701e6f8f89fe0f6b6e9914cc6ac0c98a2ae4723fe0d287fab"
+    },
+    {
+      "source": "generate_presentation.py",
+      "path": "materials/sources/root/generate_presentation.py",
+      "bytes": 38904,
+      "sha256": "2a2ad1e5916fb10b6d9443f10ab5f89de3146d5d17646bd8382096bf7d3ce682"
+    },
+    {
+      "source": "generate_srs_report.py",
+      "path": "materials/sources/root/generate_srs_report.py",
+      "bytes": 38879,
+      "sha256": "6150f8ba9d5a18817f576e06a92e6eea22a8575e3678f3c6ada4c27b650ba4af"
+    },
+    {
+      "source": "PITCH_REPORT.md",
+      "path": "materials/sources/root/PITCH_REPORT.md",
+      "bytes": 19192,
+      "sha256": "21c501999273f17c67f35d0fc5a9fd88e56b3dd149007ee9cd6fd9def676bc5c"
+    },
+    {
+      "source": "presentation.html",
+      "path": "materials/sources/root/presentation.html",
+      "bytes": 44070,
+      "sha256": "9dceeed3759d3fb05d6b0990a898ea0e747e0bed8aa1b6c3b4e4fee1e1a91277"
+    },
+    {
+      "source": "SRS.md",
+      "path": "materials/sources/root/SRS.md",
+      "bytes": 22690,
+      "sha256": "a42ccb47c580271bb21aa4e615097b4a65f0bc45ced817badcab7b6158948f27"
+    },
+    {
+      "source": "SRS_print.html",
+      "path": "materials/sources/root/SRS_print.html",
+      "bytes": 11477,
+      "sha256": "4e6af7f98955ebdd3ce7cb577822d90c8cefc09e61807b79e361192b834904a6"
+    },
+    {
+      "source": "Vakil-setu pitch.docx",
+      "path": "materials/documents/Vakil-setu pitch.docx",
+      "bytes": 219274,
+      "sha256": "da46404e6c322c80d7e851df0c7db7960fe54fe87f1513d79210d09748e8c7f9",
+      "textCharacters": 3639
+    },
+    {
+      "source": "vakil_setu_architecture.png",
+      "path": "materials/diagrams/vakil_setu_architecture.png",
+      "bytes": 736342,
+      "sha256": "491f330f1545177ff601e37271f272c9c8763fe634615b2039e84816eefde926"
+    },
+    {
+      "source": "Vakil_Setu_Pitch_Report.docx",
+      "path": "materials/documents/Vakil_Setu_Pitch_Report.docx",
+      "bytes": 46867,
+      "sha256": "b0c075acf3cb75924e0e63ce397349a7d511349b95def719bdc41418bf916d4b",
+      "textCharacters": 18589
+    },
+    {
+      "source": "Vakil_Setu_Presentation.pptx",
+      "path": "materials/presentations/Vakil_Setu_Presentation.pptx",
+      "bytes": 55666,
+      "sha256": "94304aa7c173f241912c6c27328187f227c6c28efcf03a1c5a89ad5e32a715fb",
+      "slides": 8
+    },
+    {
+      "source": "Vakil_Setu_Project_Handoff_and_Study_Guide.docx",
+      "path": "materials/documents/Vakil_Setu_Project_Handoff_and_Study_Guide.docx",
+      "bytes": 64138,
+      "sha256": "9dde47d1fca3d09f9e41462bc9b20c5178a99409c0947f41ac7ce591f9b7fbbe",
+      "textCharacters": 47486
+    },
+    {
+      "source": "Vakil_Setu_SRS.docx",
+      "path": "materials/documents/Vakil_Setu_SRS.docx",
+      "bytes": 42185,
+      "sha256": "90d0f111dc0494445266725f0e208d581acd6a7dcf4a498c4888a555d9c21462",
+      "textCharacters": 9088
+    },
+    {
+      "source": "Vakil_Setu_SRS.pdf",
+      "path": "materials/documents/Vakil_Setu_SRS.pdf",
+      "bytes": 205126,
+      "sha256": "3a440957a8ae133a959bf6db3f4b063adfbcb6d98e534ea81df32bf30e1d573d"
+    },
+    {
+      "source": "Vakil_Setu_SRS_Report.docx",
+      "path": "materials/documents/Vakil_Setu_SRS_Report.docx",
+      "bytes": 47771,
+      "sha256": "2af483b7452ef24898b647d1ac6d348b7b6e618b0edd790682f49fe74421a7ba",
+      "textCharacters": 20033
+    },
+    {
+      "source": "Vakil_Setu_Synopsis.docx",
+      "path": "materials/documents/Vakil_Setu_Synopsis.docx",
+      "bytes": 806053,
+      "sha256": "ac4cb320fa13e3c670bbff86da6dbe68cadfb6d5c8800505c2ec6d7c8290a495",
+      "textCharacters": 22649
+    },
+    {
+      "source": "Vakil_Setu_Synopsis.pdf",
+      "path": "materials/documents/Vakil_Setu_Synopsis.pdf",
+      "bytes": 891505,
+      "sha256": "d34180834247166f46af471da5f2e8459710fc416a956440d2c445d5c9478d42"
+    },
+    {
+      "source": "vakil_setu_synopsis.typ",
+      "path": "materials/sources/root/vakil_setu_synopsis.typ",
+      "bytes": 30214,
+      "sha256": "91a2ea5f56646f0d0e4c28ffd1b068f83c6d38f37a1db6caada0e8f4bc6ae457"
+    },
+    {
+      "source": "output/presentations/Vakil_Setu_Compact_9_Slides.pptx",
+      "path": "materials/presentations/Vakil_Setu_Compact_9_Slides.pptx",
+      "bytes": 118696,
+      "sha256": "3dd7f8e8b4ec6ab8f076d2f9122a04fcb733a6e62269fb6bf361d891ba1c2fc0",
+      "slides": 9
+    },
+    {
+      "source": "output/presentations/Vakil_Setu_Compact_Final.pptx",
+      "path": "materials/presentations/Vakil_Setu_Compact_Final.pptx",
+      "bytes": 118662,
+      "sha256": "4710cd619ced6e39d5a217b9b3f8f8abc579ed7293ba0dba49f4f2641f3cf4ab",
+      "slides": 9
+    },
+    {
+      "source": "output/presentations/Vakil_Setu_Faculty_Final.pptx",
+      "path": "materials/presentations/Vakil_Setu_Faculty_Final.pptx",
+      "bytes": 47690,
+      "sha256": "5bd4c5034c9ee9f537914ff11670c6ec0218f5ac3964bcd04117e1e998f94fda",
+      "slides": 9
+    },
+    {
+      "source": "output/presentations/Vakil_Setu_Faculty_Presentation.pptx",
+      "path": "materials/presentations/Vakil_Setu_Faculty_Presentation.pptx",
+      "bytes": 69368,
+      "sha256": "1276b9941bae34b954ebcecc6f2ff64c8dc4cc3d38f7b195cb5dce53b5f235a6",
+      "slides": 14
+    },
+    {
+      "source": "output/presentations/Vakil_Setu_Faculty_Revised.pptx",
+      "path": "materials/presentations/Vakil_Setu_Faculty_Revised.pptx",
+      "bytes": 40385,
+      "sha256": "f261aafa4741f7f0180b43c4b5841f84e85da3338d9fe65353f2331c55ae0cde",
+      "slides": 7
+    },
+    {
+      "source": "output/presentations/Vakil_Setu_Reference_Style.pptx",
+      "path": "materials/presentations/Vakil_Setu_Reference_Style.pptx",
+      "bytes": 156772,
+      "sha256": "c3116b8ce574dd6ad1af623cfa1d088cae4fabd453856c633479a34962fa43f1",
+      "slides": 19
+    },
+    {
+      "source": "output/presentations/Vakil_Setu_Reference_Style_Final.pptx",
+      "path": "materials/presentations/Vakil_Setu_Reference_Style_Final.pptx",
+      "bytes": 156900,
+      "sha256": "91b6b5ec3b888ad7fb4b2011319bef7ceb655f6d3465e3a330eefd035e396111",
+      "slides": 19
+    },
+    {
+      "source": "output/presentations/Vakil_Setu_Short_Detailed.pptx",
+      "path": "materials/presentations/Vakil_Setu_Short_Detailed.pptx",
+      "bytes": 118627,
+      "sha256": "2906aecc098a6be5e36e38c759f254237da22b54c73fe19ae2bcc5a925a6ad1d",
+      "slides": 9
+    },
+    {
+      "source": "output/presentations/Vakil_Setu_Short_Detailed_Multilingual.pptx",
+      "path": "materials/presentations/Vakil_Setu_Short_Detailed_Multilingual.pptx",
+      "bytes": 118789,
+      "sha256": "9c35e7c8ac9cbb1869718863bef91b1879028ace147423ffd7f47c9f4ba192bd",
+      "slides": 9
+    },
+    {
+      "source": "output/project-presentation/Vakil_Setu_Presentation_Script.docx",
+      "path": "materials/documents/Vakil_Setu_Presentation_Script.docx",
+      "bytes": 45623,
+      "sha256": "aacd5541784067379cf088ea7456f9a3d7fc5086b5334f4a0042f2a0fe120a08",
+      "textCharacters": 20767
+    },
+    {
+      "source": "output/project-presentation/Vakil_Setu_PROJECT_Deck.pptx",
+      "path": "materials/presentations/Vakil_Setu_PROJECT_Deck.pptx",
+      "bytes": 134621,
+      "sha256": "c3d395cdb835b96a27d69c0b87a6db6a06dc0ec40356b6521d0b37e1ccd8e1dd",
+      "slides": 14
+    },
+    {
+      "source": "output/reports/Vakil_Setu_Director_Pitch.docx",
+      "path": "materials/documents/Vakil_Setu_Director_Pitch.docx",
+      "bytes": 4157,
+      "sha256": "59dfd4f4b911c3e8a0dbd21e683a7b31c37c6845e27a0b900fec92a90a562593",
+      "textCharacters": 4818
+    },
+    {
+      "source": "output/reports/Vakil_Setu_SRS_From_Scratch.docx",
+      "path": "materials/documents/Vakil_Setu_SRS_From_Scratch.docx",
+      "bytes": 54746,
+      "sha256": "7af1916f92423da15f84090e99d6101ae788d745e0448159b54bbb9aa2838563",
+      "textCharacters": 31118
+    },
+    {
+      "source": "output/presentations/PROJECT/Vakil_Setu_Two_Person_Script.md",
+      "path": "materials/presentations/Vakil_Setu_Two_Person_Script.md",
+      "bytes": 8827,
+      "sha256": "2d3cef795891ec2b42fc849ed0cf4ba1a1b3764ecff54641cff4928a08f42dde"
+    },
+    {
+      "source": "output/presentations/PROJECT/Vakil_Setu_Two_Person_Script.txt",
+      "path": "materials/presentations/Vakil_Setu_Two_Person_Script.txt",
+      "bytes": 8721,
+      "sha256": "58528eef6348745ecc29f6a5a0e3f7860778867617b92f0087a1d8fda0bfc75d"
+    },
+    {
+      "source": ".codex-deck/build.mjs",
+      "path": "materials/sources/codex-deck/build.mjs",
+      "bytes": 22919,
+      "sha256": "e18e45dc9a4c4bb399d1f4964c05aa1c15c7f28f1a9004cdc13da281cac82753"
+    },
+    {
+      "source": ".codex-deck/final.mjs",
+      "path": "materials/sources/codex-deck/final.mjs",
+      "bytes": 16406,
+      "sha256": "8dcc22f913f257caba3ee89f3413dc61e46b7a7836f34c61bbf3f234937b657e"
+    },
+    {
+      "source": ".codex-deck/revised.mjs",
+      "path": "materials/sources/codex-deck/revised.mjs",
+      "bytes": 14375,
+      "sha256": "867f651686399684aa541cf8a8fd6c8aa9a4179fd4a27902b0eda6e2eedeb9a6"
+    },
+    {
+      "source": ".codex-deck/compact-build/build.mjs",
+      "path": "materials/sources/codex-deck/compact-build/build.mjs",
+      "bytes": 15070,
+      "sha256": "54b9fa75e4d5e1b7d7c04e2f2b9ae1819bf7c28fb4a540868780c076b40ba215"
+    },
+    {
+      "source": ".codex-deck/compact-build/finish.mjs",
+      "path": "materials/sources/codex-deck/compact-build/finish.mjs",
+      "bytes": 528,
+      "sha256": "e7527ba8fc20ec51ba4394b3e7e32a8a0d85152e4016c31ec7521d4326bafec7"
+    },
+    {
+      "source": ".codex-deck/compact-build/polish.mjs",
+      "path": "materials/sources/codex-deck/compact-build/polish.mjs",
+      "bytes": 1297,
+      "sha256": "c2d5ed974e03ae188b2f54a85b845af0ea34736e29f4b0a4b1558c61a3014e16"
+    },
+    {
+      "source": ".codex-deck/compact-build/prepare.mjs",
+      "path": "materials/sources/codex-deck/compact-build/prepare.mjs",
+      "bytes": 11045,
+      "sha256": "9b66ec4f7a150b9ca4000d23abb0a9bfd000a0ed1947b535104c777645da5513"
+    },
+    {
+      "source": ".codex-deck/multilingual-revision/build.mjs",
+      "path": "materials/sources/codex-deck/multilingual-revision/build.mjs",
+      "bytes": 15391,
+      "sha256": "f14d136c4fab9aef23c117c4eb818682c2cdd878acbe2a4a5d76618b48a716a3"
+    },
+    {
+      "source": ".codex-deck/multilingual-revision/revise.mjs",
+      "path": "materials/sources/codex-deck/multilingual-revision/revise.mjs",
+      "bytes": 2892,
+      "sha256": "4a0871889674b82cea8cbe3f152b2ee2c96d99096b4933fa8959230e28eda3ae"
+    },
+    {
+      "source": ".codex-deck/project-framework/build.mjs",
+      "path": "materials/sources/codex-deck/project-framework/build.mjs",
+      "bytes": 4826,
+      "sha256": "978e45267c2c8d79adb7546b4a51bd76866bf1c9e4615a3b49fe43d861dfa7c4"
+    },
+    {
+      "source": ".codex-deck/project-framework/build_script.py",
+      "path": "materials/sources/codex-deck/project-framework/build_script.py",
+      "bytes": 13082,
+      "sha256": "4f0f8fa69b1071ea358d976184b33f90ffa545607cef766acefae09720e5a7ac"
+    },
+    {
+      "source": ".codex-deck/project-framework/content.json",
+      "path": "materials/sources/codex-deck/project-framework/content.json",
+      "bytes": 21814,
+      "sha256": "26cc13e7af320341c08800df472f54e8e05f8cbfb39ad1589f2fe089064386d9"
+    },
+    {
+      "source": ".codex-deck/project-framework/finalize.mjs",
+      "path": "materials/sources/codex-deck/project-framework/finalize.mjs",
+      "bytes": 1284,
+      "sha256": "9ad19cf54f1adecedec3d22a8aee738d5b60ce74f0437e480f3482e408a0c8a9"
+    },
+    {
+      "source": ".codex-deck/project-order/build.mjs",
+      "path": "materials/sources/codex-deck/project-order/build.mjs",
+      "bytes": 26596,
+      "sha256": "decff23f3d329039cc12f6e801ff167bb2b245a9853b1cd9118c92dff738165d"
+    },
+    {
+      "source": ".codex-deck/reference-build/build.mjs",
+      "path": "materials/sources/codex-deck/reference-build/build.mjs",
+      "bytes": 23879,
+      "sha256": "84386835b618e532b4444a9bf9847f86a612f4dcfd033433d02a8ba9c300ba14"
+    },
+    {
+      "source": ".codex-deck/reference-build/polish.mjs",
+      "path": "materials/sources/codex-deck/reference-build/polish.mjs",
+      "bytes": 2263,
+      "sha256": "a6fdedb467c6a6a53f00d82eb1b86e7328839e319f2ff9dacf3e5c6ad9ba101a"
+    },
+    {
+      "source": ".codex-deck/reference-build/repair.mjs",
+      "path": "materials/sources/codex-deck/reference-build/repair.mjs",
+      "bytes": 3679,
+      "sha256": "ca8a0a039a28b189edc3dc3bab2647d13a9288e494e03108a1996b879d711b15"
+    },
+    {
+      "source": ".codex-report/build_director_pitch.ps1",
+      "path": "materials/sources/codex-report/build_director_pitch.ps1",
+      "bytes": 9257,
+      "sha256": "2147001fe05ee6352be8f5805b5fc1a2c3a9eff82dc9335bd0e6939550ff30a9"
+    },
+    {
+      "source": ".codex-report/create_pitch_ooxml.ps1",
+      "path": "materials/sources/codex-report/create_pitch_ooxml.ps1",
+      "bytes": 5961,
+      "sha256": "e815ad553f6f65fb36ab9f52705d626c64f317f1fd8820116a89cf61612e0688"
+    },
+    {
+      "source": ".codex-srs/build_srs.py",
+      "path": "materials/sources/codex-srs/build_srs.py",
+      "bytes": 37612,
+      "sha256": "f3ae01d8a7c5b8411b938fc2b9cc15c2f431257df8eeb0df4628c076413db06e"
+    },
+    {
+      "source": ".codex-srs/render_word.ps1",
+      "path": "materials/sources/codex-srs/render_word.ps1",
+      "bytes": 696,
+      "sha256": "3328a067363845633175ce36b01786d9c29619c856dafd11ba5b52985a714b81"
+    },
+    {
+      "source": ".codex-srs/render/srs.pdf",
+      "path": "materials/documents/Vakil_Setu_SRS_From_Scratch.pdf",
+      "bytes": 394995,
+      "sha256": "4af7a26a22511380f81ed3cdb4772e7ae46c1eb1c2f816479154a48d5349acc3"
+    },
+    {
+      "source": "backend/.env.example",
+      "path": "archive/legacy/backend/.env.example",
+      "bytes": 935,
+      "sha256": "85ad9d8147d93b57998de40b7360c8d34c0d48ead7d3f8bf076afaf5235da970"
+    },
+    {
+      "source": "backend/package-lock.json",
+      "path": "archive/legacy/backend/package-lock.json",
+      "bytes": 69940,
+      "sha256": "60c239e14b286018d074a813ac0dcfb69fba8d587a2e3a1b01c64aeaad7307f3"
+    },
+    {
+      "source": "backend/package.json",
+      "path": "archive/legacy/backend/package.json",
+      "bytes": 559,
+      "sha256": "a6f653ea6b4b91de429e9787585a68db2b13ff4554ffacdd1a123f475b90c0ed"
+    },
+    {
+      "source": "backend/scripts/clearAdvocates.js",
+      "path": "archive/legacy/backend/scripts/clearAdvocates.js",
+      "bytes": 1196,
+      "sha256": "3bdb291125ce7c541c833835915f56830f72b594c8fb249b45f85056c3cb1bb5"
+    },
+    {
+      "source": "backend/scripts/inspectLawrato.js",
+      "path": "archive/legacy/backend/scripts/inspectLawrato.js",
+      "bytes": 787,
+      "sha256": "b4ed5ea01062801fb30bd9fabdbed8859747c0e19f6de57f7f2a76c8659a7c0d"
+    },
+    {
+      "source": "backend/scripts/inspectLawratoPage.js",
+      "path": "archive/legacy/backend/scripts/inspectLawratoPage.js",
+      "bytes": 743,
+      "sha256": "72719559e8da2dc4a60c7f8e12621530da3a0d173dcde189ef5ed14e2089726c"
+    },
+    {
+      "source": "backend/scripts/scrapeAdvocates.js",
+      "path": "archive/legacy/backend/scripts/scrapeAdvocates.js",
+      "bytes": 17850,
+      "sha256": "d350fde4a1dd4f5e3ce5f60fe7f286cdbfee79ddeddc629e190c0e62d75e0ae6"
+    },
+    {
+      "source": "backend/src/config/db.js",
+      "path": "archive/legacy/backend/src/config/db.js",
+      "bytes": 297,
+      "sha256": "4c505f2c0a740e2a197668a8db87aa372c84e2dcf3b214df13815e013d444ba4"
+    },
+    {
+      "source": "backend/src/config/seed.js",
+      "path": "archive/legacy/backend/src/config/seed.js",
+      "bytes": 847,
+      "sha256": "da8634e2aa3f90263a85e094087ea28a9d8defb16a1b0081f994bd8c24c16876"
+    },
+    {
+      "source": "backend/src/controllers/advocateController.js",
+      "path": "archive/legacy/backend/src/controllers/advocateController.js",
+      "bytes": 622,
+      "sha256": "fdc76cb73333bce8ab081ad0d69d1103f03f1f6fd6f90ee9b4cc6284ee5bb902"
+    },
+    {
+      "source": "backend/src/controllers/aiController.js",
+      "path": "archive/legacy/backend/src/controllers/aiController.js",
+      "bytes": 1320,
+      "sha256": "4190dadbcc421c728564edf17e7e320b719679e84bd919bf6f5fb11045106001"
+    },
+    {
+      "source": "backend/src/controllers/bookingController.js",
+      "path": "archive/legacy/backend/src/controllers/bookingController.js",
+      "bytes": 933,
+      "sha256": "0815246d20b33d8debc61acc284a964a30bcdc3823a1428a24e3d56cc9aa7aff"
+    },
+    {
+      "source": "backend/src/controllers/emergencyController.js",
+      "path": "archive/legacy/backend/src/controllers/emergencyController.js",
+      "bytes": 399,
+      "sha256": "dcbe5537130c37d99839c33cfdddd6833bbbac398ff0c36700b42bef5028d1c7"
+    },
+    {
+      "source": "backend/src/controllers/paymentController.js",
+      "path": "archive/legacy/backend/src/controllers/paymentController.js",
+      "bytes": 2153,
+      "sha256": "e9ab6d6f187655ce194adc1afb46a5d9fdb3ef71d0419c76d952b531fda3c2af"
+    },
+    {
+      "source": "backend/src/middlewares/errorMiddleware.js",
+      "path": "archive/legacy/backend/src/middlewares/errorMiddleware.js",
+      "bytes": 341,
+      "sha256": "299ec1751f907a3a58ca1164a552f1e0be4ebccdf078d6ce57e56163af0fec86"
+    },
+    {
+      "source": "backend/src/models/Advocate.js",
+      "path": "archive/legacy/backend/src/models/Advocate.js",
+      "bytes": 497,
+      "sha256": "08ca69a9a1275b453c84b19e3c3abf1bdde897e4dca0626dd8319961c18cd705"
+    },
+    {
+      "source": "backend/src/models/Booking.js",
+      "path": "archive/legacy/backend/src/models/Booking.js",
+      "bytes": 838,
+      "sha256": "8824026dfa8b9e28865418e23e15421d3d66a05a60257944a61d0f80d9877f5e"
+    },
+    {
+      "source": "backend/src/models/Review.js",
+      "path": "archive/legacy/backend/src/models/Review.js",
+      "bytes": 446,
+      "sha256": "57ecfee26f39298fb2820462bfce9519ecd309a22625c1ec2973a19eaebcd355"
+    },
+    {
+      "source": "backend/src/models/User.js",
+      "path": "archive/legacy/backend/src/models/User.js",
+      "bytes": 359,
+      "sha256": "88cbe56a31184e478ea485e6aeb4691031f4963424c3996b1cb5a90868f841c6"
+    },
+    {
+      "source": "backend/src/routes/advocateRoutes.js",
+      "path": "archive/legacy/backend/src/routes/advocateRoutes.js",
+      "bytes": 201,
+      "sha256": "b28cacc8155d240aa27795edbb7078fb88fcec0a5637f123495b73d500f7111c"
+    },
+    {
+      "source": "backend/src/routes/aiRoutes.js",
+      "path": "archive/legacy/backend/src/routes/aiRoutes.js",
+      "bytes": 247,
+      "sha256": "426ead2524209c85ef298f738a6499ccef23c5e63731144c6d99415b43c6955c"
+    },
+    {
+      "source": "backend/src/routes/bookingRoutes.js",
+      "path": "archive/legacy/backend/src/routes/bookingRoutes.js",
+      "bytes": 193,
+      "sha256": "d4b14ea12ae04a6cdf23a7158190bab68680f5b33a16b83d0ad8333b59199d99"
+    },
+    {
+      "source": "backend/src/routes/emergencyRoutes.js",
+      "path": "archive/legacy/backend/src/routes/emergencyRoutes.js",
+      "bytes": 201,
+      "sha256": "8c98c9e71b44e5058cb23d03b90f820e0ee90e448d243e746f68b6b253074a88"
+    },
+    {
+      "source": "backend/src/routes/paymentRoutes.js",
+      "path": "archive/legacy/backend/src/routes/paymentRoutes.js",
+      "bytes": 256,
+      "sha256": "09e44f886a0b4b8a992295cb0ec947c3441f4ff41de412222ff027dad2bd8159"
+    },
+    {
+      "source": "backend/src/server.js",
+      "path": "archive/legacy/backend/src/server.js",
+      "bytes": 1284,
+      "sha256": "da3c36cb677badd006af1ea457803a285dec1eb3716932b606a4aab85ab1444a"
+    },
+    {
+      "source": "backend/src/services/aiService.js",
+      "path": "archive/legacy/backend/src/services/aiService.js",
+      "bytes": 11323,
+      "sha256": "eb56384fd471a0dba25817928978753693b5c039a4ece67b78ff8b70f68f5ff5"
+    },
+    {
+      "source": "backend/src/services/paymentService.js",
+      "path": "archive/legacy/backend/src/services/paymentService.js",
+      "bytes": 835,
+      "sha256": "f1e60007112ea24a675e1f27b7d9052ecc26bc87f20c2867811f25f4297ec02a"
+    },
+    {
+      "source": "backend/src/utils/legalDomain.js",
+      "path": "archive/legacy/backend/src/utils/legalDomain.js",
+      "bytes": 1036,
+      "sha256": "0c81b289615a57495a371e8cf90a0e9b29300df54cee83f76e1d2b278a2abf0e"
+    },
+    {
+      "source": "frontend/.env.example",
+      "path": "archive/legacy/frontend/.env.example",
+      "bytes": 146,
+      "sha256": "c399643f937b840b081e788ac86f32ee970bd80e6a91fbdfc896460c217ff6cf"
+    },
+    {
+      "source": "frontend/index.html",
+      "path": "archive/legacy/frontend/index.html",
+      "bytes": 309,
+      "sha256": "06cd111603fdb5fcddcece4ff8caf6cfec0273896b884de7a8c14ceced0268f6"
+    },
+    {
+      "source": "frontend/package-lock.json",
+      "path": "archive/legacy/frontend/package-lock.json",
+      "bytes": 59218,
+      "sha256": "3d22b0cd6feb264218a2849ea2aa5e1092919aaf3a4c05a7b659d1ccbba469d5"
+    },
+    {
+      "source": "frontend/package.json",
+      "path": "archive/legacy/frontend/package.json",
+      "bytes": 411,
+      "sha256": "1fc8a56887629ff29e495379da93b0b9c5612b003654127cb62f9373091d20ec"
+    },
+    {
+      "source": "frontend/src/App.jsx",
+      "path": "archive/legacy/frontend/src/App.jsx",
+      "bytes": 661,
+      "sha256": "631312b3804f5eb54c511ba2506049889fff3e676190864c8a0a0c42200dd199"
+    },
+    {
+      "source": "frontend/src/api/client.js",
+      "path": "archive/legacy/frontend/src/api/client.js",
+      "bytes": 2089,
+      "sha256": "efd925405787daf760068f4186a20ebc88c9a5ff664f38b13fda9c47b8d30390"
+    },
+    {
+      "source": "frontend/src/components/AdvocateCard.jsx",
+      "path": "archive/legacy/frontend/src/components/AdvocateCard.jsx",
+      "bytes": 1901,
+      "sha256": "e0737f93239fd4f912767df6ad3d491f1956db1afdc765dcd7e6d44199533ae7"
+    },
+    {
+      "source": "frontend/src/components/AdvocateList.jsx",
+      "path": "archive/legacy/frontend/src/components/AdvocateList.jsx",
+      "bytes": 1662,
+      "sha256": "38d51272e674124a204a3ae8ed01bf83f1483c6abc7f4d7db79ea2ef26589a35"
+    },
+    {
+      "source": "frontend/src/components/BookingModal.jsx",
+      "path": "archive/legacy/frontend/src/components/BookingModal.jsx",
+      "bytes": 1400,
+      "sha256": "0c36c0815e94f30f07ab3f7b6134e9862bda650c5e489d0573ac0f5389229310"
+    },
+    {
+      "source": "frontend/src/components/ChatTypingIndicator.jsx",
+      "path": "archive/legacy/frontend/src/components/ChatTypingIndicator.jsx",
+      "bytes": 564,
+      "sha256": "3eda63b6b53f00eeff1982a05255c39ff9cd99188b7fa90d88a723b8267dc7f2"
+    },
+    {
+      "source": "frontend/src/components/EmergencyButton.jsx",
+      "path": "archive/legacy/frontend/src/components/EmergencyButton.jsx",
+      "bytes": 869,
+      "sha256": "3ed0189e051415cebf2fbe335c109b6806ca43db6b84e968f2311e12d8183248"
+    },
+    {
+      "source": "frontend/src/components/FollowUpChat.jsx",
+      "path": "archive/legacy/frontend/src/components/FollowUpChat.jsx",
+      "bytes": 7111,
+      "sha256": "7249bb7d614c005f85695930895de22e213d513f93a12f05a128825ba25075d5"
+    },
+    {
+      "source": "frontend/src/components/ResultCard.jsx",
+      "path": "archive/legacy/frontend/src/components/ResultCard.jsx",
+      "bytes": 2243,
+      "sha256": "bd342deedb92a3e0509d7934f506e500a4d70ab4f26ac4f20170e064d30f5ca3"
+    },
+    {
+      "source": "frontend/src/components/VoiceRecorder.jsx",
+      "path": "archive/legacy/frontend/src/components/VoiceRecorder.jsx",
+      "bytes": 10307,
+      "sha256": "c7085ddfd612c436d738a7d85de788ab719dc5f4da61d2bb44ecb454e17d0466"
+    },
+    {
+      "source": "frontend/src/components/dashboard/AdvocateMatchCard.jsx",
+      "path": "archive/legacy/frontend/src/components/dashboard/AdvocateMatchCard.jsx",
+      "bytes": 3102,
+      "sha256": "c049b2e292dd3f578f92db6aa4a08e43ba5c8337c3980d20be6c6a4c635fecbf"
+    },
+    {
+      "source": "frontend/src/components/dashboard/AdvocateMatchPanel.jsx",
+      "path": "archive/legacy/frontend/src/components/dashboard/AdvocateMatchPanel.jsx",
+      "bytes": 4784,
+      "sha256": "8368b538a48635a9a9186243623c7f7da3ff22b479fac2b4157387b7048b09ed"
+    },
+    {
+      "source": "frontend/src/components/dashboard/AnalysisDashboard.jsx",
+      "path": "archive/legacy/frontend/src/components/dashboard/AnalysisDashboard.jsx",
+      "bytes": 4435,
+      "sha256": "742bb6f8b18d4849656a2003016caef159a4103185c1a4acb3e46527c6b60e20"
+    },
+    {
+      "source": "frontend/src/components/dashboard/CaseHero.jsx",
+      "path": "archive/legacy/frontend/src/components/dashboard/CaseHero.jsx",
+      "bytes": 2728,
+      "sha256": "01d997c35daa127dfdaedcac5bc2aaf0b745d446f371edd01883cd991320e54b"
+    },
+    {
+      "source": "frontend/src/components/dashboard/LegalAssistantChat.jsx",
+      "path": "archive/legacy/frontend/src/components/dashboard/LegalAssistantChat.jsx",
+      "bytes": 8875,
+      "sha256": "0df41019bed3d005a9177f50db73721dcf135884655680ec3eef205e808f5128"
+    },
+    {
+      "source": "frontend/src/components/layout/AppHeader.jsx",
+      "path": "archive/legacy/frontend/src/components/layout/AppHeader.jsx",
+      "bytes": 1213,
+      "sha256": "3a48c2f1562330919708ff757fd5aa069d3794f16b83fb94bb6339669ec4df37"
+    },
+    {
+      "source": "frontend/src/hooks/useLegalChat.js",
+      "path": "archive/legacy/frontend/src/hooks/useLegalChat.js",
+      "bytes": 4362,
+      "sha256": "49ea40a5084f90d25d0a23b6b752b8375548f8ea9bc3265a1330373a09ddd404"
+    },
+    {
+      "source": "frontend/src/main.jsx",
+      "path": "archive/legacy/frontend/src/main.jsx",
+      "bytes": 472,
+      "sha256": "5dbeeb4f611ddf6b4e88fc71353f6b6e840297f1eebe658bb4aa2b23ee6fb524"
+    },
+    {
+      "source": "frontend/src/pages/BookingPage.jsx",
+      "path": "archive/legacy/frontend/src/pages/BookingPage.jsx",
+      "bytes": 3855,
+      "sha256": "fad02cf14bb45dac2519f6277f1add14ae2072a90fac8174af8d418d49d50a82"
+    },
+    {
+      "source": "frontend/src/pages/HomePage.jsx",
+      "path": "archive/legacy/frontend/src/pages/HomePage.jsx",
+      "bytes": 1547,
+      "sha256": "c32d46227c082971456ba200f956ca39bf8c40b5ab112fd0b475c7e7bce150f9"
+    },
+    {
+      "source": "frontend/src/pages/ResultsPage.jsx",
+      "path": "archive/legacy/frontend/src/pages/ResultsPage.jsx",
+      "bytes": 5156,
+      "sha256": "6b09431d10ba779192d87c14c9d01c04c639183da66fceebee2806096947e633"
+    },
+    {
+      "source": "frontend/src/state/AppContext.jsx",
+      "path": "archive/legacy/frontend/src/state/AppContext.jsx",
+      "bytes": 2579,
+      "sha256": "9eab71c73afc754d56b6ac29a8d7ce52d6eeb0abfd0c504b3f029294a86afcb6"
+    },
+    {
+      "source": "frontend/src/styles.css",
+      "path": "archive/legacy/frontend/src/styles.css",
+      "bytes": 30728,
+      "sha256": "aaad5967515400f7d753b82b010c4ecc02ae783981e9d8c811ebb0eb5f2a649b"
+    },
+    {
+      "source": "frontend/src/styles/dashboard.css",
+      "path": "archive/legacy/frontend/src/styles/dashboard.css",
+      "bytes": 19838,
+      "sha256": "dc2ef72f773fd4fb72b9761f7769cbdbeca0fcf1b522ad118c8ad476df4a5664"
+    },
+    {
+      "source": "frontend/src/utils/advocateDisplay.js",
+      "path": "archive/legacy/frontend/src/utils/advocateDisplay.js",
+      "bytes": 2082,
+      "sha256": "3345fff36463cda12c60072dc657c73acc4fdbf6f785b15c9e7e5b6851edb5ae"
+    },
+    {
+      "source": "frontend/src/utils/analysisDisplay.js",
+      "path": "archive/legacy/frontend/src/utils/analysisDisplay.js",
+      "bytes": 5235,
+      "sha256": "8e61aff0c112e7b916fa567bfa1f631d9e2141f214036bb14e06ec465056b7e7"
+    },
+    {
+      "source": "frontend/src/utils/chatMessages.js",
+      "path": "archive/legacy/frontend/src/utils/chatMessages.js",
+      "bytes": 1819,
+      "sha256": "9446d02cca7d5882b3f1344f2f63f8c159efc89ff703e17c41af71f992d98547"
+    },
+    {
+      "source": "frontend/src/utils/classificationSpeak.js",
+      "path": "archive/legacy/frontend/src/utils/classificationSpeak.js",
+      "bytes": 452,
+      "sha256": "36d68b2208d7c6b9fc731b36335011b6c55ca5ce5902b90acf7e45c2306f8735"
+    },
+    {
+      "source": "frontend/src/utils/webSpeech.js",
+      "path": "archive/legacy/frontend/src/utils/webSpeech.js",
+      "bytes": 2025,
+      "sha256": "44eebffc39191bda3dccdb2960c53c3072877bc0af82a9bfa510bee4796b15e9"
+    },
+    {
+      "source": "frontend/vite.config.js",
+      "path": "archive/legacy/frontend/vite.config.js",
+      "bytes": 141,
+      "sha256": "227274f083e273a3b03d871a848c43550376d63394a9fd95ad30d666f2664481"
+    },
+    {
+      "source": "README.md",
+      "path": "archive/legacy/README.md",
+      "bytes": 2338,
+      "sha256": "0caf0d7b3f9a480ef9f8c36b870fad39f984e543ed5117fbe7e551dd7d27fb5d"
+    },
+    {
+      "source": "package.json",
+      "path": "archive/legacy/package.json",
+      "bytes": 349,
+      "sha256": "7b9265e6bacb68eb3382d540dd2a226bf7c6db55a835c871c4e1b0a9c4e57e27"
+    },
+    {
+      "source": "package-lock.json",
+      "path": "archive/legacy/package-lock.json",
+      "bytes": 11437,
+      "sha256": "05a839dd594f6e66b806c2ffb21d1baaeaa8fe65422d28f3717386ee6d30f966"
+    }
+  ]
+}

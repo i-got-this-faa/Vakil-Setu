@@ -1,0 +1,59 @@
+=== PAGE 7 ===
+TokenOpt: A Cache-Preserving Context Harness | Mini Project Synopsis
+5. Key Technologies and Tools
+The technical implementation of TokenOpt is built upon a high-performance, edge-native systems 
+stack designed to ensure sub-millisecond proxy overhead, zero memory leaks, and complete thread 
+safety:
+Subsystem
+Technology / Stack
+Systems Role & Architectural Justification
+Runtime
+Bun (v1.4+)
+High-performance JavaScript/TypeScript run­
+time with native C++ event loop; guarantees 
+under 2ms proxy overhead.
+HTTP Layer
+Hono Framework
+Edge-native, lightweight web framework sup­
+porting high-concurrency Server-Sent Events 
+(SSE) streaming.
+Type System
+TypeScript 5.8+ & Zod
+Static compile-time type safety and runtime 
+schema validation for OpenAI/Anthropic wire 
+payloads.
+Code Distiller
+Web-Tree-Sitter 
+(WASM)
+Concrete Syntax Tree (CST) parser for folding 
+unmodified source code function bodies into 
+skeletons.
+Swap Memory
+bun:sqlite (WAL Mode)
+In-process, zero-network embedded SQLite en­
+gine delivering microsecond query latency for 
+paged turns.
+Decision Engine
+TypeSafe AI SDK (Jev)
+System One decision model for zero-token tool 
+schema pruning and log severity classification.
+Upstream APIs
+Anthropic, 
+OpenAI, 
+Google
+Frontier model interfaces supporting prompt 
+caching headers (Claude Opus 4.8, GPT-5, 
+Gemini 2.5 Flash).
+Observability
+OpenTelemetry (OTel)
+Distributed tracing framework monitoring real-
+time token savings and effective cost reduction 
+metrics.
+Hardware & Deployment Environment Specifications
+• Host Operating System: Linux (Kernel 6.x+, x86_64 / aarch64 architecture)
+• Compute Resources: Standard developer workstation (4 CPU cores, 8 GB RAM; no dedicated 
+GPU required)
+• Network Topology: Local loopback daemon listening on 127.0.0.1:8080, proxying upstream 
+HTTPS traffic to api.anthropic.com and api.openai.com
+• Runtime Storage Footprint: under 50 MB disk space for local SQLite WAL swap storage
+7

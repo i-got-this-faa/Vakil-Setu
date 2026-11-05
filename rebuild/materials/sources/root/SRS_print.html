@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Vakil Setu — Software Requirements Specification</title>
+  <style>
+    @page {
+      size: A4;
+      margin: 20mm 15mm 20mm 15mm;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+      color: #1e293b;
+      line-height: 1.5;
+      font-size: 10.5pt;
+    }
+    h1 {
+      color: #0c447c;
+      font-size: 22pt;
+      margin-bottom: 4px;
+      font-weight: 800;
+    }
+    h2 {
+      color: #0c447c;
+      font-size: 14pt;
+      margin-top: 18pt;
+      margin-bottom: 6pt;
+      border-bottom: 1.5px solid #e2e8f0;
+      padding-bottom: 4px;
+    }
+    h3 {
+      color: #b45309;
+      font-size: 11pt;
+      margin-top: 12pt;
+      margin-bottom: 4pt;
+    }
+    .meta-tag {
+      font-size: 8.5pt;
+      font-weight: 700;
+      color: #b45309;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+    .subtitle {
+      font-size: 11pt;
+      color: #64748b;
+      margin-bottom: 14pt;
+    }
+    .doc-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 12pt 0;
+      font-size: 9pt;
+    }
+    .doc-table th, .doc-table td {
+      border: 1px solid #cbd5e1;
+      padding: 6px 10px;
+      text-align: left;
+    }
+    .doc-table th {
+      background-color: #0c447c;
+      color: #ffffff;
+      font-weight: 700;
+    }
+    .doc-table tr:nth-child(even) td {
+      background-color: #f8fafc;
+    }
+    .callout {
+      background: #fef3c7;
+      border-left: 4px solid #b45309;
+      padding: 10px 14px;
+      font-size: 9pt;
+      margin: 12pt 0;
+      font-weight: 600;
+      color: #78350f;
+    }
+    .tag-impl { color: #15803d; font-weight: 700; }
+    .tag-prog { color: #b45309; font-weight: 700; }
+    .tag-plan { color: #0c447c; font-weight: 700; }
+    ul { margin-left: 18px; margin-bottom: 8pt; }
+    li { margin-bottom: 3pt; font-size: 9.5pt; }
+    .page-break { page-break-before: always; }
+  </style>
+</head>
+<body>
+
+  <div class="meta-tag">IEEE Std 830-1998 / ISO/IEC/IEEE 29148:2018 Specification</div>
+  <h1>Software Requirements Specification (SRS)<br>Vakil Setu (वकील सेतु)</h1>
+  <div class="subtitle">Voice-First Bilingual Legal Triage & Advocate Discovery Platform under Indian Jurisprudence</div>
+
+  <table class="doc-table">
+    <tr>
+      <th style="width: 28%;">Document Identifier</th>
+      <td>SRS-VAKIL-SETU-2026-V1.0</td>
+    </tr>
+    <tr>
+      <th>Project Scope</th>
+      <td>MVP Phase 0 (Baseline) & Target Architecture (Phases 1–4)</td>
+    </tr>
+    <tr>
+      <th>Student Lead</th>
+      <td>[Your Full Name] | Roll No: [Your Roll Number]</td>
+    </tr>
+    <tr>
+      <th>Project Supervisor</th>
+      <td>[Faculty Guide / Professor Name]</td>
+    </tr>
+    <tr>
+      <th>Department & College</th>
+      <td>Department of Computer Science & Engineering, [College Name]</td>
+    </tr>
+  </table>
+
+  <div class="callout">
+    STATUTORY COMPLIANCE DISCLAIMER: Vakil Setu is explicitly an informational triage bridge and not an authorized legal practitioner under Section 29 of the Advocates Act, 1961. All advocate directory listings are strictly factual and non-promotional, adhering to Rule 36 of the Bar Council of India (BCI) rules.
+  </div>
+
+  <h2>1. Introduction & Executive Scope</h2>
+  <p>Vakil Setu is an AI-powered, voice-first legal triage platform designed to bridge the first-mile justice divide in India. The software accepts spoken Hindi or English descriptions of legal disputes, classifies grievances into canonical legal domains (Criminal, Civil, Family, Property), assesses statutory urgency, vocalizes plain-language procedural guidance for low-literacy citizens, matches users with verified enrolled advocates, and coordinates appointment scheduling backed by cryptographic Razorpay payment verification.</p>
+
+  <h2>2. Feature Status Matrix (Implemented vs. Planned)</h2>
+  <table class="doc-table">
+    <thead>
+      <tr>
+        <th style="width: 25%;">Feature Module</th>
+        <th>Description</th>
+        <th style="width: 18%;">Status</th>
+        <th style="width: 14%;">Phase</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>Voice Input (STT)</td><td>In-browser speech recognition in Hindi & English (Web Speech API)</td><td class="tag-impl">IMPLEMENTED</td><td>Phase 0</td></tr>
+      <tr><td>Voice Output (TTS)</td><td>Speech synthesis reading triage summaries aloud (window.speechSynthesis)</td><td class="tag-impl">IMPLEMENTED</td><td>Phase 0</td></tr>
+      <tr><td>AI Legal Triage</td><td>Dual-engine issue classification under Indian law (Domain, Urgency, Actions)</td><td class="tag-impl">IMPLEMENTED</td><td>Phase 0</td></tr>
+      <tr><td>Offline Failover</td><td>Local rule-based regex engine for zero-downtime offline classification</td><td class="tag-impl">IMPLEMENTED</td><td>Phase 0</td></tr>
+      <tr><td>Advocate Matching</td><td>Querying MongoDB for domain-matched available advocates sorted by rating</td><td class="tag-impl">IMPLEMENTED</td><td>Phase 0</td></tr>
+      <tr><td>Directory Web Scraper</td><td>Autonomous Cheerio crawler parsing LawRato directory listings into MongoDB</td><td class="tag-impl">IMPLEMENTED</td><td>Phase 0</td></tr>
+      <tr><td>Razorpay Escrow</td><td>Order creation and cryptographic HMAC SHA-256 signature verification</td><td class="tag-impl">IMPLEMENTED</td><td>Phase 0</td></tr>
+      <tr><td>Client Session Cache</td><td>LocalStorage persistence for multi-turn history & triage results</td><td class="tag-impl">IMPLEMENTED</td><td>Phase 0</td></tr>
+      <tr><td>Dual Homepage Input</td><td>Direct text box input on homepage alongside microphone for desktop fallback</td><td class="tag-prog">IN PROGRESS</td><td>Phase 1</td></tr>
+      <tr><td>Emergency SOS Hub</td><td>Real 1-tap dials (112, 1091, 15100 NALSA) & statutory arrest rights card</td><td class="tag-prog">IN PROGRESS</td><td>Phase 1</td></tr>
+      <tr><td>Advocate Profile Modal</td><td>Detailed modal displaying Bar Council credentials, courts, and fixed slots</td><td class="tag-prog">IN PROGRESS</td><td>Phase 1</td></tr>
+      <tr><td>Bar Council Verification</td><td>State Bar Enrolment (e.g. D/1420/2019) & AIBE COP verification workflow</td><td class="tag-plan">PLANNED</td><td>Phase 2</td></tr>
+      <tr><td>My Bookings Dashboard</td><td>Client portal to view upcoming appointments, status, and PDF booking slips</td><td class="tag-plan">PLANNED</td><td>Phase 2</td></tr>
+      <tr><td>Regulatory Suspension</td><td>Automated query quarantine and Razorpay refund trigger for banned advocates</td><td class="tag-plan">PLANNED</td><td>Phase 2</td></tr>
+      <tr><td>Legal Document OCR</td><td>Real PDF/Image file upload and text extraction for FIRs and legal notices</td><td class="tag-plan">Phase 3</td><td>Phase 3</td></tr>
+      <tr><td>Limitation Calculator</td><td>Statutory countdown tracking under Indian Limitation Act, 1963</td><td class="tag-plan">PLANNED</td><td>Phase 3</td></tr>
+      <tr><td>Free Legal Aid Checker</td><td>NALSA / DLSA eligibility evaluator under Legal Services Authorities Act</td><td class="tag-plan">PLANNED</td><td>Phase 3</td></tr>
+      <tr><td>Indic 8-Language STT</td><td>Expanding speech recognition to Bengali, Marathi, Tamil, Telugu, etc.</td><td class="tag-plan">ROADMAP</td><td>Phase 4</td></tr>
+      <tr><td>e-Courts CNR Tracking</td><td>Tracking court causes and next hearing dates via 16-digit CNR numbers</td><td class="tag-plan">ROADMAP</td><td>Phase 4</td></tr>
+      <tr><td>WebRTC Video Consult</td><td>Built-in peer-to-peer encrypted video calling and screen sharing</td><td class="tag-plan">ROADMAP</td><td>Phase 4</td></tr>
+    </tbody>
+  </table>
+
+  <div class="page-break"></div>
+
+  <h2>3. Technical Architecture & System Design</h2>
+  <ul>
+    <li><strong>Client Layer:</strong> React 18 SPA (Vite), W3C Web Speech API (zero-cost client STT/TTS), AppContext state management.</li>
+    <li><strong>API Gateway:</strong> Node.js (v20+ LTS) + Express.js RESTful routing, CORS security, custom error middleware.</li>
+    <li><strong>AI Intelligence Layer:</strong> Dual-engine pipeline: Google Gemini 2.0 / Gateway LLM + Local regex heuristics failover engine.</li>
+    <li><strong>Data Persistence:</strong> MongoDB Atlas via Mongoose ODM (Advocate, Booking, User schemas); Cheerio web crawler.</li>
+    <li><strong>Payment Security:</strong> Razorpay API with server-side HMAC SHA-256 cryptographic signature recalculation.</li>
+  </ul>
+
+  <h2>4. Core Functional Requirements (FR)</h2>
+  <ul>
+    <li><strong>[FR-1.1: Hands-Free Voice Ingestion]</strong> The system SHALL capture spoken audio in real-time using browser SpeechRecognition without server-side audio upload overhead.</li>
+    <li><strong>[FR-1.2: Bilingual Locale Tagging]</strong> The system SHALL support hi-IN and en-IN recognition with dynamic BCP-47 locale tagging.</li>
+    <li><strong>[FR-1.4: Direct Text Fallback]</strong> The system SHALL provide a manual text entry area on all triage interfaces for users on desktop PCs.</li>
+    <li><strong>[FR-1.5: Accessibility Speech Synthesis]</strong> The system SHALL vocalize generated legal summaries aloud via window.speechSynthesis in regional accents.</li>
+    <li><strong>[FR-2.1: Statutory Domain Triage]</strong> The system SHALL classify grievances into exactly one canonical domain: criminal, civil, family, or property.</li>
+    <li><strong>[FR-2.2: Procedural Urgency Estimation]</strong> The system SHALL assign an urgency rating (low, medium, high, emergency) based on statutory limitation deadlines.</li>
+    <li><strong>[FR-2.4: Deterministic Rule Failover]</strong> If upstream LLM endpoints return HTTP 429/503, the system SHALL route the narrative through local regex heuristics with zero downtime.</li>
+    <li><strong>[FR-3.1: Algorithmic Advocate Matching]</strong> The system SHALL query MongoDB for active advocates matching the classified domain, sorted by rating descending.</li>
+    <li><strong>[FR-4.1: Consultation Scheduling & Escrow]</strong> Litigants SHALL schedule consultation appointments with server-side Razorpay order generation and HMAC SHA-256 signature verification.</li>
+    <li><strong>[FR-5.1: Instant Legal SOS Hub]</strong> The emergency workflow SHALL render direct 1-tap call triggers to 112 (Police), 1091 (Women Helpline), and 15100 (NALSA Free Legal Aid).</li>
+  </ul>
+
+  <h2>5. Non-Functional Requirements (NFR)</h2>
+  <ul>
+    <li><strong>[NFR-PERF-1: Speech Latency]</strong> Interim speech-to-text tokens SHALL render within 200ms on client devices.</li>
+    <li><strong>[NFR-PERF-2: Triage Response Time]</strong> End-to-end AI triage processing round-trip SHALL complete within 3.5 seconds.</li>
+    <li><strong>[NFR-REL-1: Failover Speed]</strong> Deterministic regex failover execution SHALL execute within 50ms upon upstream timeout detection.</li>
+    <li><strong>[NFR-SEC-1: Cryptographic Integrity]</strong> All financial transactions SHALL be validated using server-side HMAC SHA-256 signature verification.</li>
+    <li><strong>[NFR-SEC-2: Data Privacy & DPDP Act]</strong> Sensitive case descriptions SHALL remain stored in client LocalStorage; no unencrypted personal litigation narratives SHALL be retained in the database.</li>
+  </ul>
+
+</body>
+</html>

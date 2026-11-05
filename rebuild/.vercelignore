@@ -1,0 +1,17 @@
+.git/
+**/node_modules/
+**/.next/
+**/.turbo/
+**/.env*
+**/*.log
+.runtime/
+.tooling/
+vendor/
+archive/
+materials/
+docs/
+apps/mobile/
+node.exe
+# The bundled engine's recorded source/build provenance is unresolved.
+apps/web/public/speech/espeak-ng/espeak-ng.js
+apps/web/public/speech/espeak-ng/espeak-ng.data

@@ -1,0 +1,29 @@
+=== PAGE 9 ===
+TokenOpt: A Cache-Preserving Context Harness | Mini Project Synopsis
+7. Expected Outcomes
+Upon successful completion of the project, the following concrete deliverables will be produced:
+1. TokenOpt Core Proxy Prototype: A fully functional, production-ready local reverse proxy service 
+packaged as an open-source CLI binary compatible with standard OpenAI SDK endpoints (/v1/
+chat/completions).
+2. Deterministic Distillation Engine Library: A modular parsing package supporting automated 
+log compaction for pytest, jest, vitest, and cargo test runners, alongside AST code folding and JSON-
+to-TOON tabular converters.
+3. Context MMU Virtual Memory Subsystem: An embedded SQLite-backed virtual memory 
+paging engine featuring deterministic ghost handle tagging, LRU/recency-based page eviction, and 
+runtime page-fault recovery.
+4. System One Triage Integration: A zero-generation decision pipeline powered by TypeSafe Jev 
+that filters unused tool schemas and evaluates task complexity in sub-100ms before prompt dispatch.
+5. Real-Time Telemetry & Cost Observability Dashboard: An integrated monitoring module 
+reporting exact metrics per turn: Raw Tokens, Distilled Tokens, Provider KV-Cache Hit Rate (%), 
+and Effective Billed Cost Savings (USD).
+6. Empirical Research Benchmark Report: A comprehensive experimental evaluation validating 
+that TokenOpt achieves a 70% to 90% reduction in billed cost on SWE-bench Lite tasks while 
+maintaining parity in binary task completion rates.
+Verification & Demonstration Setup
+The final prototype will be demonstrated in a live side-by-side terminal environment running an 
+autonomous coding agent (Cursor / Claude Code) on 5 real-world GitHub issues:
+• Baseline Run: Agent querying Claude Opus directly without middleware, displaying raw token 
+consumption and API billing.
+• TokenOpt Run: Identical agent routed through localhost:8080, displaying real-time log distil­
+lation, 100% cache hit confirmation, and live cost reduction metrics.
+9
