@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { createDictation } from "../utils/dictation";
 import { bcp47FromUiLanguage } from "../utils/webSpeech";
 
-export function useDictation({ text, setText, language }) {
+export function useDictation({ text, setText, language, stopPlayback }) {
   const [phase, setPhase] = useState("idle");
   const [error, setError] = useState("");
   const session = useRef(null);
@@ -16,7 +16,7 @@ export function useDictation({ text, setText, language }) {
     draftBefore.current = text;
     session.current = createDictation({ Recognition, language: bcp47FromUiLanguage(language), draft: text,
       onText: setText, onState: setPhase, onError: setError,
-      cancelPlayback: () => window.speechSynthesis?.cancel() });
+      cancelPlayback: () => { window.speechSynthesis?.cancel(); stopPlayback?.(); } });
     session.current.start();
   };
   const cancel = () => {

@@ -1,3 +1,4 @@
+import { AuthControls } from "../../state/ConvexServices";
 import { NavLink } from "react-router-dom";
 import { useAppState } from "../../state/AppContext";
 import { useLegalChat } from "../../hooks/useLegalChat";
@@ -31,6 +32,8 @@ export default function AppHeader() {
           <NavLink to="/booking" className={classification ? "" : "nav-muted"}>
             Booking
           </NavLink>
+          <NavLink to="/notifications">Alerts</NavLink>
+          <AuthControls />
         </nav>
       </div>
     </header>
