@@ -1,126 +1,43 @@
-# Legal-Setu ? Voice-Based Legal Assistance Platform
+# Legal-Setu
 
-The website supports voice or typed legal triage, advocate profiles and consultation requests. WhatsApp has been removed from the website; its independent backend demo remains available in the repository.
+The avatar website in `frontend/` and the mobile MVP in `rebuild/apps/mobile/` now target the shared **Convex backend with Clerk identity** in `rebuild/packages/backend/`. The avatar messenger layout and browser voice controls are preserved.
 
-Local multilingual vector and hybrid retrieval are implemented for the legal corpus. See [vector setup and retrieval modes](docs/VECTOR_RETRIEVAL.md) and the [source integrity audit](docs/RAG_DATA_AUDIT.md). The triage backend now returns RAG evidence alongside classification; the website still needs to render the new `legalAnswer` field. See [backend integration](docs/BACKEND_RAG.md). BNS currency through 2025 is not certified.
+See [Convex migration and setup](docs/CONVEX_AVATAR_MIGRATION.md) for service configuration, source import, consent and remaining live acceptance checks.
 
-The earlier standalone messaging demonstration is documented in [WHATSAPP_DEMO.md](docs/WHATSAPP_DEMO.md), with setup in [TWILIO_SANDBOX.md](docs/TWILIO_SANDBOX.md). It is not required to run the website.
-
-## Existing browser prototype
-
-- Voice input recording from browser
-- Speech-to-text through the browser Web Speech API (Hindi/English selection)
-- AI legal issue classification (`/api/ai/classify`)
-- Advocate matching by expertise + availability
-- Booking creation and storage in MongoDB
-- Razorpay order creation and payment verification
-- Available-advocate lookup (does not contact the advocate)
-
-## Project Structure
-
-```
-Vakil-setu/
-  backend/
-    src/
-      models/
-      routes/
-      controllers/
-      services/
-      middlewares/
-  frontend/
-    src/
-      pages/
-      components/
-      api/
-      state/
-```
-
-## Environment Setup
-
-### Backend (`backend/.env`)
-
-Copy `backend/.env.example` and fill values.
-
-Provider switches:
-
-- `LLM_PROVIDER=gateway` for your college gateway (`/gateway/llm/chat`)
-- `LLM_PROVIDER=gemini` to use Gemini directly (`GEMINI_MODEL`, `LLM_API_KEY`)
-
-### Frontend (`frontend/.env`)
-
-```
-VITE_API_BASE_URL=http://localhost:5000
-VITE_ENABLE_TTS=true
-```
-
-Frontend switches:
-
-- Voice recognition uses the browser Web Speech API; typed input is also available.
-- `VITE_ENABLE_TTS=true` -> browser speech synthesis for AI summary
-
-## Run Instructions
-
-From project root:
+## Run the avatar website
 
 ```bash
-npm install
-npm run install:all
+npm install --prefix frontend
+# Configure the public values in frontend/.env.local using frontend/.env.example.
 npm run dev
 ```
 
-This starts:
+Open http://localhost:5173/chat. MongoDB/Express are not required. With no service configuration, the public avatar renders and account operations remain explicitly unavailable.
 
-- Backend on `http://localhost:5000`
-- Frontend on Vite default port (usually `http://localhost:5173`)
+Use the same Clerk application and Convex deployment for both clients. The avatar uses `VITE_CLERK_PUBLISHABLE_KEY`/`VITE_CONVEX_URL`; mobile uses their `EXPO_PUBLIC_*` equivalents. Provider secrets belong only in Convex environment settings. Never commit keys or place them in public frontend variables.
 
-## API Endpoints
+## Shared backend
 
-- `POST /api/ai/classify`
-- `POST /api/advocates/match`
-- `POST /api/bookings`
-- `POST /api/emergency`
-- `POST /api/payments/create-order`
-- `POST /api/payments/verify`
+Existing authorized Convex functions own accounts, cases, chat, reviewed summaries, approved advocates, real slots, booking acceptance/cancellation/expiry and notifications. The avatar website consumes those contracts. Chat replies can carry legal evidence and citations, rendered by web and mobile. RAG ingestion requires a reviewed operator import; the local legal index is not automatically available to hosted functions.
 
-## Scrape Advocate Dataset
-
-You can scrape advocate listings and import them into MongoDB.
-
-1. Add URLs in `backend/.env`:
-   - `SCRAPE_URLS=https://site-1.com/lawyers,https://site-2.com/advocates`
-   - `SCRAPE_MAX_PAGES=3`
-   - `SCRAPE_PROFILE_DEPTH=10`
-2. Run:
+Keyword retrieval uses Convex search. Optional native vector retrieval requires re-embedding into the supported 768-dimensional Gemini profile. Existing local E5 vectors are preserved as historical artifacts, not silently reused. See the migration document for import commands and limitations.
 
 ```bash
-npm run scrape:advocates --prefix backend
+npm test --prefix frontend
+npm run build --prefix frontend
+cd rebuild
+bun run backend:codegen:local
+bun run typecheck
+bun run test
 ```
 
-The script normalizes data into your `Advocate` schema and upserts by name.
-It now supports pagination crawl and profile-level enrichment.
+## Repository boundaries
 
+- `frontend/`: active avatar Vite website.
+- `rebuild/packages/backend/`: shared Convex backend and authorization rules.
+- `rebuild/apps/mobile/`: Expo client MVP; device acceptance remains separate.
+- `rebuild/apps/web/`: additional Next.js client; its UI does not replace the avatar website.
+- `backend/`: preserved Express/Mongo prototype, public legal ingestion/export tooling and independent messaging demonstration. The active avatar website does not call it.
+- `docs/CONVEX_AVATAR_MIGRATION.md`: current architecture and setup.
 
-## Website conversation flow
-
-- `/` is the introduction page; **Start chat** opens `/chat`.
-- `/chat` contains the avatar, conversation, language selector, and messaging-style
-  input bar. The waveform control starts browser dictation; stop, review or cancel
-  before sending. Enter sends a message; Shift+Enter inserts a new line.
-- Source-supported answers include expandable citations. When stored sources
-  cannot support an answer, the independent LLM response is labelled **General AI
-  guidance** and has no citations. If the LLM itself fails, the app reports that.
-- Replies stay in chat. The summary and advocate list open only through explicit
-  navigation. **Continue chat** resumes the current tab session; **New Case** clears
-  it. Separate saved chat histories are not implemented.
-- `/results`, `/profile`, and `/booking` retain the existing case, advocate and
-  consultation flows. The floating **Find an advocate** lookup currently returns
-  an available advocate independently of the chat category.
-
-See [backend RAG setup](docs/BACKEND_RAG.md) and [frontend validation](docs/FRONTEND_CHAT.md).
-Legal sources and embeddings are local, ignored artifacts; regenerate them with
-`npm run legal:ingest:bns --prefix backend` and `npm run legal:embed --prefix backend`.
-The importer can read the official HTML directly without a Firecrawl key.
-
-Validate with `node --test backend/test/*.test.js frontend/test/*.test.js` and
-`npm run build --prefix frontend`. Browser recognition, available voices and
-real microphone accuracy depend on the device/browser.
+The old `npm run dev:legacy` command retains the historical Express/Mongo server startup for reference, but the frontend now uses Convex and does not offer a second Mongo backend mode. Payments, guaranteed emergency connections, ElevenLabs and legal-currentness certification are not part of this migration.
