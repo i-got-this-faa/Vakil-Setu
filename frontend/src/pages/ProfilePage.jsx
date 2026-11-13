@@ -1,25 +1,11 @@
 import { Link } from "react-router-dom";
+import { api } from "@convex-api";
 import { useAppState } from "../state/AppContext";
-import { cleanAdvocateName, formatExpertise } from "../utils/advocateDisplay";
-
+import { useServiceQuery } from "../state/ConvexServices";
 export default function ProfilePage() {
-  const { selectedAdvocate: advocate } = useAppState();
-  return (
-    <main className="container">
-      <section className="hero compact">
-        <p className="eyebrow">Advocate profile</p>
-        <h1>{advocate ? cleanAdvocateName(advocate.name) : "Select an advocate"}</h1>
-      </section>
-      {advocate ? (
-        <section className="card">
-          <p><strong>Practice areas:</strong> {formatExpertise(advocate.expertise).join(", ")}</p>
-          <p><strong>Experience:</strong> {advocate.experienceYears ?? 0} years</p>
-          <p><strong>Languages:</strong> {advocate.languages?.join(", ") || "Not listed"}</p>
-          <p>Availability and consultation time must be confirmed with the advocate.</p>
-          <Link to="/booking">Request a consultation</Link>
-        </section>
-      ) : <p>Choose “View profile” from the results to see an advocate’s details.</p>}
-      <p><Link to="/results">Back to results</Link></p>
-    </main>
-  );
+  const { selectedAdvocate } = useAppState();
+  const { data: advocate, error } = useServiceQuery(api.advocates.getPublic, selectedAdvocate ? { advocateId: selectedAdvocate._id } : null, false);
+  return <main className="container"><section className="hero compact"><p className="eyebrow">Advocate profile</p><h1>{advocate?.displayName || "Select an advocate"}</h1></section>
+    {error && <p role="alert">{error}</p>}{advocate && <section className="card"><p>{advocate.bio}</p><p>{advocate.city} · {advocate.yearsExperience} years</p><p>Practice areas: {advocate.domains.join(", ")}</p><p>Languages: {advocate.locales.join(", ")}</p><p>Modes: {advocate.consultationModes.join(", ")}</p><Link to="/booking">Choose a consultation slot</Link></section>}
+    {advocate === null && <p>This profile is no longer available for new requests.</p>}<p><Link to="/results">Back to advocates</Link></p></main>;
 }

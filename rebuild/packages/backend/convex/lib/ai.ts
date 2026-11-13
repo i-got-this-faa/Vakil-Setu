@@ -1,3 +1,5 @@
+import type { LegalEvidence } from "./legalEvidence";
+
 // Provider-neutral contract. Credentials and native wire objects stay in the adapter.
 export type AiPart = { kind: "text"; text: string } | { kind: "file"; mimeType: string; dataBase64: string };
 export type AiMessage = { role: "user" | "assistant"; parts: AiPart[] };
@@ -9,7 +11,7 @@ export type AiRequest = {
   output: { kind: "text" } | { kind: "json"; schema: Record<string, unknown> };
 };
 export type AiFailureReason = "timeout" | "rate_limited" | "provider_failed" | "response_too_large" | "blocked" | "truncated" | "malformed";
-export type AiResult = { kind: "reply"; text: string } | { kind: "unavailable"; reason: AiFailureReason };
+export type AiResult = { kind: "reply"; text: string; legalEvidence?: LegalEvidence } | { kind: "unavailable"; reason: AiFailureReason };
 export type AiTransportMetadata = { httpStatus: number | null; headersMs: number | null; firstByteMs: number | null; latencyMs: number };
 export type AiProvider = {
   kind: "gemini_native" | "vertex_native";
