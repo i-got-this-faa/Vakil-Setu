@@ -26,7 +26,7 @@ describe("server AI capability policy", () => {
     vi.stubEnv("GEMINI_API_KEY", "secret-test-marker");
     vi.stubEnv("GEMINI_MODEL", "gemini-3.8-flash");
     vi.stubEnv("AI_CHAT_LOCALES", undefined);
-    expect(await t.query(api.chat.capabilities, {})).toEqual({ configured: true, locales: ["en", "hi", "pa"], provider: "gemini_native", evidence: "observed_runtime_only_not_quality_validated" });
+    expect(await t.query(api.chat.capabilities, {})).toEqual({ configured: true, retrievalConfigured: false, locales: ["en", "hi", "pa"], provider: "gemini_native", evidence: "observed_runtime_only_not_quality_validated" });
     vi.stubEnv("GEMINI_API_KEY", "");
     expect(await t.query(api.chat.capabilities, {})).toMatchObject({ configured: false, reason: "not_configured" });
     vi.stubEnv("GEMINI_API_KEY", "secret-test-marker");
