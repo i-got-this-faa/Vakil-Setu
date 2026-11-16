@@ -2,6 +2,7 @@
 export function bcp47FromUiLanguage(pref) {
   if (pref === "english") return "en-IN";
   if (pref === "hindi") return "hi-IN";
+  if (pref === "punjabi") return "pa-IN";
   if (typeof navigator !== "undefined" && navigator.language) return navigator.language;
   return "hi-IN";
 }
@@ -42,13 +43,15 @@ function chunkSpeechText(rawText, maxLen = 220) {
   return normalized.slice(0, 30);
 }
 
-export function speakWithWebSpeech(text, lang) {
-  if (!text || typeof window === "undefined" || !("speechSynthesis" in window)) {
-    return;
+// Device (browser) voice. Sends text to no server. Returns { cancel } or null when unsupported.
+// handlers.onStart/onEnd fire once for the whole reply; cancellation is never reported as an error.
+export function speakWithWebSpeech(text, lang, handlers = {}) {
+  if (!text || typeof window === "undefined" || !("speechSynthesis" in window) || typeof SpeechSynthesisUtterance === "undefined") {
+    return null;
   }
   const synth = window.speechSynthesis;
   const chunks = chunkSpeechText(text);
-  if (!chunks.length) return;
+  if (!chunks.length) return null;
 
   const requestedLang = lang || "en-IN";
   const voices = synth.getVoices();
@@ -60,10 +63,31 @@ export function speakWithWebSpeech(text, lang) {
   synth.cancel();
   synth.resume();
 
+  let remaining = chunks.length;
+  let started = false;
   for (const chunk of chunks) {
     const utter = new SpeechSynthesisUtterance(chunk);
     utter.lang = requestedLang;
     if (matchedVoice) utter.voice = matchedVoice;
+    utter.onstart = () => {
+      if (started) return;
+      started = true;
+      handlers.onStart?.();
+    };
+    utter.onend = () => {
+      remaining -= 1;
+      if (remaining === 0) handlers.onEnd?.();
+    };
+    utter.onerror = (event) => {
+      if (event?.error === "canceled" || event?.error === "interrupted") return;
+      handlers.onError?.("The device voice could not read this reply.");
+    };
     synth.speak(utter);
   }
+  return {
+    cancel: () => {
+      synth.cancel();
+    },
+    matchedVoice: Boolean(matchedVoice),
+  };
 }

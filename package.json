@@ -3,18 +3,23 @@
   "private": true,
   "version": "1.0.0",
   "scripts": {
+    "convex:dev": "convex dev",
     "demo:whatsapp": "npm run demo:whatsapp --prefix backend --",
     "start:whatsapp": "npm run start:whatsapp --prefix backend",
     "start:twilio": "npm run start:twilio --prefix backend",
     "start:meta": "npm run start:meta --prefix backend",
     "demo:twilio": "npm run demo:twilio --prefix backend --",
     "doctor:whatsapp": "npm run doctor:whatsapp --prefix backend --",
-    "dev": "concurrently -n db,api,web -c gray,blue,green \"npm run db:local --prefix backend\" \"npm run dev --prefix backend\" \"npm run dev --prefix frontend\"",
+    "dev": "npm run dev --prefix frontend -- --host 0.0.0.0 --port 5173",
     "install:all": "npm install && npm install --prefix backend && npm install --prefix frontend",
     "twilio:live": "npm run twilio:live --prefix backend",
-    "setup:twilio": "npm run setup:twilio --prefix backend"
+    "setup:twilio": "npm run setup:twilio --prefix backend",
+    "dev:legacy": "concurrently -n db,api,web -c gray,blue,green \"npm run db:local --prefix backend\" \"npm run dev --prefix backend\" \"npm run dev --prefix frontend\""
   },
   "devDependencies": {
     "concurrently": "^9.1.2"
+  },
+  "dependencies": {
+    "convex": "1.46.0"
   }
 }

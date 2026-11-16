@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
+import { VAKIL_AVATAR } from "../config/avatarAssets";
 
-// Frames are rendered by avatar/build_avatar.py (Blender) into public/avatar/.
-const FRAMES = {
-  idle: "/avatar/vakil-idle.png",
-  talk: "/avatar/vakil-talk.png",
-  blink: "/avatar/vakil-blink.png"
-};
+// Artwork and mode are configured in config/avatarAssets.js.
+// kind "static": one still image. No mouth or blink timers run, because a single still cannot show
+// either. The talking prop only toggles .is-talking, which drives the CSS speaking indicator.
+// kind "frames": optional Blender stills with timed mouth and blink swaps (cosmetic, not lip-sync).
+const { kind, label, frames: FRAMES } = VAKIL_AVATAR;
+const STATIC = kind === "static";
 
 export default function VakilAvatar({ talking = false }) {
   const [mouthOpen, setMouthOpen] = useState(false);
@@ -18,7 +19,7 @@ export default function VakilAvatar({ talking = false }) {
   }, []);
 
   useEffect(() => {
-    if (!talking) {
+    if (STATIC || !talking) {
       setMouthOpen(false);
       return undefined;
     }
@@ -27,6 +28,7 @@ export default function VakilAvatar({ talking = false }) {
   }, [talking]);
 
   useEffect(() => {
+    if (STATIC) return undefined;
     let blinkTimer;
     let openTimer;
     const schedule = () => {
@@ -45,11 +47,12 @@ export default function VakilAvatar({ talking = false }) {
     };
   }, []);
 
-  const frame = mouthOpen ? FRAMES.talk : blinking ? FRAMES.blink : FRAMES.idle;
+  const frame = STATIC ? FRAMES.idle : mouthOpen ? FRAMES.talk : blinking ? FRAMES.blink : FRAMES.idle;
+  const classes = ["vakil-3d-avatar", STATIC && "is-static", talking && "is-talking"].filter(Boolean).join(" ");
 
   return (
-    <div className={`vakil-3d-avatar ${talking ? "is-talking" : ""}`}>
-      <img src={frame} alt="Legal-Setu AI advocate avatar" draggable="false" />
+    <div className={classes}>
+      <img src={frame} alt={label} draggable="false" />
     </div>
   );
 }

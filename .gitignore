@@ -19,3 +19,5 @@ backend/data/legal-models/
 
 # Local task verification artifacts
 /tmp/
+
+backend/data/convex-export/

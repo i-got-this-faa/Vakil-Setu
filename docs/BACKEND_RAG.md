@@ -1,3 +1,5 @@
+> Historical Express implementation reference. The avatar website now uses Convex; see [current migration](CONVEX_AVATAR_MIGRATION.md).
+
 # RAG integration in the triage backend
 
 `POST /api/ai/triage` now returns `legalAnswer` alongside its existing `classification` and `advocates` fields. The frontend renders the grounded answer with expandable citations and speaks the grounded text. The classification summary is separate triage output and is not presented by this API as a source-grounded answer.
