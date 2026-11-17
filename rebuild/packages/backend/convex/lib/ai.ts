@@ -14,9 +14,11 @@ export type AiFailureReason = "timeout" | "rate_limited" | "provider_failed" | "
 export type AiResult = { kind: "reply"; text: string; legalEvidence?: LegalEvidence } | { kind: "unavailable"; reason: AiFailureReason };
 export type AiTransportMetadata = { httpStatus: number | null; headersMs: number | null; firstByteMs: number | null; latencyMs: number };
 export type AiProvider = {
-  kind: "gemini_native" | "vertex_native";
+  kind: "gemini_native" | "vertex_native" | "dgx";
   model: string;
   recipientOrigin: string;
+  /** False when the provider cannot take audio, images or PDFs; callers then skip it for those requests. */
+  acceptsFiles?: boolean;
   generate: (request: AiRequest, options: { signal: AbortSignal; onMetadata: (metadata: AiTransportMetadata) => void }) => Promise<AiResult>;
 };
 

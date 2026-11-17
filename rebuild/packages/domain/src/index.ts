@@ -20,6 +20,21 @@ export const CHAT_LIMITS = {
   documentBytes: 3 * 1024 * 1024, documentsPerCase: 5,
   attachments: 3, attachmentBytes: 6 * 1024 * 1024,
 } as const;
+// Voice-first conversation (mobile). Spoken languages offered to people; the operator can narrow this with AI_VOICE_LOCALES.
+export const VOICE_LOCALES = ["hi", "en", "pa", "doi", "bn", "mr", "ta", "te", "gu", "kn", "ml", "or", "ur"] as const;
+export type VoiceLocale = (typeof VOICE_LOCALES)[number];
+export const VOICE_AUDIO_TYPES = ["audio/aac", "audio/mp4", "audio/wav", "audio/mpeg", "audio/ogg", "audio/webm"] as const;
+export type VoiceAudioType = (typeof VOICE_AUDIO_TYPES)[number];
+export const VOICE_LIMITS = {
+  // Guests get a short taste before phone sign-in; signed-in people get a quiet fair-use cap.
+  guestTurns: 10, guestTurnsPerHourGlobal: 300, accountTurnsPerDay: 300,
+  audioBytes: 3 * 1024 * 1024, audioSeconds: 90, textChars: 2_000, transcriptChars: 4_000, replyChars: 1_500,
+  summaryChars: 1_000, cityChars: 100, historyTurns: 20, turnsPerConversation: 1_000,
+  timeoutMs: 45_000, leaseMs: 60_000, dayMs: 24 * 60 * 60 * 1000, guestTokenChars: 64,
+} as const;
+export function isVoiceLocale(value: unknown): value is VoiceLocale {
+  return typeof value === "string" && VOICE_LOCALES.some((locale) => locale === value);
+}
 export const LIMITS = {
   intakeText: 10_000, contextMessages: 10, contextMessage: 2_000, contextTotal: 10_000,
   summaryText: 4_000, actions: 8, actionText: 300, credentialBytes: 5 * 1024 * 1024,
