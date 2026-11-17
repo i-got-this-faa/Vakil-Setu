@@ -7,6 +7,7 @@
     "dev": "nodemon src/server.js",
     "start": "node src/server.js",
     "scrape:advocates": "node scripts/scrapeAdvocates.js",
+    "scrape:jammu": "python3 scripts/scrape_jammu_lawyers.py",
     "clean:advocates": "node scripts/clearAdvocates.js",
     "legal:discover": "node scripts/discoverJudgments.js",
     "legal:ingest": "node scripts/ingestJudgments.js",

@@ -4,7 +4,7 @@ import { internalMutation } from "./_generated/server";
 import { fail, ownCase } from "./lib/access";
 import { integer } from "./lib/input";
 
-export const recordConsent = internalMutation({ args: { caseId: v.id("cases"), expectedVersion: v.number(), expectedContextRevision: v.number(), recipientOrigin: v.string(), provider: v.optional(v.union(v.literal("gemini"), v.literal("vertex"))) }, handler: async (ctx, args) => {
+export const recordConsent = internalMutation({ args: { caseId: v.id("cases"), expectedVersion: v.number(), expectedContextRevision: v.number(), recipientOrigin: v.string(), provider: v.optional(v.union(v.literal("gemini"), v.literal("vertex"), v.literal("dgx"))) }, handler: async (ctx, args) => {
   const { legalCase } = await ownCase(ctx, args.caseId);
   if (legalCase.summaryVersion !== integer(args.expectedVersion, "Summary version", 0, 100)) fail("CONFLICT", "Summary changed. Renew consent for the latest version.");
   if (legalCase.contextRevision !== integer(args.expectedContextRevision, "Context revision", 0, Number.MAX_SAFE_INTEGER)) fail("CONFLICT", "Follow-up context changed. Renew consent for the latest context.");

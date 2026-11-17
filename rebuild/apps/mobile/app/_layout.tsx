@@ -1,11 +1,12 @@
 import { Stack } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import { ServiceNotConfigured } from "../src/components/service-not-configured";
-import { colors, fonts } from "../src/theme";
+import { DataErrorBoundary } from "../src/components/data-error-boundary";
 import { parseServiceConfig } from "../src/lib/config";
 import { LocaleProvider } from "../src/providers/locale";
 import { ServiceProviders } from "../src/providers/service-providers";
-import { DataErrorBoundary } from "../src/components/data-error-boundary";
+import { VoicePrefsProvider } from "../src/voice/prefs";
+import { voice } from "../src/voice/ui";
 
 // Expo inlines EXPO_PUBLIC_* values only when they are read as literal member accesses.
 const serviceConfig = parseServiceConfig({
@@ -19,25 +20,23 @@ export default function RootLayout() {
       <StatusBar style="dark" />
       {serviceConfig.kind === "configured" ? (
         <ServiceProviders config={serviceConfig}>
-          <DataErrorBoundary>
-          <Stack
-            screenOptions={{
-              headerTintColor: colors.primary,
-              headerTitleStyle: { color: colors.ink, fontFamily: fonts.heading, fontWeight: "400" },
-              headerStyle: { backgroundColor: colors.surface },
-              headerShadowVisible: false,
-              contentStyle: { backgroundColor: colors.background },
-            }}
-          >
-            <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-            <Stack.Screen name="sign-in" options={{ title: "Sign in" }} />
-            <Stack.Screen name="sign-up" options={{ title: "Create account" }} />
-            <Stack.Screen name="advocate/[advocateId]" options={{ title: "Advocate" }} />
-            <Stack.Screen name="request/[advocateId]" options={{ title: "Request consultation" }} />
-            <Stack.Screen name="case/new" options={{ title: "New intake" }} />
-            <Stack.Screen name="case/[caseId]" options={{ title: "Case" }} />
-          </Stack>
-          </DataErrorBoundary>
+          <VoicePrefsProvider>
+            <DataErrorBoundary>
+              <Stack
+                screenOptions={{
+                  headerTintColor: voice.brand,
+                  headerTitleStyle: { color: voice.ink, fontSize: 20, fontWeight: "700" },
+                  headerStyle: { backgroundColor: voice.bg },
+                  headerShadowVisible: false,
+                  contentStyle: { backgroundColor: voice.bg },
+                }}
+              >
+                <Stack.Screen name="index" options={{ headerShown: false }} />
+                <Stack.Screen name="language" options={{ headerShown: false }} />
+                <Stack.Screen name="talk" options={{ headerShown: false }} />
+              </Stack>
+            </DataErrorBoundary>
+          </VoicePrefsProvider>
         </ServiceProviders>
       ) : (
         <ServiceNotConfigured missing={serviceConfig.missing} />

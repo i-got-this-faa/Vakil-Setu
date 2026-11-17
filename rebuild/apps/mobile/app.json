@@ -32,7 +32,21 @@
         }
       ],
       "expo-secure-store",
-      "expo-web-browser"
+      "expo-web-browser",
+      [
+        "expo-audio",
+        {
+          "microphonePermission": "Legal-Setu listens only while you press the microphone button, so it can understand your problem.",
+          "recordAudioAndroid": true
+        }
+      ],
+      [
+        "expo-image-picker",
+        {
+          "cameraPermission": "Legal-Setu uses the camera so you can photograph a legal paper, like a notice or FIR, and have it explained.",
+          "photosPermission": "Legal-Setu opens your photos so you can choose a picture of a legal paper to have it explained."
+        }
+      ]
     ]
   }
 }

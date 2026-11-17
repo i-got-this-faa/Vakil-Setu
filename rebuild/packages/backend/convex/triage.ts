@@ -7,10 +7,10 @@ import type { Id } from "./_generated/dataModel";
 import { aiAllowedLanguages, geminiResponseSchema, parseProviderResult } from "./lib/provider";
 import type { UnavailableReason } from "./lib/provider";
 import { AiDeadlineError, logAiDiagnostic, withAiDeadline } from "./lib/ai";
-import type { AiTransportMetadata } from "./lib/ai";
+import type { AiProvider, AiTransportMetadata } from "./lib/ai";
 import { aiRoutes, generateWithQuotaFallback } from "./lib/aiRouting";
 
-type AnalysisResult = { kind: "available"; summaryId: Id<"caseSummaries">; sourceMode: "provider"; provider: "gemini" | "vertex" } | { kind: "unavailable"; reason: UnavailableReason };
+type AnalysisResult = { kind: "available"; summaryId: Id<"caseSummaries">; sourceMode: "provider"; provider: "gemini" | "vertex" | "dgx" } | { kind: "unavailable"; reason: UnavailableReason };
 
 export const analyze = action({ args: { caseId: v.id("cases"), expectedVersion: v.number(), expectedContextRevision: v.number(), consent: v.literal(true), allowVertexFallback: v.optional(v.literal(true)) }, handler: async (ctx, args): Promise<AnalysisResult> => {
   const analysisArgs = { caseId: args.caseId, expectedVersion: args.expectedVersion, expectedContextRevision: args.expectedContextRevision };
@@ -26,7 +26,8 @@ export const analyze = action({ args: { caseId: v.id("cases"), expectedVersion: 
     logAiDiagnostic({ operation: "triage", phase: "context", reason: config.reason, latencyMs: Date.now() - started, transport: null });
     return config;
   }
-  let usedProvider: { model: string; kind: "gemini_native" | "vertex_native" } | undefined;
+  let usedProvider: { model: string; kind: AiProvider["kind"] } | undefined;
+  const label = (kind: AiProvider["kind"]) => kind === "vertex_native" ? "vertex" as const : kind === "dgx" ? "dgx" as const : "gemini" as const;
   let transport: AiTransportMetadata | null = null;
   let result: ReturnType<typeof parseProviderResult>;
   try {
@@ -35,7 +36,7 @@ export const analyze = action({ args: { caseId: v.id("cases"), expectedVersion: 
       messages: [{ role: "user", parts: [{ kind: "text", text: JSON.stringify({ title: legalCase.title, text: legalCase.text, context: legalCase.context, locale: legalCase.locale }) }] }],
       maxOutputTokens: 4096, maxReplyChars: 32_768, output: { kind: "json", schema: geminiResponseSchema(legalCase.locale) },
     }, { signal, onMetadata: value => { transport = value; } }, async provider => {
-      await ctx.runMutation(internal.triageRate.recordConsent, { ...analysisArgs, recipientOrigin: provider.recipientOrigin, provider: provider.kind === "vertex_native" ? "vertex" : "gemini" });
+      await ctx.runMutation(internal.triageRate.recordConsent, { ...analysisArgs, recipientOrigin: provider.recipientOrigin, provider: label(provider.kind) });
     }));
     const { result: response, provider } = generated;
     usedProvider = provider;
@@ -57,7 +58,7 @@ export const analyze = action({ args: { caseId: v.id("cases"), expectedVersion: 
   // Ownership/suspension/concurrent-edit failures must remain real persistence errors.
   if (!aiAllowedLanguages(process.env).includes(legalCase.locale)) return { kind: "unavailable", reason: "unsupported_language" };
   if (!usedProvider) return { kind: "unavailable", reason: "provider_failed" };
-  const provider = usedProvider.kind === "vertex_native" ? "vertex" : "gemini";
+  const provider = label(usedProvider.kind);
   const summaryId = await ctx.runMutation(internal.cases.saveProviderSummary, { ...analysisArgs, summary: result, source: { kind: "provider", provider, model: usedProvider.model } });
   logAiDiagnostic({ operation: "triage", phase: "persist", reason: "complete", latencyMs: Date.now() - started, transport });
   return { kind: "available", summaryId, sourceMode: "provider", provider };

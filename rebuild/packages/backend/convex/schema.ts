@@ -4,6 +4,7 @@ import { aiProvider, adminHandling, application, bookingActor, bookingEvent, boo
 import { legalSource } from "./lib/legalEvidence";
 import { chatResult, documentType } from "./lib/chat";
 import { reviewAuditEvent, reviewSnapshot, reviewStatus } from "./lib/reviews";
+import { voiceAttachment, voiceInputKind, voiceLocale, voiceProfile, voiceReply } from "./lib/voice";
 
 export default defineSchema({
   legalDatasets: defineTable({ key: v.string(), dataset: v.string(), count: v.number(), embeddingModel: v.optional(v.string()) }).index("by_key", ["key"]),
@@ -32,4 +33,11 @@ export default defineSchema({
   notifications: defineTable({ accountId: v.id("accounts"), kind: v.union(v.literal("booking_requested"), v.literal("booking_changed"), v.literal("application_reviewed"), v.literal("credential_reviewed"), v.literal("account_changed")), message: v.string(), bookingId: v.optional(v.id("bookings")), readAt: v.optional(v.number()) }).index("by_account", ["accountId"]),
   aiAttempts: defineTable({ accountId: v.id("accounts"), at: v.number() }).index("by_account_at", ["accountId", "at"]),
   aiConsents: defineTable({ caseId: v.id("cases"), ownerId: v.id("accounts"), summaryVersion: v.number(), contextRevision: v.number(), at: v.number(), provider: aiProvider, recipientOrigin: v.string() }),
+  // Voice-first mobile conversations. A guest session holds only the SHA-256 of a device-made token.
+  guestSessions: defineTable({ tokenHash: v.string(), createdAt: v.number(), turnCount: v.number(), claimedBy: v.optional(v.id("accounts")) }).index("by_token_hash", ["tokenHash"]),
+  conversations: defineTable({ accountId: v.optional(v.id("accounts")), guestSessionId: v.optional(v.id("guestSessions")), locale: voiceLocale, createdAt: v.number(), updatedAt: v.number(), turnCount: v.number(), consentedAt: v.number(), profile: voiceProfile, profileModel: v.optional(v.string()), caseId: v.optional(v.id("cases")), caseTurnCount: v.optional(v.number()) }).index("by_account_updated", ["accountId", "updatedAt"]).index("by_guest", ["guestSessionId"]).index("by_case", ["caseId"]),
+  conversationTurns: defineTable({ conversationId: v.id("conversations"), requestId: v.string(), inputKind: voiceInputKind, attachment: v.optional(voiceAttachment), transcript: v.string(), reply: voiceReply, createdAt: v.number(), expiresAt: v.number(), dispatch: v.optional(v.object({ model: v.string(), recipientOrigin: v.string(), at: v.number() })) }).index("by_conversation", ["conversationId"]).index("by_request", ["conversationId", "requestId"]),
+  // Saved Bhashini read-aloud clips, keyed by SHA-256 of voice, language and text.
+  voiceClips: defineTable({ key: v.string(), storageId: v.id("_storage"), createdAt: v.number() }).index("by_key", ["key"]),
+  voiceAttempts: defineTable({ subject: v.string(), at: v.number() }).index("by_subject_at", ["subject", "at"]),
 });
