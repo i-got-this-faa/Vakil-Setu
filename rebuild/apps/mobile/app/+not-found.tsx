@@ -7,7 +7,7 @@ export default function NotFoundRoute() {
       <Card>
         <Heading>This page does not exist.</Heading>
         <Body>The link may be out of date.</Body>
-        <Button label="Go to Find Advocate" onPress={() => router.replace("/(tabs)/discover")} />
+        <Button label="Go back" onPress={() => router.replace("/talk")} />
       </Card>
     </Screen>
   );

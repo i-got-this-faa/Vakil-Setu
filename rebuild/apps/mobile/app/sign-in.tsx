@@ -1,5 +1,6 @@
-import { SignInScreen } from "../src/features/auth/sign-in-screen";
+import { SignInScreen } from "../src/voice/sign-in-screen";
+import { WithLocale } from "../src/voice/with-locale";
 
 export default function SignInRoute() {
-  return <SignInScreen />;
+  return <WithLocale>{(locale) => <SignInScreen locale={locale} />}</WithLocale>;
 }
