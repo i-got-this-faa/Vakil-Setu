@@ -503,13 +503,21 @@ async function main() {
   const dryRun = (process.env.SCRAPE_DRY_RUN || "false").toLowerCase() === "true";
   const dbRetries = Number(process.env.DB_RETRIES || 5);
   const dbRetryDelayMs = Number(process.env.DB_RETRY_DELAY_MS || 2000);
-  const urls = (process.env.SCRAPE_URLS || "")
+  const defaultJammuUrls = [
+    "https://lawrato.com/high-court-lawyers/jammu",
+    "https://lawrato.com/criminal-lawyers/jammu",
+    "https://lawrato.com/property-lawyers/jammu",
+    "https://lawrato.com/civil-lawyers/jammu",
+    "https://lawrato.com/family-lawyers/jammu"
+  ];
+  let urls = (process.env.SCRAPE_URLS || "")
     .split(",")
     .map((u) => u.trim())
     .filter(Boolean);
 
   if (urls.length === 0) {
-    throw new Error("Set SCRAPE_URLS in .env (comma-separated advocate listing URLs).");
+    console.log("No SCRAPE_URLS specified. Defaulting to Jammu advocate directories...");
+    urls = defaultJammuUrls;
   }
 
   if (!dryRun) {

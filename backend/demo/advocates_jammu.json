@@ -1,0 +1,2592 @@
+[
+  {
+    "id": "jammu-aftar-ahmed",
+    "name": "Advocate Aftar Ahmed",
+    "expertise": [
+      "civil",
+      "criminal",
+      "employment",
+      "family"
+    ],
+    "city": "Jammu",
+    "location": "High Court, Jammu",
+    "experienceYears": 4,
+    "rating": 4.0,
+    "languages": [
+      "English",
+      "Hindi"
+    ],
+    "verified": true,
+    "demo": false,
+    "courts": [
+      "District Court Jammu",
+      "Jammu and Kashmir High Court"
+    ],
+    "barRegistration": "Enrolled with Bar Association of Jammu (Practicing since 2022)"
+  },
+  {
+    "id": "jammu-ajay-sharma",
+    "name": "Advocate Ajay Sharma",
+    "expertise": [
+      "civil",
+      "consumer",
+      "criminal",
+      "employment",
+      "family"
+    ],
+    "city": "Jammu",
+    "location": "PO BSF Paloura Top, Jammu",
+    "experienceYears": 18,
+    "rating": 1.0,
+    "languages": [
+      "English",
+      "Hindi",
+      "Kannada",
+      "Punjabi"
+    ],
+    "verified": true,
+    "demo": false,
+    "courts": [
+      "Armed Forces Tribunal (AFT) Jammu",
+      "Consumer Redressal Forum J& K",
+      "District and Sessions Court Dharamshala",
+      "District Court Chandigarh",
+      "District Court Gurgaon",
+      "District Court Srinagar",
+      "District Court Tis Hazari",
+      "District Court Udhampur",
+      "Jammu and Kashmir High Court",
+      "Jammu and Kashmir State Commission"
+    ],
+    "barRegistration": "Advocate Ajay enrolled with the Bar Council of Jammu & Kashmir in 2008"
+  },
+  {
+    "id": "jammu-ajay-sharma",
+    "name": "Advocate Ajay Sharma",
+    "expertise": [
+      "civil",
+      "criminal",
+      "employment"
+    ],
+    "city": "Jammu",
+    "location": "Janipur Court, Jammu",
+    "experienceYears": 16,
+    "rating": 4.0,
+    "languages": [
+      "Dogri",
+      "English",
+      "Hindi"
+    ],
+    "verified": true,
+    "demo": false,
+    "courts": [
+      "Consumer Redressal Forum J& K",
+      "District Court Jammu",
+      "District Court Rajouri",
+      "Jammu and Kashmir High Court",
+      "Jammu and Kashmir State Commission"
+    ],
+    "barRegistration": "Enrolled with Bar Association of Jammu (Practicing since 2010)"
+  },
+  {
+    "id": "jammu-ajit-verma",
+    "name": "Advocate Ajit Verma",
+    "expertise": [
+      "civil",
+      "consumer",
+      "criminal",
+      "employment",
+      "family",
+      "property"
+    ],
+    "city": "Jammu",
+    "location": "Lawyer Chamber High Court, Jammu",
+    "experienceYears": 11,
+    "rating": 4.0,
+    "languages": [
+      "English",
+      "Hindi"
+    ],
+    "verified": true,
+    "demo": false,
+    "courts": [
+      "District Court Jammu",
+      "District Court Rajouri",
+      "District Court Srinagar",
+      "Jammu and Kashmir High Court"
+    ],
+    "barRegistration": "Advocate Ajit enrolled with the Bar Council of Jammu & Kashmir in 2015"
+  },
+  {
+    "id": "jammu-alisha-kohli",
+    "name": "Advocate Alisha Kohli",
+    "expertise": [
+      "civil",
+      "consumer",
+      "criminal",
+      "employment",
+      "family",
+      "property"
+    ],
+    "city": "Jammu",
+    "location": "Talab Tillo, Jammu",
+    "experienceYears": 16,
+    "rating": 4.0,
+    "languages": [
+      "English",
+      "Hindi"
+    ],
+    "verified": true,
+    "demo": false,
+    "courts": [
+      "Armed Forces Tribunal (AFT) Jammu",
+      "District Court Jammu",
+      "Jammu and Kashmir High Court",
+      "Jammu and Kashmir Special Tribunal",
+      "Jammu and Kashmir State Commission"
+    ],
+    "barRegistration": "Enrolled with Bar Association of Jammu (Practicing since 2010)"
+  },
+  {
+    "id": "jammu-altaf-hussain-janjua",
+    "name": "Advocate Altaf Hussain Janjua",
+    "expertise": [
+      "civil",
+      "consumer",
+      "criminal",
+      "employment",
+      "family"
+    ],
+    "city": "Jammu",
+    "location": "Janipur Court, Jammu",
+    "experienceYears": 11,
+    "rating": 4.0,
+    "languages": [
+      "Dogri",
+      "English",
+      "Hindi",
+      "Punjabi",
+      "Urdu"
+    ],
+    "verified": true,
+    "demo": false,
+    "courts": [
+      "District Court Jammu",
+      "Jammu and Kashmir High Court"
+    ],
+    "barRegistration": "Enrolled with Bar Association of Jammu (Practicing since 2015)"
+  },
+  {
+    "id": "jammu-amit-chopra",
+    "name": "Advocate Amit Chopra",
+    "expertise": [
+      "civil",
+      "consumer",
+      "criminal",
+      "employment",
+      "family",
+      "property"
+    ],
+    "city": "Jammu",
+    "location": "Gandhi Nagar, Jammu",
+    "experienceYears": 19,
+    "rating": 4.0,
+    "languages": [
+      "English",
+      "Hindi",
+      "Urdu"
+    ],
+    "verified": true,
+    "demo": false,
+    "courts": [
+      "District Court Jammu",
+      "District Court Kathua",
+      "District Court Katra",
+      "District Court Reasi",
+      "District Court Samba",
+      "Jammu and Kashmir High Court"
+    ],
+    "barRegistration": "Advocate Amit enrolled with the Bar Council of Jammu & Kashmir in 2007"
+  },
+  {
+    "id": "jammu-anil-k-sharma",
+    "name": "Advocate Anil K. Sharma",
+    "expertise": [
+      "civil",
+      "consumer",
+      "criminal",
+      "employment"
+    ],
+    "city": "Jammu",
+    "location": "Panjtirthi, Jammu",
+    "experienceYears": 9,
+    "rating": 4.0,
+    "languages": [
+      "Dogri",
+      "English",
+      "Hindi",
+      "Punjabi",
+      "Urdu"
+    ],
+    "verified": true,
+    "demo": false,
+    "courts": [
+      "Armed Forces Tribunal (AFT) Jammu",
+      "District Court Jammu",
+      "District Court Kathua",
+      "District Court Reasi",
+      "District Court Samba",
+      "Jammu and Kashmir High Court",
+      "Jammu and Kashmir Special Tribunal",
+      "Jammu and Kashmir State Commission"
+    ],
+    "barRegistration": "Advocate Anil enrolled with the Bar Council of Jammu & Kashmir in 2017"
+  },
+  {
+    "id": "jammu-anil-salgotra",
+    "name": "Advocate Anil Salgotra",
+    "expertise": [
+      "civil",
+      "criminal",
+      "employment"
+    ],
+    "city": "Jammu",
+    "location": "Sanjay Nagar, Jammu",
+    "experienceYears": 19,
+    "rating": 4.0,
+    "languages": [
+      "English"
+    ],
+    "verified": true,
+    "demo": false,
+    "courts": [
+      "District Court Jammu"
+    ],
+    "barRegistration": "Enrolled with Bar Association of Jammu (Practicing since 2007)"
+  },
+  {
+    "id": "jammu-anil-vyas",
+    "name": "Advocate Anil Vyas",
+    "expertise": [
+      "civil",
+      "consumer",
+      "criminal",
+      "employment",
+      "family",
+      "property"
+    ],
+    "city": "Jammu",
+    "location": "High Court, Jodhpur, Jammu",
+    "experienceYears": 25,
+    "rating": 4.7,
+    "languages": [
+      "English",
+      "Hindi"
+    ],
+    "verified": true,
+    "demo": false,
+    "courts": [
+      "District Court Jodhpur",
+      "Rajasthan High Court"
+    ],
+    "barRegistration": "Advocate Anil enrolled with the Bar Council of Rajasthan in 2001"
+  },
+  {
+    "id": "jammu-ankush-singh-pawar",
+    "name": "Advocate Ankush Singh Pawar",
+    "expertise": [
+      "civil",
+      "criminal",
+      "employment",
+      "family"
+    ],
+    "city": "Jammu",
+    "location": "Roop Nagar, Jammu",
+    "experienceYears": 11,
+    "rating": 4.0,
+    "languages": [
+      "English",
+      "Hindi"
+    ],
+    "verified": true,
+    "demo": false,
+    "courts": [
+      "District Court Jammu",
+      "Jammu and Kashmir High Court"
+    ],
+    "barRegistration": "Enrolled with Bar Association of Jammu (Practicing since 2015)"
+  },
+  {
+    "id": "jammu-anuj-sawhney",
+    "name": "Advocate Anuj Sawhney",
+    "expertise": [
+      "civil",
+      "consumer",
+      "criminal",
+      "employment",
+      "family",
+      "property"
+    ],
+    "city": "Jammu",
+    "location": "Trikuta Nagar Extn, Jammu",
+    "experienceYears": 15,
+    "rating": 4.9,
+    "languages": [
+      "Dogri",
+      "English",
+      "Hindi",
+      "Punjabi"
+    ],
+    "verified": true,
+    "demo": false,
+    "courts": [
+      "District Court Jammu",
+      "Jammu and Kashmir High Court"
+    ],
+    "barRegistration": "Advocate Anuj enrolled with the Bar Association of Jammu in 2011"
+  },
+  {
+    "id": "jammu-arjun-singh-raju",
+    "name": "Advocate Arjun Singh Raju",
+    "expertise": [
+      "civil",
+      "consumer",
+      "criminal",
+      "employment"
+    ],
+    "city": "Jammu",
+    "location": "Janipur, Jammu",
+    "experienceYears": 19,
+    "rating": 4.0,
+    "languages": [
+      "English",
+      "Urdu"
+    ],
+    "verified": true,
+    "demo": false,
+    "courts": [
+      "District Court Ramban",
+      "Jammu and Kashmir High Court",
+      "Jammu and Kashmir Special Tribunal",
+      "Jammu and Kashmir State Commission"
+    ],
+    "barRegistration": "Enrolled with Bar Association of Jammu (Practicing since 2007)"
+  },
+  {
+    "id": "jammu-aseem-sawhney",
+    "name": "Advocate Aseem Sawhney",
+    "expertise": [
+      "civil",
+      "consumer",
+      "criminal",
+      "employment"
+    ],
+    "city": "Jammu",
+    "location": "Palace Road, Jammu",
+    "experienceYears": 24,
+    "rating": 4.0,
+    "languages": [
+      "Dogri",
+      "English",
+      "Hindi",
+      "Punjabi"
+    ],
+    "verified": true,
+    "demo": false,
+    "courts": [
+      "District Court Jammu",
+      "Jammu and Kashmir High Court"
+    ],
+    "barRegistration": "Advocate Aseem enrolled with the Bar Council of J&K in 2002"
+  },
+  {
+    "id": "jammu-ashvin-khillare",
+    "name": "Advocate Ashvin Khillare",
+    "expertise": [
+      "civil",
+      "criminal",
+      "employment",
+      "family",
+      "property"
+    ],
+    "city": "Jammu",
+    "location": "District and Session Court, Mumbai, Jammu",
+    "experienceYears": 7,
+    "rating": 4.9,
+    "languages": [
+      "English",
+      "Hindi",
+      "Marathi"
+    ],
+    "verified": true,
+    "demo": false,
+    "courts": [
+      "Bombay High Court",
+      "Court of Small Causes Bandra",
+      "Debts Recovery Tribunal (DRT) Mumbai",
+      "District and Sessions Court Mumbai",
+      "District Court Kalyan",
+      "District Court Thane",
+      "Family Courts Mumbai",
+      "Maharashtra State Consumer Disputes Redressal Commission",
+      "Trial Courts Mumbai",
+      "Vashi Civil Court"
+    ],
+    "barRegistration": "Enrolled with Bar Association of Jammu (Practicing since 2019)"
+  },
+  {
+    "id": "jammu-avish-sharma",
+    "name": "Advocate Avish Sharma",
+    "expertise": [
+      "civil",
+      "criminal",
+      "employment",
+      "family",
+      "property"
+    ],
+    "city": "Jammu",
+    "location": "Trikuta Nagar, Jammu",
+    "experienceYears": 12,
+    "rating": 4.9,
+    "languages": [
+      "Dogri",
+      "English"
+    ],
+    "verified": true,
+    "demo": false,
+    "courts": [
+      "Armed Forces Tribunal (AFT) Jammu",
+      "District Court Jammu",
+      "Jammu and Kashmir High Court"
+    ],
+    "barRegistration": "Enrolled with Bar Association of Jammu (Practicing since 2014)"
+  },
+  {
+    "id": "jammu-bhawana-pandey",
+    "name": "Advocate Bhawana Pandey",
+    "expertise": [
+      "civil",
+      "consumer",
+      "criminal",
+      "employment",
+      "family",
+      "property"
+    ],
+    "city": "Jammu",
+    "location": "Jangpura Extension, Delhi, Jammu",
+    "experienceYears": 9,
+    "rating": 4.8,
+    "languages": [
+      "English",
+      "Hindi"
+    ],
+    "verified": true,
+    "demo": false,
+    "courts": [
+      "Armed Forces Tribunal (AFT) Delhi",
+      "Central Administrative Tribunal (CAT) Delhi",
+      "Delhi High Court",
+      "District Court Dwarka",
+      "District Court Karkardooma",
+      "District Court Patiala House",
+      "District Court Rohini",
+      "District Court Saket",
+      "District Court Tis Hazari",
+      "State Commission Delhi",
+      "Supreme Court Of India"
+    ],
+    "barRegistration": "Enrolled with the Bar Council of Delhi, she brings a blend of compassion and professionalism to her work, ensuring her clients receive dedicated representation with utmost confidentiality and integrity"
+  },
+  {
+    "id": "jammu-chetan-prabhakar",
+    "name": "Advocate Chetan Prabhakar",
+    "expertise": [
+      "civil",
+      "employment"
+    ],
+    "city": "Jammu",
+    "location": "Sidhra, Jammu",
+    "experienceYears": 25,
+    "rating": 4.0,
+    "languages": [
+      "English",
+      "Hindi"
+    ],
+    "verified": true,
+    "demo": false,
+    "courts": [
+      "District Court Jammu",
+      "Jammu and Kashmir High Court"
+    ],
+    "barRegistration": "Enrolled with Bar Association of Jammu (Practicing since 2001)"
+  },
+  {
+    "id": "jammu-d-r-agrawal",
+    "name": "Advocate D R Agrawal",
+    "expertise": [
+      "civil",
+      "consumer",
+      "criminal",
+      "employment",
+      "family",
+      "property"
+    ],
+    "city": "Jammu",
+    "location": "Jawahar Nagar, Raipur, Jammu",
+    "experienceYears": 47,
+    "rating": 4.8,
+    "languages": [
+      "English",
+      "Hindi"
+    ],
+    "verified": true,
+    "demo": false,
+    "courts": [
+      "Bilaspur High Court Chhattisgarh",
+      "District Court Bilaspur",
+      "District Court Durg",
+      "District Court Raipur",
+      "District Court Rajnandgaon",
+      "Madhya Pradesh High Court",
+      "National Consumer Disputes Redressal Commission (NCDRC)",
+      "Rera appellate tribunal",
+      "Rera tribunal",
+      "State Consumer Disputes Redressal Commission Raipur"
+    ],
+    "barRegistration": "Advocate D R Agrawal enrolled with the Bar Council of Chhattisgarh in 1979"
+  },
+  {
+    "id": "jammu-deepak-sharma",
+    "name": "Advocate Deepak Sharma",
+    "expertise": [
+      "civil",
+      "criminal",
+      "employment"
+    ],
+    "city": "Jammu",
+    "location": "Talab Tillo, Jammu",
+    "experienceYears": 7,
+    "rating": 4.0,
+    "languages": [
+      "Dogri",
+      "English",
+      "Hindi",
+      "Punjabi"
+    ],
+    "verified": true,
+    "demo": false,
+    "courts": [
+      "Jammu and Kashmir High Court"
+    ],
+    "barRegistration": "Enrolled with Bar Association of Jammu (Practicing since 2019)"
+  },
+  {
+    "id": "jammu-deepak-singh-balouria",
+    "name": "Advocate Deepak Singh Balouria",
+    "expertise": [
+      "civil",
+      "consumer",
+      "criminal",
+      "employment",
+      "family",
+      "property"
+    ],
+    "city": "Jammu",
+    "location": "119 A, Jammu",
+    "experienceYears": 21,
+    "rating": 3.5,
+    "languages": [
+      "Dogri",
+      "English",
+      "Hindi"
+    ],
+    "verified": true,
+    "demo": false,
+    "courts": [
+      "District Court Jammu",
+      "Jammu and Kashmir High Court",
+      "Supreme Court Of India"
+    ],
+    "barRegistration": "Advocate Deepak enrolled with the Bar Council of Jammu & Kashmir, Jammu in 2006"
+  },
+  {
+    "id": "jammu-dewakar-sharma",
+    "name": "Advocate Dewakar Sharma",
+    "expertise": [
+      "civil",
+      "consumer",
+      "criminal",
+      "employment",
+      "family",
+      "property"
+    ],
+    "city": "Jammu",
+    "location": "Vinayak Bazar, Jammu",
+    "experienceYears": 24,
+    "rating": 4.3,
+    "languages": [
+      "English",
+      "Hindi"
+    ],
+    "verified": true,
+    "demo": false,
+    "courts": [
+      "District Court Jammu",
+      "District Court Reasi",
+      "District Court Udhampur",
+      "Jammu and Kashmir High Court"
+    ],
+    "barRegistration": "Advocate Dewakar enrolled with the Bar Council of Jammu & Kashmir in 2003"
+  },
+  {
+    "id": "jammu-dinesh-verma",
+    "name": "Advocate Dinesh Verma",
+    "expertise": [
+      "civil",
+      "consumer",
+      "criminal",
+      "employment",
+      "family",
+      "property"
+    ],
+    "city": "Jammu",
+    "location": "Near Sriram Palace, Jammu",
+    "experienceYears": 26,
+    "rating": 4.0,
+    "languages": [
+      "English",
+      "Hindi",
+      "Punjabi",
+      "Urdu"
+    ],
+    "verified": true,
+    "demo": false,
+    "courts": [
+      "Central Administrative Tribunal (CAT) Chandigarh",
+      "Delhi High Court",
+      "District Court Jammu",
+      "Jammu and Kashmir High Court"
+    ],
+    "barRegistration": "Advocate Dinesh enrolled with the Bar Council of Jammu and Kashmir in 2000"
+  },
+  {
+    "id": "jammu-divya-ojesvi",
+    "name": "Advocate Divya Ojesvi",
+    "expertise": [
+      "consumer",
+      "criminal",
+      "employment",
+      "family",
+      "property"
+    ],
+    "city": "Jammu",
+    "location": "Sector - E, Sainik Colony, Jammu",
+    "experienceYears": 14,
+    "rating": 4.0,
+    "languages": [
+      "Dogri",
+      "English",
+      "Hindi",
+      "Urdu"
+    ],
+    "verified": true,
+    "demo": false,
+    "courts": [
+      "District Court Jammu",
+      "District Court Kathua",
+      "Jammu and Kashmir High Court",
+      "Jammu and Kashmir State Commission"
+    ],
+    "barRegistration": "Enrolled with Bar Association of Jammu (Practicing since 2012)"
+  },
+  {
+    "id": "jammu-eshwarya-bangwal",
+    "name": "Advocate Eshwarya Bangwal",
+    "expertise": [
+      "civil",
+      "consumer",
+      "criminal",
+      "employment",
+      "family",
+      "property"
+    ],
+    "city": "Jammu",
+    "location": "Civil Court Compound, Dehradun, Jammu",
+    "experienceYears": 9,
+    "rating": 4.9,
+    "languages": [
+      "English",
+      "Hindi"
+    ],
+    "verified": true,
+    "demo": false,
+    "courts": [
+      "Debts Recovery Tribunal Dehradun",
+      "District Court Dehradun",
+      "District Court Haridwar",
+      "District Court Tehri Garhwal",
+      "Uttarakhand High Court"
+    ],
+    "barRegistration": "Advocate Eshwarya enrolled with the Bar Council of Uttrakhand in 2017"
+  },
+  {
+    "id": "jammu-gourav-deep-singh-sarngal",
+    "name": "Advocate Gourav Deep Singh Sarngal",
+    "expertise": [
+      "civil",
+      "criminal",
+      "employment",
+      "family"
+    ],
+    "city": "Jammu",
+    "location": "Janipur, Jammu",
+    "experienceYears": 18,
+    "rating": 4.0,
+    "languages": [
+      "English",
+      "Hindi",
+      "Urdu"
+    ],
+    "verified": true,
+    "demo": false,
+    "courts": [
+      "District Court Jammu",
+      "Jammu and Kashmir High Court"
+    ],
+    "barRegistration": "Advocate Gourav enrolled with the Bar Council of Jammu and Kashmir in 2008"
+  },
+  {
+    "id": "jammu-gurveer-singh",
+    "name": "Advocate Gurveer Singh",
+    "expertise": [
+      "civil",
+      "consumer",
+      "criminal",
+      "employment",
+      "family",
+      "property"
+    ],
+    "city": "Jammu",
+    "location": "Akalpur, Jammu",
+    "experienceYears": 15,
+    "rating": 4.0,
+    "languages": [
+      "English",
+      "Hindi",
+      "Punjabi",
+      "Urdu"
+    ],
+    "verified": true,
+    "demo": false,
+    "courts": [
+      "District Court Jammu",
+      "District Court Katra",
+      "Jammu and Kashmir High Court"
+    ],
+    "barRegistration": "Advocate Gurveer enrolled with the Bar Council of Jammu and Kashmir in 2011"
+  },
+  {
+    "id": "jammu-h-gouri-shankar",
+    "name": "Advocate H Gouri Shankar",
+    "expertise": [
+      "civil",
+      "consumer",
+      "criminal",
+      "employment",
+      "family",
+      "property"
+    ],
+    "city": "Jammu",
+    "location": "Banjara Hills, Hyderabad, Jammu",
+    "experienceYears": 30,
+    "rating": 4.9,
+    "languages": [
+      "English",
+      "Hindi",
+      "Telugu"
+    ],
+    "verified": true,
+    "demo": false,
+    "courts": [
+      "City Civil Court Hyderabad",
+      "District Consumer Forum Hyderabad",
+      "District Court Mahabubnagar",
+      "Hyderabad High Court",
+      "Metropolitan Criminal Court Hyderabad",
+      "Wakf Tribunal Hyderabad"
+    ],
+    "barRegistration": "Advocate Shankar enrolled with the Bar Council of Andra Pradesh in 1995"
+  },
+  {
+    "id": "jammu-haroon-rashid-qureshi",
+    "name": "Advocate Haroon Rashid Qureshi",
+    "expertise": [
+      "civil",
+      "criminal",
+      "employment",
+      "family"
+    ],
+    "city": "Jammu",
+    "location": "Janipur Colony, Jammu",
+    "experienceYears": 5,
+    "rating": 4.0,
+    "languages": [
+      "English",
+      "Hindi",
+      "Urdu"
+    ],
+    "verified": true,
+    "demo": false,
+    "courts": [
+      "District Court Jammu",
+      "Jammu and Kashmir High Court",
+      "Jammu and Kashmir Special Tribunal"
+    ],
+    "barRegistration": "Enrolled with Bar Association of Jammu (Practicing since 2021)"
+  },
+  {
+    "id": "jammu-harpreet-singh",
+    "name": "Advocate Harpreet Singh",
+    "expertise": [
+      "civil",
+      "criminal",
+      "employment"
+    ],
+    "city": "Jammu",
+    "location": "Green Avenue, Jammu",
+    "experienceYears": 2,
+    "rating": 4.0,
+    "languages": [
+      "English",
+      "Hindi",
+      "Punjabi"
+    ],
+    "verified": true,
+    "demo": false,
+    "courts": [
+      "District Court Jammu",
+      "Jammu and Kashmir High Court"
+    ],
+    "barRegistration": "Enrolled with Bar Association of Jammu (Practicing since 2024)"
+  },
+  {
+    "id": "jammu-hemant-kumar-joshi",
+    "name": "Advocate Hemant Kumar Joshi",
+    "expertise": [
+      "civil",
+      "consumer",
+      "criminal",
+      "employment",
+      "family",
+      "property"
+    ],
+    "city": "Jammu",
+    "location": "Court Chauraha, Udaipur, Jammu",
+    "experienceYears": 11,
+    "rating": 4.9,
+    "languages": [
+      "English",
+      "Hindi"
+    ],
+    "verified": true,
+    "demo": false,
+    "courts": [
+      "District Court Udaipur",
+      "Rajasthan High Court"
+    ],
+    "barRegistration": "Advocate Hemant enrolled with the Bar Council of Rajasthan in 2015"
+  },
+  {
+    "id": "jammu-hitesh-sharma",
+    "name": "Advocate Hitesh Sharma",
+    "expertise": [
+      "civil",
+      "consumer",
+      "criminal",
+      "employment"
+    ],
+    "city": "Jammu",
+    "location": "Samba, Jammu",
+    "experienceYears": 10,
+    "rating": 4.0,
+    "languages": [
+      "Dogri",
+      "English",
+      "Hindi"
+    ],
+    "verified": true,
+    "demo": false,
+    "courts": [
+      "District Court Jammu",
+      "Jammu and Kashmir High Court"
+    ],
+    "barRegistration": "Enrolled with Bar Association of Jammu (Practicing since 2016)"
+  },
+  {
+    "id": "jammu-hunar-gupta",
+    "name": "Advocate Hunar Gupta",
+    "expertise": [
+      "civil",
+      "consumer",
+      "criminal",
+      "employment",
+      "family",
+      "property"
+    ],
+    "city": "Jammu",
+    "location": "Shashtri Nagar, Jammu",
+    "experienceYears": 25,
+    "rating": 4.0,
+    "languages": [
+      "Dogri",
+      "English",
+      "Hindi",
+      "Punjabi",
+      "Urdu"
+    ],
+    "verified": true,
+    "demo": false,
+    "courts": [
+      "District Court Jammu",
+      "Jammu and Kashmir High Court"
+    ],
+    "barRegistration": "Advocate Hunar enrolled with the Bar Council of Jammu & Kashmir in 2002"
+  },
+  {
+    "id": "jammu-irtiza-m-salaria",
+    "name": "Advocate Irtiza M Salaria",
+    "expertise": [
+      "civil",
+      "consumer",
+      "criminal",
+      "employment",
+      "family"
+    ],
+    "city": "Jammu",
+    "location": "Bahu Fort, Jammu",
+    "experienceYears": 13,
+    "rating": 4.0,
+    "languages": [
+      "English",
+      "Hindi",
+      "Punjabi",
+      "Urdu"
+    ],
+    "verified": true,
+    "demo": false,
+    "courts": [
+      "District Court Jammu",
+      "Jammu and Kashmir High Court"
+    ],
+    "barRegistration": "Advocate Irtiza enrolled with the Bar Council of Jammu and Kashmir in 2013"
+  },
+  {
+    "id": "jammu-ishant-gupta",
+    "name": "Advocate Ishant Gupta",
+    "expertise": [
+      "civil",
+      "consumer",
+      "criminal",
+      "employment",
+      "family",
+      "property"
+    ],
+    "city": "Jammu",
+    "location": "Gangyal, Jammu",
+    "experienceYears": 9,
+    "rating": 4.0,
+    "languages": [
+      "Dogri",
+      "English",
+      "Hindi"
+    ],
+    "verified": true,
+    "demo": false,
+    "courts": [
+      "District Court Jammu",
+      "Jammu and Kashmir High Court",
+      "Jammu and Kashmir Special Tribunal"
+    ],
+    "barRegistration": "Enrolled with Bar Association of Jammu (Practicing since 2017)"
+  },
+  {
+    "id": "jammu-jia-kapur",
+    "name": "Advocate Jia Kapur",
+    "expertise": [
+      "civil",
+      "consumer",
+      "criminal",
+      "employment",
+      "family",
+      "property"
+    ],
+    "city": "Jammu",
+    "location": "Jangpura Extension, Delhi, Jammu",
+    "experienceYears": 8,
+    "rating": 4.6,
+    "languages": [
+      "English",
+      "Hindi"
+    ],
+    "verified": true,
+    "demo": false,
+    "courts": [
+      "Delhi High Court",
+      "District Court Karkardooma",
+      "District Court Patiala House",
+      "District Court Rohini",
+      "District Court Saket",
+      "District Court Tis Hazari",
+      "Supreme Court Of India"
+    ],
+    "barRegistration": "Enrolled with Bar Association of Jammu (Practicing since 2018)"
+  },
+  {
+    "id": "jammu-kamal-mangotra",
+    "name": "Advocate Kamal Mangotra",
+    "expertise": [
+      "civil",
+      "criminal",
+      "employment",
+      "family"
+    ],
+    "city": "Jammu",
+    "location": "Krishna Nagar, Jammu",
+    "experienceYears": 11,
+    "rating": 4.0,
+    "languages": [
+      "English",
+      "Hindi"
+    ],
+    "verified": true,
+    "demo": false,
+    "courts": [
+      "District Court Jammu",
+      "Jammu and Kashmir High Court"
+    ],
+    "barRegistration": "Advocate Kamal enrolled with the Bar Council of Jammu and Kashmir in 2015"
+  },
+  {
+    "id": "jammu-kanav-raina",
+    "name": "Advocate Kanav Raina",
+    "expertise": [
+      "civil",
+      "criminal",
+      "employment",
+      "family"
+    ],
+    "city": "Jammu",
+    "location": "Janipur, Jammu",
+    "experienceYears": 11,
+    "rating": 4.0,
+    "languages": [
+      "Dogri",
+      "English",
+      "Hindi"
+    ],
+    "verified": true,
+    "demo": false,
+    "courts": [
+      "District Court Jammu",
+      "Jammu and Kashmir High Court"
+    ],
+    "barRegistration": "Enrolled with Bar Association of Jammu (Practicing since 2015)"
+  },
+  {
+    "id": "jammu-kanwarjit-singh-pruthi",
+    "name": "Advocate Kanwarjit Singh Pruthi",
+    "expertise": [
+      "civil",
+      "consumer",
+      "criminal",
+      "employment",
+      "family",
+      "property"
+    ],
+    "city": "Jammu",
+    "location": "District Court, Patiala, Jammu",
+    "experienceYears": 43,
+    "rating": 4.9,
+    "languages": [
+      "English",
+      "Punjabi"
+    ],
+    "verified": true,
+    "demo": false,
+    "courts": [
+      "District Court Amritsar",
+      "District Court Bathinda",
+      "District Court Ludhiana",
+      "District Court Rupnagar",
+      "Punjab and Haryana High Court"
+    ],
+    "barRegistration": "Advocate Kanwarjit enrolled with the of Bar Council of Punjab & Haryana in 1983"
+  },
+  {
+    "id": "jammu-kriteka-sheokand",
+    "name": "Advocate Kriteka Sheokand",
+    "expertise": [
+      "civil",
+      "consumer",
+      "criminal",
+      "employment",
+      "family",
+      "property"
+    ],
+    "city": "Jammu",
+    "location": "High Court, Chandigarh, Jammu",
+    "experienceYears": 14,
+    "rating": 4.9,
+    "languages": [
+      "English",
+      "Hindi",
+      "Punjabi"
+    ],
+    "verified": true,
+    "demo": false,
+    "courts": [
+      "Central Administrative Tribunal (CAT) Chandigarh",
+      "Chandigarh State Consumer Disputes Redressal Commission (SCDRC)",
+      "Consumer Forum Panchkula",
+      "District Court Chandigarh",
+      "District Court Panchkula",
+      "Punjab and Haryana High Court",
+      "State Consumer Commission Haryana"
+    ],
+    "barRegistration": "Enrolled with Bar Association of Jammu (Practicing since 2012)"
+  },
+  {
+    "id": "jammu-lokesh-chander-sharma",
+    "name": "Advocate Lokesh Chander Sharma",
+    "expertise": [
+      "civil",
+      "criminal",
+      "employment",
+      "family",
+      "property"
+    ],
+    "city": "Jammu",
+    "location": "Subhash Nagar, Jammu",
+    "experienceYears": 18,
+    "rating": 4.0,
+    "languages": [
+      "English",
+      "Hindi"
+    ],
+    "verified": true,
+    "demo": false,
+    "courts": [
+      "District Court Jammu",
+      "Jammu and Kashmir High Court",
+      "Jammu and Kashmir Special Tribunal",
+      "Jammu and Kashmir State Commission",
+      "Leh District Court"
+    ],
+    "barRegistration": "Enrolled with Bar Association of Jammu (Practicing since 2008)"
+  },
+  {
+    "id": "jammu-mehak-samsyal",
+    "name": "Advocate Mehak Samsyal",
+    "expertise": [
+      "civil",
+      "consumer",
+      "employment"
+    ],
+    "city": "Jammu",
+    "location": "District Court, Jammu",
+    "experienceYears": 4,
+    "rating": 4.0,
+    "languages": [
+      "Dogri",
+      "English",
+      "Hindi"
+    ],
+    "verified": true,
+    "demo": false,
+    "courts": [
+      "District Court Jammu"
+    ],
+    "barRegistration": "Enrolled with Bar Association of Jammu (Practicing since 2022)"
+  },
+  {
+    "id": "jammu-mobashar-amin",
+    "name": "Advocate Mobashar Amin",
+    "expertise": [
+      "civil",
+      "criminal",
+      "employment",
+      "family"
+    ],
+    "city": "Jammu",
+    "location": "Channi Himat, Jammu",
+    "experienceYears": 11,
+    "rating": 4.0,
+    "languages": [
+      "English",
+      "Hindi",
+      "Urdu"
+    ],
+    "verified": true,
+    "demo": false,
+    "courts": [
+      "District Court Jammu",
+      "Jammu and Kashmir High Court"
+    ],
+    "barRegistration": "Enrolled with Bar Association of Jammu (Practicing since 2015)"
+  },
+  {
+    "id": "jammu-mohammed-ijaz",
+    "name": "Advocate Mohammed Ijaz",
+    "expertise": [
+      "civil",
+      "consumer",
+      "criminal",
+      "employment",
+      "family"
+    ],
+    "city": "Jammu",
+    "location": "Jewel, Jammu",
+    "experienceYears": 9,
+    "rating": 4.0,
+    "languages": [
+      "English",
+      "Hindi",
+      "Urdu"
+    ],
+    "verified": true,
+    "demo": false,
+    "courts": [
+      "District Court Jammu",
+      "Jammu and Kashmir High Court"
+    ],
+    "barRegistration": "Advocate Ijaz enrolled with the Bar Council of Jammu and Kashmir in 2017"
+  },
+  {
+    "id": "jammu-mohit-bhagat",
+    "name": "Advocate Mohit Bhagat",
+    "expertise": [
+      "criminal",
+      "employment",
+      "family",
+      "property"
+    ],
+    "city": "Jammu",
+    "location": "Bari Brahmana, Barjani, Jammu",
+    "experienceYears": 3,
+    "rating": 4.0,
+    "languages": [
+      "English",
+      "Hindi"
+    ],
+    "verified": true,
+    "demo": false,
+    "courts": [
+      "District Court Jammu",
+      "District Court Kathua",
+      "District Court Katra",
+      "District Court Samba",
+      "Jammu and Kashmir High Court"
+    ],
+    "barRegistration": "Enrolled with Bar Association of Jammu (Practicing since 2023)"
+  },
+  {
+    "id": "jammu-mohit-gupta",
+    "name": "Advocate Mohit Gupta",
+    "expertise": [
+      "civil",
+      "consumer",
+      "criminal",
+      "employment",
+      "family",
+      "property"
+    ],
+    "city": "Jammu",
+    "location": "Bakshi Nagar Near Karan Hotel, Jammu",
+    "experienceYears": 15,
+    "rating": 3.4,
+    "languages": [
+      "Dogri",
+      "English",
+      "Hindi",
+      "Punjabi"
+    ],
+    "verified": true,
+    "demo": false,
+    "courts": [
+      "Armed Forces Tribunal (AFT) Jammu",
+      "District Court Jammu",
+      "District Court Kathua",
+      "District Court Reasi",
+      "District Court Samba",
+      "District Court Udhampur",
+      "Jammu and Kashmir High Court",
+      "Jammu and Kashmir Special Tribunal",
+      "Jammu and Kashmir State Commission",
+      "Motor Accidents Claims Tribunal"
+    ],
+    "barRegistration": "Enrolled with Bar Association of Jammu (Practicing since 2011)"
+  },
+  {
+    "id": "jammu-mohit-jain",
+    "name": "Advocate Mohit Jain",
+    "expertise": [
+      "civil",
+      "consumer",
+      "criminal",
+      "employment",
+      "family",
+      "property"
+    ],
+    "city": "Jammu",
+    "location": "Sarwal, Jammu",
+    "experienceYears": 12,
+    "rating": 4.0,
+    "languages": [
+      "English",
+      "Hindi",
+      "Kashmiri"
+    ],
+    "verified": true,
+    "demo": false,
+    "courts": [
+      "District Court Jammu",
+      "Jammu and Kashmir High Court"
+    ],
+    "barRegistration": "Advocate Mohit enrolled with the Bar Council of Jammu and Kashmir in 2014"
+  },
+  {
+    "id": "jammu-monish-chopra",
+    "name": "Advocate Monish Chopra",
+    "expertise": [
+      "civil",
+      "consumer",
+      "criminal",
+      "employment",
+      "family",
+      "property"
+    ],
+    "city": "Jammu",
+    "location": "Janipur, Jammu",
+    "experienceYears": 23,
+    "rating": 4.9,
+    "languages": [
+      "English",
+      "Hindi"
+    ],
+    "verified": true,
+    "demo": false,
+    "courts": [
+      "Consumer Redressal Forum J& K",
+      "Jammu and Kashmir High Court"
+    ],
+    "barRegistration": "Advocate Monish enrolled with the Bar Council of Jammu & Kashmir in 2003"
+  },
+  {
+    "id": "jammu-muzamil-jan",
+    "name": "Advocate Muzamil Jan",
+    "expertise": [
+      "civil",
+      "criminal",
+      "employment",
+      "family"
+    ],
+    "city": "Jammu",
+    "location": "Tangmarg, Jammu",
+    "experienceYears": 17,
+    "rating": 4.0,
+    "languages": [
+      "English",
+      "Hindi"
+    ],
+    "verified": true,
+    "demo": false,
+    "courts": [
+      "District Court Anantnag",
+      "District Court Budgam",
+      "District Court Kulgam",
+      "District Court Pulwama",
+      "District Court Shopian"
+    ],
+    "barRegistration": "Enrolled with Bar Association of Jammu (Practicing since 2009)"
+  },
+  {
+    "id": "jammu-nakul-sharma",
+    "name": "Advocate Nakul Sharma",
+    "expertise": [
+      "consumer",
+      "employment",
+      "family"
+    ],
+    "city": "Jammu",
+    "location": "High Court, Jammu",
+    "experienceYears": 3,
+    "rating": 4.0,
+    "languages": [
+      "English",
+      "Hindi"
+    ],
+    "verified": true,
+    "demo": false,
+    "courts": [
+      "District Court Jammu",
+      "Jammu and Kashmir High Court"
+    ],
+    "barRegistration": "Enrolled with Bar Association of Jammu (Practicing since 2023)"
+  },
+  {
+    "id": "jammu-neelkanth-goswami",
+    "name": "Advocate Neelkanth Goswami",
+    "expertise": [
+      "civil",
+      "consumer",
+      "criminal",
+      "employment",
+      "family",
+      "property"
+    ],
+    "city": "Jammu",
+    "location": "Charai, Thane, Jammu",
+    "experienceYears": 20,
+    "rating": 4.4,
+    "languages": [
+      "English",
+      "Hindi",
+      "Marathi"
+    ],
+    "verified": true,
+    "demo": false,
+    "courts": [
+      "District Court Kalyan",
+      "District Court Thane",
+      "Mumbai Suburban District Court"
+    ],
+    "barRegistration": "Enrolled with Bar Association of Jammu (Practicing since 2006)"
+  },
+  {
+    "id": "jammu-nigam-mehta",
+    "name": "Advocate Nigam Mehta",
+    "expertise": [
+      "civil",
+      "criminal",
+      "employment",
+      "family"
+    ],
+    "city": "Jammu",
+    "location": "High Court, Jammu",
+    "experienceYears": 6,
+    "rating": 4.0,
+    "languages": [
+      "Dogri",
+      "English",
+      "Hindi"
+    ],
+    "verified": true,
+    "demo": false,
+    "courts": [
+      "District Court Jammu",
+      "District Court Kathua",
+      "District Court Samba"
+    ],
+    "barRegistration": "Enrolled with Bar Association of Jammu (Practicing since 2020)"
+  },
+  {
+    "id": "jammu-nitesh-jandial",
+    "name": "Advocate Nitesh Jandial",
+    "expertise": [
+      "civil",
+      "consumer",
+      "criminal",
+      "employment",
+      "family"
+    ],
+    "city": "Jammu",
+    "location": "Bishnah, Jammu",
+    "experienceYears": 9,
+    "rating": 4.0,
+    "languages": [
+      "Dogri",
+      "English",
+      "Hindi",
+      "Punjabi"
+    ],
+    "verified": true,
+    "demo": false,
+    "courts": [
+      "District Court Jammu",
+      "District Court Udhampur",
+      "Jammu and Kashmir High Court",
+      "Jammu and Kashmir Special Tribunal",
+      "Jammu and Kashmir State Commission"
+    ],
+    "barRegistration": "Advocate Nitesh enrolled with the Bar Council of Jammu & Kashmir in 2017"
+  },
+  {
+    "id": "jammu-nitin-parihar",
+    "name": "Advocate Nitin Parihar",
+    "expertise": [
+      "civil",
+      "consumer",
+      "criminal",
+      "employment",
+      "family",
+      "property"
+    ],
+    "city": "Jammu",
+    "location": "Janipur, Jammu",
+    "experienceYears": 13,
+    "rating": 4.9,
+    "languages": [
+      "English",
+      "Hindi"
+    ],
+    "verified": true,
+    "demo": false,
+    "courts": [
+      "District Court Jammu",
+      "Jammu and Kashmir High Court",
+      "Supreme Court Of India"
+    ],
+    "barRegistration": "Advocate Nitin enrolled with the Bar Council of Jammu and Kashmir in 2013"
+  },
+  {
+    "id": "jammu-nonu-khera",
+    "name": "Advocate Nonu Khera",
+    "expertise": [
+      "civil",
+      "consumer",
+      "criminal",
+      "employment",
+      "family"
+    ],
+    "city": "Jammu",
+    "location": "J&K High Court, Jammu",
+    "experienceYears": 17,
+    "rating": 4.0,
+    "languages": [
+      "Dogri",
+      "English",
+      "Hindi",
+      "Punjabi"
+    ],
+    "verified": true,
+    "demo": false,
+    "courts": [
+      "District Court Jammu",
+      "Jammu and Kashmir High Court",
+      "National Company Law Appellate Tribunal (NCLAT)",
+      "Supreme Court Of India"
+    ],
+    "barRegistration": "Advocate Nonu enrolled with the Bar Council of Jammu & Kashmir in 2009"
+  },
+  {
+    "id": "jammu-pankaj-katal",
+    "name": "Advocate Pankaj Katal",
+    "expertise": [
+      "civil",
+      "consumer",
+      "criminal",
+      "employment"
+    ],
+    "city": "Jammu",
+    "location": "Gandhi Nagar, Jammu",
+    "experienceYears": 4,
+    "rating": 4.0,
+    "languages": [
+      "Dogri",
+      "English",
+      "Hindi"
+    ],
+    "verified": true,
+    "demo": false,
+    "courts": [
+      "Consumer Redressal Forum J& K",
+      "District Court Jammu",
+      "Jammu and Kashmir High Court"
+    ],
+    "barRegistration": "Enrolled with Bar Association of Jammu (Practicing since 2022)"
+  },
+  {
+    "id": "jammu-parveen-kumar",
+    "name": "Advocate Parveen Kumar",
+    "expertise": [
+      "civil",
+      "consumer",
+      "criminal",
+      "employment",
+      "family"
+    ],
+    "city": "Jammu",
+    "location": "Shastri Nagar, Jammu",
+    "experienceYears": 32,
+    "rating": 4.9,
+    "languages": [
+      "English",
+      "Hindi",
+      "Punjabi"
+    ],
+    "verified": true,
+    "demo": false,
+    "courts": [
+      "District Court Kathua",
+      "District Court Katra",
+      "District Court Samba",
+      "Jammu and Kashmir High Court",
+      "Jammu and Kashmir State Commission"
+    ],
+    "barRegistration": "Advocate Parveen enrolled with the Bar Council of Jammu & Kashmir in 1995"
+  },
+  {
+    "id": "jammu-pawan-kr-khajuria",
+    "name": "Advocate Pawan Kr Khajuria",
+    "expertise": [
+      "civil",
+      "employment",
+      "family"
+    ],
+    "city": "Jammu",
+    "location": "District Court, Jammu",
+    "experienceYears": 19,
+    "rating": 4.0,
+    "languages": [
+      "Dogri",
+      "English",
+      "Hindi",
+      "Punjabi",
+      "Urdu"
+    ],
+    "verified": true,
+    "demo": false,
+    "courts": [
+      "District Court Anantnag",
+      "District Court Reasi",
+      "District Court Samba",
+      "Jammu and Kashmir High Court"
+    ],
+    "barRegistration": "Enrolled with Bar Association of Jammu (Practicing since 2007)"
+  },
+  {
+    "id": "jammu-pramod-kumar-sen",
+    "name": "Advocate Pramod Kumar Sen",
+    "expertise": [
+      "civil",
+      "criminal",
+      "employment"
+    ],
+    "city": "Jammu",
+    "location": "Bhawani Nagar, Jammu",
+    "experienceYears": 10,
+    "rating": 4.0,
+    "languages": [
+      "English",
+      "Hindi",
+      "Urdu"
+    ],
+    "verified": true,
+    "demo": false,
+    "courts": [
+      "District Court Jammu",
+      "Jammu and Kashmir High Court"
+    ],
+    "barRegistration": "Advocate Pramod enrolled with the Bar Council of Jammu and Kashmir in 2016"
+  },
+  {
+    "id": "jammu-radhika-wahi",
+    "name": "Advocate Radhika Wahi",
+    "expertise": [
+      "civil",
+      "criminal",
+      "employment",
+      "family",
+      "property"
+    ],
+    "city": "Jammu",
+    "location": "Canal Road, Jammu",
+    "experienceYears": 2,
+    "rating": 4.0,
+    "languages": [
+      "English",
+      "Hindi"
+    ],
+    "verified": true,
+    "demo": false,
+    "courts": [
+      "District Court Jammu",
+      "Jammu and Kashmir High Court"
+    ],
+    "barRegistration": "Enrolled with Bar Association of Jammu (Practicing since 2024)"
+  },
+  {
+    "id": "jammu-rahil-chadha",
+    "name": "Advocate Rahil Chadha",
+    "expertise": [
+      "civil",
+      "consumer",
+      "criminal",
+      "employment",
+      "family",
+      "property"
+    ],
+    "city": "Jammu",
+    "location": "Old Janipur, Jammu",
+    "experienceYears": 20,
+    "rating": 4.0,
+    "languages": [
+      "English",
+      "Hindi"
+    ],
+    "verified": true,
+    "demo": false,
+    "courts": [
+      "Armed Forces Tribunal (AFT) Chandigarh",
+      "District Court Jammu",
+      "Jammu and Kashmir High Court"
+    ],
+    "barRegistration": "Advocate Rahil enrolled with the Bar Council of Jammu in 2006"
+  },
+  {
+    "id": "jammu-ravi-abrol",
+    "name": "Advocate Ravi Abrol",
+    "expertise": [
+      "civil",
+      "criminal",
+      "employment"
+    ],
+    "city": "Jammu",
+    "location": "Gandhi Nagar, Jammu",
+    "experienceYears": 18,
+    "rating": 4.0,
+    "languages": [
+      "English",
+      "Hindi"
+    ],
+    "verified": true,
+    "demo": false,
+    "courts": [
+      "District Court Jammu",
+      "District Court Srinagar",
+      "Jammu and Kashmir High Court",
+      "Jammu and Kashmir Special Tribunal"
+    ],
+    "barRegistration": "Enrolled with Bar Association of Jammu (Practicing since 2008)"
+  },
+  {
+    "id": "jammu-ravi-jadhav",
+    "name": "Advocate Ravi Jadhav",
+    "expertise": [
+      "civil",
+      "consumer",
+      "criminal",
+      "employment",
+      "family",
+      "property"
+    ],
+    "city": "Jammu",
+    "location": "Koregaon Park, Pune, Jammu",
+    "experienceYears": 18,
+    "rating": 4.7,
+    "languages": [
+      "English",
+      "Hindi"
+    ],
+    "verified": true,
+    "demo": false,
+    "courts": [
+      "Bombay High Court",
+      "District and Sessions Court Mumbai",
+      "District Court Satara"
+    ],
+    "barRegistration": "Advocate Ravi enrolled with the Bar Council of Maharashtra and Goa in 2008"
+  },
+  {
+    "id": "jammu-rehan-ali",
+    "name": "Advocate Rehan Ali",
+    "expertise": [
+      "civil",
+      "employment",
+      "family"
+    ],
+    "city": "Jammu",
+    "location": "District Court, Jammu",
+    "experienceYears": 11,
+    "rating": 4.0,
+    "languages": [
+      "English",
+      "Hindi",
+      "Urdu"
+    ],
+    "verified": true,
+    "demo": false,
+    "courts": [
+      "Central Administrative Tribunal (CAT) Delhi",
+      "Jammu and Kashmir High Court"
+    ],
+    "barRegistration": "Enrolled with Bar Association of Jammu (Practicing since 2015)"
+  },
+  {
+    "id": "jammu-ritesh-sharma",
+    "name": "Advocate Ritesh Sharma",
+    "expertise": [
+      "civil",
+      "consumer",
+      "criminal",
+      "employment",
+      "property"
+    ],
+    "city": "Jammu",
+    "location": "Upper Roopnagar, Jammu",
+    "experienceYears": 12,
+    "rating": 4.0,
+    "languages": [
+      "Dogri",
+      "English",
+      "Hindi"
+    ],
+    "verified": true,
+    "demo": false,
+    "courts": [
+      "Armed Forces Tribunal (AFT) Jammu",
+      "District Court Jammu",
+      "Jammu and Kashmir High Court"
+    ],
+    "barRegistration": "Enrolled with Bar Association of Jammu (Practicing since 2014)"
+  },
+  {
+    "id": "jammu-sachin-agarwal",
+    "name": "Advocate Sachin Agarwal",
+    "expertise": [
+      "civil",
+      "consumer",
+      "criminal",
+      "employment",
+      "family",
+      "property"
+    ],
+    "city": "Jammu",
+    "location": "Tragad, Ahmedabad, Jammu",
+    "experienceYears": 5,
+    "rating": 4.9,
+    "languages": [
+      "English",
+      "Gujarati",
+      "Hindi"
+    ],
+    "verified": true,
+    "demo": false,
+    "courts": [
+      "City Civil And Sessions Court Ahmedabad",
+      "District Court Ahmedabad",
+      "District Court Gandhinagar",
+      "Gujarat High Court",
+      "Gujarat Revenue Tribunal Ahmedabad"
+    ],
+    "barRegistration": "Enrolled with Bar Association of Jammu (Practicing since 2021)"
+  },
+  {
+    "id": "jammu-sachin-sharma",
+    "name": "Advocate Sachin Sharma",
+    "expertise": [
+      "civil",
+      "employment"
+    ],
+    "city": "Jammu",
+    "location": "Gandhi Nagar, Jammu",
+    "experienceYears": 25,
+    "rating": 4.0,
+    "languages": [
+      "Dogri",
+      "English",
+      "Hindi",
+      "Punjabi"
+    ],
+    "verified": true,
+    "demo": false,
+    "courts": [
+      "District Court Jammu",
+      "Jammu and Kashmir High Court"
+    ],
+    "barRegistration": "Advocate Sachin enrolled with the Bar Council of Jammu and Kashmir in 2001"
+  },
+  {
+    "id": "jammu-samina-mirza",
+    "name": "Advocate Samina Mirza",
+    "expertise": [
+      "civil",
+      "consumer",
+      "criminal",
+      "employment",
+      "family",
+      "property"
+    ],
+    "city": "Jammu",
+    "location": "Nerul, Navi Mumbai, Jammu",
+    "experienceYears": 13,
+    "rating": 4.8,
+    "languages": [
+      "English",
+      "Hindi",
+      "Marathi"
+    ],
+    "verified": true,
+    "demo": false,
+    "courts": [
+      "Bombay High Court",
+      "District and Sessions Court Mumbai",
+      "District Court Navi Mumbai",
+      "Vashi Civil Court"
+    ],
+    "barRegistration": "Advocate Samina enrolled with the Bar Council of Maharashtra and Goa in 2013"
+  },
+  {
+    "id": "jammu-sanjay-dhar",
+    "name": "Advocate Sanjay Dhar",
+    "expertise": [
+      "civil",
+      "consumer",
+      "criminal",
+      "employment",
+      "family"
+    ],
+    "city": "Jammu",
+    "location": "Ishwar Nagar, Jammu",
+    "experienceYears": 37,
+    "rating": 4.0,
+    "languages": [
+      "English",
+      "Hindi"
+    ],
+    "verified": true,
+    "demo": false,
+    "courts": [
+      "District Court Jammu",
+      "Jammu and Kashmir High Court",
+      "Jammu and Kashmir Special Tribunal"
+    ],
+    "barRegistration": "Advocate Sanjay enrolled with the Bar Council of Jammu & Kashmir in 1989"
+  },
+  {
+    "id": "jammu-sanveer-s-thakur",
+    "name": "Advocate Sanveer S. Thakur",
+    "expertise": [
+      "civil",
+      "consumer",
+      "criminal",
+      "employment",
+      "family"
+    ],
+    "city": "Jammu",
+    "location": "Sarwal Colony, Jammu",
+    "experienceYears": 8,
+    "rating": 4.0,
+    "languages": [
+      "English",
+      "Hindi",
+      "Urdu"
+    ],
+    "verified": true,
+    "demo": false,
+    "courts": [
+      "Jammu and Kashmir High Court"
+    ],
+    "barRegistration": "Enrolled with Bar Association of Jammu (Practicing since 2018)"
+  },
+  {
+    "id": "jammu-saquib-hussain-bhat",
+    "name": "Advocate Saquib Hussain Bhat",
+    "expertise": [
+      "civil",
+      "criminal",
+      "employment",
+      "family"
+    ],
+    "city": "Jammu",
+    "location": "Sidhra, Jammu",
+    "experienceYears": 16,
+    "rating": 4.0,
+    "languages": [
+      "Dogri",
+      "English",
+      "Hindi",
+      "Urdu"
+    ],
+    "verified": true,
+    "demo": false,
+    "courts": [
+      "District Court Jammu",
+      "Jammu and Kashmir High Court",
+      "Jammu and Kashmir Special Tribunal"
+    ],
+    "barRegistration": "Enrolled with Bar Association of Jammu (Practicing since 2010)"
+  },
+  {
+    "id": "jammu-shamas-ud-din-shaaz",
+    "name": "Advocate Shamas Ud Din Shaaz",
+    "expertise": [
+      "civil",
+      "criminal",
+      "employment",
+      "family"
+    ],
+    "city": "Jammu",
+    "location": "Janipur, Jammu",
+    "experienceYears": 11,
+    "rating": 4.0,
+    "languages": [
+      "English",
+      "Hindi"
+    ],
+    "verified": true,
+    "demo": false,
+    "courts": [
+      "Consumer Redressal Forum J& K",
+      "District Court Jammu",
+      "Jammu and Kashmir High Court"
+    ],
+    "barRegistration": "Enrolled with Bar Association of Jammu (Practicing since 2015)"
+  },
+  {
+    "id": "jammu-shaniba-nowshad",
+    "name": "Advocate Shaniba Nowshad",
+    "expertise": [
+      "civil",
+      "consumer",
+      "criminal",
+      "employment",
+      "family",
+      "property"
+    ],
+    "city": "Jammu",
+    "location": "Irinjalakuda North, Thrissur, Jammu",
+    "experienceYears": 24,
+    "rating": 4.9,
+    "languages": [
+      "English",
+      "Hindi",
+      "Malayalam",
+      "Tamil"
+    ],
+    "verified": true,
+    "demo": false,
+    "courts": [
+      "District Court Thrissur",
+      "Family Court Irinjalakuda",
+      "Kerala High Court",
+      "Magistrate court Chalakudy",
+      "Munsiff Court Kodungallur"
+    ],
+    "barRegistration": "Advocate Shaniba enrolled with the Bar Council of Kerala in 2002"
+  },
+  {
+    "id": "jammu-shivaji-rathore",
+    "name": "Advocate Shivaji Rathore",
+    "expertise": [
+      "civil",
+      "consumer",
+      "criminal",
+      "employment",
+      "family"
+    ],
+    "city": "Jammu",
+    "location": "High Court, Jammu",
+    "experienceYears": 2,
+    "rating": 4.0,
+    "languages": [
+      "English",
+      "Hindi",
+      "Kashmiri",
+      "Urdu"
+    ],
+    "verified": true,
+    "demo": false,
+    "courts": [
+      "District Court Jammu",
+      "Jammu and Kashmir High Court"
+    ],
+    "barRegistration": "Enrolled with Bar Association of Jammu (Practicing since 2024)"
+  },
+  {
+    "id": "jammu-shivan-mahajan",
+    "name": "Advocate Shivan Mahajan",
+    "expertise": [
+      "civil",
+      "criminal",
+      "employment",
+      "family",
+      "property"
+    ],
+    "city": "Jammu",
+    "location": "New Secretariat Road, Jammu",
+    "experienceYears": 12,
+    "rating": 4.0,
+    "languages": [
+      "English",
+      "Hindi"
+    ],
+    "verified": true,
+    "demo": false,
+    "courts": [
+      "District Court Anantnag",
+      "District Court Jammu",
+      "District Court Kathua",
+      "District Court Pulwama",
+      "District Court Samba",
+      "District Court Srinagar",
+      "Jammu and Kashmir High Court",
+      "Jammu and Kashmir Special Tribunal"
+    ],
+    "barRegistration": "Enrolled with Bar Association of Jammu (Practicing since 2014)"
+  },
+  {
+    "id": "jammu-smita-sachin-mendhe",
+    "name": "Advocate Smita Sachin Mendhe",
+    "expertise": [
+      "civil",
+      "consumer",
+      "criminal",
+      "employment",
+      "family",
+      "property"
+    ],
+    "city": "Jammu",
+    "location": "New Kailash Nagar, Nagpur, Jammu",
+    "experienceYears": 19,
+    "rating": 4.9,
+    "languages": [
+      "English",
+      "Hindi",
+      "Marathi"
+    ],
+    "verified": true,
+    "demo": false,
+    "courts": [
+      "Bombay High Court",
+      "District Court Nagpur",
+      "Family Courts Nagpur"
+    ],
+    "barRegistration": "Advocate Smita enrolled with the Bar Council of Maharashtra and Goa in 2007"
+  },
+  {
+    "id": "jammu-snigdha-shekher",
+    "name": "Advocate Snigdha Shekher",
+    "expertise": [
+      "civil",
+      "criminal",
+      "employment",
+      "family"
+    ],
+    "city": "Jammu",
+    "location": "Gandhi Nagar, Jammu",
+    "experienceYears": 13,
+    "rating": 4.0,
+    "languages": [
+      "Dogri",
+      "English",
+      "Hindi"
+    ],
+    "verified": true,
+    "demo": false,
+    "courts": [
+      "District Court Jammu",
+      "Jammu and Kashmir High Court",
+      "Jammu and Kashmir State Commission"
+    ],
+    "barRegistration": "Enrolled with Bar Association of Jammu (Practicing since 2013)"
+  },
+  {
+    "id": "jammu-sparshika-jain",
+    "name": "Advocate Sparshika Jain",
+    "expertise": [
+      "civil",
+      "criminal",
+      "employment",
+      "family"
+    ],
+    "city": "Jammu",
+    "location": "High Court, Jammu",
+    "experienceYears": 13,
+    "rating": 4.0,
+    "languages": [
+      "Dogri",
+      "English",
+      "Hindi",
+      "Punjabi"
+    ],
+    "verified": true,
+    "demo": false,
+    "courts": [
+      "Jammu and Kashmir High Court"
+    ],
+    "barRegistration": "Enrolled with Bar Association of Jammu (Practicing since 2013)"
+  },
+  {
+    "id": "jammu-sumant-prashar",
+    "name": "Advocate Sumant Prashar",
+    "expertise": [
+      "civil",
+      "consumer",
+      "criminal",
+      "employment"
+    ],
+    "city": "Jammu",
+    "location": "Durga Nagar, Jammu",
+    "experienceYears": 3,
+    "rating": 4.0,
+    "languages": [
+      "English",
+      "Hindi"
+    ],
+    "verified": true,
+    "demo": false,
+    "courts": [
+      "District Court Jammu",
+      "District Court Poonch",
+      "District Court Rajouri",
+      "Jammu and Kashmir High Court"
+    ],
+    "barRegistration": "Enrolled with Bar Association of Jammu (Practicing since 2023)"
+  },
+  {
+    "id": "jammu-sunil-bakshi",
+    "name": "Advocate Sunil Bakshi",
+    "expertise": [
+      "civil",
+      "consumer",
+      "criminal",
+      "employment",
+      "family",
+      "property"
+    ],
+    "city": "Jammu",
+    "location": "Anand Nagar, Jammu",
+    "experienceYears": 11,
+    "rating": 4.6,
+    "languages": [
+      "English",
+      "Hindi"
+    ],
+    "verified": true,
+    "demo": false,
+    "courts": [
+      "District Court Jammu",
+      "Jammu and Kashmir High Court"
+    ],
+    "barRegistration": "Advocate Sunil enrolled with the Bar Council of India"
+  },
+  {
+    "id": "jammu-surinder-singh",
+    "name": "Advocate Surinder Singh",
+    "expertise": [
+      "civil",
+      "criminal",
+      "employment",
+      "family",
+      "property"
+    ],
+    "city": "Jammu",
+    "location": "Eid Gah Road, Jammu",
+    "experienceYears": 30,
+    "rating": 4.0,
+    "languages": [
+      "Dogri",
+      "English",
+      "Hindi",
+      "Punjabi",
+      "Urdu"
+    ],
+    "verified": true,
+    "demo": false,
+    "courts": [
+      "District Court Jammu",
+      "Jammu and Kashmir High Court"
+    ],
+    "barRegistration": "Enrolled with Bar Association of Jammu (Practicing since 1996)"
+  },
+  {
+    "id": "jammu-sushil-wattal",
+    "name": "Advocate Sushil Wattal",
+    "expertise": [
+      "civil",
+      "criminal",
+      "employment",
+      "family"
+    ],
+    "city": "Jammu",
+    "location": "Bhagwati Nagar, Jammu",
+    "experienceYears": 16,
+    "rating": 4.0,
+    "languages": [
+      "Dogri",
+      "English",
+      "Hindi",
+      "Kashmiri",
+      "Urdu"
+    ],
+    "verified": true,
+    "demo": false,
+    "courts": [
+      "District Court Jammu",
+      "Jammu and Kashmir High Court"
+    ],
+    "barRegistration": "Enrolled with Bar Association of Jammu (Practicing since 2010)"
+  },
+  {
+    "id": "jammu-syed-raafiq-rashid",
+    "name": "Advocate Syed Raafiq Rashid",
+    "expertise": [
+      "civil",
+      "criminal",
+      "employment",
+      "family"
+    ],
+    "city": "Jammu",
+    "location": "Chadoora, Jammu",
+    "experienceYears": 11,
+    "rating": 4.0,
+    "languages": [
+      "English",
+      "Hindi"
+    ],
+    "verified": true,
+    "demo": false,
+    "courts": [
+      "District Court Budgam",
+      "District Court Jammu",
+      "Jammu and Kashmir High Court",
+      "Jammu and Kashmir Special Tribunal"
+    ],
+    "barRegistration": "Enrolled with Bar Association of Jammu (Practicing since 2015)"
+  },
+  {
+    "id": "jammu-vajrapu-manavallayya",
+    "name": "Advocate Vajrapu Manavallayya",
+    "expertise": [
+      "civil",
+      "consumer",
+      "criminal",
+      "employment",
+      "family",
+      "property"
+    ],
+    "city": "Jammu",
+    "location": "Peddawaltair, Visakhapatnam, Jammu",
+    "experienceYears": 16,
+    "rating": 4.8,
+    "languages": [
+      "English",
+      "Hindi",
+      "Telugu"
+    ],
+    "verified": true,
+    "demo": false,
+    "courts": [
+      "Amaravati High Court Andhra Pradesh",
+      "Civil & Magistrate Courts Visakhapatnam",
+      "Debt Recovery Tribunal (DRT) Visakhapatnam",
+      "District & Sessions Courts Visakhapatnam",
+      "District Court Visakhapatnam",
+      "Family Court Visakhapatnam",
+      "Industrial Tribunal-cum-Labour Court Visakhapatnam",
+      "State Commission Vijayawada"
+    ],
+    "barRegistration": "Advocate Vajrapu Manavallayya himself enrolled with the Bar Council of Andhra Pradesh in 2010"
+  },
+  {
+    "id": "jammu-vijay-tangri",
+    "name": "Advocate Vijay Tangri",
+    "expertise": [
+      "civil",
+      "consumer",
+      "criminal",
+      "employment",
+      "family",
+      "property"
+    ],
+    "city": "Jammu",
+    "location": "Saket, Delhi, Jammu",
+    "experienceYears": 27,
+    "rating": 4.7,
+    "languages": [
+      "English",
+      "Hindi"
+    ],
+    "verified": true,
+    "demo": false,
+    "courts": [
+      "Delhi High Court",
+      "District Consumer Forums Delhi",
+      "District Court Dwarka",
+      "District Court Patiala House",
+      "District Court Rohini",
+      "District Court Saket",
+      "District Court Tis Hazari",
+      "Family Courts Delhi",
+      "National Commission (NCDRC)",
+      "Supreme Court Of India"
+    ],
+    "barRegistration": "Advocate Tangri enrolled with the Bar Council of Delhi in 1999"
+  },
+  {
+    "id": "jammu-vikash-shangari",
+    "name": "Advocate Vikash Shangari",
+    "expertise": [
+      "civil",
+      "consumer",
+      "criminal",
+      "employment",
+      "family",
+      "property"
+    ],
+    "city": "Jammu",
+    "location": "City Civil Court, Jamshedpur, Jammu",
+    "experienceYears": 19,
+    "rating": 4.6,
+    "languages": [
+      "English",
+      "Hindi"
+    ],
+    "verified": true,
+    "demo": false,
+    "courts": [
+      "District Court Jamshedpur",
+      "Jharkhand High Court"
+    ],
+    "barRegistration": "Advocate Vikash enrolled with the Bar Council of Jharkhand in 2007"
+  },
+  {
+    "id": "jammu-vinod-kumar-suri",
+    "name": "Advocate Vinod Kumar Suri",
+    "expertise": [
+      "civil",
+      "employment"
+    ],
+    "city": "Jammu",
+    "location": "Gandhi Nagar, Jammu",
+    "experienceYears": 39,
+    "rating": 4.0,
+    "languages": [
+      "Dogri",
+      "English",
+      "Hindi",
+      "Punjabi"
+    ],
+    "verified": true,
+    "demo": false,
+    "courts": [
+      "District Court Jammu",
+      "Jammu and Kashmir High Court"
+    ],
+    "barRegistration": "Advocate Vinod enrolled with the Bar Council of Jammu and Kashmir in 1987"
+  },
+  {
+    "id": "jammu-vishal-kumar",
+    "name": "Advocate Vishal Kumar",
+    "expertise": [
+      "civil",
+      "criminal",
+      "employment",
+      "family"
+    ],
+    "city": "Jammu",
+    "location": "EWS Colony, Jammu",
+    "experienceYears": 8,
+    "rating": 4.0,
+    "languages": [
+      "English",
+      "Hindi"
+    ],
+    "verified": true,
+    "demo": false,
+    "courts": [
+      "District Court Jammu",
+      "Jammu and Kashmir High Court"
+    ],
+    "barRegistration": "Enrolled with Bar Association of Jammu (Practicing since 2018)"
+  },
+  {
+    "id": "jammu-yasir-khan",
+    "name": "Advocate Yasir Khan",
+    "expertise": [
+      "civil",
+      "criminal",
+      "employment",
+      "family"
+    ],
+    "city": "Jammu",
+    "location": "Sub-Judge Court Complex, Jammu",
+    "experienceYears": 23,
+    "rating": 4.0,
+    "languages": [
+      "English",
+      "Hindi"
+    ],
+    "verified": true,
+    "demo": false,
+    "courts": [
+      "District Court Jammu",
+      "District Court Poonch",
+      "Jammu and Kashmir High Court"
+    ],
+    "barRegistration": "Enrolled with Bar Association of Jammu (Practicing since 2003)"
+  },
+  {
+    "id": "jammu-yuganshu-sharma",
+    "name": "Advocate Yuganshu Sharma",
+    "expertise": [
+      "civil",
+      "consumer",
+      "criminal",
+      "employment",
+      "family",
+      "property"
+    ],
+    "city": "Jammu",
+    "location": "Lawrence Road, Keshav Puram, Delhi, Jammu",
+    "experienceYears": 9,
+    "rating": 4.7,
+    "languages": [
+      "English",
+      "Hindi"
+    ],
+    "verified": true,
+    "demo": false,
+    "courts": [
+      "Delhi High Court",
+      "District Court Rouse Avenue",
+      "District Court Dwarka",
+      "District Court Karkardooma",
+      "District Court Patiala House",
+      "District Court Rohini",
+      "District Court Saket",
+      "District Court Tis Hazari",
+      "Family Courts Delhi",
+      "Supreme Court Of India"
+    ],
+    "barRegistration": "Enrolled with Bar Association of Jammu (Practicing since 2017)"
+  },
+  {
+    "id": "jammu-zulker-nain-sheikh",
+    "name": "Advocate Zulker Nain Sheikh",
+    "expertise": [
+      "civil",
+      "consumer",
+      "criminal",
+      "employment",
+      "family",
+      "property"
+    ],
+    "city": "Jammu",
+    "location": "Sunjawan Morh, Jammu",
+    "experienceYears": 15,
+    "rating": 4.0,
+    "languages": [
+      "English",
+      "Hindi"
+    ],
+    "verified": true,
+    "demo": false,
+    "courts": [
+      "District Court Jammu",
+      "Jammu and Kashmir High Court"
+    ],
+    "barRegistration": "Advocate Zulker enrolled with the Bar Council of Jammu in 2011"
+  }
+]
