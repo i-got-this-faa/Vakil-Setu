@@ -31,27 +31,38 @@ function failureReason(value: unknown): "blocked" | "truncated" | "malformed" {
   return "malformed";
 }
 
-export function nativeGeminiProvider(config: Config): AiProvider {
-  return { kind: "gemini_native", model: config.model, recipientOrigin: "https://generativelanguage.googleapis.com", generate: async (request, options): Promise<AiResult> => {
+/**
+ * One Gemini route (one model on one key).
+ * `attemptTimeoutMs` bounds this single attempt so a hung request still leaves time for the next key or model.
+ * `downModels` is shared by the routes of one request: once a model answers 503 (overloaded) or 404 (unknown),
+ * the same model on the other keys is skipped, because a different account will not fix that.
+ */
+export function nativeGeminiProvider(config: Config, attemptTimeoutMs?: number, downModels?: Set<string>): AiProvider {
+  return { kind: "gemini_native", model: config.model, recipientOrigin: "https://generativelanguage.googleapis.com", ...(downModels ? { skip: () => downModels.has(config.model) } : {}), generate: async (request, options): Promise<AiResult> => {
     const started = Date.now();
     const metadata: AiTransportMetadata = { httpStatus: null, headersMs: null, firstByteMs: null, latencyMs: 0 };
+    const signal = attemptTimeoutMs ? AbortSignal.any([options.signal, AbortSignal.timeout(attemptTimeoutMs)]) : options.signal;
     try {
-      if (options.signal.aborted) return { kind: "unavailable", reason: "timeout" };
-      const response = await fetch(config.url, { method: "POST", redirect: "error", headers: { "Content-Type": "application/json", "x-goog-api-key": config.apiKey }, signal: options.signal, body: JSON.stringify(geminiRequestBody(config.model, request)) });
+      if (signal.aborted) return { kind: "unavailable", reason: "timeout" };
+      const response = await fetch(config.url, { method: "POST", redirect: "error", headers: { "Content-Type": "application/json", "x-goog-api-key": config.apiKey }, signal, body: JSON.stringify(geminiRequestBody(config.model, request)) });
       metadata.httpStatus = response.status; metadata.headersMs = Date.now() - started;
       options.onMetadata({ ...metadata });
-      if (options.signal.aborted) { await response.body?.cancel(); return { kind: "unavailable", reason: "timeout" }; }
-      if (!response.ok) { await response.body?.cancel(); return { kind: "unavailable", reason: response.status === 429 ? "rate_limited" : "provider_failed" }; }
+      if (signal.aborted) { await response.body?.cancel(); return { kind: "unavailable", reason: "timeout" }; }
+      if (!response.ok) {
+        await response.body?.cancel();
+        if (response.status === 503 || response.status === 404) downModels?.add(config.model);
+        return { kind: "unavailable", reason: response.status === 429 ? "rate_limited" : "provider_failed" };
+      }
       const raw = await boundedResponseText(response, () => {
         if (metadata.firstByteMs === null) { metadata.firstByteMs = Date.now() - started; options.onMetadata({ ...metadata }); }
-      }, options.signal);
-      if (options.signal.aborted) return { kind: "unavailable", reason: "timeout" };
+      }, signal);
+      if (signal.aborted) return { kind: "unavailable", reason: "timeout" };
       if (raw === null) return { kind: "unavailable", reason: "response_too_large" };
       const parsed: unknown = JSON.parse(raw);
       const text = extractGeminiContent(parsed)?.trim();
       return text && text.length <= request.maxReplyChars ? { kind: "reply", text } : { kind: "unavailable", reason: text ? "truncated" : failureReason(parsed) };
     } catch (error) {
-      return { kind: "unavailable", reason: options.signal.aborted ? "timeout" : error instanceof SyntaxError ? "malformed" : "provider_failed" };
+      return { kind: "unavailable", reason: signal.aborted ? "timeout" : error instanceof SyntaxError ? "malformed" : "provider_failed" };
     } finally { metadata.latencyMs = Date.now() - started; options.onMetadata(metadata); }
   } };
 }

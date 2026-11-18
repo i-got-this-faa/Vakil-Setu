@@ -14,6 +14,27 @@ export function geminiConfig(env: Record<string, string | undefined>): ProviderC
   return { kind: "configured", url: `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`, model, apiKey: key };
 }
 
+/** Every Gemini key: GEMINI_API_KEY first, then the comma-separated GEMINI_API_KEYS (extra accounts), without duplicates. */
+export function geminiKeys(env: Record<string, string | undefined>): string[] {
+  const keys = [env.GEMINI_API_KEY, ...(env.GEMINI_API_KEYS ?? "").split(",")].map(key => key?.trim() ?? "").filter(Boolean);
+  return [...new Set(keys)];
+}
+
+/**
+ * Every Gemini route to try, in order: each model (GEMINI_MODEL, then GEMINI_FALLBACK_MODELS) on each key.
+ * Keys start at a random account so traffic spreads over all of them. Invalid extra entries fail closed like the primary.
+ */
+export function geminiConfigs(env: Record<string, string | undefined>, random: () => number = Math.random): Extract<ProviderConfig, { kind: "configured" }>[] | Extract<ProviderConfig, { kind: "unavailable" }> {
+  const primary = geminiConfig(env);
+  if (primary.kind === "unavailable") return primary;
+  const keys = geminiKeys(env);
+  const models = [...new Set([primary.model, ...(env.GEMINI_FALLBACK_MODELS ?? "").split(",").map(model => model.trim()).filter(Boolean)])];
+  if (keys.length > 20 || models.length > 5 || keys.some(key => /\s/u.test(key)) || models.some(model => model.length > 100 || !/^gemini-[A-Za-z0-9._-]+$/u.test(model))) return { kind: "unavailable", reason: "invalid_config" };
+  const start = Math.floor(random() * keys.length) % keys.length;
+  const rotated = [...keys.slice(start), ...keys.slice(0, start)];
+  return models.flatMap(model => rotated.map(apiKey => ({ kind: "configured" as const, url: `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`, model, apiKey })));
+}
+
 // Operator permission, not a translation or legal-quality certification.
 export function aiAllowedLanguages(env: Record<string, string | undefined>): string[] {
   if (env.AI_CHAT_LOCALES === undefined) return ["en", "hi", "pa"];
