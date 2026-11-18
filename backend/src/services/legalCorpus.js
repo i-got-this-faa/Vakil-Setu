@@ -45,9 +45,11 @@ export function chunkPages(text, maxChars = 1800, overlap = 250) {
   return chunks;
 }
 
-export async function loadCorpus(directory = corpusDir(), { includeStatutes = true } = {}) {
+// `includeIndiaCode`: the section-wise Acts from scripts/ingestIndiaCode.js (used by the Convex export).
+export async function loadCorpus(directory = corpusDir(), { includeStatutes = true, includeIndiaCode = false } = {}) {
   const combined = { version: 1, documents: [] };
-  for (const filename of includeStatutes ? ["corpus.json", "statutes.json"] : ["corpus.json"]) {
+  const files = includeStatutes ? ["corpus.json", "statutes.json", ...(includeIndiaCode ? ["indiacode.json"] : [])] : ["corpus.json"];
+  for (const filename of files) {
     try {
       const corpus = JSON.parse(await readFile(path.join(directory, filename), "utf8"));
       if (corpus.version !== 1 || !Array.isArray(corpus.documents)) throw new Error(`Invalid legal corpus: ${filename}`);
@@ -62,10 +64,17 @@ export async function loadCorpus(directory = corpusDir(), { includeStatutes = tr
 const stopwords = new Set("a an and are as at be been by for from has have how i in is it my of on or that the this to was were what which with would can could should me".split(" "));
 const tokens = (text) => String(text).toLowerCase().match(/[\p{L}\p{N}]+/gu)?.filter((word) => !stopwords.has(word)) || [];
 
+// A section like "143A" has no numeric section number, so its label goes in the title instead.
+function chunkSource(source, chunk) {
+  if (chunk.sectionNumber) return { ...source, sectionNumber: chunk.sectionNumber, sectionTitle: chunk.sectionTitle, url: chunk.sectionUrl || `${source.url}#${chunk.sectionNumber}` };
+  if (chunk.sectionLabel) return { ...source, title: `${source.title}, section ${chunk.sectionLabel}`, sectionTitle: chunk.sectionTitle, url: chunk.sectionUrl || `${source.url}#${chunk.sectionLabel}` };
+  return source;
+}
+
 export function corpusPassages(corpus, { court, dateFrom, dateTo, documentType, sectionNumber, act } = {}) {
   return corpus.documents
     .filter((d) => (!court || d.source.court === court) && (!dateFrom || d.source.decisionDate >= dateFrom) && (!dateTo || d.source.decisionDate <= dateTo) && (!documentType || d.source.documentType === documentType) && (!act || d.source.act === act))
-    .flatMap((d) => d.chunks.map((chunk) => ({ ...chunk, documentId: d.id, source: chunk.sectionNumber ? { ...d.source, sectionNumber: chunk.sectionNumber, sectionTitle: chunk.sectionTitle, url: `${d.source.url}#${chunk.sectionNumber}` } : d.source })))
+    .flatMap((d) => d.chunks.map((chunk) => ({ ...chunk, documentId: d.id, source: chunkSource(d.source, chunk) })))
     .filter((chunk) => !sectionNumber || chunk.sectionNumber === sectionNumber);
 }
 

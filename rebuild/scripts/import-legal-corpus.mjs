@@ -22,8 +22,35 @@ if (!args.includes("--apply")) { console.log("Dry run only. Review the target an
 const workspace = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const backend = resolve(workspace, "packages/backend");
 const cli = resolve(backend, "node_modules/convex/bin/main.js");
-function run(name, value) { execFileSync(process.execPath, [cli, "run", name, JSON.stringify(value), "--deployment-name", deployment], { cwd: backend, stdio: "inherit" }); }
-for (const batch of batches) run("legalCorpus:importBatch", batch);
-if (embed) for (let after = 0; after < manifest.count; after += 10) run("legalEmbedding:indexBatch", { dataset: manifest.dataset, after });
-run("legalCorpus:publish", { dataset: manifest.dataset, expectedCount: manifest.count, ...(embed ? { embeddingModel: "gemini-embedding-001/768" } : {}) });
+function run(name, value) { return JSON.parse(execFileSync(process.execPath, [cli, "run", name, JSON.stringify(value), "--deployment-name", deployment], { cwd: backend, encoding: "utf8", stdio: ["ignore", "pipe", "inherit"] }) || "null"); }
+const copyIndex = args.indexOf("--copy-embeddings-from");
+const copyFrom = copyIndex < 0 ? "" : args[copyIndex + 1];
+if (copyIndex >= 0 && !/^[a-f0-9]{64}$/.test(copyFrom)) throw new Error("--copy-embeddings-from needs the previous dataset ID.");
+const skipImport = args.includes("--skip-import");
+if (!skipImport) for (const [i, batch] of batches.entries()) { run("legalCorpus:importBatch", batch); console.log(`imported batch ${i + 1}/${batches.length}`); }
+if (copyFrom) {
+  // Unchanged passages keep their vectors, so only new passages use the embedding quota.
+  let cursor = null, copied = 0;
+  for (;;) { const page = run("legalCorpus:copyEmbeddings", { from: copyFrom, to: manifest.dataset, cursor }); copied += page.copied; if (page.isDone) break; cursor = page.continueCursor; }
+  console.log(`reused ${copied} vectors from ${copyFrom.slice(0, 12)}`);
+}
+if (embed) {
+  let cursor = null, indexed = 0;
+  for (;;) {
+    let page = null;
+    // A rate-limited batch is retried after a pause; passages already embedded are skipped on retry.
+    for (let attempt = 1; !page; attempt++) {
+      try { page = run("legalEmbedding:indexBatch", { dataset: manifest.dataset, cursor }); }
+      catch (error) { if (attempt >= 6) throw error; console.log(`embedding paused (attempt ${attempt}); retrying in ${attempt * 20}s`); execFileSync("sleep", [String(attempt * 20)]); }
+    }
+    indexed += page.indexed;
+    if (page.indexed) console.log(`embedded ${indexed}`);
+    if (page.isDone) break;
+    cursor = page.continueCursor;
+  }
+}
+// --vectors: the dataset has (some) vectors even if this run did not embed; --allow-missing-vectors publishes with gaps.
+const vectors = embed || args.includes("--vectors");
+const published = run("legalCorpus:publish", { dataset: manifest.dataset, expectedCount: manifest.count, ...(vectors ? { embeddingModel: "gemini-embedding-001/768" } : {}), ...(args.includes("--allow-missing-vectors") ? { allowMissingVectors: true } : {}) });
+console.log(JSON.stringify(published));
 console.log("Reviewed legal dataset published. Import/re-embedding completion is not a legal-accuracy certification.");
