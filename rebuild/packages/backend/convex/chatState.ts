@@ -62,7 +62,9 @@ export const context = internalQuery({ args: { turnId: v.id("chatTurns") }, hand
   return { legalCase, turn, history, documents };
 } });
 
-export const auditDispatch = internalMutation({ args: { turnId: v.id("chatTurns"), model: v.string(), recipientOrigin: v.optional(v.string()), purpose: v.optional(v.literal("embedding")) }, handler: async (ctx, args) => {
+// `retry`: server-set when the same send moves on to another key or model at a recipient it already went to.
+// Every ownership/revision check still runs and the attempt is still recorded; only the duplicate guard is relaxed.
+export const auditDispatch = internalMutation({ args: { turnId: v.id("chatTurns"), model: v.string(), recipientOrigin: v.optional(v.string()), purpose: v.optional(v.literal("embedding")), retry: v.optional(v.boolean()) }, handler: async (ctx, args) => {
   const turn = await ctx.db.get(args.turnId);
   if (!turn) fail("NOT_FOUND", "Chat turn not found.");
   const { legalCase } = await ownCase(ctx, turn.caseId);
@@ -71,7 +73,7 @@ export const auditDispatch = internalMutation({ args: { turnId: v.id("chatTurns"
   const vertex = /^https:\/\/(?:[a-z]+(?:-[a-z]+)+[0-9]+-)?aiplatform\.googleapis\.com$/u.test(recipientOrigin);
   if (recipientOrigin !== "https://generativelanguage.googleapis.com" && (!vertex || !turn.allowVertexFallback)) fail("FORBIDDEN", "Explicit Vertex fallback consent required.");
   const audits = await ctx.db.query("chatConsents").withIndex("by_case", q => q.eq("caseId", turn.caseId)).take(CHAT_LIMITS.turns * 3);
-  if (audits.some(audit => audit.turnId === turn._id && audit.recipientOrigin === recipientOrigin && audit.purpose === args.purpose)) fail("CONFLICT", "Send already dispatched.");
+  if (!args.retry && audits.some(audit => audit.turnId === turn._id && audit.recipientOrigin === recipientOrigin && audit.purpose === args.purpose)) fail("CONFLICT", "Send already dispatched.");
   const turns = await ctx.db.query("chatTurns").withIndex("by_case", q => q.eq("caseId", turn.caseId)).take(CHAT_LIMITS.turns);
   await ctx.db.insert("chatConsents", { caseId: turn.caseId, ownerId: turn.ownerId, turnId: turn._id, at: Date.now(), ...(args.purpose ? { purpose: args.purpose } : {}), recipientOrigin, model: args.model, contextRevision: turn.contextRevision, summaryVersion: turn.summaryVersion, documentIds: turn.documentIds, historyTurnIds: turns.filter(entry => entry.result.kind === "reply").slice(-CHAT_LIMITS.historyTurns).map(entry => entry._id) });
   return null;

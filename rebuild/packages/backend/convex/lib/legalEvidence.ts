@@ -18,7 +18,7 @@ export function safeLegalSource(source: Infer<typeof legalSource>): boolean {
   try {
     const url = new URL(source.url);
     return url.protocol === "https:" && !url.username && !url.password && !url.port &&
-      ["jkhighcourt.nic.in", "www.sci.gov.in", "api.sci.gov.in", "www.ncrb.mha.gov.in"].includes(url.hostname) &&
+      ["jkhighcourt.nic.in", "www.sci.gov.in", "api.sci.gov.in", "www.ncrb.mha.gov.in", "indiacode.gov.in"].includes(url.hostname) &&
       source.title.trim().length > 0 && source.title.length <= 500;
   } catch { return false; }
 }

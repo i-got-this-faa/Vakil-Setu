@@ -19,6 +19,8 @@ export type AiProvider = {
   recipientOrigin: string;
   /** False when the provider cannot take audio, images or PDFs; callers then skip it for those requests. */
   acceptsFiles?: boolean;
+  /** True when this route is already known to be down for the current request (e.g. its model is overloaded). */
+  skip?: () => boolean;
   generate: (request: AiRequest, options: { signal: AbortSignal; onMetadata: (metadata: AiTransportMetadata) => void }) => Promise<AiResult>;
 };
 
