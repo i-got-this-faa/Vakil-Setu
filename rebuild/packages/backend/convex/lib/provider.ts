@@ -22,15 +22,19 @@ export function geminiKeys(env: Record<string, string | undefined>): string[] {
 
 /**
  * Every Gemini route to try, in order: each model (GEMINI_MODEL, then GEMINI_FALLBACK_MODELS) on each key.
- * Keys start at a random account so traffic spreads over all of them. Invalid extra entries fail closed like the primary.
+ * Keys start at a random account so traffic spreads over all of them, unless GEMINI_KEY_ORDER=in_order: then
+ * GEMINI_API_KEY is always tried first and the GEMINI_API_KEYS accounts are only backups, in the order listed
+ * (e.g. a demo account first, an older account only once the demo account's quota runs out).
+ * Invalid extra entries fail closed like the primary.
  */
 export function geminiConfigs(env: Record<string, string | undefined>, random: () => number = Math.random): Extract<ProviderConfig, { kind: "configured" }>[] | Extract<ProviderConfig, { kind: "unavailable" }> {
   const primary = geminiConfig(env);
   if (primary.kind === "unavailable") return primary;
   const keys = geminiKeys(env);
   const models = [...new Set([primary.model, ...(env.GEMINI_FALLBACK_MODELS ?? "").split(",").map(model => model.trim()).filter(Boolean)])];
-  if (keys.length > 20 || models.length > 5 || keys.some(key => /\s/u.test(key)) || models.some(model => model.length > 100 || !/^gemini-[A-Za-z0-9._-]+$/u.test(model))) return { kind: "unavailable", reason: "invalid_config" };
-  const start = Math.floor(random() * keys.length) % keys.length;
+  const order = env.GEMINI_KEY_ORDER?.trim() || "rotate";
+  if (keys.length > 20 || models.length > 5 || keys.some(key => /\s/u.test(key)) || models.some(model => model.length > 100 || !/^gemini-[A-Za-z0-9._-]+$/u.test(model)) || !["rotate", "in_order"].includes(order)) return { kind: "unavailable", reason: "invalid_config" };
+  const start = order === "in_order" ? 0 : Math.floor(random() * keys.length) % keys.length;
   const rotated = [...keys.slice(start), ...keys.slice(0, start)];
   return models.flatMap(model => rotated.map(apiKey => ({ kind: "configured" as const, url: `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`, model, apiKey })));
 }
