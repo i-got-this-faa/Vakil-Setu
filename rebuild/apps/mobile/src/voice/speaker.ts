@@ -6,7 +6,7 @@ import { api } from "@legal-setu/backend/api";
 import type { VoiceLocale } from "@legal-setu/domain";
 import { chooseSpeechLanguage, type DeviceVoice } from "../lib/speech";
 import { speechTagFor } from "./languages";
-import { BHASHINI_VOICE_LOCALES, splitForSpeech } from "./logic";
+import { SERVER_VOICE_LOCALES, splitForSpeech } from "./logic";
 import { useVoicePrefs } from "./prefs";
 
 let voicesRequest: Promise<DeviceVoice[]> | null = null;
@@ -20,13 +20,13 @@ const LIP_TICK_MS = 260;
 
 /**
  * Reads replies aloud. Uses Bhashini's natural Indian voices (made on the server, sentence by sentence,
- * so the first sentence starts quickly); falls back to the phone's own voice for Urdu or if Bhashini fails.
+ * so the first sentence starts quickly), or Gemini for Kashmiri; falls back to the phone's own voice for Urdu or if that fails.
  * `canSpeak` is false only when neither is available; the text stays large on screen.
  */
 export function useSpeaker(locale: VoiceLocale) {
   const { guestToken } = useVoicePrefs();
   const speakRemote = useAction(api.voiceAudio.speak);
-  const natural = BHASHINI_VOICE_LOCALES.includes(locale);
+  const natural = SERVER_VOICE_LOCALES.includes(locale);
   const [language, setLanguage] = useState<string | null | undefined>(undefined);
   const [speakingId, setSpeakingId] = useState<string | null>(null);
   // Word-boundary listeners (drives the avatar's lips) kept in a ref so words don't re-render the screen.

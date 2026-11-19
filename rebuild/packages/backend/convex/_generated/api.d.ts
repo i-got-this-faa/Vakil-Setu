@@ -34,6 +34,7 @@ import type * as lib_bhashini from "../lib/bhashini.js";
 import type * as lib_chat from "../lib/chat.js";
 import type * as lib_discovery from "../lib/discovery.js";
 import type * as lib_discoveryPagination from "../lib/discoveryPagination.js";
+import type * as lib_geminiSpeech from "../lib/geminiSpeech.js";
 import type * as lib_input from "../lib/input.js";
 import type * as lib_legalEvidence from "../lib/legalEvidence.js";
 import type * as lib_legalRetrieval from "../lib/legalRetrieval.js";
@@ -89,6 +90,7 @@ declare const fullApi: ApiFromModules<{
   "lib/chat": typeof lib_chat;
   "lib/discovery": typeof lib_discovery;
   "lib/discoveryPagination": typeof lib_discoveryPagination;
+  "lib/geminiSpeech": typeof lib_geminiSpeech;
   "lib/input": typeof lib_input;
   "lib/legalEvidence": typeof lib_legalEvidence;
   "lib/legalRetrieval": typeof lib_legalRetrieval;

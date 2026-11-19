@@ -59,3 +59,47 @@ describe("Bhashini read-aloud", () => {
     expect(await t.action(api.voiceAudio.speak, { locale: "hi", text: "x".repeat(401), guestToken: GUEST })).toEqual({ kind: "unavailable", reason: "invalid_text" });
   });
 });
+
+describe("Gemini read-aloud for Kashmiri", () => {
+  const pcm = new Uint8Array([1, 0, 2, 0, 3, 0, 4, 0]);
+  const geminiAudio = (mimeType: string, data: Uint8Array) => new Response(JSON.stringify({ candidates: [{ content: { parts: [{ inlineData: { mimeType, data: Buffer.from(data).toString("base64") } }] } }] }));
+
+  it("speaks Kashmiri with Gemini (not Bhashini), wraps raw PCM as WAV, and saves the clip", async () => {
+    const t = convexTest(schema, modules);
+    vi.stubEnv("BHASHINI_API_KEY", "bhashini-key");
+    vi.stubEnv("GEMINI_API_KEY", "gemini-key");
+    const fetchMock = vi.fn(async (_url: string, _init: RequestInit) => geminiAudio("audio/L16;codec=pcm;rate=24000", pcm));
+    vi.stubGlobal("fetch", fetchMock);
+    const first = await t.action(api.voiceAudio.speak, { locale: "ks", text: "آداب، بہٕ چھس مدد کرنہٕ خٲطرٕ۔", guestToken: GUEST });
+    expect(first.kind).toBe("audio");
+    const [url, init] = fetchMock.mock.calls[0]!;
+    expect(url).toContain("generativelanguage.googleapis.com/v1beta/models/gemini-3.8-flash-lite-tts:generateContent");
+    expect(new Headers(init.headers).get("x-goog-api-key")).toBe("gemini-key");
+    const body = JSON.parse(String(init.body));
+    expect(body.generationConfig.responseModalities).toEqual(["AUDIO"]);
+    expect(body.contents[0].parts[0].text).toBe("آداب، بہٕ چھس مدد کرنہٕ خٲطرٕ۔");
+    const stored = new Uint8Array((await t.run(async ctx => {
+      const clip = await ctx.db.query("voiceClips").first();
+      return clip ? await (await ctx.storage.get(clip.storageId))!.arrayBuffer() : null;
+    }))!);
+    const view = new DataView(stored.buffer);
+    expect(String.fromCharCode(...stored.slice(0, 4))).toBe("RIFF");
+    expect(view.getUint32(24, true)).toBe(24000);
+    expect([...stored.slice(44)]).toEqual([...pcm]);
+    expect((await t.action(api.voiceAudio.speak, { locale: "ks", text: "آداب، بہٕ چھس مدد کرنہٕ خٲطرٕ۔", guestToken: GUEST })).kind).toBe("audio");
+    expect(fetchMock).toHaveBeenCalledTimes(1);
+  });
+
+  it("tries the next Gemini key, and reports failure when no key can speak", async () => {
+    const t = convexTest(schema, modules);
+    vi.stubEnv("GEMINI_API_KEY", "out-of-quota");
+    vi.stubEnv("GEMINI_API_KEYS", "spare");
+    const fetchMock = vi.fn(async (_url: string, init: RequestInit) => (new Headers(init.headers).get("x-goog-api-key") === "spare" ? geminiAudio("audio/wav", pcm) : new Response("quota", { status: 429 })));
+    vi.stubGlobal("fetch", fetchMock);
+    // A WAV that isn't really one is refused rather than saved.
+    expect(await t.action(api.voiceAudio.speak, { locale: "ks", text: "آداب", guestToken: GUEST })).toEqual({ kind: "unavailable", reason: "provider_failed" });
+    expect(fetchMock).toHaveBeenCalledTimes(2);
+    vi.stubEnv("GEMINI_API_KEYS", "");
+    expect(await t.action(api.voiceAudio.speak, { locale: "ks", text: "شکریہ", guestToken: GUEST })).toEqual({ kind: "unavailable", reason: "provider_failed" });
+  });
+});

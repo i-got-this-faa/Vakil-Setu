@@ -16,7 +16,8 @@ import { bhashiniKeys, bhashiniTranscribe, bhashiniTranslate } from "./lib/bhash
 import type { VoiceLocale } from "@legal-setu/domain";
 
 // Dogri: the AI answers in Hindi (which it handles reliably) and Bhashini translates the reply into Dogri.
-const TRANSLATED_REPLIES: Partial<Record<VoiceLocale, VoiceLocale>> = { doi: "hi" };
+// Gemini writes these replies in a better-supported language; IndicTrans2 (Bhashini) then translates them.
+const TRANSLATED_REPLIES: Partial<Record<VoiceLocale, VoiceLocale>> = { doi: "hi", ks: "en" };
 
 /**
  * One spoken (or typed) turn: Bhashini writes down what was said, the AI (college DGX models,
@@ -177,7 +178,7 @@ export const send = action({ args: voiceSendArgs, handler: async (ctx, args): Pr
       }
       const via = TRANSLATED_REPLIES[context.conversation.locale];
       if (via) {
-        // If translation fails, the Hindi reply is kept: understandable, and better than no answer.
+        // If translation fails, the untranslated reply is kept: understandable, and better than no answer.
         const translated = await bhashiniTranslate([answer.reply], via, context.conversation.locale, bhashiniKeys(process.env), signal).catch(() => null);
         if (translated?.[0]) answer = { ...answer, reply: translated[0] };
         console.info("voice_translate", { to: context.conversation.locale, ok: Boolean(translated) });

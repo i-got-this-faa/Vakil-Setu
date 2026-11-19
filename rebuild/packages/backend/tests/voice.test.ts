@@ -246,8 +246,24 @@ describe("voice helpers", () => {
     expect(view?.turns[0]?.reply).toEqual({ kind: "reply", text: "एह् कदूं होआ?" });
   });
 
+  it("answers Kashmiri speakers: Gemini replies in English, Bhashini turns the reply into Kashmiri", async () => {
+    const { t, fetchMock } = setup();
+    vi.stubEnv("BHASHINI_API_KEY", "test-key");
+    fetchMock.mockImplementation((async (...call: unknown[]) => String(call[0]).includes("bhashini")
+      ? new Response(JSON.stringify({ pipelineResponse: [{ taskType: "translation", output: [{ source: "When did this happen?", target: "یہ کر سپُد؟" }] }] }))
+      : gemini(answer({ lawQuery: "" }))) as never);
+    const result = await t.action(api.voice.send, { ...guestTurn(), locale: "ks" });
+    if (result.kind !== "available") throw new Error("expected reply");
+    const geminiBody = JSON.parse(String((fetchMock.mock.calls[0] as unknown as [string, RequestInit])[1].body));
+    expect(geminiBody.systemInstruction.parts[0].text).toContain("English");
+    const translation = JSON.parse(String((fetchMock.mock.calls[1] as unknown as [string, RequestInit])[1].body));
+    expect(translation.pipelineTasks[0].config.language).toEqual({ sourceLanguage: "en", targetLanguage: "ks" });
+    const view = await t.query(api.conversations.get, { conversationId: result.conversationId as Id<"conversations">, guestToken: GUEST });
+    expect(view?.turns[0]?.reply).toEqual({ kind: "reply", text: "یہ کر سپُد؟" });
+  });
+
   it("fails closed on unknown operator language codes", () => {
-    expect(voiceAllowedLanguages({})).toHaveLength(13);
+    expect(voiceAllowedLanguages({})).toHaveLength(14);
     expect(voiceAllowedLanguages({ AI_VOICE_LOCALES: "hi,xx" })).toEqual([]);
     expect(voiceAllowedLanguages({ AI_VOICE_LOCALES: "ta, hi" })).toEqual(["hi", "ta"]);
   });

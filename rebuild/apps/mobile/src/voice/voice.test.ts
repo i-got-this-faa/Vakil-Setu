@@ -1,7 +1,7 @@
 import { describe, expect, test } from "bun:test";
 import { VOICE_LOCALES } from "@legal-setu/domain";
 import { LANGUAGE_CHOICES, phrasesFor, speechTagFor } from "./languages";
-import { BHASHINI_VOICE_LOCALES, EMERGENCY_NUMBERS, bookingStatus, splitForSpeech, failureText, indianMobile, lawSourceLabel, rankLawyers } from "./logic";
+import { SERVER_VOICE_LOCALES, EMERGENCY_NUMBERS, bookingStatus, splitForSpeech, failureText, indianMobile, lawSourceLabel, rankLawyers } from "./logic";
 
 describe("phrases", () => {
   test("every spoken language has every phrase in its own words (no silent English fallback)", () => {
@@ -98,6 +98,6 @@ describe("splitForSpeech", () => {
     expect(pieces.join(" ").split(" ").every((word) => word === "शब्द" || word === "अंत।")).toBe(true);
   });
   test("every language except Urdu has a natural voice", () => {
-    expect(VOICE_LOCALES.filter((code) => !BHASHINI_VOICE_LOCALES.includes(code))).toEqual(["ur"]);
+    expect(VOICE_LOCALES.filter((code) => !SERVER_VOICE_LOCALES.includes(code))).toEqual(["ur"]);
   });
 });
