@@ -27,3 +27,26 @@ export function chooseSpeechLanguage(voices: readonly DeviceVoice[], languageTag
   if (primary && reported.some((tag) => primarySubtag(tag) === primary)) return primary;
   return null;
 }
+
+/** Hindi voices can read Dogri's Devanagari script; this is a fallback voice, not native Dogri speech. */
+export function chooseReadAloudLanguage(voices: readonly DeviceVoice[], languageTag: string): string | null {
+  return chooseSpeechLanguage(voices, languageTag)
+    ?? (primarySubtag(languageTag) === "doi" ? chooseSpeechLanguage(voices, "hi-IN") : null);
+}
+
+/** Spoken instructions omit button size; the visible greeting stays unchanged. */
+export function greetingForSpeech(text: string): string {
+  return text.replace(/\bbig button\b/gi, "button")
+    .replace(/(?:बड़ा|बड़े|बड्डा|बड्डे) बटन/g, "बटन")
+    .replace("ਵੱਡਾ ਬਟਨ", "ਬਟਨ")
+    .replace("বড় বোতাম", "বোতাম")
+    .replace("मोठे बटण", "बटण")
+    .replace("பெரிய பட்டனை", "பட்டனை")
+    .replace("పెద్ద బటన్", "బటన్")
+    .replace("મોટું બટન", "બટન")
+    .replace("ದೊಡ್ಡ ಬಟನ್", "ಬಟನ್")
+    .replace("വലിയ ബട്ടൺ", "ബട്ടൺ")
+    .replace("ବଡ଼ ବଟନ୍", "ବଟନ୍")
+    .replace("بڑا بٹن", "بٹن")
+    .replace("بوڑ بٹن", "بٹن");
+}

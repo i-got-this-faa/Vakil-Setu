@@ -4,6 +4,7 @@ import { getRandomBytes } from "expo-crypto";
 import { isVoiceLocale, type VoiceLocale } from "@legal-setu/domain";
 import { createContext, useCallback, useContext, useEffect, useMemo, useState, type ReactNode } from "react";
 import { phrasesFor, type Phrases } from "./languages";
+import { FRESH_CONVERSATION, restoreConversation, type ConversationSelection } from "./conversation-selection";
 
 const LOCALE_KEY = "legal-setu.voice-locale";
 const CONVERSATION_KEY = "legal-setu.conversation";
@@ -21,6 +22,7 @@ interface VoicePrefs {
   readonly phrases: Phrases;
   readonly guestToken: string | null;
   readonly conversationId: string | null;
+  readonly resumeLatest: boolean;
   setLocale(locale: VoiceLocale): void;
   setConversationId(id: string | null): void;
   /** After sign-out (or once a guest token is claimed) the device starts a fresh guest identity. */
@@ -33,7 +35,9 @@ export function VoicePrefsProvider({ children }: { children: ReactNode }) {
   const [ready, setReady] = useState(false);
   const [locale, setLocaleState] = useState<VoiceLocale | null>(null);
   const [guestToken, setGuestToken] = useState<string | null>(null);
-  const [conversationId, setConversationIdState] = useState<string | null>(null);
+  const [selection, setSelection] = useState<ConversationSelection>({ kind: "resume" });
+  const conversationId = selection.kind === "open" ? selection.id : null;
+  const resumeLatest = selection.kind === "resume";
 
   useEffect(() => {
     let active = true;
@@ -49,7 +53,7 @@ export function VoicePrefsProvider({ children }: { children: ReactNode }) {
       }
       if (!active) return;
       if (isVoiceLocale(storedLocale)) setLocaleState(storedLocale);
-      setConversationIdState(storedConversation);
+      setSelection(restoreConversation(storedConversation, process.env.EXPO_PUBLIC_DEMO_MODE === "1"));
       setGuestToken(token);
       setReady(true);
     })();
@@ -63,8 +67,8 @@ export function VoicePrefsProvider({ children }: { children: ReactNode }) {
     AsyncStorage.setItem(LOCALE_KEY, next).catch(() => undefined);
   }, []);
   const setConversationId = useCallback((id: string | null) => {
-    setConversationIdState(id);
-    (id ? AsyncStorage.setItem(CONVERSATION_KEY, id) : AsyncStorage.removeItem(CONVERSATION_KEY)).catch(() => undefined);
+    setSelection(id ? { kind: "open", id } : { kind: "fresh" });
+    AsyncStorage.setItem(CONVERSATION_KEY, id ?? FRESH_CONVERSATION).catch(() => undefined);
   }, []);
   const resetGuest = useCallback(() => {
     const token = newGuestToken();
@@ -74,8 +78,8 @@ export function VoicePrefsProvider({ children }: { children: ReactNode }) {
   }, [setConversationId]);
 
   const value = useMemo<VoicePrefs>(() => ({
-    ready, locale, phrases: phrasesFor(locale ?? "hi"), guestToken, conversationId, setLocale, setConversationId, resetGuest,
-  }), [ready, locale, guestToken, conversationId, setLocale, setConversationId, resetGuest]);
+    ready, locale, phrases: phrasesFor(locale ?? "hi"), guestToken, conversationId, resumeLatest, setLocale, setConversationId, resetGuest,
+  }), [ready, locale, guestToken, conversationId, resumeLatest, setLocale, setConversationId, resetGuest]);
   return <Context.Provider value={value}>{children}</Context.Provider>;
 }
 

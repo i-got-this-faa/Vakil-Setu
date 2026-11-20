@@ -1,12 +1,12 @@
 import { useAction } from "convex/react";
-import { createAudioPlayer, type AudioPlayer } from "expo-audio";
+import { createAudioPlayer, setAudioModeAsync, type AudioPlayer } from "expo-audio";
 import * as Speech from "expo-speech";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { api } from "@legal-setu/backend/api";
 import type { VoiceLocale } from "@legal-setu/domain";
-import { chooseSpeechLanguage, type DeviceVoice } from "../lib/speech";
+import { chooseReadAloudLanguage, greetingForSpeech, type DeviceVoice } from "../lib/speech";
 import { speechTagFor } from "./languages";
-import { BHASHINI_VOICE_LOCALES, splitForSpeech } from "./logic";
+import { SERVER_VOICE_LOCALES, splitForSpeech } from "./logic";
 import { useVoicePrefs } from "./prefs";
 
 let voicesRequest: Promise<DeviceVoice[]> | null = null;
@@ -20,15 +20,16 @@ const LIP_TICK_MS = 260;
 
 /**
  * Reads replies aloud. Uses Bhashini's natural Indian voices (made on the server, sentence by sentence,
- * so the first sentence starts quickly); falls back to the phone's own voice for Urdu or if Bhashini fails.
+ * so the first sentence starts quickly), or Gemini for Kashmiri; falls back to the phone's own voice for Urdu or if that fails.
  * `canSpeak` is false only when neither is available; the text stays large on screen.
  */
 export function useSpeaker(locale: VoiceLocale) {
   const { guestToken } = useVoicePrefs();
   const speakRemote = useAction(api.voiceAudio.speak);
-  const natural = BHASHINI_VOICE_LOCALES.includes(locale);
+  const natural = SERVER_VOICE_LOCALES.includes(locale);
   const [language, setLanguage] = useState<string | null | undefined>(undefined);
   const [speakingId, setSpeakingId] = useState<string | null>(null);
+  const [notice, setNotice] = useState("");
   // Word-boundary listeners (drives the avatar's lips) kept in a ref so words don't re-render the screen.
   const wordListeners = useRef(new Set<() => void>());
   const onWord = useCallback((listener: () => void) => {
@@ -48,7 +49,7 @@ export function useSpeaker(locale: VoiceLocale) {
     deviceVoices().then((voices) => {
       if (!active) return;
       // Some Android engines report no list but still speak; try the tag anyway in that case.
-      setLanguage(voices.length === 0 ? speechTagFor(locale) : chooseSpeechLanguage(voices, speechTagFor(locale)));
+      setLanguage(voices.length === 0 ? speechTagFor(locale === "doi" ? "hi" : locale) : chooseReadAloudLanguage(voices, speechTagFor(locale)));
     });
     return () => {
       active = false;
@@ -77,29 +78,43 @@ export function useSpeaker(locale: VoiceLocale) {
   }, []);
 
   const speakOnDevice = useCallback((id: string, text: string, mine: number) => {
-    if (!language) return done(id, mine);
+    if (!language) {
+      setNotice(locale === "hi" || locale === "doi" ? "इस भाषा की आवाज़ उपलब्ध नहीं है। जवाब नीचे पढ़ सकते हैं।" : "Audio is unavailable for this language. You can read the reply below.");
+      return done(id, mine);
+    }
+    if (locale === "doi" && language.startsWith("hi")) setNotice("डोगरी पाठ हिन्दी आवाज़ में पढ़ा जा रहा है।");
     Speech.speak(text, {
       language,
       rate: 0.92,
       onBoundary: tickWord,
       onDone: () => done(id, mine),
       onStopped: () => done(id, mine),
-      onError: () => done(id, mine),
+      onError: () => {
+        if (session.current !== mine) return;
+        setNotice(locale === "hi" || locale === "doi" ? "आवाज़ नहीं चल सकी। जवाब नीचे पढ़ सकते हैं।" : "Audio could not play. You can read the reply below.");
+        done(id, mine);
+      },
     });
-  }, [done, language, tickWord]);
+  }, [done, language, locale, tickWord]);
 
   // Plays one clip; resolves true when it finished, false if it was stopped or failed.
   const playClip = useCallback((url: string, mine: number) => new Promise<boolean>((resolve) => {
     if (session.current !== mine) return resolve(false);
     let settled = false;
+    let clip: AudioPlayer | null = null;
+    let subscription: { remove(): void } | null = null;
+    let loadTimer: ReturnType<typeof setTimeout> | undefined;
+    let endTimer: ReturnType<typeof setTimeout> | undefined;
     const finish = (completed: boolean) => {
       if (settled) return;
       settled = true;
+      clearTimeout(loadTimer);
+      clearTimeout(endTimer);
       if (ticker.current) clearInterval(ticker.current);
       ticker.current = null;
       subscription?.remove();
       try {
-        clip.remove();
+        clip?.remove();
       } catch {
         // Already released.
       }
@@ -107,33 +122,45 @@ export function useSpeaker(locale: VoiceLocale) {
       if (finishClip.current === finish) finishClip.current = null;
       resolve(completed);
     };
-    const clip = createAudioPlayer({ uri: url });
-    player.current = clip;
     finishClip.current = finish;
-    const subscription = clip.addListener("playbackStatusUpdate", (status) => {
-      if (status.didJustFinish) finish(true);
-    });
-    ticker.current = setInterval(() => {
-      if (clip.playing) tickWord();
-    }, LIP_TICK_MS);
     try {
+      clip = createAudioPlayer({ uri: url });
+      player.current = clip;
+      // Failed downloads must release playback so device speech can take over.
+      loadTimer = setTimeout(() => finish(false), 12000);
+      endTimer = setTimeout(() => finish(false), 120000);
+      subscription = clip.addListener("playbackStatusUpdate", (status) => {
+        if (status.isLoaded) clearTimeout(loadTimer);
+        if (status.didJustFinish) finish(true);
+      });
+      ticker.current = setInterval(() => {
+        if (clip?.playing) tickWord();
+      }, LIP_TICK_MS);
       clip.play();
     } catch {
       finish(false);
     }
   }), [tickWord]);
 
-  const speak = useCallback((id: string, text: string) => {
+  const speak = useCallback((id: string, displayText: string) => {
+    const text = id === "greeting" ? greetingForSpeech(displayText) : displayText;
     if (!text.trim()) return;
     halt();
+    setNotice("");
     const mine = session.current;
     setSpeakingId(id);
-    if (!natural) return speakOnDevice(id, text, mine);
     const pieces = splitForSpeech(text);
     const fetchPiece = (piece: string) => speakRemote({ locale, text: piece, ...(guestToken ? { guestToken } : {}) })
       .then((result) => (result.kind === "audio" ? result.url : null))
       .catch(() => null);
     void (async () => {
+      try {
+        await setAudioModeAsync({ allowsRecording: false, playsInSilentMode: true, shouldPlayInBackground: false });
+      } catch {
+        // Device speech may still work if player session setup fails.
+      }
+      if (session.current !== mine) return;
+      if (!natural || (locale === "doi" && language?.startsWith("hi"))) return speakOnDevice(id, text, mine);
       let next: Promise<string | null> | null = fetchPiece(pieces[0]!);
       for (let index = 0; index < pieces.length; index++) {
         const url: string | null = await next!;
@@ -148,12 +175,12 @@ export function useSpeaker(locale: VoiceLocale) {
       }
       done(id, mine);
     })();
-  }, [done, guestToken, halt, locale, natural, playClip, speakOnDevice, speakRemote]);
+  }, [done, guestToken, halt, language, locale, natural, playClip, speakOnDevice, speakRemote]);
 
   const stop = useCallback(() => {
     halt();
     setSpeakingId(null);
   }, [halt]);
 
-  return { ready: natural || language !== undefined, canSpeak: natural || Boolean(language), speakingId, speak, stop, onWord };
+  return { ready: language !== undefined, canSpeak: natural || Boolean(language), speakingId, speak, stop, onWord, notice };
 }

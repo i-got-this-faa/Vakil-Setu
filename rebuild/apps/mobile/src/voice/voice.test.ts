@@ -1,7 +1,7 @@
 import { describe, expect, test } from "bun:test";
 import { VOICE_LOCALES } from "@legal-setu/domain";
-import { LANGUAGE_CHOICES, phrasesFor, speechTagFor } from "./languages";
-import { BHASHINI_VOICE_LOCALES, EMERGENCY_NUMBERS, bookingStatus, splitForSpeech, failureText, indianMobile, lawSourceLabel, rankLawyers } from "./logic";
+import { LANGUAGE_CHOICES, UPCOMING_LANGUAGES, phrasesFor, speechTagFor } from "./languages";
+import { SERVER_VOICE_LOCALES, EMERGENCY_NUMBERS, bookingStatus, splitForSpeech, failureText, indianMobile, lawSourceLabel, rankLawyers } from "./logic";
 
 describe("phrases", () => {
   test("every spoken language has every phrase in its own words (no silent English fallback)", () => {
@@ -20,6 +20,12 @@ describe("phrases", () => {
     expect(LANGUAGE_CHOICES.find((choice) => choice.code === "doi")?.name).toBe("डोगरी");
     expect(speechTagFor("en")).toBe("en-IN");
     expect(speechTagFor("or")).toBe("or-IN");
+  });
+  test("working and coming-soon languages together cover all 22 scheduled languages, with no overlap", () => {
+    const working = VOICE_LOCALES.filter((code) => code !== "en") as readonly string[];
+    const upcoming = UPCOMING_LANGUAGES.map((language) => language.code);
+    expect(upcoming.filter((code) => working.includes(code))).toEqual([]);
+    expect(new Set([...working, ...upcoming]).size).toBe(22);
   });
 });
 
@@ -98,6 +104,6 @@ describe("splitForSpeech", () => {
     expect(pieces.join(" ").split(" ").every((word) => word === "शब्द" || word === "अंत।")).toBe(true);
   });
   test("every language except Urdu has a natural voice", () => {
-    expect(VOICE_LOCALES.filter((code) => !BHASHINI_VOICE_LOCALES.includes(code))).toEqual(["ur"]);
+    expect(VOICE_LOCALES.filter((code) => !SERVER_VOICE_LOCALES.includes(code))).toEqual(["ur"]);
   });
 });

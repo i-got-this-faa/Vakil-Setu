@@ -15,7 +15,10 @@ import { useVoicePrefs } from "./prefs";
 import { useSpeaker } from "./speaker";
 import { BigButton, Big, Card, Plain, voice } from "./ui";
 
-type Prepared = { caseId: Id<"cases">; summaryVersion: number; summary: { text: string } };
+/** Payment is not built yet; demo mode shows the planned fee step (src/demo, EXPO_PUBLIC_DEMO_MODE=1). */
+const DEMO_MODE = process.env.EXPO_PUBLIC_DEMO_MODE === "1";
+
+type Prepared ={ caseId: Id<"cases">; summaryVersion: number; summary: { text: string } };
 
 export function LawyerScreen({ locale, advocateId }: { locale: VoiceLocale; advocateId: Id<"advocates"> }) {
   const phrases = phrasesFor(locale);
@@ -98,7 +101,8 @@ export function LawyerScreen({ locale, advocateId }: { locale: VoiceLocale; advo
       {done ? (
         <Card tone="ok">
           <Big rtl={rtl}>{phrases.requestSent}</Big>
-          <BigButton icon="mic" label={phrases.backToTalk} onPress={() => router.dismissTo("/talk")} />
+          {DEMO_MODE ? <BigButton icon="card" label={locale === "doi" ? "फीस भरो ते मुलाकात पक्की करो" : locale === "hi" ? "फ़ीस भरें और मुलाक़ात पक्की करें" : "Pay fee and confirm"} tone="lawyer" onPress={() => router.push("/payment")} /> : null}
+          <BigButton icon="mic" label={phrases.backToTalk} tone={DEMO_MODE ? "plain" : "brand"} onPress={() => router.dismissTo("/talk")} />
         </Card>
       ) : (
         <>

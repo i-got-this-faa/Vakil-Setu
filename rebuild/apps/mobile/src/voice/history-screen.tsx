@@ -7,6 +7,7 @@ import { useState } from "react";
 import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 import type { VoiceLocale } from "@legal-setu/domain";
 import { formatIst } from "../lib/format";
+import { convexErrorMessage } from "../lib/errors";
 import { RTL_LOCALES, phrasesFor, speechTagFor } from "./languages";
 import { useVoiceAccount } from "./account";
 import { useVoicePrefs } from "./prefs";
@@ -24,15 +25,20 @@ export function HistoryScreen({ locale }: { locale: VoiceLocale }) {
   const startNew = useMutation(api.conversations.startNew);
   const clerk = useClerk();
   const [busy, setBusy] = useState(false);
+  const [error, setError] = useState("");
 
   function open(id: string) {
     setConversationId(id);
     router.dismissTo("/talk");
   }
   async function newProblem() {
+    if (busy || !ready) return;
     setBusy(true);
+    setError("");
     try {
       open(await startNew({ locale, consent: true }));
+    } catch (failure) {
+      setError(convexErrorMessage(failure));
     } finally {
       setBusy(false);
     }
@@ -51,7 +57,8 @@ export function HistoryScreen({ locale }: { locale: VoiceLocale }) {
   return (
     <ScrollView style={styles.page} contentContainerStyle={styles.content}>
       <Stack.Screen options={{ title: phrases.myConversations }} />
-      <BigButton icon="add-circle" label={phrases.newProblem} busy={busy} onPress={() => void newProblem()} />
+      <BigButton icon="add-circle" label={phrases.newProblem} busy={busy} disabled={!ready} onPress={() => void newProblem()} />
+      {error ? <Card tone="warn"><Plain rtl={rtl}>{error}</Plain></Card> : null}
 
       {bookings.results.length > 0 ? <Text style={styles.section}>{phrases.appointment}</Text> : null}
       {bookings.results.map((booking) => (

@@ -1,5 +1,6 @@
 import { Stack } from "expo-router";
 import { StatusBar } from "expo-status-bar";
+import { View } from "react-native";
 import { ServiceNotConfigured } from "../src/components/service-not-configured";
 import { DataErrorBoundary } from "../src/components/data-error-boundary";
 import { parseServiceConfig } from "../src/lib/config";
@@ -17,6 +18,7 @@ const serviceConfig = parseServiceConfig({
 export default function RootLayout() {
   return (
     <LocaleProvider>
+      <View style={{ flex: 1 }}>
       <StatusBar style="dark" />
       {serviceConfig.kind === "configured" ? (
         <ServiceProviders config={serviceConfig}>
@@ -41,6 +43,7 @@ export default function RootLayout() {
       ) : (
         <ServiceNotConfigured missing={serviceConfig.missing} />
       )}
+      </View>
     </LocaleProvider>
   );
 }

@@ -853,7 +853,7 @@ const ur: Partial<Phrases> = {
 // Dogri: machine-translated from Hindi with Bhashini (IndicTrans2), then hand-corrected. Needs a Dogri speaker's review.
 const doi: Partial<Phrases> = {
   name: "डोगरी",
-  greeting: "नमस्ते। में तुंʼदी मदद करने लेई आं। अपनी समस्या गी अपने शब्दें च दस्सो। बड्डे बटन गी दबाओ ते बोलो।",
+  greeting: "नमस्ते। में तुंʼदी मदद करने लेई आं। अपनी समस्या गी अपने शब्दें च दस्सो। बटन गी दबाओ ते बोलो।",
   tapToSpeak: "दबाओ ते बोलो",
   listening: "सुना दे आं… बोलियै परतियै दबाओ",
   cancelRecording: "रद्द करो",
@@ -915,7 +915,73 @@ const doi: Partial<Phrases> = {
   speakFirst: "पैह्लें मिगी अपनी समस्या दे बारे च किश दस्सो, फ्ही में इसगी वकील गी भेजी सकनां।",
   error: "किश गलत होई गेआ। परतियै कोशश करो।",
 };
-const TABLE: Record<VoiceLocale, Partial<Phrases>> = { en, hi, pa, doi, bn, mr, ta, te, gu, kn, ml, or, ur };
+// Kashmiri (Perso-Arabic script). Machine-translated with IndicTrans2 (Bhashini), a few phrases fixed by hand;
+// needs review by a native Kashmiri speaker before release.
+const ks: Partial<Phrases> = {
+  name: "کٲشُر",
+  greeting: "آداب۔ بہٕ چھس ییٚتہ تۄہہ مدد کرنہٕ خٲطرٕ۔ پنُن مسلہٕ ونِو پنٛنیٚن لفظن منٛز۔ بوڑ بٹن دبٲیو تہٕ ونِو۔",
+  tapToSpeak: "دبٲیو تہٕ ونِو",
+  listening: "بوزان چھس… ونِتھ دبٲیو دوبارٕ",
+  cancelRecording: "رد کریو",
+  emergency: "ایمرجنسی",
+  emergencyTitle: "ایمرجنسی مدد",
+  emergencyHint: "کال کرنہٕ باپتھ تھٲوو بٹن۔ یم کال چھ مفت۔",
+  callPolice: "پولیس، ایمبولینس، فائر",
+  callWomen: "زنانہٕ خٲطرٕ مدد",
+  callChild: "شرؠن خٲطرٕ مدد",
+  callLegalAid: "مفت قانونی مدد",
+  attach: "اکھ کاغذ کریو شٲمل",
+  attachHint: "مےٚ ہاو نوٹس، ایف آٮٔی آر، چٹھہ یا محادٕ۔ بہٕ چھس وضاحت کران۔",
+  takePhoto: "فوٹو بنٲیو",
+  choosePhoto: "اکھ فوٹو ژارنہٕ",
+  choosePdf: "پی ڈی ایف ژارنہٕ",
+  documentTooBig: "یہ فائل چھےٚ واریاہ بٔڑ۔ امہ بجایہ کٔرو مہربٲنی کٔرتھ پیجٕچ اکھ فوٹو۔",
+  documentProblem: "بہٕ ہیٚکہٕ نہٕ یہ فائل کھولتھ۔ مہربٲنی کٔرتھ کٔرو اکھ صاف فوٹو آزمٲئش۔",
+  thinking: "سمجھان چھس…",
+  talkToLawyer: "أکس وکیلس سۭتۍ کٔرو کتھ",
+  typeInstead: "امہ بجایہ لیکھو",
+  typeHere: "ییٚتہ لیکھو",
+  send: "سوز",
+  sayAgain: "افسوس، بہٕ ہیٚکہٕ نہٕ یہ کٔرتھ مہربٲنی کٔرتھ دبوو بٹن تہٕ بیٚیہ ؤنۍ۔",
+  busy: "واریاہ لکھ چھ وینکیس کتھ کران۔ مہربٲنی کٔرتھ کٔرو کینژن منٹن منٛز دوبارٕ کوٗشش۔",
+  guestLimit: "کتھ باتھ جٲری تھاونہٕ تہٕ پننہ کتھ باتھ بچاونہٕ باپتھ کٔرو مہربٲنی کٔرتھ پننس فون نمبرس سۭتۍ سائن ان۔ یہ چھ مفت۔",
+  signIn: "فون سۭتۍ کٔرو سائن ان",
+  phoneNumber: "تہنٛد فون نمبر",
+  sendSms: "ایس ایم ایس ذٔریعہٕ کٔرو کوڈ حٲصل",
+  sendWhatsApp: "وٹس ایپ پؠٹھ کٔرو کوڈ حٲصل",
+  enterCode: "تۄہہ موصول گژھن وول کوڈ کٔرو ایٚنٹر",
+  continue: "جٲری تھوو",
+  yourName: "تُہُنٛد ناو کیا چھُ؟",
+  micPermission: "مہربٲنی کٔرتھ د مائیکروفونس اجازت تاکہ أسۍ ہؠکو تۄہہ ؤنتھ۔",
+  consent: "تہنٛز آواز چھ صرف تۄہہ سمجنہٕ خٲطرٕ اے آٮٔی سٔروسزس (بھشینی، سٲنؠن کالجن ہنٛد ایم آی ای ٹی اے آٮٔی سرور، تہٕ گوگل بطور بیک اپ) سوزنہٕ یوان۔ یہ چھ عام مدد، نہٕ کہ قونوٗنی مشورٕ۔",
+  lawyersTitle: "وکلا یم ہیکن مدد کرتھ",
+  lawyersHint: "تم وکلا یم تٗہنز زبان بولان چھ تہٕ تٗہنز مسٲئل چھ جانان تمن چھ گۄڈٕ ہاونہٕ یوان۔",
+  noLawyers: "وینکینس چھنہٕ کانٛہہ وکیل دٔستیاب۔ مہربٲنی کٔرتھ کٔرو پتہٕ بیٚیہ چیک۔",
+  chooseTime: "اکھ وقت ژارنہٕ",
+  noTimes: "امہ وکیلس چھ نہٕ وینکینس کانٛہہ فرصت وقت۔",
+  shareAndBook: "میون مسلہٕ سوز اتھ وکیلس تہٕ ون یہ وقت۔",
+  sharedSummary: "یہ چھ وکیل پرناوان:",
+  requestSent: "تہنٛز درخاست چھ سوزنہٕ آمٕژ۔ وکیل کر جلدی جواب۔ تہۍ ہیٚکوا مےٚ سۭتۍ کتھ کٔرتھ۔",
+  myConversations: "میٲنۍ کتھ باتھ",
+  newProblem: "نوٚو مسلہٕ",
+  backToTalk: "کتھ باتھ پیٹھ واپس",
+  appointment: "وکیلن ہنٛز تقرری",
+  statusPending: "وکیلن ہنٛد انتظار",
+  statusAccepted: "تصدیق شدہ",
+  statusDeclined: "وکیلن ووٚن نہٕ",
+  statusCancelled: "رد کرنہٕ آمت",
+  statusCompleted: "کرنہٕ آمت",
+  statusExpired: "وقتس پیٹھ چھنہٕ کانٛہہ جواب",
+  language: "زبان",
+  signOut: "سائن آوٹ",
+  listenAgain: "بییہٕ بوزن۔",
+  lawSource: "قانونس پیٹھ",
+  stop: "رُکِو",
+  yearsExperience: "ؤری وادن ہنٛد تجربہٕ",
+  speakFirst: "گۄڈٕ ون مےٚ پنٛنس مسلس متعلق کیٚنٛہہ، پتہٕ ہؠکو بہٕ یہ وکیلس سوزتھ۔",
+  error: "کینٛہہ گۄو غلط۔ مہربٲنی کٔرتھ کٔرو دوبارٕ کوٗشش۔",
+};
+const TABLE: Record<VoiceLocale, Partial<Phrases>> = { en, hi, pa, doi, ks, bn, mr, ta, te, gu, kn, ml, or, ur };
 
 export function phrasesFor(locale: VoiceLocale): Phrases {
   return { ...en, ...TABLE[locale] };
@@ -926,6 +992,23 @@ export function speechTagFor(locale: VoiceLocale): string {
   return locale === "en" ? "en-IN" : `${locale}-IN`;
 }
 
-export const RTL_LOCALES: readonly VoiceLocale[] = ["ur"];
+export const RTL_LOCALES: readonly VoiceLocale[] = ["ur", "ks"];
 
 export const LANGUAGE_CHOICES = VOICE_LOCALES.map((code) => ({ code, name: phrasesFor(code).name }));
+
+/**
+ * The rest of India's 22 scheduled languages (Eighth Schedule), shown on the language screen as
+ * "coming soon" placeholders. They are not VoiceLocales: the backend does not accept them yet.
+ * Move a language into VOICE_LOCALES (with phrases) when speech and translation support lands.
+ */
+export const UPCOMING_LANGUAGES: readonly { code: string; name: string; english: string }[] = [
+  { code: "as", name: "অসমীয়া", english: "Assamese" },
+  { code: "brx", name: "बड़ो", english: "Bodo" },
+  { code: "kok", name: "कोंकणी", english: "Konkani" },
+  { code: "mai", name: "मैथिली", english: "Maithili" },
+  { code: "mni", name: "ꯃꯩꯇꯩꯂꯣꯟ", english: "Manipuri" },
+  { code: "ne", name: "नेपाली", english: "Nepali" },
+  { code: "sa", name: "संस्कृतम्", english: "Sanskrit" },
+  { code: "sat", name: "ᱥᱟᱱᱛᱟᱲᱤ", english: "Santali" },
+  { code: "sd", name: "سنڌي", english: "Sindhi" },
+];

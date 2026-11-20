@@ -4,7 +4,7 @@ import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
 import type { VoiceLocale } from "@legal-setu/domain";
-import { LANGUAGE_CHOICES, speechTagFor } from "./languages";
+import { LANGUAGE_CHOICES, UPCOMING_LANGUAGES, speechTagFor } from "./languages";
 import { useVoicePrefs } from "./prefs";
 import { voice } from "./ui";
 
@@ -37,6 +37,13 @@ export function LanguageScreen({ allowed }: { allowed: readonly VoiceLocale[] | 
             </Pressable>
           );
         })}
+        {UPCOMING_LANGUAGES.map((upcoming) => (
+          <View key={upcoming.code} accessible accessibilityRole="button" accessibilityState={{ disabled: true }}
+            accessibilityLabel={`${upcoming.name}, ${upcoming.english}, coming soon`} style={[styles.choice, styles.upcoming]}>
+            <Text style={[styles.name, styles.upcomingName]}>{upcoming.name}</Text>
+            <Text style={styles.soon}>जल्द आ रहा है · Coming soon</Text>
+          </View>
+        ))}
       </ScrollView>
     </SafeAreaView>
   );
@@ -50,4 +57,7 @@ const styles = StyleSheet.create({
   choice: { width: "46%", minHeight: 84, borderRadius: 20, backgroundColor: voice.card, borderWidth: 2, borderColor: voice.line, alignItems: "center", justifyContent: "center", padding: 12 },
   selected: { backgroundColor: voice.brand, borderColor: voice.brand },
   name: { fontSize: 26, fontWeight: "700", color: voice.ink },
+  upcoming: { borderStyle: "dashed", opacity: 0.55 },
+  upcomingName: { color: voice.muted },
+  soon: { marginTop: 4, fontSize: 12, color: voice.muted, textAlign: "center" },
 });

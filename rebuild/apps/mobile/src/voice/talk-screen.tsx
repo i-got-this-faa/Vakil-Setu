@@ -1,5 +1,5 @@
 import { Ionicons } from "@expo/vector-icons";
-import { useAction, useQuery } from "convex/react";
+import { useAction, useMutation, useQuery } from "convex/react";
 import { ConvexError } from "convex/values";
 import { api } from "@legal-setu/backend/api";
 import type { Id } from "@legal-setu/backend/data-model";
@@ -10,6 +10,7 @@ import { KeyboardAvoidingView, Linking, Modal, Pressable, ScrollView, StyleSheet
 import { SafeAreaView } from "react-native-safe-area-context";
 import type { VoiceLocale } from "@legal-setu/domain";
 import { formatIst } from "../lib/format";
+import { convexErrorMessage } from "../lib/errors";
 import { RTL_LOCALES, speechTagFor, type Phrases } from "./languages";
 import { bookingStatus, failureText, lawSourceLabel, type LawSource } from "./logic";
 import { useClaimGuestConversation, useVoiceAccount } from "./account";
@@ -23,27 +24,29 @@ import { pickDocument, type DocumentSource, type PickedDocument } from "./docume
 type Input = { kind: "audio"; mimeType: Recording["mimeType"]; data: ArrayBuffer } | { kind: "text"; text: string } | PickedDocument;
 
 export function TalkScreen({ locale }: { locale: VoiceLocale }) {
-  const { phrases, guestToken, conversationId, setConversationId } = useVoicePrefs();
+  const { phrases, guestToken, conversationId, resumeLatest, setConversationId } = useVoicePrefs();
   const account = useVoiceAccount();
   useClaimGuestConversation(account);
   const rtl = RTL_LOCALES.includes(locale);
   const speaker = useSpeaker(locale);
   const send = useAction(api.voice.send);
+  const startNew = useMutation(api.conversations.startNew);
   const asGuest = account.kind !== "ready";
   const tokenArg = asGuest && guestToken ? { guestToken } : {};
 
-  const latest = useQuery(api.conversations.latest, !conversationId && account.kind !== "loading" ? tokenArg : "skip");
+  const latest = useQuery(api.conversations.latest, resumeLatest && !conversationId && account.kind !== "loading" ? tokenArg : "skip");
   const data = useQuery(api.conversations.get, conversationId && account.kind !== "loading" ? { conversationId: conversationId as Id<"conversations">, ...tokenArg } : "skip");
 
   // Resume the newest conversation, and forget one this device can no longer open.
   useEffect(() => {
-    if (!conversationId && latest) setConversationId(latest._id);
-  }, [conversationId, latest, setConversationId]);
+    if (resumeLatest && !conversationId && latest) setConversationId(latest._id);
+  }, [resumeLatest, conversationId, latest, setConversationId]);
   useEffect(() => {
     if (conversationId && data === null && (account.kind === "guest" || account.kind === "ready")) setConversationId(null);
   }, [conversationId, data, account.kind, setConversationId]);
 
   const [sending, setSending] = useState(false);
+  const [starting, setStarting] = useState(false);
   const [notice, setNotice] = useState("");
   const [guestLimit, setGuestLimit] = useState(false);
   const [typing, setTyping] = useState(false);
@@ -53,6 +56,7 @@ export function TalkScreen({ locale }: { locale: VoiceLocale }) {
   const greeted = useRef(false);
 
   const submit = useCallback(async (input: Input) => {
+    if (sending || starting) return;
     setSending(true);
     setNotice("");
     speaker.stop();
@@ -83,7 +87,7 @@ export function TalkScreen({ locale }: { locale: VoiceLocale }) {
     } finally {
       setSending(false);
     }
-  }, [asGuest, conversationId, guestToken, locale, phrases, send, setConversationId, speaker]);
+  }, [asGuest, conversationId, guestToken, locale, phrases, send, setConversationId, speaker, sending, starting]);
 
   const recorder = useVoiceRecorder((recording) => {
     if (recording) void submit({ kind: "audio", mimeType: recording.mimeType, data: recording.data });
@@ -119,7 +123,7 @@ export function TalkScreen({ locale }: { locale: VoiceLocale }) {
   const scroll = useRef<ScrollViewInstance>(null);
   const suggestLawyer = data?.profile.suggestLawyer === true;
   const recording = recorder.state === "recording";
-  const busy = sending || recorder.state === "stopping";
+  const busy = sending || starting || recorder.state === "stopping";
   const waitingForReply = busy || turns.some((turn) => turn.reply.kind === "pending");
   const mood: AvatarMood = speaker.speakingId ? "speaking" : recording ? "listening" : waitingForReply ? "thinking" : "idle";
 
@@ -145,10 +149,31 @@ export function TalkScreen({ locale }: { locale: VoiceLocale }) {
   }
 
   function sendTyped() {
+    if (busy) return;
     const text = draft.trim();
     if (!text) return;
     setDraft("");
     void submit({ kind: "text", text });
+  }
+
+  async function newProblem() {
+    if ((account.kind !== "ready" && account.kind !== "guest") || busy || recording || waitingForReply) return;
+    setStarting(true);
+    setNotice("");
+    speaker.stop();
+    try {
+      // Guest sends already create conversations; retain the guest token and its server-side allowance.
+      const id = account.kind === "ready" ? await startNew({ locale, consent: true }) : null;
+      awaitingSpeech.current = null;
+      greeted.current = false;
+      setDraft("");
+      setGuestLimit(account.kind === "guest" && outOfGuestTurns);
+      setConversationId(id);
+    } catch (error) {
+      setNotice(convexErrorMessage(error));
+    } finally {
+      setStarting(false);
+    }
   }
 
   return (
@@ -168,6 +193,12 @@ export function TalkScreen({ locale }: { locale: VoiceLocale }) {
             : <IconButton icon="person-circle-outline" label={phrases.signIn} onPress={() => router.push("/sign-in")} showLabel />}
         </View>
       </View>
+
+      {speaker.notice ? <View style={styles.newProblem}><Plain muted rtl={rtl}>{speaker.notice}</Plain></View> : null}
+      {account.kind === "ready" || account.kind === "guest" ? <View style={styles.newProblem}>
+        <BigButton icon="add-circle-outline" label={phrases.newProblem} tone="plain" busy={starting}
+          disabled={busy || recording || waitingForReply} onPress={() => void newProblem()} />
+      </View> : null}
 
       <KeyboardAvoidingView style={styles.flex} behavior="padding">
         <View style={styles.stage}>
@@ -339,6 +370,7 @@ function Thinking({ label }: { label: string }) {
 }
 
 const styles = StyleSheet.create({
+  newProblem: { paddingHorizontal: 16, paddingBottom: 8 },
   sheetBackdrop: { flex: 1, backgroundColor: "rgba(0,0,0,0.35)" },
   sheet: { gap: 12, padding: 20, paddingBottom: 32, borderTopLeftRadius: 24, borderTopRightRadius: 24, backgroundColor: voice.bg },
   sources: { alignSelf: "stretch", marginRight: "8%", gap: 6, padding: 12, borderRadius: 16, backgroundColor: voice.lawyerSoft },

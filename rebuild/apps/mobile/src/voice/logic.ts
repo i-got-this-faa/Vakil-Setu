@@ -56,8 +56,8 @@ export const EMERGENCY_NUMBERS = [
   { number: "15100", label: "callLegalAid", icon: "scale", color: "#0f766e" },
 ] as const;
 
-/** Languages read aloud by Bhashini (Dogri uses the Hindi voice; it shares the script). Urdu uses the phone's own voice. */
-export const BHASHINI_VOICE_LOCALES: readonly string[] = ["hi", "en", "pa", "doi", "bn", "mr", "gu", "or", "ta", "te", "kn", "ml"];
+/** Languages read aloud by a server voice: Bhashini (Dogri uses the Hindi voice; it shares the script), or Gemini for Kashmiri. Urdu uses the phone's own voice. */
+export const SERVER_VOICE_LOCALES: readonly string[] = ["hi", "en", "pa", "doi", "ks", "bn", "mr", "gu", "or", "ta", "te", "kn", "ml"];
 
 /**
  * Splits a reply into short pieces at sentence ends (। . ? ! ۔ and line breaks), so the first piece
