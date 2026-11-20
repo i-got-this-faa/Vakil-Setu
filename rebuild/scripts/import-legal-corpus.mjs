@@ -27,7 +27,15 @@ const copyIndex = args.indexOf("--copy-embeddings-from");
 const copyFrom = copyIndex < 0 ? "" : args[copyIndex + 1];
 if (copyIndex >= 0 && !/^[a-f0-9]{64}$/.test(copyFrom)) throw new Error("--copy-embeddings-from needs the previous dataset ID.");
 const skipImport = args.includes("--skip-import");
-if (!skipImport) for (const [i, batch] of batches.entries()) { run("legalCorpus:importBatch", batch); console.log(`imported batch ${i + 1}/${batches.length}`); }
+// Arguments travel on the command line, which Windows caps at ~32K characters: split a large batch
+// into smaller importBatch calls (each still 1–25 passages of the same staged dataset).
+function importChunks(batch) {
+  if (JSON.stringify(batch).length <= 24_000 || batch.passages.length === 1) return void run("legalCorpus:importBatch", batch);
+  const half = Math.ceil(batch.passages.length / 2);
+  importChunks({ ...batch, passages: batch.passages.slice(0, half) });
+  importChunks({ ...batch, passages: batch.passages.slice(half) });
+}
+if (!skipImport) for (const [i, batch] of batches.entries()) { importChunks(batch); console.log(`imported batch ${i + 1}/${batches.length}`); }
 if (copyFrom) {
   // Unchanged passages keep their vectors, so only new passages use the embedding quota.
   let cursor = null, copied = 0;

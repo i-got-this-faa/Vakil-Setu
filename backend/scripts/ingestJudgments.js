@@ -13,7 +13,9 @@ const defaultManifest = fileURLToPath(new URL("../config/judgments.sources.json"
 const manifest = JSON.parse(await readFile(process.argv[2] || defaultManifest, "utf8"));
 if (!Array.isArray(manifest) || !manifest.length) throw new Error("Manifest must be a nonempty source array");
 manifest.forEach(validateSource);
-await run("pdftotext", ["-v"]); // Fail before downloading if Poppler is missing.
+// Fail before downloading if pdftotext is missing. Xpdf's build (common on Windows) prints its
+// version but exits 99 for -v; it supports the -layout -enc UTF-8 flags used below.
+await run("pdftotext", ["-v"]).catch(error => { if (!/pdftotext version/u.test(String(error.stderr ?? ""))) throw error; });
 const directory = corpusDir();
 await mkdir(path.join(directory, "raw"), { recursive: true });
 const lockPath = path.join(directory, ".ingest-lock");

@@ -120,6 +120,7 @@ const ASR_SERVICES: Record<VoiceLocale, string> = {
   gu: "ai4bharat/conformer-multilingual-indo_aryan-gpu--t4",
   or: "ai4bharat/conformer-multilingual-indo_aryan-gpu--t4",
   ur: "ai4bharat/conformer-multilingual-indo_aryan-gpu--t4",
+  ks: "ai4bharat/conformer-multilingual-indo_aryan-gpu--t4", // Checked by round-tripping Gemini Kashmiri speech.
   ta: "ai4bharat/conformer-multilingual-dravidian-gpu--t4",
   te: "ai4bharat/conformer-multilingual-dravidian-gpu--t4",
   kn: "ai4bharat/conformer-multilingual-dravidian-gpu--t4",

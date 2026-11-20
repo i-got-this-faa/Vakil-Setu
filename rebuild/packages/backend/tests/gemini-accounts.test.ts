@@ -36,6 +36,17 @@ describe("several Gemini accounts and models", () => {
     const single = geminiConfigs({ GEMINI_API_KEY: "only" });
     expect(Array.isArray(single) && single.map(route => route.model)).toEqual(["gemini-3.6-flash"]);
   });
+  it("with GEMINI_KEY_ORDER=in_order, always tries the main key first and the others only as backups", () => {
+    for (const roll of [0, 0.5, 0.99]) {
+      const routes = geminiConfigs({ ...ENV, GEMINI_KEY_ORDER: "in_order" }, () => roll);
+      if (!Array.isArray(routes)) throw new Error("expected routes");
+      expect(routes.map(route => `${route.model}/${route.apiKey}`)).toEqual([
+        "gemini-lite-1/key-a", "gemini-lite-1/key-b", "gemini-lite-1/key-c",
+        "gemini-lite-2/key-a", "gemini-lite-2/key-b", "gemini-lite-2/key-c",
+      ]);
+    }
+    expect(geminiConfigs({ ...ENV, GEMINI_KEY_ORDER: "backwards" })).toEqual({ kind: "unavailable", reason: "invalid_config" });
+  });
   it("fails closed on a bad extra key or model", () => {
     expect(geminiConfigs({ ...ENV, GEMINI_API_KEYS: "good,bad key" })).toEqual({ kind: "unavailable", reason: "invalid_config" });
     expect(geminiConfigs({ ...ENV, GEMINI_FALLBACK_MODELS: "../evil" })).toEqual({ kind: "unavailable", reason: "invalid_config" });

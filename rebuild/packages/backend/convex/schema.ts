@@ -1,5 +1,7 @@
 import { defineSchema, defineTable } from "convex/server";
 import { v } from "convex/values";
+import { waLocale } from "./lib/whatsapp";
+import { noticeDraft } from "./lib/notices";
 import { aiProvider, adminHandling, application, bookingActor, bookingEvent, bookingState, consent, consultationMode, contextMessage, credentialReview, credentialType, domain, locale, role, summary, summarySource } from "./lib/validators";
 import { legalSource } from "./lib/legalEvidence";
 import { chatResult, documentType } from "./lib/chat";
@@ -31,6 +33,8 @@ export default defineSchema({
   bookings: defineTable({ userId: v.id("accounts"), advocateId: v.id("advocates"), advocateAccountId: v.id("accounts"), slotId: v.id("slots"), caseId: v.id("cases"), summaryVersion: v.number(), summarySnapshot: summary, summarySource, consent: v.object({ ...consent.fields, grantedAt: v.number(), grantedBy: v.id("accounts") }), idempotencyKey: v.string(), start: v.number(), end: v.number(), consultationMode, requestedAt: v.number(), expiresAt: v.number(), state: bookingState, stateChangedAt: v.number(), reason: v.optional(v.string()), adminHandling: v.optional(adminHandling) }).index("by_user", ["userId"]).index("by_advocate_account", ["advocateAccountId"]).index("by_idempotency", ["userId", "idempotencyKey"]).index("by_case", ["caseId"]).index("by_user_state", ["userId", "state"]).index("by_advocate_state", ["advocateAccountId", "state"]).index("by_admin_handling", ["adminHandling.kind"]),
   bookingEvents: defineTable({ bookingId: v.id("bookings"), at: v.number(), actor: bookingActor, event: bookingEvent }).index("by_booking", ["bookingId"]),
   notifications: defineTable({ accountId: v.id("accounts"), kind: v.union(v.literal("booking_requested"), v.literal("booking_changed"), v.literal("application_reviewed"), v.literal("credential_reviewed"), v.literal("account_changed")), message: v.string(), bookingId: v.optional(v.id("bookings")), readAt: v.optional(v.number()) }).index("by_account", ["accountId"]),
+  whatsappContacts: defineTable({ waId: v.string(), locale: v.optional(waLocale), consentedAt: v.optional(v.number()), recent: v.array(contextMessage), draft: v.optional(noticeDraft), updatedAt: v.number() }).index("by_wa_id", ["waId"]),
+  whatsappInbound: defineTable({ messageId: v.string(), waId: v.string(), at: v.number() }).index("by_message_id", ["messageId"]).index("by_wa_id_and_at", ["waId", "at"]),
   aiAttempts: defineTable({ accountId: v.id("accounts"), at: v.number() }).index("by_account_at", ["accountId", "at"]),
   aiConsents: defineTable({ caseId: v.id("cases"), ownerId: v.id("accounts"), summaryVersion: v.number(), contextRevision: v.number(), at: v.number(), provider: aiProvider, recipientOrigin: v.string() }),
   // Voice-first mobile conversations. A guest session holds only the SHA-256 of a device-made token.

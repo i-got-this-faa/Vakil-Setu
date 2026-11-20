@@ -21,7 +21,7 @@ export const CHAT_LIMITS = {
   attachments: 3, attachmentBytes: 6 * 1024 * 1024,
 } as const;
 // Voice-first conversation (mobile). Spoken languages offered to people; the operator can narrow this with AI_VOICE_LOCALES.
-export const VOICE_LOCALES = ["hi", "en", "pa", "doi", "bn", "mr", "ta", "te", "gu", "kn", "ml", "or", "ur"] as const;
+export const VOICE_LOCALES = ["hi", "en", "pa", "doi", "ks", "bn", "mr", "ta", "te", "gu", "kn", "ml", "or", "ur"] as const;
 export type VoiceLocale = (typeof VOICE_LOCALES)[number];
 export const VOICE_AUDIO_TYPES = ["audio/aac", "audio/mp4", "audio/wav", "audio/mpeg", "audio/ogg", "audio/webm"] as const;
 export type VoiceAudioType = (typeof VOICE_AUDIO_TYPES)[number];
