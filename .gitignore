@@ -21,3 +21,26 @@ backend/data/legal-models/
 /tmp/
 
 backend/data/convex-export/
+
+# Local scratch / build artifacts (kept on disk, not in repo)
+.codex-deck/
+.codex-srs/
+.codex-report/
+tokenopt*
+dump_full_tokenopt.py
+inspect_tokenopt.py
+/test.*
+/test_syntax.*
+extracted_p*_img*.png
+
+# Demo media and generators
+demo-video/
+*.mp4
+/generate_demo_video.py
+/generate_dogri_expo_demo_video.py
+/render_latest_mobile_ui.py
+/latest_mobile_*.png
+/showcase_latest_mobile.html
+/legal_setu_demo_player.html
+/dogri_expo_demo_player.html
+/sample-draft-notice.pdf
