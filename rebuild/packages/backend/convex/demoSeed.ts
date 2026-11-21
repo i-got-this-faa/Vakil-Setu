@@ -69,6 +69,36 @@ export const importRoster = internalMutation({
 });
 
 // Removes every demo lawyer, their placeholder accounts and their free slots.
+// Operator-only: keeps the demo lawyers bookable by adding 11:00 and 16:00 IST slots for the next `days` days.
+// Safe to run again: existing slots are left alone.
+export const extendSlots = internalMutation({
+  args: { days: v.number() },
+  returns: v.object({ lawyers: v.number(), added: v.number() }),
+  handler: async (ctx, args) => {
+    if (!Number.isInteger(args.days) || args.days < 1 || args.days > 14) throw new Error("days must be 1 to 14");
+    const now = Date.now();
+    const istMidnight = Math.floor((now + IST_OFFSET_MS) / DAY_MS) * DAY_MS - IST_OFFSET_MS;
+    const starts: number[] = [];
+    for (let day = 1; day <= args.days; day += 1) for (const hour of [11, 16]) starts.push(istMidnight + day * DAY_MS + hour * 60 * 60 * 1000);
+    let lawyers = 0;
+    let added = 0;
+    for (const advocate of await ctx.db.query("advocates").withIndex("by_status_city", (q) => q.eq("application.kind", "approved")).take(500)) {
+      const account = await ctx.db.get(advocate.accountId);
+      if (!account?.clerkSubject.startsWith(SUBJECT_PREFIX)) continue;
+      lawyers += 1;
+      const mode = advocate.consultationModes.includes("video") ? "video" : (advocate.consultationModes[0] ?? "video");
+      for (const start of starts) {
+        const taken = await ctx.db.query("slots").withIndex("by_advocate_start", (q) => q.eq("advocateId", advocate._id).eq("start", start)).first();
+        if (!taken) {
+          await ctx.db.insert("slots", { advocateId: advocate._id, start, durationMinutes: 30, end: start + 30 * 60 * 1000, consultationMode: mode, reservation: { kind: "free" } });
+          added += 1;
+        }
+      }
+    }
+    return { lawyers, added };
+  },
+});
+
 export const removeRoster = internalMutation({
   args: {},
   returns: v.object({ removed: v.number() }),
