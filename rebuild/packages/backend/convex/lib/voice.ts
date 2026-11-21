@@ -8,12 +8,50 @@ export const voiceLocale = v.union(...VOICE_LOCALES.map(code => v.literal(code))
 export const audioType = v.union(...VOICE_AUDIO_TYPES.map(type => v.literal(type)));
 // Papers people photograph or pick: court notices, FIRs, agreements. Same types the case chat accepts.
 export const voiceDocumentType = v.union(v.literal("application/pdf"), v.literal("image/jpeg"), v.literal("image/png"));
+// Steps of booking a lawyer by voice. The AI only recognises which step the person means; the server does the rest.
+export const BOOKING_ACTIONS = ["find", "choose_lawyer", "choose_time", "more_times", "other_lawyer", "other_time", "yes", "no", "cancel"] as const;
+export type BookingAction = (typeof BOOKING_ACTIONS)[number];
+export const bookingAction = v.union(...BOOKING_ACTIONS.map(action => v.literal(action)));
 export const voiceInput = v.union(
   v.object({ kind: v.literal("audio"), mimeType: audioType, data: v.bytes() }),
   v.object({ kind: v.literal("text"), text: v.string() }),
   v.object({ kind: v.literal("document"), mimeType: voiceDocumentType, data: v.bytes(), fileName: v.string() }),
+  // A tap on a booking card: goes straight to the server, no AI call. `label` is what the person's bubble shows.
+  v.object({ kind: v.literal("booking"), action: bookingAction, option: v.optional(v.number()), label: v.string() }),
 );
-export const voiceInputKind = v.union(v.literal("audio"), v.literal("text"), v.literal("document"));
+export const voiceInputKind = v.union(v.literal("audio"), v.literal("text"), v.literal("document"), v.literal("booking"));
+// A booking in progress, kept on the conversation between turns. Only facts from the database go in here.
+// A consultation fee recorded in demo mode (PAYMENTS_MODE=demo): no money moves and no payment details are collected.
+export const demoPayment = v.object({
+  status: v.literal("paid"), test: v.literal(true), amount: v.number(), currency: v.literal("INR"),
+  method: v.union(v.literal("upi"), v.literal("card"), v.literal("net")), reference: v.string(), paidAt: v.number(),
+});
+export const bookingDraft = v.object({
+  stage: v.union(v.literal("lawyer"), v.literal("time"), v.literal("confirm"), v.literal("pay")),
+  lawyers: v.array(v.object({ advocateId: v.id("advocates"), name: v.string() })),
+  advocateId: v.optional(v.id("advocates")),
+  times: v.array(v.object({ slotId: v.id("slots"), start: v.number() })),
+  timeOffset: v.number(),
+  slotId: v.optional(v.id("slots")),
+  caseId: v.optional(v.id("cases")),
+  summaryVersion: v.optional(v.number()),
+  bookingId: v.optional(v.id("bookings")),
+  expiresAt: v.number(),
+});
+export type BookingDraft = Infer<typeof bookingDraft>;
+// What the app shows under a booking reply, so the person can also see (and tap) what was said.
+export const bookingCard = v.object({
+  stage: v.union(v.literal("sign_in"), v.literal("describe_first"), v.literal("lawyer"), v.literal("time"), v.literal("confirm"), v.literal("booked"), v.literal("paid"), v.literal("none_available"), v.literal("cancelled")),
+  lawyers: v.optional(v.array(v.object({ name: v.string(), city: v.string(), yearsExperience: v.number(), locales: v.array(v.string()), nextStart: v.optional(v.number()) }))),
+  times: v.optional(v.array(v.number())),
+  lawyerName: v.optional(v.string()),
+  start: v.optional(v.number()),
+  summary: v.optional(v.string()),
+  bookingId: v.optional(v.id("bookings")),
+  fee: v.optional(v.number()),
+  reference: v.optional(v.string()),
+});
+export type BookingCard = Infer<typeof bookingCard>;
 export const voiceAttachment = v.object({ storageId: v.id("_storage"), fileName: v.string(), contentType: voiceDocumentType, size: v.number() });
 // What the assistant has understood so far. Shown back to the person and used to match lawyers.
 export const voiceProfile = v.object({
@@ -38,7 +76,7 @@ export const voiceSource = v.object({
 export type VoiceSource = Infer<typeof voiceSource>;
 export const voiceReply = v.union(
   v.object({ kind: v.literal("pending") }),
-  v.object({ kind: v.literal("reply"), text: v.string(), sources: v.optional(v.array(voiceSource)) }),
+  v.object({ kind: v.literal("reply"), text: v.string(), sources: v.optional(v.array(voiceSource)), booking: v.optional(bookingCard) }),
   v.object({ kind: v.literal("unavailable"), reason: v.string() }),
 );
 export const voiceSendArgs = {
@@ -62,6 +100,16 @@ export function voiceAllowedLanguages(env: Record<string, string | undefined>): 
   return VOICE_LOCALES.filter(locale => values.includes(locale));
 }
 
+// What the AI says the person meant about booking. option 0 / hour -1 / "" mean "not said".
+const bookingIntentSchema = { type: "object", properties: {
+  action: { type: "string", enum: ["none", ...BOOKING_ACTIONS] },
+  option: { type: "integer" },
+  date: { type: "string" },
+  hour: { type: "integer" },
+  partOfDay: { type: "string", enum: ["", "morning", "afternoon", "evening"] },
+}, required: ["action", "option", "date", "hour", "partOfDay"] };
+export type BookingIntent = { action: BookingAction; option?: number; date?: string; hour?: number; partOfDay?: "morning" | "afternoon" | "evening" };
+
 export function voiceResponseSchema() {
   return { type: "object", properties: {
     transcript: { type: "string" },
@@ -72,7 +120,21 @@ export function voiceResponseSchema() {
     summary: { type: "string" },
     suggestLawyer: { type: "boolean" },
     lawQuery: { type: "string" },
-  }, required: ["transcript", "reply", "domain", "urgency", "city", "summary", "suggestLawyer", "lawQuery"] };
+    booking: bookingIntentSchema,
+  }, required: ["transcript", "reply", "domain", "urgency", "city", "summary", "suggestLawyer", "lawQuery", "booking"] };
+}
+
+/** The booking step the AI recognised, or null for an ordinary message. Anything malformed counts as ordinary. */
+export function parseBookingIntent(value: unknown): BookingIntent | null {
+  if (typeof value !== "object" || value === null) return null;
+  const record = value as Record<string, unknown>;
+  const action = BOOKING_ACTIONS.find(candidate => candidate === record.action);
+  if (!action) return null;
+  const option = Number.isInteger(record.option) && (record.option as number) >= 1 && (record.option as number) <= 10 ? record.option as number : undefined;
+  const date = typeof record.date === "string" && /^\d{4}-\d{2}-\d{2}$/.test(record.date) ? record.date : undefined;
+  const hour = Number.isInteger(record.hour) && (record.hour as number) >= 0 && (record.hour as number) <= 23 ? record.hour as number : undefined;
+  const partOfDay = record.partOfDay === "morning" || record.partOfDay === "afternoon" || record.partOfDay === "evening" ? record.partOfDay : undefined;
+  return { action, ...(option ? { option } : {}), ...(date ? { date } : {}), ...(hour !== undefined ? { hour } : {}), ...(partOfDay ? { partOfDay } : {}) };
 }
 
 /**
@@ -87,8 +149,9 @@ export function fastVoiceResponseSchema(withSources: boolean) {
     city: { type: "string" },
     summary: { type: "string" },
     suggestLawyer: { type: "boolean" },
+    booking: bookingIntentSchema,
     ...(withSources ? { usedSources: { type: "array", items: { type: "integer" } } } : {}),
-  }, required: ["reply", "domain", "urgency", "city", "summary", "suggestLawyer", ...(withSources ? ["usedSources"] : [])] };
+  }, required: ["reply", "domain", "urgency", "city", "summary", "suggestLawyer", "booking", ...(withSources ? ["usedSources"] : [])] };
 }
 
 /** A small, fast model writes only the English search phrase for the law lookup. */
@@ -110,7 +173,28 @@ export type VoiceContext = {
   history: { user: string; assistant: string }[];
   bookings: { advocateName: string; start: number; state: string }[];
   firstTurn: boolean;
+  /** Today in India, e.g. "2026-11-20 (Friday)", so "tomorrow" or "Monday" can be turned into a date. */
+  today?: string;
+  /** A booking in progress: what was offered, numbered as it was read out. */
+  bookingInProgress?: { stage: "lawyer" | "time" | "confirm" | "pay"; lawyers: string[]; times: string[] } | null;
 };
+
+function bookingInstruction(context: VoiceContext) {
+  const progress = context.bookingInProgress;
+  const offered = !progress ? "No booking is in progress."
+    : `A booking is in progress, waiting for the person to ${progress.stage === "lawyer" ? "choose a lawyer" : progress.stage === "time" ? "choose a time" : progress.stage === "pay" ? "say yes or no to paying the consultation fee now" : "say yes or no to the booking"}. ${JSON.stringify({
+      lawyers: progress.lawyers.map((name, index) => ({ number: index + 1, name })),
+      times: progress.times.map((when, index) => ({ number: index + 1, when })),
+    })}`;
+  return [
+    `Booking a lawyer is done entirely by voice, and the app itself reads out the lawyers, times and confirmation. Fill "booking" every time:`,
+    `action "find" when the person asks to book, meet, call, get or talk to a lawyer or advocate. "other_lawyer" when they want a different lawyer.`,
+    `While a booking is in progress, map their answer: "choose_lawyer" with option = the lawyer's number (they may say the number, the name, or describe them); "choose_time" with option = the time's number, OR with date (YYYY-MM-DD), hour (0 to 23, India time; when am or pm is not said, use the daytime hour, so "4 o'clock" is 16) and/or partOfDay for words like "tomorrow evening", "Friday", "4 o'clock"; "more_times" for other or later times of the same lawyer; "other_time" to hear that lawyer's times again; "yes" or "no" to the confirmation question or to paying the fee; "cancel" to stop booking.`,
+    `Otherwise action is "none": for example when they talk about their problem or ask about the law, even during a booking. When unsure, use "none". option 0, date "", hour -1 and partOfDay "" mean not said.`,
+    `Never invent lawyers, times or bookings. When action is not "none", reply is just one short sentence, because the app adds the booking details. summary is only about their legal problem: never mention booking, lawyers or appointment times in it.`,
+    `Today in India: ${context.today ?? "unknown"}. ${offered}`,
+  ].join("\n");
+}
 
 export function voiceSystemInstruction(context: VoiceContext, fast?: { passages: readonly GroundingPassage[] }) {
   const language = getLanguageName(context.locale);
@@ -124,7 +208,8 @@ export function voiceSystemInstruction(context: VoiceContext, fast?: { passages:
     `If they ask a direct question, answer it first in simple words, then ask at most ONE question. Ask only ONE question at a time. First understand the problem by gently covering, in this order and only if still unknown: what happened; when; who is involved (family, employer, landlord, police, shop, someone else); where they live (city or village); whether they have any papers; what they want to happen. Skip anything already answered. Never make it feel like a form.`,
     `Once the problem is clear, answer their doubts for as long as they want. Give general information about Indian law and practical next steps only; this is not legal advice. Never promise outcomes. Never invent laws, section numbers or case names.`,
     `If someone is in danger right now, first tell them to call 112 (police and emergency). For violence against women they can also call 181.`,
-    `Set suggestLawyer to true when a lawyer would clearly help (court papers, police case, arrest, property or money at stake, deadlines, violence). When true, you may say once, kindly, that they can press the "talk to a lawyer" button. Never push.`,
+    `Set suggestLawyer to true when a lawyer would clearly help (court papers, police case, arrest, property or money at stake, deadlines, violence). When true, you may say once, kindly, that if they want, you can book a lawyer for them: they only need to say so. Never push.`,
+    bookingInstruction(context),
     fast
       ? `The person's message was written down by speech-to-text or typed, so it may have small spelling mistakes; understand what they mean. If it says the audio was silent or unclear, reply politely asking them to say it again.`
       : `transcript: write exactly what the person said in this turn, in the language they spoke. If the audio is silent or unclear, transcript is "" and reply politely asks them to say it again.`,
@@ -145,7 +230,7 @@ export function voiceSystemInstruction(context: VoiceContext, fast?: { passages:
   ].join("\n");
 }
 
-export type ParsedVoiceResult = { transcript: string; reply: string; profile: VoiceProfile; lawQuery: string };
+export type ParsedVoiceResult = { transcript: string; reply: string; profile: VoiceProfile; lawQuery: string; booking: BookingIntent | null };
 
 // Strict parse of the provider JSON. Returns null for anything we cannot trust.
 export function parseVoiceResult(value: unknown, previous: VoiceProfile, typedText?: string): ParsedVoiceResult | null {
@@ -165,6 +250,7 @@ export function parseVoiceResult(value: unknown, previous: VoiceProfile, typedTe
     transcript,
     reply,
     lawQuery,
+    booking: parseBookingIntent(record.booking),
     profile: {
       domain: domain === "unknown" ? previous.domain : domain,
       urgency: urgency === "unknown" ? previous.urgency : urgency,

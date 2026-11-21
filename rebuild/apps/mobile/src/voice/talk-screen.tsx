@@ -8,10 +8,10 @@ import { router } from "expo-router";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { KeyboardAvoidingView, Linking, Modal, Pressable, ScrollView, StyleSheet, Text, TextInput, View, type ScrollViewInstance } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import type { VoiceLocale } from "@legal-setu/domain";
+import { VOICE_LOCALES, type VoiceLocale } from "@legal-setu/domain";
 import { formatIst } from "../lib/format";
 import { convexErrorMessage } from "../lib/errors";
-import { RTL_LOCALES, speechTagFor, type Phrases } from "./languages";
+import { RTL_LOCALES, phrasesFor, speechTagFor, type Phrases } from "./languages";
 import { bookingStatus, failureText, lawSourceLabel, type LawSource } from "./logic";
 import { useClaimGuestConversation, useVoiceAccount } from "./account";
 import { useVoicePrefs } from "./prefs";
@@ -21,7 +21,16 @@ import { Avatar, type AvatarMood } from "./avatar";
 import { BigButton, Card, IconButton, Plain, voice } from "./ui";
 import { pickDocument, type DocumentSource, type PickedDocument } from "./documents";
 
-type Input = { kind: "audio"; mimeType: Recording["mimeType"]; data: ArrayBuffer } | { kind: "text"; text: string } | PickedDocument;
+type BookingAction = "find" | "choose_lawyer" | "choose_time" | "more_times" | "other_lawyer" | "other_time" | "yes" | "no" | "cancel";
+type BookingInput = { kind: "booking"; action: BookingAction; option?: number; label: string };
+type Input = { kind: "audio"; mimeType: Recording["mimeType"]; data: ArrayBuffer } | { kind: "text"; text: string } | PickedDocument | BookingInput;
+/** What the server shows under a booking reply (see bookingCard in the backend). */
+type BookingCardData = {
+  stage: "sign_in" | "describe_first" | "lawyer" | "time" | "confirm" | "booked" | "paid" | "none_available" | "cancelled";
+  lawyers?: { name: string; city: string; yearsExperience: number; locales: string[]; nextStart?: number }[];
+  times?: number[]; lawyerName?: string; start?: number; summary?: string;
+  bookingId?: string; fee?: number; reference?: string;
+};
 
 export function TalkScreen({ locale }: { locale: VoiceLocale }) {
   const { phrases, guestToken, conversationId, resumeLatest, setConversationId } = useVoicePrefs();
@@ -108,6 +117,8 @@ export function TalkScreen({ locale }: { locale: VoiceLocale }) {
   }, [data, speaker]);
 
   const turns = data?.turns ?? [];
+  // Only the newest booking card can be tapped; older ones are a record of what was said.
+  const lastTurnId = turns.at(-1)?._id;
   const empty = turns.length === 0;
   useEffect(() => {
     if (greeted.current || !speaker.ready || !empty || (conversationId && data === undefined)) return;
@@ -219,6 +230,7 @@ export function TalkScreen({ locale }: { locale: VoiceLocale }) {
                   <Text style={styles.cardTitle}>{phrases.appointment}: {booking.advocateName}</Text>
                   <Text style={styles.cardText}>{formatIst(booking.start, speechTagFor(locale))}</Text>
                   <Text style={styles.cardStatus}>{bookingStatus(booking.state, phrases)}</Text>
+                  {"paid" in booking && booking.paid ? <Text style={styles.cardText}>✓ {phrases.paidLabel} · ₹{booking.paid.amount}</Text> : null}
                 </View>
               </View>
             </Card>
@@ -240,6 +252,9 @@ export function TalkScreen({ locale }: { locale: VoiceLocale }) {
                   onSpeak={() => (speaker.speakingId === turn._id ? speaker.stop() : turn.reply.kind === "reply" && speaker.speak(turn._id, turn.reply.text))} />
               ) : null}
               {turn.reply.kind === "reply" && turn.reply.sources?.length ? <Sources sources={turn.reply.sources} label={phrases.lawSource} /> : null}
+              {turn.reply.kind === "reply" && turn.reply.booking ? (
+                <BookingCard card={turn.reply.booking} active={turn._id === lastTurnId && !busy} rtl={rtl} locale={locale} phrases={phrases} onChoose={(input) => void submit(input)} />
+              ) : null}
               {turn.reply.kind === "unavailable" ? <Plain muted rtl={rtl}>{failureText(turn.reply.reason, phrases)}</Plain> : null}
             </View>
           ))}
@@ -247,7 +262,8 @@ export function TalkScreen({ locale }: { locale: VoiceLocale }) {
         </ScrollView>
 
         <View style={styles.dock}>
-          <BigButton icon="briefcase" label={phrases.talkToLawyer} tone={suggestLawyer ? "lawyer" : "plain"} onPress={() => router.push("/lawyers")} />
+          <BigButton icon="briefcase" label={phrases.talkToLawyer} tone={suggestLawyer ? "lawyer" : "plain"} disabled={busy}
+            onPress={() => void submit({ kind: "booking", action: "find", label: phrases.bookLawyer })} />
           {outOfGuestTurns ? (
             <Card tone="warn">
               <Plain rtl={rtl}>{phrases.guestLimit}</Plain>
@@ -360,6 +376,101 @@ function Sources({ sources, label }: { sources: LawSource[]; label: string }) {
   );
 }
 
+/**
+ * The lawyers, times or question from a booking reply, so they can be seen and tapped as well as spoken.
+ * A tap sends the same step a spoken answer would ("number 2", "yes"), straight to the server.
+ */
+function BookingCard({ card, active, rtl, locale, phrases, onChoose }: {
+  card: BookingCardData; active: boolean; rtl: boolean; locale: VoiceLocale; phrases: Phrases; onChoose: (input: BookingInput) => void;
+}) {
+  const tag = speechTagFor(locale);
+  const languageName = (code: string) => (VOICE_LOCALES as readonly string[]).includes(code) ? phrasesFor(code as VoiceLocale).name : code;
+  const choice = (key: string, number: number, title: string, lines: string[], input: BookingInput) => (
+    <Pressable key={key} accessibilityRole="button" accessibilityLabel={`${number}. ${title}`} accessibilityState={{ disabled: !active }} disabled={!active}
+      onPress={() => onChoose(input)} style={({ pressed }) => [styles.choice, pressed && styles.pressed, !active && styles.inactive]}>
+      <View style={styles.choiceNumber}><Text style={styles.choiceNumberText}>{number}</Text></View>
+      <View style={styles.flex}>
+        <Text style={[styles.cardTitle, rtl && styles.rtlText]}>{title}</Text>
+        {lines.map((line) => <Text key={line} style={[styles.cardText, rtl && styles.rtlText]}>{line}</Text>)}
+      </View>
+    </Pressable>
+  );
+  switch (card.stage) {
+    case "lawyer":
+      return (
+        <View style={styles.booking}>
+          {(card.lawyers ?? []).map((lawyer, index) => choice(lawyer.name, index + 1, lawyer.name, [
+            `${lawyer.city} · ${lawyer.yearsExperience} ${phrases.yearsExperience}`,
+            lawyer.locales.map(languageName).join(", "),
+            ...(lawyer.nextStart ? [`🕑 ${formatIst(lawyer.nextStart, tag)}`] : []),
+          ], { kind: "booking", action: "choose_lawyer", option: index + 1, label: lawyer.name }))}
+          <Pressable accessibilityRole="link" onPress={() => router.push("/lawyers")} style={styles.sourceLink}>
+            <Ionicons name="list" size={18} color={voice.brand} />
+            <Text style={styles.sourceLinkText}>{phrases.seeAllLawyers}</Text>
+          </Pressable>
+        </View>
+      );
+    case "time":
+      return (
+        <View style={styles.booking}>
+          {card.lawyerName ? <Text style={[styles.cardTitle, rtl && styles.rtlText]}>{card.lawyerName}</Text> : null}
+          {(card.times ?? []).map((start, index) => {
+            const when = formatIst(start, tag);
+            return choice(String(start), index + 1, when, [], { kind: "booking", action: "choose_time", option: index + 1, label: when });
+          })}
+        </View>
+      );
+    case "confirm":
+      return (
+        <View style={styles.booking}>
+          <Text style={[styles.cardTitle, rtl && styles.rtlText]}>{card.lawyerName}{card.start ? ` · ${formatIst(card.start, tag)}` : ""}</Text>
+          {card.summary ? <Text style={[styles.summary, rtl && styles.rtlText]}>{card.summary}</Text> : null}
+          {active ? (
+            <>
+              <BigButton icon="checkmark-circle" label={phrases.yesBook} tone="lawyer" onPress={() => onChoose({ kind: "booking", action: "yes", label: phrases.yesBook })} />
+              <BigButton icon="close-circle" label={phrases.no} tone="plain" onPress={() => onChoose({ kind: "booking", action: "no", label: phrases.no })} />
+            </>
+          ) : null}
+        </View>
+      );
+    case "booked":
+      return (
+        <Card tone="ok">
+          <View style={styles.row}>
+            <Ionicons name="checkmark-circle" size={28} color={voice.lawyer} />
+            <View style={styles.flex}>
+              <Text style={[styles.cardTitle, rtl && styles.rtlText]}>{phrases.appointment}: {card.lawyerName}</Text>
+              {card.start ? <Text style={styles.cardText}>{formatIst(card.start, tag)}</Text> : null}
+              <Text style={styles.cardStatus}>{phrases.statusPending}</Text>
+            </View>
+          </View>
+          {card.fee && card.bookingId ? (
+            <BigButton icon="card" label={`${phrases.payFee} · ₹${card.fee}`} tone="lawyer"
+              onPress={() => router.push({ pathname: "/payment", params: { bookingId: card.bookingId! } })} />
+          ) : null}
+        </Card>
+      );
+    case "paid":
+      return (
+        <Card tone="ok">
+          <View style={styles.row}>
+            <Ionicons name="checkmark-done-circle" size={30} color={voice.lawyer} />
+            <View style={styles.flex}>
+              <Text style={[styles.cardTitle, rtl && styles.rtlText]}>{phrases.paidLabel} · ₹{card.fee}</Text>
+              <Text style={styles.cardText}>{card.lawyerName}{card.start ? ` · ${formatIst(card.start, tag)}` : ""}</Text>
+              {card.reference ? <Text style={styles.cardText}>{card.reference}</Text> : null}
+              <Text style={styles.demoNote}>{phrases.demoPaymentNote}</Text>
+            </View>
+          </View>
+        </Card>
+      );
+    case "sign_in":
+      return active ? <BigButton icon="call" label={phrases.signIn} onPress={() => router.push("/sign-in")} /> : null;
+    default:
+      return null;
+  }
+}
+
 function Thinking({ label }: { label: string }) {
   return (
     <View style={[styles.bubble, styles.assistant, styles.row]}>
@@ -374,6 +485,14 @@ const styles = StyleSheet.create({
   sheetBackdrop: { flex: 1, backgroundColor: "rgba(0,0,0,0.35)" },
   sheet: { gap: 12, padding: 20, paddingBottom: 32, borderTopLeftRadius: 24, borderTopRightRadius: 24, backgroundColor: voice.bg },
   sources: { alignSelf: "stretch", marginRight: "8%", gap: 6, padding: 12, borderRadius: 16, backgroundColor: voice.lawyerSoft },
+  booking: { alignSelf: "stretch", gap: 8 },
+  choice: { flexDirection: "row", alignItems: "center", gap: 12, padding: 12, minHeight: 64, borderRadius: 16, borderWidth: 2, borderColor: voice.lawyer, backgroundColor: voice.card },
+  choiceNumber: { width: 40, height: 40, borderRadius: 20, alignItems: "center", justifyContent: "center", backgroundColor: voice.lawyer },
+  choiceNumberText: { fontSize: 20, fontWeight: "800", color: "#fff" },
+  pressed: { opacity: 0.7 },
+  inactive: { opacity: 0.5, borderColor: voice.line },
+  demoNote: { fontSize: 13, color: voice.muted, fontStyle: "italic" },
+  summary: { fontSize: 17, lineHeight: 25, color: voice.ink, padding: 12, borderRadius: 12, backgroundColor: voice.lawyerSoft },
   sourcesTitle: { fontSize: 15, fontWeight: "700", color: voice.lawyer },
   source: { gap: 6, paddingVertical: 4 },
   sourceHead: { flexDirection: "row", alignItems: "center", gap: 8, minHeight: 36 },

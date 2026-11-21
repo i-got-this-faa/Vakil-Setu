@@ -1,5 +1,8 @@
 import { Ionicons } from "@expo/vector-icons";
 import { Stack, router } from "expo-router";
+import { useMutation, useQuery } from "convex/react";
+import { api } from "@legal-setu/backend/api";
+import type { Id } from "@legal-setu/backend/data-model";
 import { useEffect, useState } from "react";
 import { ActivityIndicator, Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 import type { VoiceLocale } from "@legal-setu/domain";
@@ -9,7 +12,11 @@ import { phrasesFor, speechTagFor } from "./languages";
 import { useSpeaker } from "./speaker";
 import { BigButton, Big, Card, Plain, voice } from "./ui";
 
-/** Consultation-fee payment after a lawyer is booked. DEMO MODE ONLY for now: no money moves. */
+/**
+ * Consultation-fee payment after a lawyer is booked. DEMO ONLY: no money moves and no payment details are collected.
+ * With a `bookingId` it shows that real appointment and records a test payment on the server (PAYMENTS_MODE=demo);
+ * without one (EXPO_PUBLIC_DEMO_MODE) it uses the scripted demo booking.
+ */
 type PaymentText = Record<"title" | "fee" | "method" | "upi" | "card" | "net" | "pay" | "paying" | "paid" | "receipt" | "secure", string>;
 const TEXT: Record<"doi" | "hi" | "en", PaymentText> = {
   doi: {
@@ -33,24 +40,45 @@ const METHODS: { id: Method; icon: "qr-code" | "card" | "business" }[] = [
   { id: "net", icon: "business" },
 ];
 
-export function PaymentScreen({ locale }: { locale: VoiceLocale }) {
+export function PaymentScreen({ locale, bookingId }: { locale: VoiceLocale; bookingId?: string }) {
   const text = TEXT[locale === "doi" || locale === "hi" ? locale : "en"];
   const phrases = phrasesFor(locale);
   const speaker = useSpeaker(locale);
-  const booking = pendingBooking();
+  const real = useQuery(api.payments.forBooking, bookingId ? { bookingId: bookingId as Id<"bookings"> } : "skip");
+  const payDemo = useMutation(api.payments.payDemo);
+  const scripted = bookingId ? null : pendingBooking();
+  const booking = bookingId ? (real ? { name: real.advocateName, start: real.start } : null) : scripted;
   const [method, setMethod] = useState<Method>("upi");
   const [stage, setStage] = useState<"choose" | "paying" | "paid">("choose");
-  const fee = `₹${DEMO_SCRIPT.fee}`;
+  const [receipt, setReceipt] = useState(bookingId ? "" : "LS-7Q4D2K");
+  const [failed, setFailed] = useState("");
+  const fee = `₹${bookingId ? (real?.fee ?? "") : DEMO_SCRIPT.fee}`;
+
+  // Already paid (for example by voice): show the receipt straight away.
+  useEffect(() => {
+    if (real?.payment && stage === "choose") { setReceipt(real.payment.reference); setStage("paid"); }
+  }, [real, stage]);
 
   useEffect(() => {
     if (stage !== "paying") return;
     const timer = setTimeout(() => {
-      markPaid();
-      setStage("paid");
-      speaker.speak("paid", text.paid);
+      void (async () => {
+        try {
+          if (bookingId) setReceipt((await payDemo({ bookingId: bookingId as Id<"bookings">, method })).reference);
+          else markPaid();
+          setStage("paid");
+          speaker.speak("paid", text.paid);
+        } catch {
+          setFailed(phrases.error);
+          setStage("choose");
+        }
+      })();
     }, 2200);
     return () => clearTimeout(timer);
-  }, [stage, speaker, text.paid]);
+  }, [stage, speaker, text.paid, bookingId, method, payDemo, phrases.error]);
+
+  if (bookingId && real === undefined) return <View style={styles.paying}><ActivityIndicator size="large" color={voice.brand} /></View>;
+  if (bookingId && (!real || !real.enabled)) return <ScrollView style={styles.page} contentContainerStyle={styles.content}><Card tone="warn"><Plain>{phrases.error}</Plain></Card></ScrollView>;
 
   return (
     <ScrollView style={styles.page} contentContainerStyle={styles.content}>
@@ -75,7 +103,8 @@ export function PaymentScreen({ locale }: { locale: VoiceLocale }) {
             <Ionicons name="checkmark-circle" size={44} color={voice.ok} />
             <View style={styles.flex}><Big>{text.paid}</Big></View>
           </View>
-          <Plain muted>{text.receipt}: LS-7Q4D2K · {fee} · UPI</Plain>
+          <Plain muted>{text.receipt}: {receipt} · {fee} · {text[method]}</Plain>
+          <Text style={styles.demoNote}>{phrases.demoPaymentNote}</Text>
           <BigButton icon="mic" label={phrases.backToTalk} onPress={() => router.dismissTo("/talk")} />
         </Card>
       ) : (
@@ -98,7 +127,9 @@ export function PaymentScreen({ locale }: { locale: VoiceLocale }) {
           ) : (
             <BigButton icon="lock-closed" label={`${fee} ${text.pay}`} onPress={() => setStage("paying")} />
           )}
+          {failed ? <Card tone="warn"><Plain>{failed}</Plain></Card> : null}
           <View style={styles.secure}><Ionicons name="shield-checkmark" size={18} color={voice.ok} /><Text style={styles.secureText}>{text.secure}</Text></View>
+          <Text style={styles.demoNote}>{phrases.demoPaymentNote}</Text>
         </>
       )}
     </ScrollView>
@@ -124,4 +155,5 @@ const styles = StyleSheet.create({
   payingText: { fontSize: 19, fontWeight: "600", color: voice.ink },
   secure: { flexDirection: "row", alignItems: "center", justifyContent: "center", gap: 6 },
   secureText: { fontSize: 15, color: voice.ok },
+  demoNote: { fontSize: 13, color: voice.muted, fontStyle: "italic", textAlign: "center" },
 });

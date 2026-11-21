@@ -8,3 +8,11 @@ const NAMES: Record<VoiceLocale, string> = {
 export function getLanguageName(locale: VoiceLocale) {
   return NAMES[locale];
 }
+
+// Dogri: the AI answers in Hindi (which it handles reliably) and Bhashini translates the reply into Dogri.
+// Kashmiri: the AI answers in English and IndicTrans2 (Bhashini) translates it.
+export const TRANSLATED_REPLIES: Partial<Record<VoiceLocale, VoiceLocale>> = { doi: "hi", ks: "en" };
+/** The language the AI writes replies and summaries in for this conversation. */
+export function replyLocaleFor(locale: VoiceLocale): VoiceLocale {
+  return TRANSLATED_REPLIES[locale] ?? locale;
+}

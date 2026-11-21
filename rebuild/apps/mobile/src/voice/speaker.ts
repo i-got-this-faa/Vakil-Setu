@@ -5,7 +5,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { api } from "@legal-setu/backend/api";
 import type { VoiceLocale } from "@legal-setu/domain";
 import { chooseReadAloudLanguage, greetingForSpeech, type DeviceVoice } from "../lib/speech";
-import { speechTagFor } from "./languages";
+import { phrasesFor, speechTagFor } from "./languages";
 import { SERVER_VOICE_LOCALES, splitForSpeech } from "./logic";
 import { useVoicePrefs } from "./prefs";
 
@@ -79,7 +79,7 @@ export function useSpeaker(locale: VoiceLocale) {
 
   const speakOnDevice = useCallback((id: string, text: string, mine: number) => {
     if (!language) {
-      setNotice(locale === "hi" || locale === "doi" ? "इस भाषा की आवाज़ उपलब्ध नहीं है। जवाब नीचे पढ़ सकते हैं।" : "Audio is unavailable for this language. You can read the reply below.");
+      setNotice(phrasesFor(locale).audioUnavailable);
       return done(id, mine);
     }
     if (locale === "doi" && language.startsWith("hi")) setNotice("डोगरी पाठ हिन्दी आवाज़ में पढ़ा जा रहा है।");
@@ -91,7 +91,7 @@ export function useSpeaker(locale: VoiceLocale) {
       onStopped: () => done(id, mine),
       onError: () => {
         if (session.current !== mine) return;
-        setNotice(locale === "hi" || locale === "doi" ? "आवाज़ नहीं चल सकी। जवाब नीचे पढ़ सकते हैं।" : "Audio could not play. You can read the reply below.");
+        setNotice(phrasesFor(locale).audioFailed);
         done(id, mine);
       },
     });

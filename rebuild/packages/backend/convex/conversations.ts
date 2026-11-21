@@ -6,9 +6,10 @@ import { internalMutation, internalQuery, mutation, query } from "./_generated/s
 import type { MutationCtx, QueryCtx } from "./_generated/server";
 import { currentAccount, fail, requireAccount } from "./lib/access";
 import { boundedText } from "./lib/input";
+import { prepareConversationCase } from "./lib/voiceCase";
 import { geminiConfig } from "./lib/provider";
 import { dgxConfig } from "./lib/aiDgx";
-import { EMPTY_PROFILE, hashGuestToken, validGuestToken, voiceAllowedLanguages, voiceAttachment, voiceInputKind, voiceLocale, voiceProfile, voiceSource } from "./lib/voice";
+import { EMPTY_PROFILE, bookingCard, hashGuestToken, validGuestToken, voiceAllowedLanguages, voiceAttachment, voiceInputKind, voiceLocale, voiceProfile, voiceSource } from "./lib/voice";
 
 type ReadCtx = QueryCtx | MutationCtx;
 type Actor = { kind: "account"; account: Doc<"accounts"> } | { kind: "guest"; session: Doc<"guestSessions"> };
@@ -57,7 +58,7 @@ async function bookingsFor(ctx: ReadCtx, caseId: Id<"cases"> | undefined) {
   const result = [];
   for (const booking of bookings) {
     const advocate = await ctx.db.get(booking.advocateId);
-    result.push({ _id: booking._id, advocateId: booking.advocateId, advocateName: advocate?.displayName ?? "", start: booking.start, end: booking.end, state: booking.state, consultationMode: booking.consultationMode });
+    result.push({ _id: booking._id, advocateId: booking.advocateId, advocateName: advocate?.displayName ?? "", start: booking.start, end: booking.end, state: booking.state, consultationMode: booking.consultationMode, ...(booking.payment ? { paid: { amount: booking.payment.amount, reference: booking.payment.reference, test: true } } : {}) });
   }
   return result;
 }
@@ -136,33 +137,7 @@ export const prepareCase = mutation({ args: { conversationId: v.id("conversation
   const account = await requireAccount(ctx, "user");
   const conversation = await ctx.db.get(args.conversationId);
   if (!conversation || conversation.accountId !== account._id) fail("NOT_FOUND", "Conversation not found.");
-  const turns = await ctx.db.query("conversationTurns").withIndex("by_conversation", q => q.eq("conversationId", conversation._id)).order("desc").take(200);
-  const spoken = turns.filter(turn => turn.reply.kind === "reply" && turn.transcript).reverse().map(turn => turn.transcript);
-  if (!spoken.length) fail("INVALID_INPUT", "Tell us a little about your problem first.");
-  let text = spoken.join("\n");
-  if (text.length > LIMITS.intakeText) text = text.slice(text.length - LIMITS.intakeText);
-  text = boundedText(text, "Conversation", LIMITS.intakeText);
-  const fromModel = Boolean(conversation.profile.summary);
-  const summaryText = boundedText((conversation.profile.summary || text).slice(0, LIMITS.summaryText), "Summary", LIMITS.summaryText);
-  const summary = { locale: conversation.locale, domain: conversation.profile.domain, urgency: conversation.profile.urgency, text: summaryText, actions: [] };
-  const source = fromModel ? { kind: "provider" as const, provider: conversation.profileModel?.startsWith("gemini") ? "gemini" as const : "dgx" as const, model: conversation.profileModel ?? "unknown" } : { kind: "manual" as const };
-  const now = Date.now();
-  let legalCase = conversation.caseId ? await ctx.db.get(conversation.caseId) : null;
-  if (legalCase && legalCase.ownerId !== account._id) legalCase = null;
-  if (legalCase && conversation.caseTurnCount === conversation.turnCount) return { caseId: legalCase._id, summaryVersion: legalCase.summaryVersion, summary };
-  if (!legalCase) {
-    const title = boundedText(summaryText.slice(0, 80), "Title", 160);
-    const caseId = await ctx.db.insert("cases", { ownerId: account._id, title, text, locale: conversation.locale, context: [], contextRevision: 0, state: "draft", summaryVersion: 1 });
-    await ctx.db.insert("caseSummaries", { caseId, version: 1, summary, source, createdAt: now });
-    await ctx.db.patch(conversation._id, { caseId, caseTurnCount: conversation.turnCount });
-    return { caseId, summaryVersion: 1, summary };
-  }
-  if (legalCase.summaryVersion >= 100) fail("LIMIT_EXCEEDED", "This case has reached the summary version limit.");
-  const version = legalCase.summaryVersion + 1;
-  await ctx.db.insert("caseSummaries", { caseId: legalCase._id, version, summary, source, createdAt: now });
-  await ctx.db.patch(legalCase._id, { text, summaryVersion: version, contextRevision: legalCase.contextRevision + 1 });
-  await ctx.db.patch(conversation._id, { caseTurnCount: conversation.turnCount });
-  return { caseId: legalCase._id, summaryVersion: version, summary };
+  return await prepareConversationCase(ctx, account, conversation);
 } });
 
 // ---- Internal steps used by voice.send ----
@@ -200,7 +175,7 @@ export const reserve = internalMutation({ args: { conversationId: v.optional(v.i
   } else if (await recentAttempts(ctx, `account:${actor.account._id}`, VOICE_LIMITS.dayMs, VOICE_LIMITS.accountTurnsPerDay) >= VOICE_LIMITS.accountTurnsPerDay) {
     return { kind: "unavailable" as const, reason: "rate_limited", ...(conversation ? { conversationId: conversation._id } : {}) };
   }
-  const text = args.inputKind === "text" ? boundedText(args.text ?? "", "Message", VOICE_LIMITS.textChars) : "";
+  const text = args.inputKind === "text" || args.inputKind === "booking" ? boundedText(args.text ?? "", "Message", VOICE_LIMITS.textChars) : "";
   if (!conversation) {
     const id = await ctx.db.insert("conversations", { ...(actor.kind === "account" ? { accountId: actor.account._id } : { guestSessionId: actor.session._id }), locale: args.locale, createdAt: now, updatedAt: now, turnCount: 0, consentedAt: now, profile: EMPTY_PROFILE });
     conversation = (await ctx.db.get(id))!;
@@ -239,7 +214,7 @@ export const auditDispatch = internalMutation({ args: { turnId: v.id("conversati
 } });
 
 export const finish = internalMutation({ args: { turnId: v.id("conversationTurns"), result: v.union(
-  v.object({ kind: v.literal("reply"), transcript: v.string(), reply: v.string(), sources: v.optional(v.array(voiceSource)), profile: voiceProfile, model: v.string() }),
+  v.object({ kind: v.literal("reply"), transcript: v.string(), reply: v.string(), sources: v.optional(v.array(voiceSource)), profile: voiceProfile, model: v.string(), booking: v.optional(bookingCard) }),
   v.object({ kind: v.literal("unavailable"), reason: v.string() }),
 ) }, handler: async (ctx, args) => {
   const turn = await ctx.db.get(args.turnId);
@@ -255,9 +230,12 @@ export const finish = internalMutation({ args: { turnId: v.id("conversationTurns
     }
     return { kind: "unavailable" as const, reason: args.result.reason };
   }
-  const { transcript, reply, sources, profile, model } = args.result;
-  await ctx.db.patch(turn._id, { transcript: turn.inputKind === "text" ? turn.transcript : transcript.slice(0, VOICE_LIMITS.transcriptChars), reply: { kind: "reply", text: reply.slice(0, VOICE_LIMITS.replyChars), ...(sources?.length ? { sources: sources.slice(0, 3) } : {}) } });
-  await ctx.db.patch(conversation._id, { profile, profileModel: model, updatedAt: Date.now() });
+  const { transcript, reply, sources, profile, model, booking } = args.result;
+  const typed = turn.inputKind === "text" || turn.inputKind === "booking";
+  await ctx.db.patch(turn._id, { transcript: typed ? turn.transcript : transcript.slice(0, VOICE_LIMITS.transcriptChars), reply: { kind: "reply", text: reply.slice(0, VOICE_LIMITS.replyChars), ...(sources?.length ? { sources: sources.slice(0, 3) } : {}), ...(booking ? { booking } : {}) } });
+  // A booking tap is not an AI answer, so it leaves the AI's understanding of the problem as it was.
+  if (model !== "booking") await ctx.db.patch(conversation._id, { profile, profileModel: model, updatedAt: Date.now() });
+  else await ctx.db.patch(conversation._id, { updatedAt: Date.now() });
   return { kind: "available" as const };
 } });
 

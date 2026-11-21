@@ -68,6 +68,15 @@ export interface Phrases {
   yearsExperience: string;
   speakFirst: string;
   error: string;
+  audioUnavailable: string;
+  audioFailed: string;
+  bookLawyer: string;
+  seeAllLawyers: string;
+  yesBook: string;
+  no: string;
+  payFee: string;
+  paidLabel: string;
+  demoPaymentNote: string;
 }
 
 const en: Phrases = {
@@ -133,6 +142,15 @@ const en: Phrases = {
   yearsExperience: "years experience",
   speakFirst: "First tell me a little about your problem, then I can send it to the lawyer.",
   error: "Something went wrong. Please try again.",
+  audioUnavailable: "Audio is unavailable for this language. You can read the reply below.",
+  audioFailed: "Audio could not play. You can read the reply below.",
+  bookLawyer: "I want to book a lawyer.",
+  seeAllLawyers: "See all lawyers",
+  yesBook: "Yes, book it",
+  no: "No",
+  payFee: "Pay the fee",
+  paidLabel: "Paid",
+  demoPaymentNote: "Demo payment: no money is charged.",
 };
 
 const hi: Phrases = {
@@ -198,6 +216,15 @@ const hi: Phrases = {
   yearsExperience: "साल का अनुभव",
   speakFirst: "पहले अपनी परेशानी थोड़ी बताइए, फिर मैं इसे वकील को भेज सकूँगा।",
   error: "कुछ गड़बड़ हो गई। फिर से कोशिश करें।",
+  audioUnavailable: "इस भाषा की आवाज़ उपलब्ध नहीं है। जवाब नीचे पढ़ सकते हैं।",
+  audioFailed: "आवाज़ नहीं चल सकी। जवाब नीचे पढ़ सकते हैं।",
+  bookLawyer: "मुझे वकील से मिलना है।",
+  seeAllLawyers: "सभी वकील देखें",
+  yesBook: "हाँ, बुक करें",
+  no: "नहीं",
+  payFee: "फ़ीस भरें",
+  paidLabel: "भुगतान हो गया",
+  demoPaymentNote: "डेमो भुगतान: कोई पैसा नहीं लिया जाता।",
 };
 
 const pa: Partial<Phrases> = {
@@ -263,6 +290,15 @@ const pa: Partial<Phrases> = {
   yearsExperience: "ਸਾਲ ਦਾ ਤਜਰਬਾ",
   speakFirst: "ਪਹਿਲਾਂ ਆਪਣੀ ਮੁਸ਼ਕਲ ਥੋੜ੍ਹੀ ਦੱਸੋ, ਫਿਰ ਮੈਂ ਇਹ ਵਕੀਲ ਨੂੰ ਭੇਜ ਸਕਾਂਗਾ।",
   error: "ਕੁਝ ਗੜਬੜ ਹੋ ਗਈ। ਫਿਰ ਕੋਸ਼ਿਸ਼ ਕਰੋ।",
+  audioUnavailable: "ਇਸ ਭਾਸ਼ਾ ਲਈ ਆਡੀਓ ਉਪਲਬਧ ਨਹੀਂ ਹੈ। ਤੁਸੀਂ ਹੇਠਾਂ ਜਵਾਬ ਪੜ੍ਹ ਸਕਦੇ ਹੋ।",
+  audioFailed: "ਆਡੀਓ ਨਹੀਂ ਚੱਲ ਸਕੀ। ਤੁਸੀਂ ਹੇਠਾਂ ਜਵਾਬ ਪੜ੍ਹ ਸਕਦੇ ਹੋ।",
+  bookLawyer: "ਮੈਂ ਇੱਕ ਵਕੀਲ ਬੁੱਕ ਕਰਨਾ ਚਾਹੁੰਦਾ ਹਾਂ।",
+  seeAllLawyers: "ਸਾਰੇ ਵਕੀਲਾਂ ਨੂੰ ਵੇਖੋ",
+  yesBook: "ਹਾਂ, ਬੁੱਕ ਕਰੋ",
+  no: "ਨਹੀਂ",
+  payFee: "ਫੀਸ ਦਾ ਭੁਗਤਾਨ ਕਰੋ",
+  paidLabel: "ਭੁਗਤਾਨ ਕੀਤਾ",
+  demoPaymentNote: "ਡੈਮੋ ਭੁਗਤਾਨ: ਕੋਈ ਪੈਸਾ ਨਹੀਂ ਲਿਆ ਜਾਂਦਾ ਹੈ।",
 };
 
 const bn: Partial<Phrases> = {
@@ -328,6 +364,15 @@ const bn: Partial<Phrases> = {
   yearsExperience: "বছরের অভিজ্ঞতা",
   speakFirst: "আগে আপনার সমস্যা একটু বলুন, তারপর আমি উকিলকে পাঠাতে পারব।",
   error: "কিছু ভুল হয়েছে। আবার চেষ্টা করুন।",
+  audioUnavailable: "এই ভাষার জন্য অডিও উপলব্ধ নয়। আপনি নীচের উত্তরটি পড়তে পারেন।",
+  audioFailed: "অডিও বাজানো যায়নি। আপনি নীচের উত্তরটি পড়তে পারেন।",
+  bookLawyer: "আমি একজন আইনজীবীর সঙ্গে কথা বলতে চাই।",
+  seeAllLawyers: "সমস্ত আইনজীবীদের দেখুন",
+  yesBook: "হ্যাঁ, বুক করুন",
+  no: "না",
+  payFee: "ফি পরিশোধ করুন",
+  paidLabel: "পরিশোধ করা হয়েছে",
+  demoPaymentNote: "ডেমো পেমেন্ট: কোনও টাকা নেওয়া হয় না।",
 };
 
 const mr: Partial<Phrases> = {
@@ -393,6 +438,15 @@ const mr: Partial<Phrases> = {
   yearsExperience: "वर्षांचा अनुभव",
   speakFirst: "आधी तुमची अडचण थोडी सांगा, मग मी ती वकिलांना पाठवू शकेन।",
   error: "काहीतरी चुकले। पुन्हा प्रयत्न करा।",
+  audioUnavailable: "या भाषेसाठी ध्वनी उपलब्ध नाही. उत्तर तुम्ही खाली वाचू शकता.",
+  audioFailed: "ऑडिओ वाजवता आला नाही. उत्तर तुम्ही खाली वाचू शकता.",
+  bookLawyer: "मला वकील बुक करायचा आहे.",
+  seeAllLawyers: "सर्व वकील पहा",
+  yesBook: "होय, ते बुक करा",
+  no: "नाही",
+  payFee: "शुल्क भरा",
+  paidLabel: "पैसे दिले",
+  demoPaymentNote: "डेमो देय: कोणतेही पैसे आकारले जात नाहीत.",
 };
 
 const ta: Partial<Phrases> = {
@@ -458,6 +512,15 @@ const ta: Partial<Phrases> = {
   yearsExperience: "ஆண்டு அனுபவம்",
   speakFirst: "முதலில் உங்கள் பிரச்சனையைக் கொஞ்சம் சொல்லுங்கள், பிறகு வழக்கறிஞருக்கு அனுப்ப முடியும்.",
   error: "ஏதோ தவறு நடந்தது. மீண்டும் முயலுங்கள்.",
+  audioUnavailable: "இந்த மொழிக்கு ஆடியோ கிடைக்கவில்லை. கீழே உள்ள பதிலை நீங்கள் படிக்கலாம்.",
+  audioFailed: "ஆடியோவை இயக்க முடியவில்லை. கீழே உள்ள பதிலை நீங்கள் படிக்கலாம்.",
+  bookLawyer: "நான் ஒரு வழக்கறிஞரை பதிவு செய்ய விரும்புகிறேன்.",
+  seeAllLawyers: "அனைத்து வழக்கறிஞர்களையும் பார்க்கவும்",
+  yesBook: "ஆம், அதை பதிவு செய்யுங்கள்",
+  no: "இல்லை",
+  payFee: "கட்டணத்தைச் செலுத்தவும்",
+  paidLabel: "செலுத்தப்பட்டது",
+  demoPaymentNote: "டெமோ கட்டணம்: பணம் எதுவும் வசூலிக்கப்படாது.",
 };
 
 const te: Partial<Phrases> = {
@@ -523,6 +586,15 @@ const te: Partial<Phrases> = {
   yearsExperience: "సంవత్సరాల అనుభవం",
   speakFirst: "ముందు మీ సమస్య కొంచెం చెప్పండి, తర్వాత లాయర్‌కు పంపగలను.",
   error: "ఏదో తప్పు జరిగింది. మళ్ళీ ప్రయత్నించండి.",
+  audioUnavailable: "ఈ భాషకు ఆడియో అందుబాటులో లేదు. మీరు సమాధానం క్రింద చదవవచ్చు.",
+  audioFailed: "ఆడియో ప్లే కాలేదు. మీరు సమాధానం క్రింద చదవవచ్చు.",
+  bookLawyer: "నేను ఒక న్యాయవాదిని బుక్ చేయాలనుకుంటున్నాను.",
+  seeAllLawyers: "అన్ని న్యాయవాదులను చూడండి",
+  yesBook: "అవును, బుక్ చేయండి",
+  no: "లేదు",
+  payFee: "రుసుము చెల్లించండి",
+  paidLabel: "చెల్లించారు",
+  demoPaymentNote: "డెమో చెల్లింపు: డబ్బు వసూలు చేయబడదు.",
 };
 
 const gu: Partial<Phrases> = {
@@ -588,6 +660,15 @@ const gu: Partial<Phrases> = {
   yearsExperience: "વર્ષનો અનુભવ",
   speakFirst: "પહેલા તમારી તકલીફ થોડી કહો, પછી હું વકીલને મોકલી શકીશ.",
   error: "કંઈક ખોટું થયું. ફરી પ્રયત્ન કરો.",
+  audioUnavailable: "આ ભાષા માટે ધ્વનિ ઉપલબ્ધ નથી. તમે નીચે જવાબ વાંચી શકો છો.",
+  audioFailed: "ઓડિયો વગાડી શકાયો નહીં. તમે નીચે જવાબ વાંચી શકો છો.",
+  bookLawyer: "હું વકીલ બુક કરવા માંગુ છું.",
+  seeAllLawyers: "બધા વકીલોને જુઓ",
+  yesBook: "હા, તેને બુક કરો",
+  no: "ના",
+  payFee: "ફી ચૂકવો",
+  paidLabel: "ચૂકવેલ",
+  demoPaymentNote: "ડેમો પેમેન્ટ: કોઈ પૈસા લેવામાં આવતા નથી.",
 };
 
 const kn: Partial<Phrases> = {
@@ -653,6 +734,15 @@ const kn: Partial<Phrases> = {
   yearsExperience: "ವರ್ಷಗಳ ಅನುಭವ",
   speakFirst: "ಮೊದಲು ನಿಮ್ಮ ಸಮಸ್ಯೆ ಸ್ವಲ್ಪ ಹೇಳಿ, ನಂತರ ವಕೀಲರಿಗೆ ಕಳುಹಿಸಬಹುದು.",
   error: "ಏನೋ ತಪ್ಪಾಗಿದೆ. ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ.",
+  audioUnavailable: "ಈ ಭಾಷೆಗೆ ಆಡಿಯೋ ಲಭ್ಯವಿಲ್ಲ. ನೀವು ಈ ಕೆಳಗಿನ ಉತ್ತರವನ್ನು ಓದಬಹುದು.",
+  audioFailed: "ಆಡಿಯೋ ನುಡಿಸಲು ಸಾಧ್ಯವಾಗಲಿಲ್ಲ. ನೀವು ಈ ಕೆಳಗಿನ ಉತ್ತರವನ್ನು ಓದಬಹುದು.",
+  bookLawyer: "ನಾನು ವಕೀಲರನ್ನು ಬುಕ್ ಮಾಡಲು ಬಯಸುತ್ತೇನೆ.",
+  seeAllLawyers: "ಎಲ್ಲಾ ವಕೀಲರನ್ನು ನೋಡಿ",
+  yesBook: "ಹೌದು, ಅದನ್ನು ಬುಕ್ ಮಾಡಿ",
+  no: "ಇಲ್ಲ",
+  payFee: "ಶುಲ್ಕ ಪಾವತಿಸಿ",
+  paidLabel: "ಪಾವತಿಸಲಾಗಿದೆ",
+  demoPaymentNote: "ಡೆಮೊ ಪಾವತಿ: ಯಾವುದೇ ಹಣವನ್ನು ವಿಧಿಸಲಾಗುವುದಿಲ್ಲ.",
 };
 
 const ml: Partial<Phrases> = {
@@ -718,6 +808,15 @@ const ml: Partial<Phrases> = {
   yearsExperience: "വർഷത്തെ പരിചയം",
   speakFirst: "ആദ്യം നിങ്ങളുടെ പ്രശ്നം കുറച്ച് പറയൂ, എന്നിട്ട് വക്കീലിന് അയയ്ക്കാം.",
   error: "എന്തോ പിശക് സംഭവിച്ചു. വീണ്ടും ശ്രമിക്കൂ.",
+  audioUnavailable: "ഈ ഭാഷയ്ക്ക് ഓഡിയോ ലഭ്യമല്ല. താഴെ കൊടുത്തിരിക്കുന്ന മറുപടി നിങ്ങൾക്ക് വായിക്കാം.",
+  audioFailed: "ഓഡിയോ പ്ലേ ചെയ്യാൻ കഴിഞ്ഞില്ല. താഴെ കൊടുത്തിരിക്കുന്ന മറുപടി നിങ്ങൾക്ക് വായിക്കാം.",
+  bookLawyer: "എനിക്ക് ഒരു അഭിഭാഷകനെ നിയമിക്കണം.",
+  seeAllLawyers: "എല്ലാ അഭിഭാഷകരെയും കാണുക",
+  yesBook: "അതെ, ബുക്ക് ചെയ്യുക",
+  no: "ഇല്ല",
+  payFee: "ഫീസ് അടയ്ക്കുക",
+  paidLabel: "പണം നൽകി",
+  demoPaymentNote: "ഡെമോ പേയ്മെന്റ്: പണം ഈടാക്കില്ല.",
 };
 
 const or: Partial<Phrases> = {
@@ -783,6 +882,15 @@ const or: Partial<Phrases> = {
   yearsExperience: "ବର୍ଷର ଅଭିଜ୍ଞତା",
   speakFirst: "ପ୍ରଥମେ ଆପଣଙ୍କ ସମସ୍ୟା ଟିକେ କୁହନ୍ତୁ, ତା'ପରେ ଓକିଲଙ୍କୁ ପଠାଇପାରିବି।",
   error: "କିଛି ଭୁଲ୍ ହେଲା। ପୁଣି ଚେଷ୍ଟା କରନ୍ତୁ।",
+  audioUnavailable: "ଏହି ଭାଷା ପାଇଁ ଅଡିଓ ଉପଲବ୍ଧ ନାହିଁ। ଉତ୍ତର ଆପଣ ତଳେ ପଢ଼ିପାରିବେ।",
+  audioFailed: "ଅଡିଓ ବାଜିପାରିଲା ନାହିଁ। ଉତ୍ତର ଆପଣ ତଳେ ପଢ଼ିପାରିବେ।",
+  bookLawyer: "ମୁଁ ଜଣେ ଓକିଲଙ୍କୁ ବୁକ୍ କରିବାକୁ ଚାହୁଁଛି।",
+  seeAllLawyers: "ସମସ୍ତ ଓକିଲଙ୍କୁ ଦେଖନ୍ତୁ",
+  yesBook: "ହଁ, ଏହାକୁ ବୁକ୍ କରନ୍ତୁ",
+  no: "ନା",
+  payFee: "ଶୁଳ୍କ ପଇଠ କରନ୍ତୁ",
+  paidLabel: "ପଇଠ କଲେ",
+  demoPaymentNote: "ଡେମୋ ଦେୟ: କୌଣସି ଅର୍ଥ ଦେବାକୁ ପଡ଼ିବ ନାହିଁ।",
 };
 
 const ur: Partial<Phrases> = {
@@ -848,6 +956,15 @@ const ur: Partial<Phrases> = {
   yearsExperience: "سال کا تجربہ",
   speakFirst: "پہلے اپنی پریشانی تھوڑی بتائیے، پھر میں اسے وکیل کو بھیج سکوں گا۔",
   error: "کچھ گڑبڑ ہو گئی۔ پھر سے کوشش کریں۔",
+  audioUnavailable: "اس زبان کے لیے آڈیو دستیاب نہیں ہے۔ آپ ذیل میں جواب پڑھ سکتے ہیں۔",
+  audioFailed: "آڈیو نہیں چل سکا۔ آپ ذیل میں جواب پڑھ سکتے ہیں۔",
+  bookLawyer: "میں ایک وکیل کو بک کرنا چاہتا ہوں۔",
+  seeAllLawyers: "تمام وکلاء کو دیکھیں",
+  yesBook: "ہاں، اسے بک کروائیں",
+  no: "نہیں",
+  payFee: "فیس ادا کریں",
+  paidLabel: "ادا شدہ",
+  demoPaymentNote: "ڈیمو ادائیگی: کوئی رقم وصول نہیں کی جاتی ہے۔",
 };
 
 // Dogri: machine-translated from Hindi with Bhashini (IndicTrans2), then hand-corrected. Needs a Dogri speaker's review.
@@ -914,6 +1031,15 @@ const doi: Partial<Phrases> = {
   yearsExperience: "बʼरे दा अनुभव",
   speakFirst: "पैह्लें मिगी अपनी समस्या दे बारे च किश दस्सो, फ्ही में इसगी वकील गी भेजी सकनां।",
   error: "किश गलत होई गेआ। परतियै कोशश करो।",
+  audioUnavailable: "इस भाषा की आवाज़ उपलब्ध नहीं है। जवाब नीचे पढ़ सकते हैं।",
+  audioFailed: "आवाज़ नहीं चल सकी। जवाब नीचे पढ़ सकते हैं।",
+  bookLawyer: "में इक वकील बुक करना चाह्न्नां।",
+  seeAllLawyers: "सारे वकील दिक्खो",
+  yesBook: "हां, इसगी बुक करो",
+  no: "नेईं",
+  payFee: "फीस दा भुगतान करो",
+  paidLabel: "भुगतान कीता",
+  demoPaymentNote: "डेमो भुगतान: कोई पैसा नेईं लाया जंदा ऐ।",
 };
 // Kashmiri (Perso-Arabic script). Machine-translated with IndicTrans2 (Bhashini), a few phrases fixed by hand;
 // needs review by a native Kashmiri speaker before release.
@@ -980,6 +1106,15 @@ const ks: Partial<Phrases> = {
   yearsExperience: "ؤری وادن ہنٛد تجربہٕ",
   speakFirst: "گۄڈٕ ون مےٚ پنٛنس مسلس متعلق کیٚنٛہہ، پتہٕ ہؠکو بہٕ یہ وکیلس سوزتھ۔",
   error: "کینٛہہ گۄو غلط۔ مہربٲنی کٔرتھ کٔرو دوبارٕ کوٗشش۔",
+  audioUnavailable: "اتھ زبٲنۍ خٲطرٕ چھنہٕ آڈیو دٔستیاب۔ تہۍ ہیٚکو بۄن جواب ؤچھتھ۔",
+  audioFailed: "آڈیو ہیکہ نہٕ پلے کٔرتھ۔ تہۍ ہیٚکو بۄن جواب ؤچھتھ۔",
+  bookLawyer: "بہٕ چھس یژھان اکھ وکیل بک کرن۔",
+  seeAllLawyers: "تمام وکلا ؤچھو",
+  yesBook: "ہا، یہ کر بک",
+  no: "نہ",
+  payFee: "فیس کریو ادا",
+  paidLabel: "ادا گۄو",
+  demoPaymentNote: "ڈیمو پیمنٹ: چھنہٕ کانٛہہ پونٛسہٕ لاگو یوان کرنہٕ۔",
 };
 const TABLE: Record<VoiceLocale, Partial<Phrases>> = { en, hi, pa, doi, ks, bn, mr, ta, te, gu, kn, ml, or, ur };
 
