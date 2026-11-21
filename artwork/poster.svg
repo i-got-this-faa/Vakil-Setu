@@ -1,0 +1,141 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080" font-family="Noto Sans, Noto Sans Devanagari, Noto Sans Gurmukhi, Noto Sans Tamil, Noto Sans Bengali, Noto Sans Arabic, sans-serif">
+  <defs>
+    <linearGradient id="logo" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#6366f1"/><stop offset="1" stop-color="#3730a3"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#c7d2fe" stop-opacity="0.9"/><stop offset="1" stop-color="#c7d2fe" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="glow2" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#99f6e4" stop-opacity="0.7"/><stop offset="1" stop-color="#99f6e4" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="24" stdDeviation="30" flood-color="#1e1b4b" flood-opacity="0.22"/>
+    </filter>
+    <filter id="soft" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="8" stdDeviation="12" flood-color="#1e1b4b" flood-opacity="0.14"/>
+    </filter>
+    <clipPath id="screen"><rect x="1222" y="132" width="420" height="836" rx="44"/></clipPath>
+  </defs>
+
+  <!-- background -->
+  <rect width="1920" height="1080" fill="#fbf7f2"/>
+  <circle cx="1430" cy="520" r="560" fill="url(#glow)"/>
+  <circle cx="1780" cy="930" r="320" fill="url(#glow2)"/>
+  <!-- faint bridge across the bottom -->
+
+  <!-- ===== Left: brand and message ===== -->
+  <g transform="translate(120 118)">
+    <g transform="scale(0.1)">
+      <rect width="1024" height="1024" rx="230" fill="url(#logo)"/>
+      <path d="M232 262 h560 a70 70 0 0 1 70 70 v300 a70 70 0 0 1 -70 70 h-250 l-110 104 v-104 h-200 a70 70 0 0 1 -70 -70 v-300 a70 70 0 0 1 70 -70 z" fill="#fff"/>
+      <path d="M262 560 Q512 300 762 560" fill="none" stroke="#0f766e" stroke-width="44" stroke-linecap="round"/>
+      <rect x="236" y="548" width="552" height="40" rx="20" fill="#4f46e5"/>
+      <g stroke="#0f766e" stroke-width="18" stroke-linecap="round"><line x1="362" y1="470" x2="362" y2="548"/><line x1="437" y1="430" x2="437" y2="548"/><line x1="512" y1="416" x2="512" y2="548"/><line x1="587" y1="430" x2="587" y2="548"/><line x1="662" y1="470" x2="662" y2="548"/></g>
+    </g>
+    <text x="128" y="70" font-size="52" font-weight="800" fill="#1c1917" letter-spacing="-1">Legal Setu</text>
+  </g>
+
+  <text x="120" y="360" font-size="88" font-weight="800" fill="#1c1917" letter-spacing="-2">Legal help,</text>
+  <text x="120" y="462" font-size="88" font-weight="800" fill="#4f46e5" letter-spacing="-2">in your own voice.</text>
+  <text x="122" y="540" font-size="40" font-weight="600" fill="#0f766e" font-family="Noto Sans Devanagari">अपनी भाषा में बोलिए, कानूनी मदद पाइए।</text>
+  <text x="122" y="606" font-size="30" fill="#57534e">Speak your problem. Get clear answers from real Indian law,</text>
+  <text x="122" y="648" font-size="30" fill="#57534e">then talk to a verified lawyer. Free, simple, made for everyone.</text>
+
+  <!-- feature chips -->
+  <g font-size="27" font-weight="700" fill="#1c1917">
+    <g transform="translate(120 712)">
+      <rect width="400" height="96" rx="24" fill="#fff" filter="url(#soft)"/>
+      <circle cx="56" cy="48" r="30" fill="#eef2ff"/>
+      <rect x="47" y="30" width="18" height="28" rx="9" fill="#4f46e5"/>
+      <path d="M40 50 a16 16 0 0 0 32 0" fill="none" stroke="#4f46e5" stroke-width="4" stroke-linecap="round"/>
+      <line x1="56" y1="66" x2="56" y2="72" stroke="#4f46e5" stroke-width="4" stroke-linecap="round"/>
+      <text x="104" y="42">13 Indian languages</text>
+      <text x="104" y="74" font-size="22" font-weight="400" fill="#57534e">Just press and speak</text>
+    </g>
+    <g transform="translate(544 712)">
+      <rect width="400" height="96" rx="24" fill="#fff" filter="url(#soft)"/>
+      <circle cx="56" cy="48" r="30" fill="#ccfbf1"/>
+      <text x="56" y="61" font-size="38" font-weight="800" fill="#0f766e" text-anchor="middle">§</text>
+      <text x="104" y="42">Cites real law</text>
+      <text x="104" y="74" font-size="22" font-weight="400" fill="#57534e">5,500+ sections, 42 Acts</text>
+    </g>
+    <g transform="translate(120 832)">
+      <rect width="400" height="96" rx="24" fill="#fff" filter="url(#soft)"/>
+      <circle cx="56" cy="48" r="30" fill="#ccfbf1"/>
+      <rect x="40" y="40" width="32" height="22" rx="5" fill="#0f766e"/>
+      <path d="M49 40 v-6 a3 3 0 0 1 3 -3 h8 a3 3 0 0 1 3 3 v6" fill="none" stroke="#0f766e" stroke-width="4"/>
+      <text x="104" y="42">Verified lawyers</text>
+      <text x="104" y="74" font-size="22" font-weight="400" fill="#57534e">Compare and book a call</text>
+    </g>
+    <g transform="translate(544 832)">
+      <rect width="400" height="96" rx="24" fill="#fff" filter="url(#soft)"/>
+      <circle cx="56" cy="48" r="30" fill="#fee2e2"/>
+      <text x="56" y="57" font-size="20" font-weight="800" fill="#dc2626" text-anchor="middle">SOS</text>
+      <text x="104" y="42">Emergency help</text>
+      <text x="104" y="74" font-size="22" font-weight="400" fill="#57534e">Police, women, child lines</text>
+    </g>
+  </g>
+
+  <!-- ===== Right: phone ===== -->
+  <g filter="url(#shadow)">
+    <rect x="1202" y="112" width="460" height="876" rx="62" fill="#1c1917"/>
+  </g>
+  <rect x="1222" y="132" width="420" height="836" rx="44" fill="#fbf7f2"/>
+  <g clip-path="url(#screen)">
+    <!-- top bar -->
+    <rect x="1246" y="170" width="132" height="46" rx="23" fill="#eef2ff"/>
+    <text x="1312" y="201" font-size="20" font-weight="700" fill="#4f46e5" text-anchor="middle" font-family="Noto Sans Devanagari">हिन्दी</text>
+    <rect x="1394" y="170" width="112" height="46" rx="23" fill="#dc2626"/>
+    <text x="1450" y="201" font-size="20" font-weight="800" fill="#fff" text-anchor="middle">SOS</text>
+    <!-- avatar -->
+    <circle cx="1432" cy="318" r="80" fill="#e0e7ff"/>
+    <g>
+      <path d="M1372 398 q60 -62 120 0 z" fill="#1e293b"/>
+      <path d="M1420 352 h24 v24 h-24 z" fill="#c2855c"/>
+      <path d="M1418 360 l14 38 l14 -38 z" fill="#ffffff"/>
+      <ellipse cx="1432" cy="312" rx="38" ry="44" fill="#c98b5f"/>
+      <ellipse cx="1394" cy="314" rx="7" ry="11" fill="#b87a50"/>
+      <ellipse cx="1470" cy="314" rx="7" ry="11" fill="#b87a50"/>
+      <path d="M1392 300 q0 -46 40 -46 q40 0 40 46 q-8 -22 -40 -22 q-32 0 -40 22 z" fill="#2b1d16"/>
+      <circle cx="1418" cy="312" r="4.5" fill="#1c1917"/>
+      <circle cx="1446" cy="312" r="4.5" fill="#1c1917"/>
+      <path d="M1422 336 q10 6 20 0" fill="none" stroke="#7c2d12" stroke-width="3" stroke-linecap="round"/>
+    </g>
+    <!-- user bubble -->
+    <rect x="1330" y="424" width="290" height="88" rx="22" fill="#e0e7ff"/>
+    <text x="1350" y="460" font-size="20" fill="#1c1917" font-family="Noto Sans Devanagari">मेरा चेक बाउंस हो गया।</text>
+    <text x="1350" y="492" font-size="20" fill="#1c1917" font-family="Noto Sans Devanagari">अब मैं क्या करूँ?</text>
+    <!-- reply card -->
+    <rect x="1244" y="532" width="376" height="236" rx="22" fill="#fff" stroke="#e7e5e4" stroke-width="2"/>
+    <text x="1266" y="570" font-size="19" fill="#1c1917" font-family="Noto Sans Devanagari">आप 30 दिन के अंदर लिखित नोटिस भेजें।</text>
+    <text x="1266" y="600" font-size="19" fill="#1c1917" font-family="Noto Sans Devanagari">15 दिन में भुगतान न हो तो आप</text>
+    <text x="1266" y="630" font-size="19" fill="#1c1917" font-family="Noto Sans Devanagari">अदालत में शिकायत कर सकते हैं।</text>
+    <rect x="1266" y="652" width="232" height="38" rx="19" fill="#ccfbf1"/>
+    <text x="1382" y="678" font-size="17" font-weight="700" fill="#0f766e" text-anchor="middle">§ NI Act · Section 138</text>
+    <path d="M1272 724 h16 l12 -10 v32 l-12 -10 h-16 z" fill="#4f46e5"/>
+    <path d="M1308 718 q8 12 0 24 M1316 712 q14 18 0 36" fill="none" stroke="#4f46e5" stroke-width="3" stroke-linecap="round"/>
+    <text x="1330" y="737" font-size="18" font-weight="700" fill="#4f46e5" font-family="Noto Sans Devanagari">फिर से सुनें</text>
+    <!-- lawyer button -->
+    <rect x="1244" y="788" width="376" height="62" rx="20" fill="#0f766e"/>
+    <text x="1432" y="827" font-size="21" font-weight="800" fill="#fff" text-anchor="middle" font-family="Noto Sans Devanagari">वकील से बात करें</text>
+    <!-- mic -->
+    <circle cx="1432" cy="912" r="44" fill="#4f46e5"/>
+    <rect x="1422" y="888" width="20" height="32" rx="10" fill="#fff"/>
+    <path d="M1412 912 a20 20 0 0 0 40 0" fill="none" stroke="#fff" stroke-width="4" stroke-linecap="round"/>
+    <line x1="1432" y1="932" x2="1432" y2="942" stroke="#fff" stroke-width="4" stroke-linecap="round"/>
+  </g>
+
+  <!-- floating language chips -->
+  <g font-size="26" font-weight="700" text-anchor="middle">
+    <g transform="translate(1110 250)"><rect x="-74" y="-30" width="148" height="56" rx="28" fill="#fff" filter="url(#soft)"/><text y="8" fill="#4f46e5" font-family="Noto Sans Gurmukhi">ਪੰਜਾਬੀ</text></g>
+    <g transform="translate(1100 430)"><rect x="-70" y="-30" width="140" height="56" rx="28" fill="#fff" filter="url(#soft)"/><text y="8" fill="#0f766e" font-family="Noto Sans Devanagari">डोगरी</text></g>
+    <g transform="translate(1110 830)"><rect x="-70" y="-30" width="140" height="56" rx="28" fill="#fff" filter="url(#soft)"/><text y="8" fill="#4f46e5" font-family="Noto Sans Tamil">தமிழ்</text></g>
+    <g transform="translate(1790 300)"><rect x="-70" y="-30" width="140" height="56" rx="28" fill="#fff" filter="url(#soft)"/><text y="8" fill="#0f766e" font-family="Noto Sans Bengali">বাংলা</text></g>
+    <g transform="translate(1810 500)"><rect x="-64" y="-30" width="128" height="56" rx="28" fill="#fff" filter="url(#soft)"/><text y="8" fill="#4f46e5" font-family="Noto Sans Arabic">اردو</text></g>
+    <g transform="translate(1784 700)"><rect x="-80" y="-30" width="160" height="56" rx="28" fill="#fff" filter="url(#soft)"/><text y="8" fill="#0f766e">English</text></g>
+  </g>
+
+  <!-- footer -->
+  <text x="120" y="1010" font-size="22" fill="#78716c">General legal information, not legal advice. Law text from India Code (indiacode.gov.in). Indian-language speech by Bhashini.</text>
+</svg>

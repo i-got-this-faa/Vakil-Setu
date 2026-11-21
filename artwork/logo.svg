@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#6366f1"/>
+      <stop offset="1" stop-color="#3730a3"/>
+    </linearGradient>
+  </defs>
+  <rect width="1024" height="1024" rx="230" fill="url(#bg)"/>
+  <!-- speech bubble -->
+  <path d="M232 262 h560 a70 70 0 0 1 70 70 v300 a70 70 0 0 1 -70 70 h-250 l-110 104 v-104 h-200 a70 70 0 0 1 -70 -70 v-300 a70 70 0 0 1 70 -70 z" fill="#ffffff"/>
+  <!-- bridge (setu): arch, deck and pillars -->
+  <path d="M262 560 Q512 300 762 560" fill="none" stroke="#0f766e" stroke-width="44" stroke-linecap="round"/>
+  <rect x="236" y="548" width="552" height="40" rx="20" fill="#4f46e5"/>
+  <g stroke="#0f766e" stroke-width="18" stroke-linecap="round">
+    <line x1="362" y1="470" x2="362" y2="548"/>
+    <line x1="437" y1="430" x2="437" y2="548"/>
+    <line x1="512" y1="416" x2="512" y2="548"/>
+    <line x1="587" y1="430" x2="587" y2="548"/>
+    <line x1="662" y1="470" x2="662" y2="548"/>
+  </g>
+</svg>
