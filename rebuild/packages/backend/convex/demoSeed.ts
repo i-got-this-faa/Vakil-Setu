@@ -1,6 +1,7 @@
 import { v } from "convex/values";
 import { internalMutation, type MutationCtx } from "./_generated/server";
 import { consultationMode, domain, locale } from "./lib/validators";
+import { terminateBooking } from "./lib/lifecycle";
 
 // DEMO ONLY. Loads a scraped public roster into a development deployment for a presentation.
 // Internal: callable only with `npx convex run` by a deployment admin, never from the app.
@@ -96,6 +97,52 @@ export const extendSlots = internalMutation({
       }
     }
     return { lawyers, added };
+  },
+});
+
+// Operator-only, for demo retakes: gives one test account a clean start. Cancels its live bookings (freeing the
+// lawyers' slots), then deletes all its bookings with their events, reviews and notifications (both sides), and its
+// voice conversations with their messages and attached files. Cannot be undone.
+export const resetUser = internalMutation({
+  args: { accountId: v.id("accounts") },
+  returns: v.object({ conversations: v.number(), turns: v.number(), bookingsCancelled: v.number(), bookingsDeleted: v.number() }),
+  handler: async (ctx, args) => {
+    const account = await ctx.db.get(args.accountId);
+    if (!account || account.role !== "user") throw new Error("Only a user account can be reset.");
+    let bookingsCancelled = 0;
+    for (const state of ["pending", "accepted"] as const) {
+      for (const booking of await ctx.db.query("bookings").withIndex("by_user_state", (q) => q.eq("userId", account._id).eq("state", state)).take(100)) {
+        await terminateBooking(ctx, booking, "cancelled", "Demo reset", { kind: "user", accountId: account._id });
+        bookingsCancelled += 1;
+      }
+    }
+    let bookingsDeleted = 0;
+    for (const booking of await ctx.db.query("bookings").withIndex("by_user", (q) => q.eq("userId", account._id)).take(200)) {
+      for (const event of await ctx.db.query("bookingEvents").withIndex("by_booking", (q) => q.eq("bookingId", booking._id)).take(200)) await ctx.db.delete(event._id);
+      for (const review of (await ctx.db.query("reviews").take(1000)).filter((r) => r.bookingId === booking._id)) await ctx.db.delete(review._id);
+      for (const owner of [account._id, booking.advocateAccountId]) {
+        for (const note of await ctx.db.query("notifications").withIndex("by_account", (q) => q.eq("accountId", owner)).take(1000)) {
+          if (note.bookingId === booking._id) await ctx.db.delete(note._id);
+        }
+      }
+      // A slot never points at a deleted booking.
+      const slot = await ctx.db.get(booking.slotId);
+      if (slot?.reservation.kind === "reserved" && slot.reservation.bookingId === booking._id) await ctx.db.patch(slot._id, { reservation: { kind: "free" } });
+      await ctx.db.delete(booking._id);
+      bookingsDeleted += 1;
+    }
+    let conversations = 0;
+    let turns = 0;
+    for (const conversation of await ctx.db.query("conversations").withIndex("by_account_updated", (q) => q.eq("accountId", account._id)).take(200)) {
+      for (const turn of await ctx.db.query("conversationTurns").withIndex("by_conversation", (q) => q.eq("conversationId", conversation._id)).take(500)) {
+        if (turn.attachment) await ctx.storage.delete(turn.attachment.storageId);
+        await ctx.db.delete(turn._id);
+        turns += 1;
+      }
+      await ctx.db.delete(conversation._id);
+      conversations += 1;
+    }
+    return { conversations, turns, bookingsCancelled, bookingsDeleted };
   },
 });
 

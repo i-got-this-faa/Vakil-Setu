@@ -203,7 +203,7 @@ describe("booking a lawyer by voice", () => {
     await user.action(api.voice.send, tap(conversationId, "more_times"));
     let turn = await lastTurn(user, conversationId);
     expect(turn.reply.booking!.times).toEqual([istMidnight(2) + 15 * HOUR]);
-    expect(turn.reply.text).toContain("Advocate Asha Raina is free number 1, on");
+    expect(turn.reply.text).toContain("Advocate Asha Raina is available number 1, on");
     await user.action(api.voice.send, tap(conversationId, "choose_time", 1));
     await user.action(api.voice.send, tap(conversationId, "yes"));
     turn = await lastTurn(user, conversationId);
@@ -251,7 +251,7 @@ describe("booking a lawyer by voice", () => {
     await t.run(async ctx => { await ctx.db.patch(lawyers.second.slotIds[0]!, { start: Date.now() - 1000 }); });
     await user.action(api.voice.send, tap(conversationId, "yes"));
     const turn = await lastTurn(user, conversationId);
-    expect(turn.reply.text).toMatch(/^Sorry, that time was just taken by someone else\. Advocate Bilal Khan has no free time right now/);
+    expect(turn.reply.text).toMatch(/^Sorry, that time was just taken by someone else\. Advocate Bilal Khan has no available time right now/);
     expect(await t.run(async ctx => await ctx.db.query("bookings").first())).toBeNull();
 
     await user.action(api.voice.send, tap(conversationId, "cancel"));
@@ -340,5 +340,33 @@ describe("demo consultation fee (PAYMENTS_MODE=demo)", () => {
     const paid = await user.mutation(api.payments.payDemo, { bookingId, method: "card" });
     expect(paid).toMatchObject({ test: true, method: "card", amount: 500 });
     expect(await user.mutation(api.payments.payDemo, { bookingId, method: "upi" })).toEqual(paid);
+  });
+});
+
+describe("no clashing times", () => {
+  it("never offers a time that clashes with the person's own appointment", async () => {
+    const { t, queue } = setup();
+    const lawyers = await seedLawyers(t);
+    // Bilal also has a slot at 11:00 tomorrow, the same time as Asha's first slot.
+    await t.run(async ctx => {
+      const start = istMidnight(1) + 11 * HOUR;
+      await ctx.db.insert("slots", { advocateId: lawyers.second.advocateId, start, durationMinutes: 30, end: start + 30 * 60_000, consultationMode: "video", reservation: { kind: "free" } });
+    });
+    const user = t.withIdentity({ subject: "double-booker" });
+    await user.mutation(api.accounts.ensure, { role: "user", displayName: "Two", locale: "en" });
+    queue.push(answer({ ...NONE }, { reply: "I see.", summary: "Landlord eviction." }));
+    const conversationId = (await user.action(api.voice.send, say(undefined, "Landlord problem", "en"))).conversationId as Id<"conversations">;
+    await user.action(api.voice.send, tap(conversationId, "find"));
+    await user.action(api.voice.send, tap(conversationId, "choose_lawyer", await optionOf(user, conversationId, "Advocate Asha Raina")));
+    await user.action(api.voice.send, tap(conversationId, "choose_time", 1)); // tomorrow 11:00
+    await user.action(api.voice.send, tap(conversationId, "yes"));
+    expect((await lastTurn(user, conversationId)).reply.booking).toMatchObject({ stage: "booked" });
+
+    await user.action(api.voice.send, tap(conversationId, "find"));
+    // Bilal's next time is now 12:00, not the clashing 11:00.
+    const offered = (await lastTurn(user, conversationId)).reply.booking!.lawyers as { name: string; nextStart: number }[];
+    expect(offered.find(l => l.name === "Advocate Bilal Khan")?.nextStart).toBe(istMidnight(1) + 12 * HOUR);
+    await user.action(api.voice.send, tap(conversationId, "choose_lawyer", await optionOf(user, conversationId, "Advocate Bilal Khan")));
+    expect((await lastTurn(user, conversationId)).reply.booking!.times).toEqual([istMidnight(1) + 12 * HOUR]);
   });
 });

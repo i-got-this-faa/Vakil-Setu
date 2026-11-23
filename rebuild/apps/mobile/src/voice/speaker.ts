@@ -61,6 +61,9 @@ export function useSpeaker(locale: VoiceLocale) {
     if (ticker.current) clearInterval(ticker.current);
     ticker.current = null;
     try {
+      // Pause first: on some phones remove() alone lets the clip keep sounding for a moment,
+      // and the microphone then records the app's own voice.
+      player.current?.pause();
       player.current?.remove();
     } catch {
       // Already released.

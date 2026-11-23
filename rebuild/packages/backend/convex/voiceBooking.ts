@@ -1,3 +1,4 @@
+import { overlaps } from "@legal-setu/domain";
 import { ConvexError, v } from "convex/values";
 import type { Infer } from "convex/values";
 import type { VoiceLocale } from "@legal-setu/domain";
@@ -32,9 +33,22 @@ type Conversation = Doc<"conversations">;
 
 const en = (text: string): Segment => ({ text, lang: "en" });
 
-async function freeSlots(ctx: Ctx, advocate: Doc<"advocates">, now: number, limit = SLOTS_SCANNED) {
-  const slots = await ctx.db.query("slots").withIndex("by_advocate_start", q => q.eq("advocateId", advocate._id).gt("start", now)).take(limit * 2);
-  return slots.filter(slot => slot.reservation.kind === "free" && advocate.consultationModes.includes(slot.consultationMode)).slice(0, limit);
+type Busy = { start: number; end: number }[];
+
+/** The person's own live appointments: a time that clashes with one of them is never offered. */
+async function ownAppointments(ctx: Ctx, conversation: Conversation, now: number): Promise<Busy> {
+  if (!conversation.accountId) return [];
+  const busy: Busy = [];
+  for (const state of ["pending", "accepted"] as const) {
+    const live = await ctx.db.query("bookings").withIndex("by_user_state", q => q.eq("userId", conversation.accountId!).eq("state", state)).take(50);
+    for (const booking of live) if (booking.end > now && (state === "accepted" || booking.expiresAt > now)) busy.push({ start: booking.start, end: booking.end });
+  }
+  return busy;
+}
+
+async function freeSlots(ctx: Ctx, advocate: Doc<"advocates">, now: number, busy: Busy, limit = SLOTS_SCANNED) {
+  const slots = await ctx.db.query("slots").withIndex("by_advocate_start", q => q.eq("advocateId", advocate._id).gt("start", now)).take(limit * 2 + busy.length);
+  return slots.filter(slot => slot.reservation.kind === "free" && advocate.consultationModes.includes(slot.consultationMode) && !busy.some(own => overlaps(own, slot))).slice(0, limit);
 }
 
 async function saveDraft(ctx: Ctx, conversation: Conversation, draft: BookingDraft | undefined) {
@@ -53,10 +67,11 @@ async function offerLawyers(ctx: Ctx, conversation: Conversation, now: number, l
     return { segments: [en("First tell me a little about your problem, so I can find the right lawyer and tell them about it. After that, just say: book a lawyer.")], card: { stage: "describe_first" } };
   }
   const candidates = await ctx.db.query("advocates").withIndex("by_status_city", q => q.eq("application.kind", "approved")).take(500);
+  const busy = await ownAppointments(ctx, conversation, now);
   const available = [];
   for (const candidate of candidates) {
     if (exclude.includes(candidate._id) || !(await approvedAdvocate(ctx, candidate._id))) continue;
-    const next = (await freeSlots(ctx, candidate, now, 1))[0];
+    const next = (await freeSlots(ctx, candidate, now, busy, 1))[0];
     if (next) available.push({ ...candidate, nextStart: next.start });
   }
   const ranked = rankLawyers(available, { locale: conversation.locale, domain: conversation.profile.domain, city: conversation.profile.city }).slice(0, PER_TURN);
@@ -64,10 +79,10 @@ async function offerLawyers(ctx: Ctx, conversation: Conversation, now: number, l
     // Asked for different lawyers but there are no others: offer everyone again rather than nobody.
     if (exclude.length) return await offerLawyers(ctx, conversation, now, lead);
     await saveDraft(ctx, conversation, undefined);
-    return { segments: [en(`${lead}Sorry, no lawyer has a free time right now. Please try again later.`)], card: { stage: "none_available" } };
+    return { segments: [en(`${lead}Sorry, no lawyer is available right now. Please try again later.`)], card: { stage: "none_available" } };
   }
   await saveDraft(ctx, conversation, { stage: "lawyer", lawyers: ranked.map(lawyer => ({ advocateId: lawyer._id, name: lawyer.displayName })), times: [], timeOffset: 0, expiresAt: now + DRAFT_MS });
-  const list = numbered(ranked.map(lawyer => `${lawyer.displayName} from ${lawyer.city}, ${lawyer.yearsExperience} years of experience, free ${spokenTime(lawyer.nextStart, now)}`));
+  const list = numbered(ranked.map(lawyer => `${lawyer.displayName} from ${lawyer.city}, ${lawyer.yearsExperience} years of experience, available ${spokenTime(lawyer.nextStart, now)}`));
   const found = ranked.length === 1 ? "I found one lawyer who can help you" : `I found ${ranked.length} lawyers who can help you`;
   return {
     segments: [en(`${lead}${found}: ${list}. Which lawyer would you like? Say the number or the name.`)],
@@ -76,10 +91,10 @@ async function offerLawyers(ctx: Ctx, conversation: Conversation, now: number, l
 }
 
 async function offerTimes(ctx: Ctx, conversation: Conversation, draft: BookingDraft, advocate: Doc<"advocates">, offset: number, now: number, lead = ""): Promise<StepResult> {
-  const slots = await freeSlots(ctx, advocate, now);
+  const slots = await freeSlots(ctx, advocate, now, await ownAppointments(ctx, conversation, now));
   if (!slots.length) {
     await saveDraft(ctx, conversation, { ...draft, stage: "lawyer", advocateId: undefined, times: [], timeOffset: 0, slotId: undefined, expiresAt: now + DRAFT_MS });
-    return { segments: [en(`${lead}${advocate.displayName} has no free time right now. Would you like another lawyer?`)], card: { stage: "none_available", lawyerName: advocate.displayName } };
+    return { segments: [en(`${lead}${advocate.displayName} has no available time right now. Would you like another lawyer?`)], card: { stage: "none_available", lawyerName: advocate.displayName } };
   }
   let start = offset;
   if (start >= slots.length) { lead += "There are no later times. "; start = 0; }
@@ -87,7 +102,7 @@ async function offerTimes(ctx: Ctx, conversation: Conversation, draft: BookingDr
   await saveDraft(ctx, conversation, { ...draft, stage: "time", advocateId: advocate._id, times: page.map(slot => ({ slotId: slot._id, start: slot.start })), timeOffset: start, slotId: undefined, caseId: undefined, summaryVersion: undefined, expiresAt: now + DRAFT_MS });
   const more = slots.length > start + PER_TURN ? ", or say more for other times" : "";
   return {
-    segments: [en(`${lead}${advocate.displayName} is free ${numbered(page.map(slot => spokenTime(slot.start, now)))}. Which time suits you? Say the number, or a day and time${more}.`)],
+    segments: [en(`${lead}${advocate.displayName} is available ${numbered(page.map(slot => spokenTime(slot.start, now)))}. Which time suits you? Say the number, or a day and time${more}.`)],
     card: { stage: "time", lawyerName: advocate.displayName, times: page.map(slot => slot.start) },
   };
 }
@@ -114,7 +129,7 @@ async function confirmTime(ctx: Ctx, conversation: Conversation, account: Doc<"a
 }
 
 async function chooseTime(ctx: Ctx, conversation: Conversation, account: Doc<"accounts">, draft: BookingDraft, advocate: Doc<"advocates">, intent: Intent, now: number): Promise<StepResult> {
-  const slots = await freeSlots(ctx, advocate, now);
+  const slots = await freeSlots(ctx, advocate, now, await ownAppointments(ctx, conversation, now));
   if (intent.option !== undefined) {
     const offered = draft.times[intent.option - 1];
     if (!offered) return await offerTimes(ctx, conversation, draft, advocate, draft.timeOffset, now, `Please choose one of these times. `);
@@ -125,13 +140,13 @@ async function chooseTime(ctx: Ctx, conversation: Conversation, account: Doc<"ac
   if (intent.date || intent.hour !== undefined || intent.partOfDay) {
     const matches = matchSlots(slots, { date: intent.date, hour: intent.hour, partOfDay: intent.partOfDay });
     const first = matches[0];
-    if (!first) return await offerTimes(ctx, conversation, draft, advocate, 0, now, `${advocate.displayName} is not free then. `);
+    if (!first) return await offerTimes(ctx, conversation, draft, advocate, 0, now, `${advocate.displayName} is not available then. `);
     // An exact hour, or only one time that fits: that is their choice. Otherwise read the times that fit.
     if (matches.length === 1 || intent.hour !== undefined) return await confirmTime(ctx, conversation, account, draft, advocate, first, now);
     const page = matches.slice(0, PER_TURN);
     await saveDraft(ctx, conversation, { ...draft, stage: "time", advocateId: advocate._id, times: page.map(slot => ({ slotId: slot._id, start: slot.start })), timeOffset: 0, expiresAt: now + DRAFT_MS });
     return {
-      segments: [en(`${advocate.displayName} is free then ${numbered(page.map(slot => spokenTime(slot.start, now)))}. Which time suits you? Say the number.`)],
+      segments: [en(`${advocate.displayName} is available then ${numbered(page.map(slot => spokenTime(slot.start, now)))}. Which time suits you? Say the number.`)],
       card: { stage: "time", lawyerName: advocate.displayName, times: page.map(slot => slot.start) },
     };
   }
@@ -154,7 +169,12 @@ async function book(ctx: Ctx, conversation: Conversation, account: Doc<"accounts
     const code = (error.data as { code?: string } | undefined)?.code;
     if (code === "NOT_APPROVED") return await offerLawyers(ctx, conversation, now, `Sorry, ${advocate.displayName} is not taking new requests. `, [advocate._id]);
     if (code === "SLOT_UNAVAILABLE") return await offerTimes(ctx, conversation, draft, advocate, 0, now, "Sorry, that time was just taken by someone else. ");
-    if (code === "CONFLICT") return await offerTimes(ctx, conversation, draft, advocate, 0, now, "You already have another appointment at that time, or your problem details changed. Please choose a time again. ");
+    if (code === "CONFLICT") {
+      const overlap = /overlaps/i.test((error.data as { message?: string } | undefined)?.message ?? "");
+      return await offerTimes(ctx, conversation, draft, advocate, 0, now, overlap
+        ? "You already have another lawyer appointment at that time. Please choose a different time. "
+        : "Your problem details changed, so please choose the time again and I will read the new summary. ");
+    }
     return { segments: [en("Sorry, I could not book it right now. Please say yes again in a moment.")], card: { stage: "confirm", lawyerName: advocate.displayName, start: slot.start } };
   }
   const sent = `Done. I have sent your request to ${advocate.displayName} for ${spokenTime(slot.start, now)}.`;
@@ -181,7 +201,7 @@ async function pay(ctx: Ctx, conversation: Conversation, account: Doc<"accounts"
   try {
     const payment = await recordDemoPayment(ctx, account, booking._id, "upi");
     return {
-      segments: [en(`Payment of ${payment.amount} rupees is done. Your receipt number is ${payment.reference.split("").join(" ")}. ${advocate?.displayName ?? "The lawyer"} will reply soon, and I will tell you here.`)],
+      segments: [en(`I have paid the fee of ${payment.amount} rupees. Your receipt is shown on the screen. ${advocate?.displayName ?? "The lawyer"} will reply soon, and I will tell you here.`)],
       card: { stage: "paid", lawyerName: advocate?.displayName, start: booking.start, bookingId: booking._id, fee: payment.amount, reference: payment.reference },
     };
   } catch (error) {

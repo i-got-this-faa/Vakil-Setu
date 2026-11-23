@@ -44,3 +44,7 @@ demo-video/
 /legal_setu_demo_player.html
 /dogri_expo_demo_player.html
 /sample-draft-notice.pdf
+
+# Local data exports and models (large)
+backend/data/
+expo_qr.png

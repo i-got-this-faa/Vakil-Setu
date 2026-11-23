@@ -141,9 +141,11 @@ export function TalkScreen({ locale }: { locale: VoiceLocale }) {
   function onMic() {
     if (recording) void recorder.stop();
     else {
+      // Stop the voice and give the speaker a moment to fall silent, so the recording starts with the person, not the app.
+      const wasSpeaking = speaker.speakingId !== null;
       speaker.stop();
       setNotice("");
-      void recorder.start().then((started) => {
+      void new Promise((resolve) => setTimeout(resolve, wasSpeaking ? 350 : 0)).then(() => recorder.start()).then((started) => {
         if (!started && recorder.permissionDenied) setNotice(phrases.micPermission);
       });
     }
