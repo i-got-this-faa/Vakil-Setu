@@ -2,7 +2,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { useMutation, useQuery } from "convex/react";
 import { api } from "@legal-setu/backend/api";
 import type { Id } from "@legal-setu/backend/data-model";
-import { randomUUID } from "expo-crypto";
+import { randomUUID } from "../lib/random";
 import { Stack, router } from "expo-router";
 import { useEffect, useRef, useState } from "react";
 import { ActivityIndicator, Pressable, ScrollView, StyleSheet, Text, View } from "react-native";

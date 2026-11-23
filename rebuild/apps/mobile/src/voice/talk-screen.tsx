@@ -3,7 +3,6 @@ import { useAction, useMutation, useQuery } from "convex/react";
 import { ConvexError } from "convex/values";
 import { api } from "@legal-setu/backend/api";
 import type { Id } from "@legal-setu/backend/data-model";
-import { randomUUID } from "expo-crypto";
 import { router } from "expo-router";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { KeyboardAvoidingView, Linking, Modal, Pressable, ScrollView, StyleSheet, Text, TextInput, View, type ScrollViewInstance } from "react-native";
@@ -11,6 +10,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { VOICE_LOCALES, type VoiceLocale } from "@legal-setu/domain";
 import { formatIst } from "../lib/format";
 import { convexErrorMessage } from "../lib/errors";
+import { randomUUID } from "../lib/random";
 import { RTL_LOCALES, phrasesFor, speechTagFor, type Phrases } from "./languages";
 import { bookingStatus, failureText, lawSourceLabel, type LawSource } from "./logic";
 import { useClaimGuestConversation, useVoiceAccount } from "./account";
@@ -41,6 +41,7 @@ export function TalkScreen({ locale }: { locale: VoiceLocale }) {
   const send = useAction(api.voice.send);
   const startNew = useMutation(api.conversations.startNew);
   const asGuest = account.kind !== "ready";
+  const guestSignInRequired = account.kind === "guest" && guestToken === null;
   const tokenArg = asGuest && guestToken ? { guestToken } : {};
 
   const latest = useQuery(api.conversations.latest, resumeLatest && !conversationId && account.kind !== "loading" ? tokenArg : "skip");
@@ -65,7 +66,7 @@ export function TalkScreen({ locale }: { locale: VoiceLocale }) {
   const greeted = useRef(false);
 
   const submit = useCallback(async (input: Input) => {
-    if (sending || starting) return;
+    if (sending || starting || guestSignInRequired) return;
     setSending(true);
     setNotice("");
     speaker.stop();
@@ -96,7 +97,7 @@ export function TalkScreen({ locale }: { locale: VoiceLocale }) {
     } finally {
       setSending(false);
     }
-  }, [asGuest, conversationId, guestToken, locale, phrases, send, setConversationId, speaker, sending, starting]);
+  }, [asGuest, conversationId, guestSignInRequired, guestToken, locale, phrases, send, setConversationId, speaker, sending, starting]);
 
   const recorder = useVoiceRecorder((recording) => {
     if (recording) void submit({ kind: "audio", mimeType: recording.mimeType, data: recording.data });
@@ -208,7 +209,7 @@ export function TalkScreen({ locale }: { locale: VoiceLocale }) {
       </View>
 
       {speaker.notice ? <View style={styles.newProblem}><Plain muted rtl={rtl}>{speaker.notice}</Plain></View> : null}
-      {account.kind === "ready" || account.kind === "guest" ? <View style={styles.newProblem}>
+      {account.kind === "ready" || (account.kind === "guest" && !guestSignInRequired) ? <View style={styles.newProblem}>
         <BigButton icon="add-circle-outline" label={phrases.newProblem} tone="plain" busy={starting}
           disabled={busy || recording || waitingForReply} onPress={() => void newProblem()} />
       </View> : null}
@@ -242,7 +243,7 @@ export function TalkScreen({ locale }: { locale: VoiceLocale }) {
             <Bubble side="assistant" rtl={rtl} text={phrases.greeting} speaking={speaker.speakingId === "greeting"} canSpeak={speaker.canSpeak}
               onSpeak={() => (speaker.speakingId === "greeting" ? speaker.stop() : speaker.speak("greeting", phrases.greeting))} phrases={phrases} />
           ) : null}
-          {empty && asGuest ? <Plain muted rtl={rtl}>{phrases.consent}</Plain> : null}
+          {empty && asGuest && !guestSignInRequired ? <Plain muted rtl={rtl}>{phrases.consent}</Plain> : null}
 
           {turns.map((turn) => (
             <View key={turn._id} style={styles.turn}>
@@ -264,9 +265,9 @@ export function TalkScreen({ locale }: { locale: VoiceLocale }) {
         </ScrollView>
 
         <View style={styles.dock}>
-          <BigButton icon="briefcase" label={phrases.talkToLawyer} tone={suggestLawyer ? "lawyer" : "plain"} disabled={busy}
-            onPress={() => void submit({ kind: "booking", action: "find", label: phrases.bookLawyer })} />
-          {outOfGuestTurns ? (
+          {guestSignInRequired ? null : <BigButton icon="briefcase" label={phrases.talkToLawyer} tone={suggestLawyer ? "lawyer" : "plain"} disabled={busy}
+            onPress={() => void submit({ kind: "booking", action: "find", label: phrases.bookLawyer })} />}
+          {guestSignInRequired || outOfGuestTurns ? (
             <Card tone="warn">
               <Plain rtl={rtl}>{phrases.guestLimit}</Plain>
               <BigButton icon="call" label={phrases.signIn} onPress={() => router.push("/sign-in")} />
@@ -308,7 +309,7 @@ export function TalkScreen({ locale }: { locale: VoiceLocale }) {
               </View>
             </View>
           )}
-          {!outOfGuestTurns && !typing ? (
+          {!guestSignInRequired && !outOfGuestTurns && !typing ? (
             <Text style={styles.micLabel}>
               {recording ? `${phrases.listening}  ${Math.floor(recorder.elapsedMs / 1000)}s` : busy ? phrases.thinking : phrases.tapToSpeak}
             </Text>

@@ -4,6 +4,7 @@ import { ConvexReactClient } from "convex/react";
 import { ConvexProviderWithClerk } from "convex/react-clerk";
 import { useState, type ReactNode } from "react";
 import type { ServiceConfig } from "../lib/config";
+import { secureRandomHex } from "../lib/random";
 import { LiveDemoAccount, LiveDemoSession } from "./live-demo-session";
 
 type ConfiguredServices = Extract<ServiceConfig, { kind: "configured" }>;
@@ -15,7 +16,7 @@ type ConfiguredServices = Extract<ServiceConfig, { kind: "configured" }>;
  */
 export function ServiceProviders({ config, children }: { config: ConfiguredServices; children: ReactNode }) {
   const [client] = useState(() => new ConvexReactClient(config.convexUrl));
-  const demoLogin = process.env.EXPO_PUBLIC_DEMO_LOGIN === "1" && __DEV__;
+  const [demoLogin] = useState(() => __DEV__ && process.env.EXPO_PUBLIC_DEMO_LOGIN === "1" && secureRandomHex(1) !== null);
   const content = <ConvexProviderWithClerk client={client} useAuth={useAuth}>
     {demoLogin ? <LiveDemoAccount>{children}</LiveDemoAccount> : children}
   </ConvexProviderWithClerk>;

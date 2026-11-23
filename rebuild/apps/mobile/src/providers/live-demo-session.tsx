@@ -1,11 +1,11 @@
 import { useAuth, useClerk, useSignIn, useSignUp } from "@clerk/expo";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { randomUUID } from "expo-crypto";
 import { useConvexAuth, useMutation, useQuery } from "convex/react";
 import { api } from "@legal-setu/backend/api";
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import { ActivityIndicator, Platform, Text, View } from "react-native";
 import { authErrorCode, authErrorMessage, convexErrorMessage } from "../lib/errors";
+import { randomUUID, secureRandomHex } from "../lib/random";
 import { BigButton, voice } from "../voice/ui";
 
 const EMAIL_KEY = "legal-setu.development-demo-email";
@@ -63,7 +63,9 @@ export function LiveDemoSession({ children }: { children: ReactNode }) {
         return;
       }
       if (authErrorCode(sent.error) !== "form_identifier_not_found") throw sent.error;
-      const created = await signUp.create({ emailAddress, password: `${randomUUID()}Aa9!`, firstName: "Demo", lastName: "User" });
+      const secret = secureRandomHex(16);
+      if (!secret) throw new Error("Creating a demo account requires secure randomness. Use a development build.");
+      const created = await signUp.create({ emailAddress, password: `${secret}Aa9!`, firstName: "Demo", lastName: "User" });
       if (created.error) throw created.error;
       const prepared = await signUp.verifications.sendEmailCode();
       if (prepared.error) throw prepared.error;

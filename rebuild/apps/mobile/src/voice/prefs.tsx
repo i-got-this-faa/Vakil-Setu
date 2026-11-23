@@ -1,8 +1,8 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import * as SecureStore from "expo-secure-store";
-import { getRandomBytes } from "expo-crypto";
 import { isVoiceLocale, type VoiceLocale } from "@legal-setu/domain";
 import { createContext, useCallback, useContext, useEffect, useMemo, useState, type ReactNode } from "react";
+import { secureRandomHex } from "../lib/random";
 import { phrasesFor, type Phrases } from "./languages";
 import { FRESH_CONVERSATION, restoreConversation, type ConversationSelection } from "./conversation-selection";
 
@@ -11,9 +11,8 @@ const CONVERSATION_KEY = "legal-setu.conversation";
 const GUEST_KEY = "legal-setu.guest-token";
 
 /** A device-made bearer secret for talking before sign-in. The server only stores its hash. */
-function newGuestToken(): string {
-  const bytes = getRandomBytes(32);
-  return Array.from(bytes, (byte) => byte.toString(16).padStart(2, "0")).join("");
+function newGuestToken(): string | null {
+  return secureRandomHex(32);
 }
 
 interface VoicePrefs {
@@ -46,11 +45,10 @@ export function VoicePrefsProvider({ children }: { children: ReactNode }) {
         AsyncStorage.getItem(LOCALE_KEY).catch(() => null),
         AsyncStorage.getItem(CONVERSATION_KEY).catch(() => null),
       ]);
-      let token = await SecureStore.getItemAsync(GUEST_KEY).catch(() => null);
-      if (!token) {
-        token = newGuestToken();
-        await SecureStore.setItemAsync(GUEST_KEY, token).catch(() => undefined);
-      }
+      const newToken = newGuestToken();
+      const storedToken = newToken ? await SecureStore.getItemAsync(GUEST_KEY).catch(() => null) : null;
+      const token = storedToken ?? newToken;
+      if (!storedToken && token) await SecureStore.setItemAsync(GUEST_KEY, token).catch(() => undefined);
       if (!active) return;
       if (isVoiceLocale(storedLocale)) setLocaleState(storedLocale);
       setSelection(restoreConversation(storedConversation, process.env.EXPO_PUBLIC_DEMO_MODE === "1"));
@@ -73,7 +71,8 @@ export function VoicePrefsProvider({ children }: { children: ReactNode }) {
   const resetGuest = useCallback(() => {
     const token = newGuestToken();
     setGuestToken(token);
-    SecureStore.setItemAsync(GUEST_KEY, token).catch(() => undefined);
+    const update = token ? SecureStore.setItemAsync(GUEST_KEY, token) : SecureStore.deleteItemAsync(GUEST_KEY);
+    update.catch(() => undefined);
     setConversationId(null);
   }, [setConversationId]);
 

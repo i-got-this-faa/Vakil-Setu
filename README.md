@@ -1,5 +1,7 @@
 # Legal-Setu
 
+> Set up Convex and Clerk, then run the mobile app and both websites. [Developer setup guide](DEVELOPER_SETUP.md)
+
 The avatar website in `frontend/` and the mobile MVP in `rebuild/apps/mobile/` now target the shared **Convex backend with Clerk identity** in `rebuild/packages/backend/`. The avatar messenger layout and browser voice controls are preserved.
 
 See [Convex migration and setup](docs/CONVEX_AVATAR_MIGRATION.md) for service configuration, source import, consent and remaining live acceptance checks.
