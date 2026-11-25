@@ -137,7 +137,7 @@ export function TalkScreen({ locale }: { locale: VoiceLocale }) {
   const recording = recorder.state === "recording";
   const busy = sending || starting || recorder.state === "stopping";
   const waitingForReply = busy || turns.some((turn) => turn.reply.kind === "pending");
-  const mood: AvatarMood = speaker.speakingId ? "speaking" : recording ? "listening" : waitingForReply ? "thinking" : "idle";
+  const mood: AvatarMood = speaker.isPlaying ? "speaking" : recording ? "listening" : waitingForReply || speaker.speakingId ? "thinking" : "idle";
 
   function onMic() {
     if (recording) void recorder.stop();

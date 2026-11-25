@@ -66,5 +66,5 @@ export function useSpeaker(_locale: VoiceLocale) {
     setSpeakingId(null);
   }, [halt]);
 
-  return { ready: true, canSpeak: true, speakingId, speak, stop, onWord, notice: "" };
+  return { ready: true, canSpeak: true, speakingId, isPlaying: speakingId !== null, speak, stop, onWord, notice: "" };
 }

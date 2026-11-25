@@ -3,7 +3,8 @@ import type { Phrases } from "./languages";
 export function failureText(reason: string, phrases: Phrases): string {
   if (reason === "busy" || reason === "rate_limited") return phrases.busy;
   if (reason === "document_invalid") return phrases.documentProblem;
-  if (reason === "unsupported_language" || reason === "not_configured" || reason === "invalid_config") return phrases.error;
+  if (reason === "timeout" || reason === "provider_failed" || reason === "malformed"
+    || reason === "unsupported_language" || reason === "not_configured" || reason === "invalid_config") return phrases.error;
   return phrases.sayAgain;
 }
 
@@ -56,7 +57,7 @@ export const EMERGENCY_NUMBERS = [
   { number: "15100", label: "callLegalAid", icon: "scale", color: "#0f766e" },
 ] as const;
 
-/** Languages read aloud by a server voice: Bhashini (Dogri uses the Hindi voice; it shares the script), or Gemini for Kashmiri. Urdu uses the phone's own voice. */
+/** Languages read aloud by a server voice. Dogri uses Bhashini and Kashmiri uses Gemini. */
 export const SERVER_VOICE_LOCALES: readonly string[] = ["hi", "en", "pa", "doi", "ks", "bn", "mr", "gu", "or", "ta", "te", "kn", "ml"];
 
 /**

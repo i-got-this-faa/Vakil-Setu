@@ -15,7 +15,8 @@ export function LanguageScreen({ allowed }: { allowed: readonly VoiceLocale[] | 
 
   function choose(code: VoiceLocale, name: string) {
     Speech.stop();
-    Speech.speak(name, { language: speechTagFor(code) });
+    // The talk screen plays the Dogri greeting through Bhashini.
+    if (code !== "doi") Speech.speak(name, { language: speechTagFor(code) });
     setLocale(code);
     if (router.canGoBack()) router.back();
     else router.replace("/talk");

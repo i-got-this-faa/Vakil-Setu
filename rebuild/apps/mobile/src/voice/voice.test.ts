@@ -65,7 +65,9 @@ describe("messages", () => {
   test("maps server reasons to plain spoken messages", () => {
     expect(failureText("busy", hi)).toBe(hi.busy);
     expect(failureText("rate_limited", hi)).toBe(hi.busy);
-    expect(failureText("malformed", hi)).toBe(hi.sayAgain);
+    expect(failureText("timeout", hi)).toBe(hi.error);
+    expect(failureText("provider_failed", hi)).toBe(hi.error);
+    expect(failureText("malformed", hi)).toBe(hi.error);
     expect(failureText("not_configured", hi)).toBe(hi.error);
     expect(bookingStatus("accepted", hi)).toBe(hi.statusAccepted);
     expect(bookingStatus("expired", hi)).toBe(hi.statusExpired);

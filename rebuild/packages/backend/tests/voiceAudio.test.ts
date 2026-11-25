@@ -60,6 +60,33 @@ describe("Bhashini read-aloud", () => {
   });
 });
 
+describe("Bhashini read-aloud for Dogri", () => {
+  it("reads Dogri text with the Hindi male voice and bypasses cached MIET clips", async () => {
+    const t = convexTest(schema, modules);
+    vi.stubEnv("BHASHINI_API_KEY", "bhashini-key");
+    const text = "नमस्ते, तुस किंयां ओ?";
+    const digest = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(`dgx:doi_karan|doi|${text}`));
+    const dgxKey = Buffer.from(digest).toString("hex");
+    await t.run(async (ctx) => {
+      const storageId = await ctx.storage.store(new Blob(["old MIET clip"], { type: "audio/mpeg" }));
+      await ctx.db.insert("voiceClips", { key: dgxKey, storageId, createdAt: Date.now() });
+    });
+    const fetchMock = vi.fn(async (_url: string, _init: RequestInit) => bhashini(floatWav([0.1, 0.2])));
+    vi.stubGlobal("fetch", fetchMock);
+    const args = { locale: "doi" as const, text, guestToken: GUEST };
+    const result = await t.action(api.voiceAudio.speak, args);
+    expect(result.kind).toBe("audio");
+    const [url, request] = fetchMock.mock.calls[0]!;
+    expect(url).toBe("https://dhruva-api.bhashini.gov.in/services/inference/pipeline");
+    expect(JSON.parse(String(request.body))).toMatchObject({
+      pipelineTasks: [{ config: { language: { sourceLanguage: "hi" }, gender: "male" } }],
+      inputData: { input: [{ source: text }] },
+    });
+    expect(await t.action(api.voiceAudio.speak, args)).toEqual(result);
+    expect(fetchMock).toHaveBeenCalledTimes(1);
+  });
+});
+
 describe("Gemini read-aloud for Kashmiri", () => {
   const pcm = new Uint8Array([1, 0, 2, 0, 3, 0, 4, 0]);
   const geminiAudio = (mimeType: string, data: Uint8Array) => new Response(JSON.stringify({ candidates: [{ content: { parts: [{ inlineData: { mimeType, data: Buffer.from(data).toString("base64") } }] } }] }));
