@@ -81,7 +81,7 @@ export interface Phrases {
 
 const en: Phrases = {
   name: "English",
-  greeting: "Namaste. I am here to help you. Tell me your problem in your own words. Press the big button and speak.",
+  greeting: "Namaste. I am here to help you. Tell me your problem in your own words. Press the button and speak.",
   tapToSpeak: "Press and speak",
   listening: "Listening… press again when done",
   cancelRecording: "Cancel",
@@ -155,7 +155,7 @@ const en: Phrases = {
 
 const hi: Phrases = {
   name: "हिन्दी",
-  greeting: "नमस्ते। मैं आपकी मदद के लिए हूँ। अपनी परेशानी अपने शब्दों में बताइए। बड़ा बटन दबाइए और बोलिए।",
+  greeting: "नमस्ते। मैं आपकी मदद के लिए हूँ। अपनी परेशानी अपने शब्दों में बताइए। बटन दबाइए और बोलिए।",
   tapToSpeak: "दबाइए और बोलिए",
   listening: "सुन रहे हैं… बोलकर फिर से दबाइए",
   cancelRecording: "रद्द करें",
@@ -229,7 +229,7 @@ const hi: Phrases = {
 
 const pa: Partial<Phrases> = {
   name: "ਪੰਜਾਬੀ",
-  greeting: "ਸਤ ਸ੍ਰੀ ਅਕਾਲ। ਮੈਂ ਤੁਹਾਡੀ ਮਦਦ ਲਈ ਹਾਂ। ਆਪਣੀ ਮੁਸ਼ਕਲ ਆਪਣੇ ਸ਼ਬਦਾਂ ਵਿੱਚ ਦੱਸੋ। ਵੱਡਾ ਬਟਨ ਦਬਾਓ ਅਤੇ ਬੋਲੋ।",
+  greeting: "ਸਤ ਸ੍ਰੀ ਅਕਾਲ। ਮੈਂ ਤੁਹਾਡੀ ਮਦਦ ਲਈ ਹਾਂ। ਆਪਣੀ ਮੁਸ਼ਕਲ ਆਪਣੇ ਸ਼ਬਦਾਂ ਵਿੱਚ ਦੱਸੋ। ਬਟਨ ਦਬਾਓ ਅਤੇ ਬੋਲੋ।",
   tapToSpeak: "ਦਬਾਓ ਅਤੇ ਬੋਲੋ",
   listening: "ਸੁਣ ਰਹੇ ਹਾਂ… ਬੋਲ ਕੇ ਫਿਰ ਦਬਾਓ",
   cancelRecording: "ਰੱਦ ਕਰੋ",
@@ -303,7 +303,7 @@ const pa: Partial<Phrases> = {
 
 const bn: Partial<Phrases> = {
   name: "বাংলা",
-  greeting: "নমস্কার। আমি আপনাকে সাহায্য করতে এখানে আছি। আপনার সমস্যা নিজের ভাষায় বলুন। বড় বোতামটি টিপে কথা বলুন।",
+  greeting: "নমস্কার। আমি আপনাকে সাহায্য করতে এখানে আছি। আপনার সমস্যা নিজের ভাষায় বলুন। বোতামটি টিপে কথা বলুন।",
   tapToSpeak: "টিপুন আর বলুন",
   listening: "শুনছি… বলা শেষ হলে আবার টিপুন",
   cancelRecording: "বাতিল করুন",
@@ -377,7 +377,7 @@ const bn: Partial<Phrases> = {
 
 const mr: Partial<Phrases> = {
   name: "मराठी",
-  greeting: "नमस्कार। मी तुमच्या मदतीसाठी आहे। तुमची अडचण तुमच्या शब्दांत सांगा। मोठे बटण दाबा आणि बोला।",
+  greeting: "नमस्कार। मी तुमच्या मदतीसाठी आहे। तुमची अडचण तुमच्या शब्दांत सांगा। बटण दाबा आणि बोला।",
   tapToSpeak: "दाबा आणि बोला",
   listening: "ऐकत आहोत… बोलून झाल्यावर पुन्हा दाबा",
   cancelRecording: "रद्द करा",
@@ -451,7 +451,7 @@ const mr: Partial<Phrases> = {
 
 const ta: Partial<Phrases> = {
   name: "தமிழ்",
-  greeting: "வணக்கம். உங்களுக்கு உதவ நான் இருக்கிறேன். உங்கள் பிரச்சனையை உங்கள் வார்த்தைகளில் சொல்லுங்கள். பெரிய பொத்தானை அழுத்திப் பேசுங்கள்.",
+  greeting: "வணக்கம். உங்களுக்கு உதவ நான் இருக்கிறேன். உங்கள் பிரச்சனையை உங்கள் வார்த்தைகளில் சொல்லுங்கள். பொத்தானை அழுத்திப் பேசுங்கள்.",
   tapToSpeak: "அழுத்திப் பேசுங்கள்",
   listening: "கேட்கிறோம்… முடிந்ததும் மீண்டும் அழுத்துங்கள்",
   cancelRecording: "ரத்து செய்",
@@ -525,7 +525,7 @@ const ta: Partial<Phrases> = {
 
 const te: Partial<Phrases> = {
   name: "తెలుగు",
-  greeting: "నమస్కారం. మీకు సహాయం చేయడానికి నేను ఉన్నాను. మీ సమస్యను మీ మాటల్లో చెప్పండి. పెద్ద బటన్ నొక్కి మాట్లాడండి.",
+  greeting: "నమస్కారం. మీకు సహాయం చేయడానికి నేను ఉన్నాను. మీ సమస్యను మీ మాటల్లో చెప్పండి. బటన్ నొక్కి మాట్లాడండి.",
   tapToSpeak: "నొక్కి మాట్లాడండి",
   listening: "వింటున్నాం… అయ్యాక మళ్ళీ నొక్కండి",
   cancelRecording: "రద్దు చేయండి",
@@ -599,7 +599,7 @@ const te: Partial<Phrases> = {
 
 const gu: Partial<Phrases> = {
   name: "ગુજરાતી",
-  greeting: "નમસ્તે. હું તમારી મદદ માટે છું. તમારી તકલીફ તમારા શબ્દોમાં કહો. મોટું બટન દબાવો અને બોલો.",
+  greeting: "નમસ્તે. હું તમારી મદદ માટે છું. તમારી તકલીફ તમારા શબ્દોમાં કહો. બટન દબાવો અને બોલો.",
   tapToSpeak: "દબાવો અને બોલો",
   listening: "સાંભળીએ છીએ… બોલી લો પછી ફરી દબાવો",
   cancelRecording: "રદ કરો",
@@ -673,7 +673,7 @@ const gu: Partial<Phrases> = {
 
 const kn: Partial<Phrases> = {
   name: "ಕನ್ನಡ",
-  greeting: "ನಮಸ್ಕಾರ. ನಿಮಗೆ ಸಹಾಯ ಮಾಡಲು ನಾನಿದ್ದೇನೆ. ನಿಮ್ಮ ಸಮಸ್ಯೆಯನ್ನು ನಿಮ್ಮ ಮಾತಿನಲ್ಲಿ ಹೇಳಿ. ದೊಡ್ಡ ಬಟನ್ ಒತ್ತಿ ಮಾತನಾಡಿ.",
+  greeting: "ನಮಸ್ಕಾರ. ನಿಮಗೆ ಸಹಾಯ ಮಾಡಲು ನಾನಿದ್ದೇನೆ. ನಿಮ್ಮ ಸಮಸ್ಯೆಯನ್ನು ನಿಮ್ಮ ಮಾತಿನಲ್ಲಿ ಹೇಳಿ. ಬಟನ್ ಒತ್ತಿ ಮಾತನಾಡಿ.",
   tapToSpeak: "ಒತ್ತಿ ಮಾತನಾಡಿ",
   listening: "ಕೇಳುತ್ತಿದ್ದೇವೆ… ಮುಗಿದ ಮೇಲೆ ಮತ್ತೆ ಒತ್ತಿ",
   cancelRecording: "ರದ್ದುಮಾಡಿ",
@@ -747,7 +747,7 @@ const kn: Partial<Phrases> = {
 
 const ml: Partial<Phrases> = {
   name: "മലയാളം",
-  greeting: "നമസ്കാരം. നിങ്ങളെ സഹായിക്കാൻ ഞാൻ ഇവിടെയുണ്ട്. നിങ്ങളുടെ പ്രശ്നം നിങ്ങളുടെ വാക്കുകളിൽ പറയൂ. വലിയ ബട്ടൺ അമർത്തി സംസാരിക്കൂ.",
+  greeting: "നമസ്കാരം. നിങ്ങളെ സഹായിക്കാൻ ഞാൻ ഇവിടെയുണ്ട്. നിങ്ങളുടെ പ്രശ്നം നിങ്ങളുടെ വാക്കുകളിൽ പറയൂ. ബട്ടൺ അമർത്തി സംസാരിക്കൂ.",
   tapToSpeak: "അമർത്തി സംസാരിക്കൂ",
   listening: "കേൾക്കുന്നു… കഴിഞ്ഞാൽ വീണ്ടും അമർത്തൂ",
   cancelRecording: "റദ്ദാക്കുക",
@@ -821,7 +821,7 @@ const ml: Partial<Phrases> = {
 
 const or: Partial<Phrases> = {
   name: "ଓଡ଼ିଆ",
-  greeting: "ନମସ୍କାର। ମୁଁ ଆପଣଙ୍କୁ ସାହାଯ୍ୟ କରିବାକୁ ଅଛି। ଆପଣଙ୍କ ସମସ୍ୟା ନିଜ ଭାଷାରେ କୁହନ୍ତୁ। ବଡ଼ ବଟନ୍ ଦବାଇ କଥା କୁହନ୍ତୁ।",
+  greeting: "ନମସ୍କାର। ମୁଁ ଆପଣଙ୍କୁ ସାହାଯ୍ୟ କରିବାକୁ ଅଛି। ଆପଣଙ୍କ ସମସ୍ୟା ନିଜ ଭାଷାରେ କୁହନ୍ତୁ। ବଟନ୍ ଦବାଇ କଥା କୁହନ୍ତୁ।",
   tapToSpeak: "ଦବାନ୍ତୁ ଓ କୁହନ୍ତୁ",
   listening: "ଶୁଣୁଛୁ… ସରିଲେ ପୁଣି ଦବାନ୍ତୁ",
   cancelRecording: "ବାତିଲ କରନ୍ତୁ",
@@ -895,7 +895,7 @@ const or: Partial<Phrases> = {
 
 const ur: Partial<Phrases> = {
   name: "اردو",
-  greeting: "آداب۔ میں آپ کی مدد کے لیے ہوں۔ اپنی پریشانی اپنے لفظوں میں بتائیے۔ بڑا بٹن دبائیے اور بولیے۔",
+  greeting: "آداب۔ میں آپ کی مدد کے لیے ہوں۔ اپنی پریشانی اپنے لفظوں میں بتائیے۔ بٹن دبائیے اور بولیے۔",
   tapToSpeak: "دبائیے اور بولیے",
   listening: "سن رہے ہیں… بول کر پھر دبائیے",
   cancelRecording: "منسوخ کریں",
@@ -1045,7 +1045,7 @@ const doi: Partial<Phrases> = {
 // needs review by a native Kashmiri speaker before release.
 const ks: Partial<Phrases> = {
   name: "کٲشُر",
-  greeting: "آداب۔ بہٕ چھس ییٚتہ تۄہہ مدد کرنہٕ خٲطرٕ۔ پنُن مسلہٕ ونِو پنٛنیٚن لفظن منٛز۔ بوڑ بٹن دبٲیو تہٕ ونِو۔",
+  greeting: "آداب۔ بہٕ چھس ییٚتہ تۄہہ مدد کرنہٕ خٲطرٕ۔ پنُن مسلہٕ ونِو پنٛنیٚن لفظن منٛز۔ بٹن دبٲیو تہٕ ونِو۔",
   tapToSpeak: "دبٲیو تہٕ ونِو",
   listening: "بوزان چھس… ونِتھ دبٲیو دوبارٕ",
   cancelRecording: "رد کریو",
