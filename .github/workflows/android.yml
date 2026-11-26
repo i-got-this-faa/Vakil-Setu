@@ -1,0 +1,69 @@
+name: Android APK
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    name: Build Android APK
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    env:
+      CI: true
+      EXPO_PUBLIC_CONVEX_URL: ${{ vars.EXPO_PUBLIC_CONVEX_URL }}
+      EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY: ${{ vars.EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY }}
+
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          persist-credentials: false
+
+      - uses: actions/setup-node@v5
+        with:
+          node-version: '22'
+
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version-file: rebuild/package.json
+
+      - name: Check public app configuration
+        run: |
+          if [[ "$EXPO_PUBLIC_CONVEX_URL" != https://* || ! "$EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY" =~ ^pk_(test|live)_ ]]; then
+            echo "::error::Set EXPO_PUBLIC_CONVEX_URL and EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY in GitHub Actions variables."
+            exit 1
+          fi
+
+      - name: Install workspace dependencies
+        working-directory: rebuild
+        run: bun install --frozen-lockfile --linker hoisted
+
+      - name: Generate Android project
+        working-directory: rebuild/apps/mobile
+        run: bun run expo prebuild --platform android --no-install
+
+      - name: Assemble APK
+        working-directory: rebuild/apps/mobile/android
+        run: ./gradlew --no-daemon :app:assembleRelease
+
+      - name: Verify and stage APK
+        run: |
+          apk=rebuild/apps/mobile/android/app/build/outputs/apk/release/app-release.apk
+          signer=$(find "$ANDROID_HOME/build-tools" -name apksigner | sort -V | tail -n 1)
+          "$signer" verify --print-certs "$apk"
+          mkdir -p artifacts
+          cp "$apk" artifacts/legal-setu-android.apk
+
+      - name: Publish Android APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: legal-setu-android
+          path: artifacts/legal-setu-android.apk
+          if-no-files-found: error
