@@ -35,7 +35,7 @@ type BookingCardData = {
 export function TalkScreen({ locale }: { locale: VoiceLocale }) {
   const { phrases, guestToken, conversationId, resumeLatest, setConversationId } = useVoicePrefs();
   const account = useVoiceAccount();
-  useClaimGuestConversation(account);
+  const claimingGuest = useClaimGuestConversation(account);
   const rtl = RTL_LOCALES.includes(locale);
   const speaker = useSpeaker(locale);
   const send = useAction(api.voice.send);
@@ -44,8 +44,9 @@ export function TalkScreen({ locale }: { locale: VoiceLocale }) {
   const guestSignInRequired = account.kind === "guest" && guestToken === null;
   const tokenArg = asGuest && guestToken ? { guestToken } : {};
 
-  const latest = useQuery(api.conversations.latest, resumeLatest && !conversationId && account.kind !== "loading" ? tokenArg : "skip");
-  const data = useQuery(api.conversations.get, conversationId && account.kind !== "loading" ? { conversationId: conversationId as Id<"conversations">, ...tokenArg } : "skip");
+  const canReadConversation = account.kind !== "loading" && !claimingGuest;
+  const latest = useQuery(api.conversations.latest, resumeLatest && !conversationId && canReadConversation ? tokenArg : "skip");
+  const data = useQuery(api.conversations.get, conversationId && canReadConversation ? { conversationId: conversationId as Id<"conversations">, ...tokenArg } : "skip");
 
   // Resume the newest conversation, and forget one this device can no longer open.
   useEffect(() => {
@@ -66,7 +67,7 @@ export function TalkScreen({ locale }: { locale: VoiceLocale }) {
   const greeted = useRef(false);
 
   const submit = useCallback(async (input: Input) => {
-    if (sending || starting || guestSignInRequired) return;
+    if (sending || starting || guestSignInRequired || claimingGuest) return;
     setSending(true);
     setNotice("");
     speaker.stop();
@@ -97,7 +98,7 @@ export function TalkScreen({ locale }: { locale: VoiceLocale }) {
     } finally {
       setSending(false);
     }
-  }, [asGuest, conversationId, guestSignInRequired, guestToken, locale, phrases, send, setConversationId, speaker, sending, starting]);
+  }, [asGuest, claimingGuest, conversationId, guestSignInRequired, guestToken, locale, phrases, send, setConversationId, speaker, sending, starting]);
 
   const recorder = useVoiceRecorder((recording) => {
     if (recording) void submit({ kind: "audio", mimeType: recording.mimeType, data: recording.data });
@@ -135,7 +136,7 @@ export function TalkScreen({ locale }: { locale: VoiceLocale }) {
   const scroll = useRef<ScrollViewInstance>(null);
   const suggestLawyer = data?.profile.suggestLawyer === true;
   const recording = recorder.state === "recording";
-  const busy = sending || starting || recorder.state === "stopping";
+  const busy = sending || starting || claimingGuest || recorder.state === "stopping";
   const waitingForReply = busy || turns.some((turn) => turn.reply.kind === "pending");
   const mood: AvatarMood = speaker.isPlaying ? "speaking" : recording ? "listening" : waitingForReply || speaker.speakingId ? "thinking" : "idle";
 
@@ -256,7 +257,7 @@ export function TalkScreen({ locale }: { locale: VoiceLocale }) {
               ) : null}
               {turn.reply.kind === "reply" && turn.reply.sources?.length ? <Sources sources={turn.reply.sources} label={phrases.lawSource} /> : null}
               {turn.reply.kind === "reply" && turn.reply.booking ? (
-                <BookingCard card={turn.reply.booking} active={turn._id === lastTurnId && !busy} rtl={rtl} locale={locale} phrases={phrases} onChoose={(input) => void submit(input)} />
+                <BookingCard card={turn.reply.booking} active={turn._id === lastTurnId && !busy} signedIn={!asGuest} rtl={rtl} locale={locale} phrases={phrases} onChoose={(input) => void submit(input)} />
               ) : null}
               {turn.reply.kind === "unavailable" ? <Plain muted rtl={rtl}>{failureText(turn.reply.reason, phrases)}</Plain> : null}
             </View>
@@ -383,8 +384,8 @@ function Sources({ sources, label }: { sources: LawSource[]; label: string }) {
  * The lawyers, times or question from a booking reply, so they can be seen and tapped as well as spoken.
  * A tap sends the same step a spoken answer would ("number 2", "yes"), straight to the server.
  */
-function BookingCard({ card, active, rtl, locale, phrases, onChoose }: {
-  card: BookingCardData; active: boolean; rtl: boolean; locale: VoiceLocale; phrases: Phrases; onChoose: (input: BookingInput) => void;
+function BookingCard({ card, active, signedIn, rtl, locale, phrases, onChoose }: {
+  card: BookingCardData; active: boolean; signedIn: boolean; rtl: boolean; locale: VoiceLocale; phrases: Phrases; onChoose: (input: BookingInput) => void;
 }) {
   const tag = speechTagFor(locale);
   const languageName = (code: string) => (VOICE_LOCALES as readonly string[]).includes(code) ? phrasesFor(code as VoiceLocale).name : code;
@@ -430,7 +431,8 @@ function BookingCard({ card, active, rtl, locale, phrases, onChoose }: {
           {card.summary ? <Text style={[styles.summary, rtl && styles.rtlText]}>{card.summary}</Text> : null}
           {active ? (
             <>
-              <BigButton icon="checkmark-circle" label={phrases.yesBook} tone="lawyer" onPress={() => onChoose({ kind: "booking", action: "yes", label: phrases.yesBook })} />
+              <BigButton icon="checkmark-circle" label={card.summary ? phrases.yesBook : phrases.continue} tone="lawyer"
+                onPress={() => onChoose({ kind: "booking", action: "yes", label: card.summary ? phrases.yesBook : phrases.continue })} />
               <BigButton icon="close-circle" label={phrases.no} tone="plain" onPress={() => onChoose({ kind: "booking", action: "no", label: phrases.no })} />
             </>
           ) : null}
@@ -468,6 +470,10 @@ function BookingCard({ card, active, rtl, locale, phrases, onChoose }: {
         </Card>
       );
     case "sign_in":
+      if (signedIn) {
+        return active && card.start ? <BigButton icon="checkmark-circle" label={phrases.continue} tone="lawyer"
+          onPress={() => onChoose({ kind: "booking", action: "yes", label: phrases.continue })} /> : null;
+      }
       return active ? <BigButton icon="call" label={phrases.signIn} onPress={() => router.push("/sign-in")} /> : null;
     default:
       return null;

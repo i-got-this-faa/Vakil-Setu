@@ -107,7 +107,16 @@ async function offerTimes(ctx: Ctx, conversation: Conversation, draft: BookingDr
   };
 }
 
-async function confirmTime(ctx: Ctx, conversation: Conversation, account: Doc<"accounts">, draft: BookingDraft, advocate: Doc<"advocates">, slot: Doc<"slots">, now: number): Promise<StepResult> {
+async function confirmTime(ctx: Ctx, conversation: Conversation, account: Doc<"accounts"> | null, draft: BookingDraft, advocate: Doc<"advocates">, slot: Doc<"slots">, now: number): Promise<StepResult> {
+  const when = spokenTime(slot.start, now);
+  const selection = { ...draft, stage: "confirm" as const, advocateId: advocate._id, slotId: slot._id, expiresAt: now + DRAFT_MS };
+  if (!account) {
+    await saveDraft(ctx, conversation, selection);
+    return {
+      segments: [en(`${advocate.displayName} is available ${when}. Would you like to request this appointment? Please say yes or no.`)],
+      card: { stage: "confirm", lawyerName: advocate.displayName, start: slot.start },
+    };
+  }
   let prepared;
   try {
     prepared = await prepareConversationCase(ctx, account, conversation);
@@ -116,8 +125,7 @@ async function confirmTime(ctx: Ctx, conversation: Conversation, account: Doc<"a
     return { segments: [en("First tell me a little about your problem, so the lawyer knows how to help. After that, just say: book a lawyer.")], card: { stage: "describe_first" } };
   }
   const fresh = (await ctx.db.get(conversation._id))!;
-  await saveDraft(ctx, fresh, { ...draft, stage: "confirm", advocateId: advocate._id, slotId: slot._id, caseId: prepared.caseId, summaryVersion: prepared.summaryVersion, expiresAt: now + DRAFT_MS });
-  const when = spokenTime(slot.start, now);
+  await saveDraft(ctx, fresh, { ...selection, caseId: prepared.caseId, summaryVersion: prepared.summaryVersion });
   return {
     segments: [
       en(`This is what I will send to ${advocate.displayName}:`),
@@ -128,7 +136,7 @@ async function confirmTime(ctx: Ctx, conversation: Conversation, account: Doc<"a
   };
 }
 
-async function chooseTime(ctx: Ctx, conversation: Conversation, account: Doc<"accounts">, draft: BookingDraft, advocate: Doc<"advocates">, intent: Intent, now: number): Promise<StepResult> {
+async function chooseTime(ctx: Ctx, conversation: Conversation, account: Doc<"accounts"> | null, draft: BookingDraft, advocate: Doc<"advocates">, intent: Intent, now: number): Promise<StepResult> {
   const slots = await freeSlots(ctx, advocate, now, await ownAppointments(ctx, conversation, now));
   if (intent.option !== undefined) {
     const offered = draft.times[intent.option - 1];
@@ -238,7 +246,7 @@ export const step = internalMutation({ args: { turnId: v.id("conversationTurns")
     return { segments: [en("Okay, I have stopped the booking. Whenever you want, just say: book a lawyer.")], card: { stage: "cancelled" } };
   }
   const account = conversation.accountId ? await ctx.db.get(conversation.accountId) : null;
-  if (!account || account.role !== "user" || account.disabled) {
+  if (conversation.accountId && (!account || account.role !== "user" || account.disabled)) {
     return { segments: [en("To book a lawyer, please sign in first with the sign in button at the top. After that, just say: book a lawyer.")], card: { stage: "sign_in" } };
   }
   const chosen = draft?.advocateId ? await approvedAdvocate(ctx, draft.advocateId) : null;
@@ -264,8 +272,20 @@ export const step = internalMutation({ args: { turnId: v.id("conversationTurns")
       if (!draft || !chosen) return await offerLawyers(ctx, conversation, now);
       return await offerTimes(ctx, conversation, draft, chosen, action === "more_times" ? draft.timeOffset + PER_TURN : 0, now);
     case "yes":
-      if (draft?.stage === "pay") return await pay(ctx, conversation, account, draft, now);
-      if (draft?.stage === "confirm" && chosen) return await book(ctx, conversation, account, draft, chosen, now);
+      if (draft?.stage === "pay" && account) return await pay(ctx, conversation, account, draft, now);
+      if (draft?.stage === "confirm" && chosen) {
+        if (account && draft.caseId && draft.summaryVersion) return await book(ctx, conversation, account, draft, chosen, now);
+        const slot = draft.slotId ? await ctx.db.get(draft.slotId) : null;
+        if (!slot || slot.advocateId !== chosen._id || slot.start <= now || slot.reservation.kind !== "free" ||
+            !chosen.consultationModes.includes(slot.consultationMode) || (await ownAppointments(ctx, conversation, now)).some(own => overlaps(own, slot))) {
+          return await offerTimes(ctx, conversation, draft, chosen, 0, now, "Please choose another time. ");
+        }
+        if (account) return await confirmTime(ctx, conversation, account, draft, chosen, slot, now);
+        return {
+          segments: [en("Please sign in by phone to continue with this appointment request.")],
+          card: { stage: "sign_in", lawyerName: chosen.displayName, start: slot.start },
+        };
+      }
       if (draft?.stage === "time" && chosen) return await offerTimes(ctx, conversation, draft, chosen, draft.timeOffset, now, "Please tell me which time suits you. ");
       // "Yes" to "shall I book a lawyer for you?" starts the booking.
       return await offerLawyers(ctx, conversation, now, draft?.stage === "lawyer" ? "Please tell me the number of the lawyer. " : "");

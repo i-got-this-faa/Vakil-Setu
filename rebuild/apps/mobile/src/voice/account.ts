@@ -1,7 +1,7 @@
 import { useAuth } from "@clerk/expo";
 import { useConvexAuth, useMutation, useQuery } from "convex/react";
 import { api } from "@legal-setu/backend/api";
-import { useEffect, useRef } from "react";
+import { useEffect, useState } from "react";
 import { useVoicePrefs } from "./prefs";
 
 export type VoiceAccount =
@@ -28,12 +28,14 @@ export function useVoiceAccount(): VoiceAccount {
 export function useClaimGuestConversation(account: VoiceAccount) {
   const { guestToken } = useVoicePrefs();
   const claim = useMutation(api.conversations.claimGuest);
-  const claimed = useRef<string | null>(null);
+  const [settledToken, setSettledToken] = useState<string | null>(null);
+  const claiming = account.kind === "ready" && !!guestToken && settledToken !== guestToken;
   useEffect(() => {
-    if (account.kind !== "ready" || !guestToken || claimed.current === guestToken) return;
-    claimed.current = guestToken;
-    claim({ guestToken }).catch(() => {
-      claimed.current = null;
-    });
-  }, [account.kind, guestToken, claim]);
+    if (!claiming || !guestToken) return;
+    let active = true;
+    const settle = () => { if (active) setSettledToken(guestToken); };
+    void claim({ guestToken }).then(settle, settle);
+    return () => { active = false; };
+  }, [claiming, guestToken, claim]);
+  return claiming;
 }

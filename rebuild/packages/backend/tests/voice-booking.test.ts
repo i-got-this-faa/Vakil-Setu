@@ -215,14 +215,38 @@ describe("booking a lawyer by voice", () => {
     expect(fetchMock.mock.calls.some(call => String(call[0]).includes("bhashini"))).toBe(false);
   });
 
-  it("asks guests to sign in, and asks to hear the problem before finding a lawyer", async () => {
+  it("lets guests choose a recommended lawyer and time before signing in to send a request", async () => {
     const { t, queue } = setup();
     await seedLawyers(t);
+    const guestArgs = { guestToken: GUEST };
+    queue.push(answer());
+    const guest = await t.action(api.voice.send, { ...guestArgs, ...say(undefined, "मकान मालिक ने मुझे बिना नोटिस निकाल दिया।") });
+    const conversationId = guest.conversationId as Id<"conversations">;
+    const guestTurn = async () => (await t.query(api.conversations.get, { conversationId, ...guestArgs }))?.turns.at(-1)?.reply;
     queue.push(answer({ action: "find", option: 0, date: "", hour: -1, partOfDay: "" }));
-    const guest = await t.action(api.voice.send, { guestToken: GUEST, ...say(undefined, "मुझे वकील चाहिए") });
-    const guestView = await t.query(api.conversations.get, { conversationId: guest.conversationId as Id<"conversations">, guestToken: GUEST });
-    expect(guestView?.turns[0]?.reply).toMatchObject({ booking: { stage: "sign_in" } });
+    await t.action(api.voice.send, { ...guestArgs, ...say(conversationId, "सारे कागजात हैं मेरे पास, अब मुझे कोई वकील बताओ।") });
+    expect(await guestTurn()).toMatchObject({ booking: { stage: "lawyer", lawyers: [{ name: "Advocate Asha Raina" }, expect.anything(), expect.anything()] } });
+    await t.action(api.voice.send, { ...guestArgs, ...tap(conversationId, "choose_lawyer", 1, "hi") });
+    expect(await guestTurn()).toMatchObject({ booking: { stage: "time", lawyerName: "Advocate Asha Raina" } });
+    await t.action(api.voice.send, { ...guestArgs, ...tap(conversationId, "choose_time", 1, "hi") });
+    expect(await guestTurn()).toMatchObject({ booking: { stage: "confirm", lawyerName: "Advocate Asha Raina", start: istMidnight(1) + 11 * HOUR } });
+    await t.action(api.voice.send, { ...guestArgs, ...tap(conversationId, "yes", undefined, "hi") });
+    expect(await guestTurn()).toMatchObject({ booking: { stage: "sign_in" } });
+    expect(await t.run(async ctx => await ctx.db.query("bookings").first())).toBeNull();
+    expect(await t.run(async ctx => await ctx.db.query("cases").first())).toBeNull();
 
+    const user = t.withIdentity({ subject: "new-user" });
+    await user.mutation(api.accounts.ensure, { role: "user", displayName: "New", locale: "en" });
+    await user.mutation(api.conversations.claimGuest, guestArgs);
+    await user.action(api.voice.send, tap(conversationId, "yes", undefined, "hi"));
+    expect((await lastTurn(user, conversationId)).reply.booking).toMatchObject({ stage: "confirm", lawyerName: "Advocate Asha Raina", summary: expect.any(String) });
+    expect(await t.run(async ctx => await ctx.db.query("bookings").first())).toBeNull();
+    await user.action(api.voice.send, tap(conversationId, "yes", undefined, "hi"));
+    expect((await lastTurn(user, conversationId)).reply.booking).toMatchObject({ stage: "booked", lawyerName: "Advocate Asha Raina" });
+  });
+
+  it("asks to hear the problem before finding a lawyer", async () => {
+    const { t } = setup();
     const user = t.withIdentity({ subject: "new-user" });
     await user.mutation(api.accounts.ensure, { role: "user", displayName: "New", locale: "en" });
     const started = await user.mutation(api.conversations.startNew, { locale: "en", consent: true });
